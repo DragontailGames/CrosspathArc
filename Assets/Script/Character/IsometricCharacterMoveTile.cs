@@ -58,7 +58,7 @@ public class IsometricCharacterMoveTile : MonoBehaviour
             {
                 mouse = Vector3Int.zero;
 
-                if (collisionTM.GetTile(currentTileIndex + moveCell * tileMove) == null)//Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o movimento
+                if (collisionTM.GetTile(currentTileIndex + moveCell * tileMove) == null && tilemap.GetTile(currentTileIndex + moveCell * tileMove) != null)//Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o movimento
                 {
                     currentTileIndex += moveCell * tileMove;
                     movePosition = tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
