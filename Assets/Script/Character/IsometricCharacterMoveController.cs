@@ -8,13 +8,17 @@ public class IsometricCharacterMoveController : MonoBehaviour
     [Tooltip("Velocidade do movimento para ambos os tipos")]
     public float movementSpeed = 1;
 
-    private Rigidbody2D rb;
-
     public Tilemap tilemap;
 
-    public Vector3 destination;
+    public Vector3 offsetPosition;
 
-    public bool keyboardMove = false;
+    public GameManager gameManager;
+
+    private Vector3 destination;
+
+    private Rigidbody2D rb;
+
+    private bool keyboardMove = false;
 
     void Start()
     {
@@ -87,7 +91,8 @@ public class IsometricCharacterMoveController : MonoBehaviour
 
             if (tilemap.HasTile(gridPos))//Verifica se o tile clicado existe
             {
-                destination = tilemap.GetCellCenterWorld(gridPos);//Define a posição com referencia ao tile que foi clicado
+                destination = tilemap.GetCellCenterWorld(gridPos) + offsetPosition;//Define a posição com referencia ao tile que foi clicado
+                gameManager.MoveParticle(pos);
             }
         }
     }
