@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class IsometricCharacterMoveTile : MonoBehaviour
 {
@@ -39,8 +40,10 @@ public class IsometricCharacterMoveTile : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))//Detecta o click do jogador
+        if (Input.GetMouseButtonDown(0) && !gameManager.InPause)//Detecta o click do jogador
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            
             mouse = MouseMove();
         }
     }
@@ -48,7 +51,7 @@ public class IsometricCharacterMoveTile : MonoBehaviour
     public void FixedUpdate()
     {
         Vector3Int moveCell = Vector3Int.zero;
-        if (canMove)//Testa o delay para correção da movimentação por tile
+        if (canMove && !gameManager.InPause)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 
