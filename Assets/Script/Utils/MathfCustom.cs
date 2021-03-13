@@ -13,4 +13,15 @@ public class MathfCustom
     {
         return new Vector3Int(Sign(value.x), Sign(value.y), Sign(value.z));//Retorna o sinal de um vector3
     }
+
+    public static int CalculateStatusByPoints(int status, int byPoints)
+    {
+        return Mathf.FloorToInt(status / byPoints);
+    }
+
+    public static int TotalLevelExp(int level)
+    {
+        int expBase = 100;
+        return Mathf.RoundToInt(expBase + ((expBase * 0.5f) * level));
+    }
 }

@@ -102,6 +102,8 @@ public class IsometricCharacterMoveTile : MonoBehaviour
     /// </summary>
     public IEnumerator DelayMove()
     {
+        this.GetComponent<CharacterStatus>().MoveOneTile();
+
         canMove = false;
 
         yield return new WaitForSeconds(0.2f);

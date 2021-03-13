@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Gerenciamento do inventario
+/// </summary>
 public class InventoryManager : MonoBehaviour
 {
     public List<EquipmentUi> equipmentUi;
@@ -15,7 +18,7 @@ public class InventoryManager : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.I))
         {
             OpenInventory();
         }
@@ -38,6 +41,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Define o item na estrutura do inventario mais comentarios no futuro
+    /// </summary>
+    /// <param name="item"></param>
     public void SetupItem(Item item)
     {
         List<EquipmentUi> equipment = equipmentUi.FindAll(n => n.equipmentType == item.equipmentType);
