@@ -78,12 +78,12 @@ public class AttributeStatus
                 }
             case EnumCustom.Status.HpRegen:
                 {
-                    value += MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Con), 4);//Corrige o atributo baseado na formula
+                    value += MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Con), 2);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.MpRegen:
                 {
-                    value += MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Foc), 4);//Corrige o atributo baseado na formula
+                    value += GetAttribute(EnumCustom.Attribute.Foc);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.SpellDodge:
@@ -128,9 +128,9 @@ public class AttributeStatus
     public int GetMaxHP(int level)
     {
         return 10 +
-            MathfCustom.CalculateStatusByPoints(level, 4) + 
-            MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Str),4) +
-            (GetAttribute(EnumCustom.Attribute.Con) * 2);
+            MathfCustom.CalculateStatusByPoints(level, 2) + 
+            MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Str),2) +
+            (GetAttribute(EnumCustom.Attribute.Con) * 3);
     }
 
 
@@ -142,7 +142,7 @@ public class AttributeStatus
     public int GetMaxMP(int level)
     {
         return 10 + 
-            MathfCustom.CalculateStatusByPoints(level, 4) +
-            (GetAttribute(EnumCustom.Attribute.Foc) * 2);
+            MathfCustom.CalculateStatusByPoints(level, 2) +
+            (GetAttribute(EnumCustom.Attribute.Foc) * 4);
     }
 }
