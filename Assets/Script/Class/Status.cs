@@ -8,6 +8,4 @@ public class Status
     public EnumCustom.Status status;
 
     public int value;
-
-    public List<int> modifier;
 }

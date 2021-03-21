@@ -32,4 +32,8 @@ public class Manager : MonoBehaviour
     public GameManager gameManager;
 
     public CanvasManager canvasManager;
+
+    public EnemyManager enemyManager;
+
+    public CharacterController characterController;
 }

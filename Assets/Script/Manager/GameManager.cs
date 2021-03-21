@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Game manager geral
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    public Tilemap tilemap;
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;

@@ -14,7 +14,7 @@ public class EnumCustom : MonoBehaviour
         Gloves,
         Ring,
         Boots,
-        Sword,
+        Weapon,
         Shield,
         Bow
     }
@@ -41,5 +41,25 @@ public class EnumCustom : MonoBehaviour
         SpellDodge,
         HpRegen,
         MpRegen
+    }
+
+    public enum SkillType
+    {
+        WeaponModifier,
+
+    }
+
+    public enum WeaponType
+    {
+        Hands,
+        Sword,
+        Shield
+    }
+
+    public enum MagicSchool
+    {
+        Fire,
+        Water,
+        Necromancy
     }
 }

@@ -20,6 +20,8 @@ public class CanvasManager : MonoBehaviour
 
     public GameObject logPrefab;//Prefab da linha de log
 
+    public Transform skillPanel;
+
     /// <summary>
     /// Carrega a barra de exp
     /// </summary>
@@ -39,6 +41,11 @@ public class CanvasManager : MonoBehaviour
     {
         GameObject log = Instantiate(logPrefab, combatLog.content);
         log.GetComponent<TextMeshProUGUI>().text = text;
-        combatLog.verticalScrollbar.value = 1;
+        Invoke("FixPositionScroll", 0.2f);
+    }
+
+    public void FixPositionScroll()
+    {
+        combatLog.normalizedPosition = new Vector2(0, 0);
     }
 }

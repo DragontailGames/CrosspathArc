@@ -13,6 +13,8 @@ public class AttributeStatus
 
     public Status[] status = new Status[Enum.GetNames(typeof(EnumCustom.Status)).Length];//array com os status
 
+    public List<Status> modifier = new List<Status>();
+
     /// <summary>
     /// Construtor da classe
     /// </summary>
@@ -30,10 +32,11 @@ public class AttributeStatus
     /// </summary>
     /// <param name="attribute">Attributo a ser verificado</param>
     /// <returns>valor total do atributo</returns>
-    public int GetValue(Attributes attribute)
+    public int GetValue(EnumCustom.Attribute enumAttribute)
     {
-        float value = attribute.value;
-        foreach(var aux in attribute.modifier)
+        Attributes currentAttribute = Array.Find(attributes, n => n.attribute == enumAttribute);
+        float value = currentAttribute.value;
+        foreach(var aux in currentAttribute.modifier)
         {
             value += aux;
         }
@@ -45,79 +48,62 @@ public class AttributeStatus
     /// </summary>
     /// <param name="status">Status a ser verificado</param>
     /// <returns>valor total do status</returns>
-    public int GetValue(Status status)
+    public int GetValue(EnumCustom.Status enumStatus)
     {
-        int value = status.value;
-        foreach (var aux in status.modifier)
+        Status currentStatus = Array.Find(status, n => n.status == enumStatus);
+        int value = currentStatus.value;
+        List<Status> modifierTemp = modifier.FindAll(n => n.status == currentStatus.status);
+
+        foreach (var aux in modifierTemp)
         {
-            value += aux;
+            value += aux.value;
         }
 
         //verifica qual o status que esta sendo verificado e aplica a formula
-        switch(status.status)
+        switch(enumStatus)
         {
             case EnumCustom.Status.Armor:
                 {
-                    value += MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Agi), 2);//Corrige o atributo baseado na formula
+                    value += MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Agi), 2);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.CriticalHit:
                 {
-                    value += GetAttribute(EnumCustom.Attribute.Dex);//Corrige o atributo baseado na formula
+                    value += GetValue(EnumCustom.Attribute.Dex);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.Dodge:
                 {
-                    value += GetAttribute(EnumCustom.Attribute.Agi);//Corrige o atributo baseado na formula
+                    value += GetValue(EnumCustom.Attribute.Agi);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.HitChance:
                 {
-                    value += GetAttribute(EnumCustom.Attribute.Dex);//Corrige o atributo baseado na formula
+                    value += GetValue(EnumCustom.Attribute.Dex);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.HpRegen:
                 {
-                    value += MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Con), 2);//Corrige o atributo baseado na formula
+                    value += MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Con), 2);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.MpRegen:
                 {
-                    value += GetAttribute(EnumCustom.Attribute.Foc);//Corrige o atributo baseado na formula
+                    value += GetValue(EnumCustom.Attribute.Foc);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.SpellDodge:
                 {
-                    value += GetAttribute(EnumCustom.Attribute.Wis);//Corrige o atributo baseado na formula
+                    value += GetValue(EnumCustom.Attribute.Wis);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.SpellHit:
                 {
-                    value += GetAttribute(EnumCustom.Attribute.Int);//Corrige o atributo baseado na formula
+                    value += GetValue(EnumCustom.Attribute.Int);//Corrige o atributo baseado na formula
                     break;
                 }
         }
         return value;
-    }
-
-    /// <summary>
-    /// Retorna o valor do atributo passando o tipo dele
-    /// </summary>
-    /// <param name="attribute">Atributo a ser verificado</param>
-    /// <returns>Valor do atributo</returns>
-    public int GetAttribute(EnumCustom.Attribute attribute)
-    {
-        return Array.Find(attributes, n => n.attribute == attribute).value;
-    }
-
-    /// <summary>
-    /// Retorna o status passando o tipo
-    /// </summary>
-    /// <param name="stat">tipo do status</param>
-    /// <returns>Retorna o status</returns>
-    public Status GetStatus(EnumCustom.Status stat)
-    {
-        return Array.Find(status, n => n.status == stat);
     }
 
     /// <summary>
@@ -129,8 +115,8 @@ public class AttributeStatus
     {
         return 10 +
             MathfCustom.CalculateStatusByPoints(level, 2) + 
-            MathfCustom.CalculateStatusByPoints(GetAttribute(EnumCustom.Attribute.Str),2) +
-            (GetAttribute(EnumCustom.Attribute.Con) * 3);
+            MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Str),2) +
+            (GetValue(EnumCustom.Attribute.Con) * 3);
     }
 
 
@@ -143,6 +129,6 @@ public class AttributeStatus
     {
         return 10 + 
             MathfCustom.CalculateStatusByPoints(level, 2) +
-            (GetAttribute(EnumCustom.Attribute.Foc) * 4);
+            (GetValue(EnumCustom.Attribute.Foc) * 4);
     }
 }

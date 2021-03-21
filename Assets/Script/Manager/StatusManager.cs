@@ -83,7 +83,7 @@ public class StatusManager : MonoBehaviour
         }
         for (int i = 0; i < statusText.Count; i++)
         {
-            statusText[i].text = characterStatus.attributeStatus.GetValue(characterStatus.attributeStatus.status[i]).ToString();
+            statusText[i].text = characterStatus.attributeStatus.GetValue(characterStatus.attributeStatus.status[i].status).ToString();
         }
 
         levelPlayerBaseTMPro.text = characterStatus.Level.ToString();

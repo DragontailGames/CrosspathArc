@@ -24,4 +24,9 @@ public class MathfCustom
         int expBase = 100;
         return Mathf.RoundToInt(expBase + ((expBase * 0.5f) * level));
     }
+
+    public static int GetDice(int sides)
+    {
+        return (Random.Range(1, sides+1));
+    }
 }

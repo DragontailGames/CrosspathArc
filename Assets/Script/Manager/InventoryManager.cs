@@ -10,7 +10,7 @@ public class InventoryManager : MonoBehaviour
 {
     public List<EquipmentUi> equipmentUi;
 
-    public List<Item> tempSetupItem;
+    public List<Equipment> tempSetupItem;
 
     public GameObject inventory;
 
@@ -45,7 +45,7 @@ public class InventoryManager : MonoBehaviour
     /// Define o item na estrutura do inventario mais comentarios no futuro
     /// </summary>
     /// <param name="item"></param>
-    public void SetupItem(Item item)
+    public void SetupItem(Equipment item)
     {
         List<EquipmentUi> equipment = equipmentUi.FindAll(n => n.equipmentType == item.equipmentType);
         if(equipment.Count == 1)
