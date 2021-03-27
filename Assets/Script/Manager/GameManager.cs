@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     public Tilemap tilemap;
 
+    public Tilemap collisionTM;
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;
@@ -29,5 +31,23 @@ public class GameManager : MonoBehaviour
     {
         particleClick.transform.position = position;
         particleClick.GetComponent<ParticleSystem>().Play();
+    }
+
+    string lastDirection = "";
+
+    public string GetDirection(Vector3Int startIndex, Vector3Int destinationIndex)
+    {
+        Vector3Int index = MathfCustom.Sign(destinationIndex - startIndex);
+
+        if (index == new Vector3Int(1, 1, 0)) lastDirection = "N";
+        if (index == new Vector3Int(1, 0, 0)) lastDirection = "NE";
+        if (index == new Vector3Int(1, -1, 0)) lastDirection = "E";
+        if (index == new Vector3Int(0, -1, 0)) lastDirection = "SE";
+        if (index == new Vector3Int(-1, -1, 0)) lastDirection = "S";
+        if (index == new Vector3Int(-1, 0, 0)) lastDirection = "SW";
+        if (index == new Vector3Int(-1, 1, 0)) lastDirection = "W";
+        if (index == new Vector3Int(0, 1, 0)) lastDirection = "NW";
+
+        return lastDirection;
     }
 }

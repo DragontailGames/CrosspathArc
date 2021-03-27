@@ -6,26 +6,16 @@ using UnityEngine.Events;
 
 public class CharacterMoveTileIsometric : MonoBehaviour
 {
-    CharacterController characterController;
-
-    [Tooltip("Velocidade do movimento para ambos os tipos")]
-    public float movementSpeed = 1;
-
-    [Tooltip("Tiles de movimento")]
-    public int tileMove = 1;
-
-    public Tilemap collisionTM;
-
-    public Vector3 offsetPosition;
-
+    private CharacterController characterController;
     public GameManager gameManager;
 
+    public float movementSpeed = 1;
+    public int tileMove = 1;
+
+    public Vector3 offsetPosition;
     private bool canMove = true;
-
     private Vector3Int currentTileIndex;
-
     private Vector3 movePosition;
-
     Vector3Int mouse = Vector3Int.zero;
 
     public Vector3Int Mouse { get => this.mouse; set => this.mouse = value; }
@@ -34,6 +24,8 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     //Resets iniciais
     public void Start()
     {
+        characterController = this.GetComponent<CharacterController>();
+
         CurrentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
 
         movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
@@ -54,14 +46,16 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
                 if (CanMoveToTile(moveCell))
                 {
+                    characterController.direction = characterController.GetDirection(moveCell);
+                    PlayAnimation(characterController.animationName + "_Walk_" + characterController.direction);
                     CurrentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
-                    StartCoroutine(DelayMove());//Inicia o delay do movimento
+                    StartCoroutine(DelayMove(characterController.direction == "W" || characterController.direction == "E"));//Inicia o delay do movimento
                 }
             }
         }
-
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
+
     }
 
     /// <summary>
@@ -77,13 +71,14 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     /// <summary>
     /// Delay na movimentação do usuario, apenas para simular melhor o movimento por tiles
     /// </summary>
-    public IEnumerator DelayMove()
+    public IEnumerator DelayMove(bool sides)
     {
         this.GetComponent<CharacterStatus>().MoveOneTile();
 
         canMove = false;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(sides ? 0.4f:0.2f);
+        characterController.Animator.SetBool("Walk", false);
 
         canMove = true;
     }
@@ -93,9 +88,15 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         Vector3Int nextTile = CurrentTileIndex + moveCell * tileMove;
         //Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o movimento
 
-        return (collisionTM.GetTile(nextTile) == null) &&
+        return (gameManager.collisionTM.GetTile(nextTile) == null) &&
                 (gameManager.tilemap.GetTile(nextTile) != null) &&
                 (Manager.Instance.enemyManager.CheckEnemyInTile(nextTile) == null);
+    }
+
+    public void PlayAnimation(string animation)
+    {
+        characterController.Animator.Play(animation);
+        characterController.Animator.SetBool("Walk", true);
     }
 }
 

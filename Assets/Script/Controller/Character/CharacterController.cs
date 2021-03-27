@@ -25,12 +25,16 @@ public class CharacterController : MonoBehaviour
     public CharacterInventory CharacterInventory { get => this.characterInventory; set => this.characterInventory = value; }
     public CharacterMoveTileIsometric CharacterMoveTileIsometric { get => this.characterMoveTileIsometric; set => this.characterMoveTileIsometric = value; }
     public CharacterStatus CharacterStatus { get => this.characterStatus; set => this.characterStatus = value; }
+    public Animator Animator { get => this.animator; set => this.animator = value; }
 
     #endregion
 
     private GameManager gameManager;
-
     private EnemyManager enemyManager;
+    private Animator animator;
+
+    internal string direction;
+    public readonly string animationName = "Male_Archer";
 
     public void Awake()
     {
@@ -48,6 +52,9 @@ public class CharacterController : MonoBehaviour
         characterMoveTileIsometric = this.GetComponent<CharacterMoveTileIsometric>();
         characterStatus = this.GetComponent<CharacterStatus>();
 
+        Animator = this.GetComponentInChildren<Animator>();
+        animator.speed = 0.7f;
+
         gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;
     }
@@ -62,7 +69,7 @@ public class CharacterController : MonoBehaviour
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if (enemyInTile != null)
+            if (enemyInTile != null && enemyInTile.enemy.hp>0)
             {
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
             }
@@ -83,7 +90,6 @@ public class CharacterController : MonoBehaviour
         Vector3Int gridPos = gameManager.tilemap.WorldToCell(pos);//pega o index do tile que foi clicado
         gameManager.MoveParticle(pos);//Efeito para identificar o click
         return gridPos;
-       
     }
 
     public Vector3Int CharacterMousePosition(Vector3Int pos)
@@ -91,5 +97,19 @@ public class CharacterController : MonoBehaviour
         pos -= characterMoveTileIsometric.CurrentTileIndex;
 
         return MathfCustom.Sign(pos);//Retorna o sinal do valor(-1,+1 ou 0)
+    }
+
+    public string GetDirection(Vector3Int index)
+    {
+        if (index == new Vector3Int(1, 1, 0)) return "N";
+        if (index == new Vector3Int(1, 0, 0)) return "NE";
+        if (index == new Vector3Int(1, -1, 0)) return "E";
+        if (index == new Vector3Int(0, -1, 0)) return "SE";
+        if (index == new Vector3Int(-1, -1, 0)) return "S";
+        if (index == new Vector3Int(-1, 0, 0)) return "SW";
+        if (index == new Vector3Int(-1, 1, 0)) return "W";
+        if (index == new Vector3Int(0, 1, 0)) return "NW";
+
+        return "DirectionWrong";
     }
 }

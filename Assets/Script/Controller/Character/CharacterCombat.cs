@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class CharacterCombat : MonoBehaviour
 {
     private CharacterController characterController;
+    private CharacterStatus characterStatus;
 
     public List<Skill> skills;
 
@@ -18,14 +19,17 @@ public class CharacterCombat : MonoBehaviour
 
     public Transform selectedUi;
 
+    public CharacterController CharacterController { get => this.characterController; set => this.characterController = value; }
+
     /// <summary>
     /// Configs
     /// </summary>
     public void Start()
     {
-        characterController = this.GetComponent<CharacterController>();
+        CharacterController = this.GetComponent<CharacterController>();
+        characterStatus = CharacterController.CharacterStatus;
 
-        foreach(Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
+        foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
         {
             spellUi.Add(aux.gameObject);
         }
@@ -56,7 +60,7 @@ public class CharacterCombat : MonoBehaviour
     public void SelectSkill(int index)
     {
         //Checa mana
-        if (spells[index].manaCost > characterController.CharacterStatus.Mp)
+        if (spells[index].manaCost > CharacterController.CharacterStatus.Mp)
         {
             Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
             return;
@@ -86,7 +90,7 @@ public class CharacterCombat : MonoBehaviour
         if(clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (Vector3Int.Distance(clickPos, playerPos)<= characterController.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+        if (Vector3Int.Distance(clickPos, playerPos)<= CharacterController.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
         {
             HitEnemy(enemy);
         }
@@ -102,9 +106,12 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="enemy"></param>
     public void CastSpell(EnemyController enemy)
     {
-        characterController.CharacterStatus.Mp -= selectedSpell.manaCost;
+        CharacterController.CharacterStatus.Mp -= selectedSpell.manaCost;
 
-        if (!TrySpell(enemy))//Calcula se o hit errou
+        int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
+        int intAttribute = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Int);
+
+        if (!Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge)))//Calcula se o hit errou
         {
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
@@ -112,11 +119,12 @@ public class CharacterCombat : MonoBehaviour
         }
 
         int weaponDamage = Random.Range(selectedSpell.minDamage, selectedSpell.maxDamage+1);
-        int intAttribute = characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
         int damage = weaponDamage + intAttribute;
-
         string textDamage = "(" + weaponDamage + " + " + intAttribute + ")";
+
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+        CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
 
         //Cria a spell e configura para a animação
         StartCoroutine(AnimateCastSpell(enemy.transform.position, selectedSpell, () => { 
@@ -167,15 +175,18 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="enemy"></param>
     public void HitEnemy(EnemyController enemy)
     {
-        if(!TryHit(enemy))//Calcula se o hit errou
+        int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.HitChance);
+        int dex = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
+
+        if (!Combat.TryHit(hitChance, dex, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge)))//Calcula se o hit errou
         {
             return;
         }
-        
+
         //Define o dano do ataque
-        int weaponDamage = Random.Range(characterController.CharacterInventory.weapon.damageMin, characterController.CharacterInventory.weapon.damageMax+1);
-        int str = characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Str);
-        int critical = Critical();
+        int weaponDamage = Random.Range(CharacterController.CharacterInventory.weapon.damageMin, CharacterController.CharacterInventory.weapon.damageMax+1);
+        int str = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Str);
+        int critical = Combat.Critical(characterStatus.attributeStatus.GetValue(EnumCustom.Status.CriticalHit));
 
         List<Skill> skillBuffs = skills.FindAll(n => n.skillType == EnumCustom.SkillType.WeaponModifier);
         int skillModifier = 0;
@@ -184,7 +195,7 @@ public class CharacterCombat : MonoBehaviour
         {
             foreach(var aux in skillBuffs)
             {
-                var tempweaponBuffSkills = aux.weaponBuffSkills.FindAll(n => n.weaponType == characterController.CharacterInventory.weapon.weaponType);
+                var tempweaponBuffSkills = aux.weaponBuffSkills.FindAll(n => n.weaponType == CharacterController.CharacterInventory.weapon.weaponType);
 
                 if(tempweaponBuffSkills.Count>0)
                 {
@@ -200,60 +211,28 @@ public class CharacterCombat : MonoBehaviour
 
         string textDamage = "(" + weaponDamage + " + " + str + " + " + skillModifier + ") * " + critical;//texto do dano
 
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+        CharacterController.Animator.Play(CharacterController.animationName + "_Punch_" + CharacterController.direction);
+
         enemy.HitEnemy(damage, textDamage);
     }
 
-    /// <summary>
-    /// Calcula se o hit vai acertar
-    /// </summary>
-    /// <param name="enemy"></param>
-    /// <returns></returns>
-    public bool TryHit(EnemyController enemy)
+    public void GetHit(int damage, EnemyController enemy)
     {
-        int dice = MathfCustom.GetDice(20);
-        int hitChance = characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.HitChance);
-        int dex = characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
-        int dodge = enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge);
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+        CharacterController.Animator.Play(CharacterController.animationName + "_GetHit_" + CharacterController.direction);
 
-        int value = dice + hitChance + dex - dodge;
+        int armor = characterStatus.attributeStatus.GetValue(EnumCustom.Status.Armor);
+        int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
 
-        string message = "Tentando atacar: dado(" + dice + ") + " + hitChance + " + " + dex + " - " + dodge + " = " + value;
+        Manager.Instance.canvasManager.LogMessage(characterController.CharacterStatus.nickname + " sofreu " + damage + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");
 
-        message += value >=20 ? " <color=green>(acertou)</color>" : " <color=red>(errou)</color>";
-
-        Manager.Instance.canvasManager.LogMessage(message);
-        return value >= 20;
-    }
-
-    /// <summary>
-    /// Calcula se a spell vai acertar
-    /// </summary>
-    /// <param name="enemy"></param>
-    /// <returns></returns>
-    public bool TrySpell(EnemyController enemy)
-    {
-        int dice = MathfCustom.GetDice(20);
-        int hitChance = characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
-        int intAttribute = characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Int);
-        int dodge = enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge);
-
-        int value = dice + hitChance + intAttribute - dodge;
-
-        string message = "Tentando atacar: dado(" + dice + ") + " + hitChance + " + " + intAttribute + " - " + dodge + " = " + value;
-
-        message += value >= 20 ? " <color=green>(acertou)</color>" : " <color=red>(errou)</color>";
-
-        Manager.Instance.canvasManager.LogMessage(message);
-        return value >= 20;
-    }
-
-    /// <summary>
-    /// Calcula o critico
-    /// </summary>
-    /// <returns></returns>
-    public int Critical()
-    {
-        int value = MathfCustom.GetDice(100);
-        return value < (95 - characterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.CriticalHit)) ? 1 : 2;
+        if (!CharacterController.CharacterStatus.DropHP(trueDamage))
+        {
+            CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+            CharacterController.Animator.Play(CharacterController.animationName + "_Die_" + CharacterController.direction);
+            Manager.Instance.gameManager.InPause = true;
+            Debug.Log("Morreu");
+        }
     }
 }

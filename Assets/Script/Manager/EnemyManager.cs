@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour
 
     public EnemyController CheckEnemyInTile(Vector3Int tile)
     {
-        return enemies.Find(n => n.enemy.tilePos == tile);
+        return enemies.Find(n => n.currentTileIndex == tile);
     }
 
     public Vector3Int MaxRangePos(Enemy enemy)

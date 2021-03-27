@@ -22,14 +22,16 @@ public class InventoryManager : MonoBehaviour
         {
             OpenInventory();
         }
-        manager.InPause = inventory.activeSelf;
     }
 
     public void OpenInventory()
     {
-        if(inventory.activeSelf)
+        manager.InPause = true;
+
+        if (inventory.activeSelf)//Inventario aberto
         {
             inventory.SetActive(false);
+            manager.InPause = false;
             return;
         }
 

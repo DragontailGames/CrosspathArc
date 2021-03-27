@@ -115,4 +115,14 @@ public class CharacterStatus : MonoBehaviour
             tilesToRegenMp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.MpRegen);
         }
     }
+
+    public bool DropHP(int value)
+    {
+        Hp = Mathf.Clamp(Hp - value, 0, Hp);
+        if(Hp<=0)
+        {
+            return false;
+        }
+        return true;
+    }
 }
