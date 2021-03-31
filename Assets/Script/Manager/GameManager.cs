@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
 
     private bool inPause;
 
+    public List<Transform> creatures = new List<Transform>();
+
+    public int currenteCreature = 0;
+
     public bool InPause { get => this.inPause; set => this.inPause = value; }//pausa o jogo quando abrir o menu
 
     /// <summary>
@@ -49,5 +53,29 @@ public class GameManager : MonoBehaviour
         if (index == new Vector3Int(0, 1, 0)) lastDirection = "NW";
 
         return lastDirection;
+    }
+
+    public void EndMyTurn()
+    {
+        currenteCreature++;
+        if (currenteCreature >= creatures.Count)
+        {
+            currenteCreature = 0;
+        }
+
+        if (creatures[currenteCreature] == null)
+            EndMyTurn();
+
+        if (creatures[currenteCreature].GetComponent<CharacterController>())
+        {
+            creatures[currenteCreature].GetComponent<CharacterController>().myTurn = true;
+        }
+        else
+        {
+            EnemyController enemyController = creatures[currenteCreature].GetComponent<EnemyController>();
+
+            if(enemyController.enemy.hp > 0)
+                StartCoroutine(creatures[currenteCreature].GetComponent<EnemyController>().StartMyTurn());
+        }
     }
 }

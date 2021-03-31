@@ -27,8 +27,6 @@ public class EnemyController : MonoBehaviour
 
     public readonly string mainAnimation = "Wolf";
 
-    private IEnumerator action;
-
     void Start()
     {
         maxHp = enemy.hp;
@@ -61,9 +59,6 @@ public class EnemyController : MonoBehaviour
 
         animator = this.GetComponentInChildren<Animator>();
         animator.speed = 0.7f;
-
-        action = EnemyAction(player);
-        StartCoroutine(action);
     }
 
     /// <summary>
@@ -103,17 +98,22 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         var scale = hpBar.localScale;
-        scale.x =  Mathf.Clamp((float)enemy.hp/ (float)maxHp, 0, 1);//Animação da barra de hp
+        scale.x = Mathf.Clamp((float)enemy.hp / (float)maxHp, 0, 1);//Animação da barra de hp
         hpBar.localScale = scale;
+
+        if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
+        {
+            if (!gameManager.creatures.Contains(this.transform))
+            {
+                gameManager.creatures.Add(this.transform);
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
-        if (Vector3.Distance(this.transform.position, movePosition) <= 0.05f && animator.GetBool("Walk"))
-        {
-            animator.SetBool("Walk", false);
-        }
+        animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f);
     }
 
     /// <summary>
@@ -124,34 +124,26 @@ public class EnemyController : MonoBehaviour
         Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
         Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
         //Destroy(this.gameObject);
-        StopCoroutine(action);
         this.transform.Find("HealthBar").gameObject.SetActive(false);
-
+        gameManager.creatures.Remove(this.transform);
         PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
     }
 
-    public IEnumerator EnemyAction(CharacterController characterController)
+    public IEnumerator StartMyTurn()
     {
-        yield return new WaitForSeconds(1f);
-        if (!gameManager.InPause)
-        {
-            if (Vector3Int.Distance(characterController.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
-            {
-                Vector3Int playerTileIndex = characterController.CharacterMoveTileIsometric.CurrentTileIndex;
-                int offsetDiagonal = (playerTileIndex.x != currentTileIndex.x && playerTileIndex.y != currentTileIndex.y) ? 2 : 1;
-                if (Vector3.Distance(playerTileIndex, currentTileIndex) <= offsetDiagonal)
-                {
-                    Attack(characterController.CharacterCombat);
-                }
-                else 
-                {
-                    Walk(playerTileIndex);
-                }
-            }
-        }
+        yield return new WaitForSeconds(0.5f);
 
-        action = EnemyAction(player);
-        StartCoroutine(action);
+        Vector3Int playerTileIndex = player.CharacterMoveTileIsometric.CurrentTileIndex;
+        int offsetDiagonal = (playerTileIndex.x != currentTileIndex.x && playerTileIndex.y != currentTileIndex.y) ? 2 : 1;
+        if (Vector3.Distance(playerTileIndex, currentTileIndex) <= offsetDiagonal)
+        {
+            Attack(player.CharacterCombat);
+        }
+        else
+        {
+            Walk(playerTileIndex);
+        }
+        gameManager.EndMyTurn();
     }
 
     public List<PathFind.Point> path = new List<PathFind.Point>();
@@ -181,7 +173,7 @@ public class EnemyController : MonoBehaviour
         int str = enemy.attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int dodge = characterCombat.CharacterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.Dodge);
 
-        if (!Combat.TryHit(hitChance, str, dodge))
+        if (!Combat.TryHit(hitChance, str, dodge, player.CharacterStatus.nickname))
         {
             return;
         }

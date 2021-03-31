@@ -13,6 +13,10 @@ public class AttributeStatus
 
     public Status[] status = new Status[Enum.GetNames(typeof(EnumCustom.Status)).Length];//array com os status
 
+    public float walkDelay = 0.5f;
+
+    public float combatDelay = 1.0f;
+
     public List<Status> modifier = new List<Status>();
 
     /// <summary>

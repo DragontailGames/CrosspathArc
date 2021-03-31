@@ -36,6 +36,8 @@ public class CharacterController : MonoBehaviour
     internal string direction;
     public readonly string animationName = "Male_Archer";
 
+    public bool myTurn = true;
+
     public void Awake()
     {
         Manager.Instance.characterController = this;
@@ -57,11 +59,13 @@ public class CharacterController : MonoBehaviour
 
         gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;
+
+        gameManager.creatures.Add(this.transform);
     }
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !gameManager.InPause)//Detecta o click do jogador
+        if (Input.GetMouseButtonDown(0) && !gameManager.InPause && myTurn)//Detecta o click do jogador
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -69,13 +73,20 @@ public class CharacterController : MonoBehaviour
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
+            bool validTurn = true;
+
             if (enemyInTile != null && enemyInTile.enemy.hp>0)
             {
-                characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
+                validTurn = characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
             }
             else
             {
                 characterMoveTileIsometric.Mouse = CharacterMousePosition(mousePos);
+            }
+            if (validTurn)
+            {
+                myTurn = false;
+                gameManager.EndMyTurn();
             }
         }
     }

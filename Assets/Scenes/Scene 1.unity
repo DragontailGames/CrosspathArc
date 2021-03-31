@@ -21522,9 +21522,7 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 881319379}
     m_ColliderPaths:
-    - - X: -100000000
-        Y: 97500000
-      - X: -105000000
+    - - X: -105000000
         Y: 100000000
       - X: -110000000
         Y: 97500000
@@ -21542,6 +21540,8 @@ CompositeCollider2D:
         Y: 107500000
       - X: -110000000
         Y: 92500000
+      - X: -100000000
+        Y: 97500000
   m_CompositePaths:
     m_Paths:
     - - {x: -11.000012, y: 9.750006}
@@ -22116,7 +22116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy:
     name: Wolf
-    tilePos: {x: 5, y: 5, z: 0}
+    tilePos: {x: 20, y: 20, z: 0}
     size: 1
     attributeStatus:
       attributes:
@@ -22169,6 +22169,8 @@ MonoBehaviour:
         value: 0
       - status: 7
         value: 0
+      walkDelay: 0.5
+      combatDelay: 1
       modifier: []
     hp: 4
     exp: 125
@@ -22921,6 +22923,8 @@ MonoBehaviour:
   tilemap: {fileID: 452967320}
   collisionTM: {fileID: 881319381}
   particleClick: {fileID: 1762381165}
+  creatures: []
+  currenteCreature: 0
 --- !u!4 &977288733
 Transform:
   m_ObjectHideFlags: 0
@@ -65268,6 +65272,8 @@ MonoBehaviour:
       value: 1
     - status: 7
       value: 1
+    walkDelay: 0.5
+    combatDelay: 1
     modifier: []
   totalTilesToRegen: 20
   addLevelTemp: 25
@@ -65320,6 +65326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe1ad8eb74aacb4bb87c85c04c745f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myTurn: 1
 --- !u!114 &2137639110
 MonoBehaviour:
   m_ObjectHideFlags: 0

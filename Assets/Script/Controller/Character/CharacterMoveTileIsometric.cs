@@ -34,6 +34,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     public void FixedUpdate()
     {
         Vector3Int moveCell = Vector3Int.zero;
+
         if (canMove && !gameManager.InPause)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
@@ -48,14 +49,16 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                 {
                     characterController.direction = characterController.GetDirection(moveCell);
                     PlayAnimation(characterController.animationName + "_Walk_" + characterController.direction);
+                    characterController.Animator.SetBool("Walk", true);
                     CurrentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
-                    StartCoroutine(DelayMove(characterController.direction == "W" || characterController.direction == "E"));//Inicia o delay do movimento
+                    this.GetComponent<CharacterStatus>().MoveOneTile();
                 }
             }
         }
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
 
+        characterController.Animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.1);
     }
 
     /// <summary>
@@ -66,21 +69,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");//Recebe o input do jogador no eixo Horizontal(A/D,Seta para esquerda/Seta para direita)
         float vertical = Input.GetAxisRaw("Vertical");//Recebe o input do jogador no eixo Vertical(W/S,Seta para cima/Seta para baixo)
         return new Vector3Int((int)vertical, -(int)horizontal, 0);
-    }
-
-    /// <summary>
-    /// Delay na movimentação do usuario, apenas para simular melhor o movimento por tiles
-    /// </summary>
-    public IEnumerator DelayMove(bool sides)
-    {
-        this.GetComponent<CharacterStatus>().MoveOneTile();
-
-        canMove = false;
-
-        yield return new WaitForSeconds(sides ? 0.4f:0.2f);
-        characterController.Animator.SetBool("Walk", false);
-
-        canMove = true;
     }
 
     public bool CanMoveToTile(Vector3Int moveCell)

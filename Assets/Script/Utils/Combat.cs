@@ -21,13 +21,13 @@ public class Combat
     /// <param name="attribute">Atribute para ser calculado</param>
     /// <param name="dodge">Chance de dodge do openten</param>
     /// <returns></returns>
-    public static bool TryHit(int hitChance, int attribute, int dodge)
+    public static bool TryHit(int hitChance, int attribute, int dodge, string enemy)
     {
         int dice = MathfCustom.GetDice(20);
 
         int value = dice + hitChance + attribute - dodge;
 
-        string message = "Tentando atacar: dado(" + dice + ") + " + hitChance + " + " + attribute + " - " + dodge + " = " + value;
+        string message = "Tentando atacar " + enemy + ": dado(" + dice + ") + " + hitChance + " + " + attribute + " - " + dodge + " = " + value;
 
         message += value >= 20 ? " <color=green>(acertou)</color>" : " <color=red>(errou)</color>";
 
