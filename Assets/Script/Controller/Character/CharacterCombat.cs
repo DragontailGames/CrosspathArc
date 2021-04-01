@@ -47,10 +47,7 @@ public class CharacterCombat : MonoBehaviour
 
     public void Update()
     {
-        if (selectedSpell == null || string.IsNullOrEmpty(selectedSpell.name))//Identifica se não existe outra skill selecionada
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no primeiro slot
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no primeiro slot
     }
 
     /// <summary>
@@ -59,6 +56,13 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="index"></param>
     public void SelectSkill(int index)
     {
+        if(selectedSpell == spells[index])
+        {
+            selectedSpell = null;
+            selectedUi.gameObject.SetActive(false);
+            return;
+        }
+
         //Checa mana
         if (spells[index].manaCost > CharacterController.CharacterStatus.Mp)
         {
@@ -77,12 +81,12 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="enemy">inimigo</param>
     /// <param name="clickPos">tile do inimigo</param>
     /// <param name="playerPos">posição do jogador</param>
-    public bool TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
+    public void TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
     {
         if(selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
             CastSpell(enemy);
-            return true;
+            return;
         }
 
         int offsetRange = 0;
@@ -90,15 +94,13 @@ public class CharacterCombat : MonoBehaviour
         if(clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (Vector3Int.Distance(clickPos, playerPos)<= CharacterController.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+        if (Vector3Int.Distance(clickPos, playerPos) <= CharacterController.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
         {
             HitEnemy(enemy);
-            return true;
         }
         else
         {
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
-            return false;
         }
     }
 
@@ -113,10 +115,15 @@ public class CharacterCombat : MonoBehaviour
         int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
         int intAttribute = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+        CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
+
         if (!Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name))//Calcula se o hit errou
         {
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
+
+            Manager.Instance.gameManager.EndMyTurn(characterController);
             return;
         }
 
@@ -125,14 +132,12 @@ public class CharacterCombat : MonoBehaviour
         int damage = weaponDamage + intAttribute;
         string textDamage = "(" + weaponDamage + " + " + intAttribute + ")";
 
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
-        CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
-
         //Cria a spell e configura para a animação
         StartCoroutine(AnimateCastSpell(enemy.transform.position, selectedSpell, () => { 
             enemy.HitEnemy(damage, textDamage); 
             selectedSpell = null; 
-            selectedUi.gameObject.SetActive(false); 
+            selectedUi.gameObject.SetActive(false);
+            Manager.Instance.gameManager.EndMyTurn(characterController);
         }));
     }
 
@@ -179,6 +184,8 @@ public class CharacterCombat : MonoBehaviour
     {
         int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int dex = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
+
+        Manager.Instance.gameManager.EndMyTurn(characterController);
 
         if (!Combat.TryHit(hitChance, dex, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.enemy.name))//Calcula se o hit errou
         {
@@ -234,7 +241,7 @@ public class CharacterCombat : MonoBehaviour
             CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
             CharacterController.Animator.Play(CharacterController.animationName + "_Die_" + CharacterController.direction);
             Manager.Instance.gameManager.InPause = true;
-            Manager.Instance.gameManager.creatures.Remove(this.transform);
+            Manager.Instance.gameManager.creatures.Remove(this.gameObject);
             Debug.Log("Morreu");
         }
     }

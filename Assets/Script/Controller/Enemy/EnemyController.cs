@@ -35,6 +35,9 @@ public class EnemyController : MonoBehaviour
         enemyManager = Manager.Instance.enemyManager;
         enemyManager.enemies.Add(this);
 
+        enemy.tilePos = gameManager.tilemap.WorldToCell(this.transform.position);
+        enemy.tilePos.z = 0;
+
         this.transform.position = Manager.Instance.gameManager.tilemap.GetCellCenterWorld(enemy.tilePos) + offsetPosition;
         movePosition = this.transform.position;
 
@@ -97,21 +100,27 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (enemy.hp <= 0)//Correção temporaria
+            return;
+
         var scale = hpBar.localScale;
         scale.x = Mathf.Clamp((float)enemy.hp / (float)maxHp, 0, 1);//Animação da barra de hp
         hpBar.localScale = scale;
 
         if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
         {
-            if (!gameManager.creatures.Contains(this.transform))
+            if (!gameManager.creatures.Contains(this.gameObject))
             {
-                gameManager.creatures.Add(this.transform);
+                gameManager.creatures.Add(this.gameObject);
             }
         }
     }
 
     private void FixedUpdate()
     {
+        if (enemy.hp <= 0)//Correção temporaria
+            return;
+
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
         animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f);
     }
@@ -121,16 +130,23 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     void Defeat()
     {
+        Debug.Log("Morreu");
         Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
         Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
         //Destroy(this.gameObject);
         this.transform.Find("HealthBar").gameObject.SetActive(false);
-        gameManager.creatures.Remove(this.transform);
+        gameManager.creatures.Remove(this.gameObject);
         PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
+        gameManager.EndMyTurn();
     }
 
     public IEnumerator StartMyTurn()
     {
+        if(enemy.hp <=0)
+        {
+            yield break;
+        }
+
         yield return new WaitForSeconds(0.5f);
 
         Vector3Int playerTileIndex = player.CharacterMoveTileIsometric.CurrentTileIndex;
@@ -173,12 +189,13 @@ public class EnemyController : MonoBehaviour
         int str = enemy.attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int dodge = characterCombat.CharacterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.Dodge);
 
+        PlayAnimation("Attack", gameManager.GetDirection(currentTileIndex, characterCombat.CharacterController.CharacterMoveTileIsometric.CurrentTileIndex));
+
         if (!Combat.TryHit(hitChance, str, dodge, player.CharacterStatus.nickname))
         {
             return;
         }
 
-        PlayAnimation("Attack", gameManager.GetDirection(currentTileIndex ,characterCombat.CharacterController.CharacterMoveTileIsometric.CurrentTileIndex));
         characterCombat.GetHit(str, this);
     }
 

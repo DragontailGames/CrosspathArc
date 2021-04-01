@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private bool inPause;
 
-    public List<Transform> creatures = new List<Transform>();
+    public List<GameObject> creatures = new List<GameObject>();
 
     public int currenteCreature = 0;
 
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         particleClick.GetComponent<ParticleSystem>().Play();
     }
 
-    string lastDirection = "";
+    string lastDirection = "S";
 
     public string GetDirection(Vector3Int startIndex, Vector3Int destinationIndex)
     {
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         return lastDirection;
     }
 
-    public void EndMyTurn()
+    public void EndMyTurn(CharacterController cController = null)
     {
         currenteCreature++;
         if (currenteCreature >= creatures.Count)
@@ -63,19 +63,25 @@ public class GameManager : MonoBehaviour
             currenteCreature = 0;
         }
 
+        if(cController != null)
+            cController.myTurn = false;
+
         if (creatures[currenteCreature] == null)
             EndMyTurn();
 
         if (creatures[currenteCreature].GetComponent<CharacterController>())
         {
-            creatures[currenteCreature].GetComponent<CharacterController>().myTurn = true;
+            CharacterController playerController = creatures[currenteCreature].GetComponent<CharacterController>();
+
+            if (playerController.CharacterStatus.Hp > 0)
+                StartCoroutine(playerController.StartMyTurn());
         }
         else
         {
             EnemyController enemyController = creatures[currenteCreature].GetComponent<EnemyController>();
 
             if(enemyController.enemy.hp > 0)
-                StartCoroutine(creatures[currenteCreature].GetComponent<EnemyController>().StartMyTurn());
+                StartCoroutine(enemyController.StartMyTurn());
         }
     }
 }

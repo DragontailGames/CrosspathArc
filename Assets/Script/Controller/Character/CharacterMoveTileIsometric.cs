@@ -13,7 +13,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     public int tileMove = 1;
 
     public Vector3 offsetPosition;
-    private bool canMove = true;
     private Vector3Int currentTileIndex;
     private Vector3 movePosition;
     Vector3Int mouse = Vector3Int.zero;
@@ -35,11 +34,16 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         Vector3Int moveCell = Vector3Int.zero;
 
-        if (canMove && !gameManager.InPause)//Testa o delay para correção da movimentação por tile
+        if (!gameManager.InPause && characterController.myTurn)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 
             moveCell = Mouse != Vector3Int.zero ? Mouse : keyboard;//Detecta se deve usar o valor do teclado ou do mouse
+
+            if (moveCell != Vector3Int.zero)
+            {
+                gameManager.EndMyTurn(characterController);
+            }
 
             if (moveCell != Vector3Int.zero)
             {

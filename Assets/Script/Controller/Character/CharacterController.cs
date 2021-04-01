@@ -60,7 +60,7 @@ public class CharacterController : MonoBehaviour
         gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;
 
-        gameManager.creatures.Add(this.transform);
+        gameManager.creatures.Add(this.gameObject);
     }
 
     public void Update()
@@ -73,22 +73,26 @@ public class CharacterController : MonoBehaviour
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            bool validTurn = true;
-
             if (enemyInTile != null && enemyInTile.enemy.hp>0)
             {
-                validTurn = characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
+                characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
             }
             else
             {
                 characterMoveTileIsometric.Mouse = CharacterMousePosition(mousePos);
             }
-            if (validTurn)
-            {
-                myTurn = false;
-                gameManager.EndMyTurn();
-            }
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            gameManager.EndMyTurn(this);
+        }
+    }
+
+    public IEnumerator StartMyTurn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        myTurn = true;
     }
 
     /// <summary>
