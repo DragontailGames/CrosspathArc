@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                bool pathEnable = gameManager.tilemap.HasTile(pos) && !gameManager.collisionTM.HasTile(pos);
+                bool pathEnable = gameManager.tilemap.HasTile(pos);
                 tilesmap[x, y] = pathEnable;
             }
         }
@@ -114,6 +114,13 @@ public class EnemyController : MonoBehaviour
                 gameManager.creatures.Add(this.gameObject);
             }
         }
+        else
+        {
+            if (gameManager.creatures.Contains(this.gameObject))
+            {
+                gameManager.creatures.Remove(this.gameObject);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -130,7 +137,6 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     void Defeat()
     {
-        Debug.Log("Morreu");
         Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
         Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
         //Destroy(this.gameObject);
@@ -171,6 +177,11 @@ public class EnemyController : MonoBehaviour
 
         path = PathFind.Pathfinding.FindPath(grid, _from, _to);
 
+        if(DetectLOS(path))
+        {
+            return false;
+        }
+
         Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
 
         animator.SetBool("Walk", true);
@@ -181,6 +192,19 @@ public class EnemyController : MonoBehaviour
         movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
 
         return true;
+    }
+
+    public bool DetectLOS(List<PathFind.Point> path)
+    {
+        foreach(var aux in path)
+        {
+            Vector3Int tempPath = new Vector3Int(aux.x, aux.y, 0);
+            if(gameManager.elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void Attack(CharacterCombat characterCombat)

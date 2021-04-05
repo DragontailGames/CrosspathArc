@@ -65,7 +65,7 @@ public class CharacterController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !gameManager.InPause && myTurn)//Detecta o click do jogador
+        if (Input.GetMouseButton(0) && !gameManager.InPause && myTurn)//Detecta o click do jogador
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -91,7 +91,7 @@ public class CharacterController : MonoBehaviour
 
     public IEnumerator StartMyTurn()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         myTurn = true;
     }
 

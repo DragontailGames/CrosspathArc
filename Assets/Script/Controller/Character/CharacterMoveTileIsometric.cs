@@ -78,10 +78,10 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     public bool CanMoveToTile(Vector3Int moveCell)
     {
         Vector3Int nextTile = CurrentTileIndex + moveCell * tileMove;
-        //Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o movimento
+        //Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o 
 
-        return (gameManager.collisionTM.GetTile(nextTile) == null) &&
-                (gameManager.tilemap.GetTile(nextTile) != null) &&
+        return (!gameManager.elevationTM.HasTile(nextTile + new Vector3Int(1,1,0))) &&
+                (gameManager.tilemap.HasTile(nextTile)) &&
                 (Manager.Instance.enemyManager.CheckEnemyInTile(nextTile) == null);
     }
 

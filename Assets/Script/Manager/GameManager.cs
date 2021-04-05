@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public Tilemap tilemap;
 
-    public Tilemap collisionTM;
+    public Tilemap elevationTM;
 
     private void Awake()
     {
