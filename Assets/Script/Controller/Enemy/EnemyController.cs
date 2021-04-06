@@ -16,11 +16,7 @@ public class EnemyController : MonoBehaviour
     public Transform hpBar;
     private int maxHp;
 
-    bool[,] tilesmap;
-    PathFind.Grid grid;
     public Vector3Int currentTileIndex;
-    int width; 
-    int height;
     private Vector3 movePosition;
     public float movementSpeed = 1;
     public int range = 1;
@@ -42,23 +38,6 @@ public class EnemyController : MonoBehaviour
         movePosition = this.transform.position;
 
         currentTileIndex = enemy.tilePos;
-
-        width = gameManager.tilemap.size.x;
-        height = gameManager.tilemap.size.y;
-
-        tilesmap = new bool[width , height];
-
-        for(int x = 0; x<width;x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                Vector3Int pos = new Vector3Int(x, y, 0);
-                bool pathEnable = gameManager.tilemap.HasTile(pos);
-                tilesmap[x, y] = pathEnable;
-            }
-        }
-
-        grid = new PathFind.Grid(width, height, tilesmap);
 
         animator = this.GetComponentInChildren<Animator>();
         animator.speed = 0.7f;
@@ -129,7 +108,7 @@ public class EnemyController : MonoBehaviour
             return;
 
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
-        animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f);
+        animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f && enemy.hp>0);
     }
 
     /// <summary>
@@ -137,18 +116,18 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     void Defeat()
     {
+        PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
         Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
         Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
         //Destroy(this.gameObject);
         this.transform.Find("HealthBar").gameObject.SetActive(false);
         gameManager.creatures.Remove(this.gameObject);
-        PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
         gameManager.EndMyTurn();
     }
 
     public IEnumerator StartMyTurn()
     {
-        if(enemy.hp <=0)
+        if(enemy.hp <= 0)
         {
             yield break;
         }
@@ -168,16 +147,11 @@ public class EnemyController : MonoBehaviour
         gameManager.EndMyTurn();
     }
 
-    public List<PathFind.Point> path = new List<PathFind.Point>();
-
     public bool Walk(Vector3Int playerPos)
     {
-        PathFind.Point _from = new PathFind.Point(currentTileIndex.x, currentTileIndex.y);
-        PathFind.Point _to = new PathFind.Point(playerPos.x, playerPos.y);
+        List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, playerPos);
 
-        path = PathFind.Pathfinding.FindPath(grid, _from, _to);
-
-        if(DetectLOS(path))
+        if(gameManager.DetectLOS(path))
         {
             return false;
         }
@@ -192,19 +166,6 @@ public class EnemyController : MonoBehaviour
         movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
 
         return true;
-    }
-
-    public bool DetectLOS(List<PathFind.Point> path)
-    {
-        foreach(var aux in path)
-        {
-            Vector3Int tempPath = new Vector3Int(aux.x, aux.y, 0);
-            if(gameManager.elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void Attack(CharacterCombat characterCombat)

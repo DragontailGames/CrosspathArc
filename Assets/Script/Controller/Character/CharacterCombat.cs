@@ -10,8 +10,7 @@ public class CharacterCombat : MonoBehaviour
     private CharacterStatus characterStatus;
 
     public List<Skill> skills;
-
-    public List<Spell> spells;
+    private List<Spell> spells = new List<Spell>();
 
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
@@ -28,6 +27,14 @@ public class CharacterCombat : MonoBehaviour
     {
         CharacterController = this.GetComponent<CharacterController>();
         characterStatus = CharacterController.CharacterStatus;
+
+        foreach(var aux in skills)
+        {
+            if(aux.skillType == EnumCustom.SkillType.MagicSchool)
+            {
+                SetupSpells(aux.spells);
+            }
+        }
 
         foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
         {
@@ -48,6 +55,17 @@ public class CharacterCombat : MonoBehaviour
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no primeiro slot
+    }
+
+    public void SetupSpells(List<Spell> _spells)
+    {
+        foreach(var aux in _spells)
+        {
+            if(!this.spells.Contains(aux) && aux.availableAt <= characterStatus.Level)
+            {
+                this.spells.Add(aux);
+            }
+        }
     }
 
     /// <summary>
@@ -83,7 +101,16 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="playerPos">posição do jogador</param>
     public void TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
     {
-        if(selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
+        List<PathFind.Point> path = Manager.Instance.gameManager.GetPath(playerPos, clickPos);
+
+        if (Manager.Instance.gameManager.DetectLOS(path))
+        {
+            StartCoroutine(characterController.StartDelay());
+            Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
+            return;
+        }
+
+        if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
             CastSpell(enemy);
             return;
@@ -101,6 +128,7 @@ public class CharacterCombat : MonoBehaviour
         else
         {
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
+            StartCoroutine(characterController.StartDelay());
         }
     }
 
@@ -185,6 +213,9 @@ public class CharacterCombat : MonoBehaviour
         int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int dex = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
 
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+        CharacterController.Animator.Play(CharacterController.animationName + "_Punch_" + CharacterController.direction);
+
         Manager.Instance.gameManager.EndMyTurn(characterController);
 
         if (!Combat.TryHit(hitChance, dex, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.enemy.name))//Calcula se o hit errou
@@ -219,9 +250,6 @@ public class CharacterCombat : MonoBehaviour
         int damage = (weaponDamage + str + skillModifier) * critical;
 
         string textDamage = "(" + weaponDamage + " + " + str + " + " + skillModifier + ") * " + critical;//texto do dano
-
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
-        CharacterController.Animator.Play(CharacterController.animationName + "_Punch_" + CharacterController.direction);
 
         enemy.HitEnemy(damage, textDamage);
     }

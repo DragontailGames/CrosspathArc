@@ -37,6 +37,7 @@ public class CharacterController : MonoBehaviour
     public readonly string animationName = "Male_Archer";
 
     public bool myTurn = true;
+    private bool delay = false;
 
     public void Awake()
     {
@@ -61,11 +62,13 @@ public class CharacterController : MonoBehaviour
         enemyManager = Manager.Instance.enemyManager;
 
         gameManager.creatures.Add(this.gameObject);
+
+        characterInterface.CreateSkills(characterCombat.skills);
     }
 
     public void Update()
     {
-        if (Input.GetMouseButton(0) && !gameManager.InPause && myTurn)//Detecta o click do jogador
+        if (Input.GetMouseButton(0) && !gameManager.InPause && myTurn && !delay)//Detecta o click do jogador
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -126,5 +129,12 @@ public class CharacterController : MonoBehaviour
         if (index == new Vector3Int(0, 1, 0)) return "NW";
 
         return "DirectionWrong";
+    }
+
+    public IEnumerator StartDelay()
+    {
+        delay = true;
+        yield return new WaitForSeconds(0.2f);
+        delay = false;
     }
 }

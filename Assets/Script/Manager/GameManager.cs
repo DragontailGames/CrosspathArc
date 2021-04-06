@@ -25,6 +25,17 @@ public class GameManager : MonoBehaviour
 
     public int currenteCreature = 0;
 
+    bool[,] tilesmap;
+    PathFind.Grid grid;
+    public PathFind.Grid Grid{get { return grid; }}
+    int width;
+    int height;
+
+    private void Start()
+    {
+        CalculateGrid();
+    }
+
     public bool InPause { get => this.inPause; set => this.inPause = value; }//pausa o jogo quando abrir o menu
 
     /// <summary>
@@ -83,5 +94,46 @@ public class GameManager : MonoBehaviour
             if(enemyController.enemy.hp > 0)
                 StartCoroutine(enemyController.StartMyTurn());
         }
+    }
+
+    private void CalculateGrid()
+    {
+        width = tilemap.size.x;
+        height = tilemap.size.y;
+
+        tilesmap = new bool[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y, 0);
+                bool pathEnable = tilemap.HasTile(pos);
+                tilesmap[x, y] = pathEnable;
+            }
+        }
+
+        grid = new PathFind.Grid(width, height, tilesmap);
+    }
+
+    public List<PathFind.Point> GetPath(Vector3Int startIndex, Vector3Int destIndex)
+    {
+        PathFind.Point _from = new PathFind.Point(startIndex.x, startIndex.y);
+        PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
+
+        return PathFind.Pathfinding.FindPath(grid, _from, _to);
+    }
+
+    public bool DetectLOS(List<PathFind.Point> path)
+    {
+        foreach (var aux in path)
+        {
+            Vector3Int tempPath = new Vector3Int(aux.x, aux.y, 0);
+            if (elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

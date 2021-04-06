@@ -10,6 +10,8 @@ public class Spell
 {
     public string name;
 
+    public int availableAt = 1;
+
     public int minDamage;
 
     public int maxDamage;

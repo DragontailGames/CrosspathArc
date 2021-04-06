@@ -46,7 +46,7 @@ public class EnumCustom : MonoBehaviour
     public enum SkillType
     {
         WeaponModifier,
-
+        MagicSchool
     }
 
     public enum WeaponType
