@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
 
     public Vector3Int currentTileIndex;
     private Vector3 movePosition;
-    public float movementSpeed = 1;
+    public float movementSpeed = 10;
     public int range = 1;
 
     public readonly string mainAnimation = "Wolf";
@@ -132,9 +132,17 @@ public class EnemyController : MonoBehaviour
             yield break;
         }
 
-        yield return new WaitForSeconds(0.5f);
-
         Vector3Int playerTileIndex = player.CharacterMoveTileIsometric.CurrentTileIndex;
+        List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, playerTileIndex);
+
+        if (gameManager.DetectLOS(path))
+        {
+            gameManager.EndMyTurn();
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.4f);
+
         int offsetDiagonal = (playerTileIndex.x != currentTileIndex.x && playerTileIndex.y != currentTileIndex.y) ? 2 : 1;
         if (Vector3.Distance(playerTileIndex, currentTileIndex) <= offsetDiagonal)
         {
@@ -142,20 +150,13 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            Walk(playerTileIndex);
+            Walk(playerTileIndex, path);
         }
         gameManager.EndMyTurn();
     }
 
-    public bool Walk(Vector3Int playerPos)
+    public bool Walk(Vector3Int playerPos, List<PathFind.Point> path)
     {
-        List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, playerPos);
-
-        if(gameManager.DetectLOS(path))
-        {
-            return false;
-        }
-
         Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
 
         animator.SetBool("Walk", true);

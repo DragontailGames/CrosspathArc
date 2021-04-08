@@ -62,8 +62,6 @@ public class CharacterController : MonoBehaviour
         enemyManager = Manager.Instance.enemyManager;
 
         gameManager.creatures.Add(this.gameObject);
-
-        characterInterface.CreateSkills(characterCombat.skills);
     }
 
     public void Update()
@@ -94,7 +92,7 @@ public class CharacterController : MonoBehaviour
 
     public IEnumerator StartMyTurn()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         myTurn = true;
     }
 
@@ -134,7 +132,7 @@ public class CharacterController : MonoBehaviour
     public IEnumerator StartDelay()
     {
         delay = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.01f);
         delay = false;
     }
 }

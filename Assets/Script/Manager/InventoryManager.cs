@@ -22,6 +22,12 @@ public class InventoryManager : MonoBehaviour
         {
             OpenInventory();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            inventory.SetActive(false);
+            manager.InPause = false;
+        }
     }
 
     public void OpenInventory()

@@ -10,14 +10,16 @@ using UnityEngine.UI;
 public class StatusManager : MonoBehaviour
 {
     public GameObject aboutPlayer, status, attributes, playerBase, availablePoints;
+    public ScrollRect skillScrollRect;
+    public GameObject skillContentModel;
 
     public List<TextMeshProUGUI> attributesText = new List<TextMeshProUGUI>();
-
     public List<TextMeshProUGUI> statusText = new List<TextMeshProUGUI>();
+    private List<GameObject> skillsContent = new List<GameObject>();
 
     public List<Button> attributePlusButton = new List<Button>();
 
-    public CharacterStatus characterStatus;
+    public CharacterController character;
 
     public TextMeshProUGUI nameTMPro;
 
@@ -39,8 +41,8 @@ public class StatusManager : MonoBehaviour
             //Botao para adicionar pontos ao atributo
             bt.onClick.AddListener(() => 
             {
-                characterStatus.attributeStatus.attributes[tempI].value++; 
-                characterStatus.AvailablePoint--;
+                character.CharacterStatus.attributeStatus.attributes[tempI].value++;
+                character.CharacterStatus.AvailableStatusPoint--;
                 UpdateStatus();
             });
 
@@ -55,18 +57,21 @@ public class StatusManager : MonoBehaviour
             statusText.Add(stats.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
         }
 
-        nameTMPro.text = characterStatus.nickname;
+        nameTMPro.text = character.CharacterStatus.nickname;
 
         levelPlayerBaseTMPro = playerBase.transform.Find("Level").GetChild(0).GetComponent<TextMeshProUGUI>();
         hpPlayerBaseTMPro = playerBase.transform.Find("Hp").GetChild(0).GetComponent<TextMeshProUGUI>();
         mpPlayerBaseTMPro = playerBase.transform.Find("Mp").GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        characterStatus.levelUpAction += UpdateStatus;
+        CreateSkills(character.CharacterCombat.skills);
+
+        character.CharacterStatus.levelUpAction += UpdateStatus;
     }
 
     private void OnEnable()
     {
         UpdateStatus();
+        UpdateSkills();
     }
 
     /// <summary>
@@ -76,21 +81,58 @@ public class StatusManager : MonoBehaviour
     {
         for (int i = 0; i < attributesText.Count; i++)
         {
-            attributesText[i].text = characterStatus.attributeStatus.attributes[i].value.ToString();
+            attributesText[i].text = character.CharacterStatus.attributeStatus.attributes[i].value.ToString();
 
             Button currentButton = attributePlusButton[i];
-            currentButton.targetGraphic.enabled = characterStatus.AvailablePoint > 0 && characterStatus.attributeStatus.attributes[i].value < 10;
+            currentButton.targetGraphic.enabled = character.CharacterStatus.AvailableStatusPoint > 0 && character.CharacterStatus.attributeStatus.attributes[i].value < 10;
         }
         for (int i = 0; i < statusText.Count; i++)
         {
-            statusText[i].text = characterStatus.attributeStatus.GetValue(characterStatus.attributeStatus.status[i].status).ToString();
+            statusText[i].text = character.CharacterStatus.attributeStatus.GetValue(character.CharacterStatus.attributeStatus.status[i].status).ToString();
         }
 
-        levelPlayerBaseTMPro.text = characterStatus.Level.ToString();
-        hpPlayerBaseTMPro.text = characterStatus.attributeStatus.GetMaxHP(characterStatus.Level).ToString();
-        mpPlayerBaseTMPro.text = characterStatus.attributeStatus.GetMaxMP(characterStatus.Level).ToString();
+        levelPlayerBaseTMPro.text = character.CharacterStatus.Level.ToString();
+        hpPlayerBaseTMPro.text = character.CharacterStatus.attributeStatus.GetMaxHP(character.CharacterStatus.Level).ToString();
+        mpPlayerBaseTMPro.text = character.CharacterStatus.attributeStatus.GetMaxMP(character.CharacterStatus.Level).ToString();
 
-        availablePoints.gameObject.SetActive(characterStatus.AvailablePoint > 0);
-        availablePoints.GetComponentInChildren<TextMeshProUGUI>().text = characterStatus.AvailablePoint.ToString();
+        availablePoints.gameObject.SetActive(character.CharacterStatus.AvailableStatusPoint > 0);
+        availablePoints.GetComponentInChildren<TextMeshProUGUI>().text = character.CharacterStatus.AvailableStatusPoint.ToString();
+    }
+
+    public void CreateSkills(List<Skill> skills)
+    {
+        for (int i = 0; i < skills.Count; i++)
+        {
+            Skill aux = skills[i];
+            GameObject tempSkillContent = Instantiate(skillContentModel, skillScrollRect.content);
+            tempSkillContent.transform.Find("SkillName").GetComponent<TextMeshProUGUI>().text = aux.name;
+            Transform skillLevel = tempSkillContent.transform.Find("SkillLevel");
+            skillLevel.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = aux.level.ToString();
+            var currentSkill = i;
+            skillLevel.GetChild(1).GetComponent<Button>().onClick.AddListener(() =>
+            {
+                character.CharacterCombat.skills[currentSkill].level++;
+                character.CharacterStatus.AvailableSkillPoint--;
+                UpdateSkill(skills[currentSkill], currentSkill);
+                UpdateSkills();
+            });
+            skillsContent.Add(tempSkillContent);
+        }
+    }
+
+    public void UpdateSkill(Skill skills, int index)
+    {
+        Transform skillLevel = skillsContent[index].transform.Find("SkillLevel");
+        skillLevel.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = skills.level.ToString();
+    }
+
+    public void UpdateSkills()
+    {
+        for (int i = 0; i < skillsContent.Count; i++)
+        {
+            GameObject aux = (GameObject)skillsContent[i];
+            Transform skillLevel = aux.transform.Find("SkillLevel");
+            skillLevel.GetChild(1).gameObject.SetActive(character.CharacterStatus.AvailableSkillPoint > 0 && character.CharacterCombat.skills[i].level < 10);
+        }
     }
 }

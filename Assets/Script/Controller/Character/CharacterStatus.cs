@@ -13,7 +13,9 @@ public class CharacterStatus : MonoBehaviour
 
     private int level = 1;//level atual
 
-    private int availablePoint = 0;//pontos de status para serem distribuído
+    private int availableStatusPoint = 0;//pontos de status para serem distribuído
+
+    private int availableSkillPoint = 0;//pontos de status para serem distribuído
 
     [Tooltip("Regular a quantidade de tile base para regenerar")]
     public int totalTilesToRegen = 20;//quantidade de tiles base para regenerar
@@ -31,7 +33,8 @@ public class CharacterStatus : MonoBehaviour
     public int Hp { get => this.hp; set => this.hp = value; }
     public int Mp { get => this.mp; set => this.mp = value; }
     public int Level { get => this.level; set => this.level = value; }
-    public int AvailablePoint { get => this.availablePoint; set => this.availablePoint = value; }
+    public int AvailableStatusPoint { get => this.availableStatusPoint; set => this.availableStatusPoint = value; }
+    public int AvailableSkillPoint { get => this.availableSkillPoint; set => this.availableSkillPoint = value; }
     public int NextLevelExp { get => this.nextLevelExp; set => this.nextLevelExp = value; }
     public int Exp { get => this.exp; set => this.exp = value; }
 
@@ -80,7 +83,8 @@ public class CharacterStatus : MonoBehaviour
     public void LevelUp()
     {
         Level++;
-        AvailablePoint++;
+        AvailableStatusPoint++;
+        AvailableSkillPoint++;
         ResetHp_Mp();
         levelUpAction?.Invoke();
         Exp -= NextLevelExp;

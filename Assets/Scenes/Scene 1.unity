@@ -60886,10 +60886,12 @@ MonoBehaviour:
   attributes: {fileID: 1933149765}
   playerBase: {fileID: 595190430}
   availablePoints: {fileID: 536295289}
+  skillScrollRect: {fileID: 923440598}
+  skillContentModel: {fileID: 8570308541980812172, guid: c722b4cf7c681eb48883e12995363793, type: 3}
   attributesText: []
   statusText: []
   attributePlusButton: []
-  characterStatus: {fileID: 2137639107}
+  character: {fileID: 2137639109}
   nameTMPro: {fileID: 784883460}
 --- !u!1 &2088440889
 GameObject:
@@ -61790,8 +61792,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpInterface: {fileID: 4742661168552907054}
   mpInterface: {fileID: 7960335488561324358}
-  skillScrollRect: {fileID: 923440598}
-  skillContentModel: {fileID: 8570308541980812172, guid: c722b4cf7c681eb48883e12995363793, type: 3}
 --- !u!50 &2137639104
 Rigidbody2D:
   serializedVersion: 4
