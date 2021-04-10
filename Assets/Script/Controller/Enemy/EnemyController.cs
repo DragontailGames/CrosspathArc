@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     public Enemy enemy;
 
     public CharacterController player;
+    public bool hasTarget = false;
     public Animator animator;
 
     public Vector3 offsetPosition;
@@ -41,6 +42,11 @@ public class EnemyController : MonoBehaviour
 
         animator = this.GetComponentInChildren<Animator>();
         animator.speed = 0.7f;
+
+        if (!gameManager.DetectLOS(gameManager.GetPath(currentTileIndex, player.CharacterMoveTileIsometric.CurrentTileIndex)))
+        {
+            hasTarget = true;
+        }
     }
 
     /// <summary>
@@ -141,6 +147,7 @@ public class EnemyController : MonoBehaviour
             yield break;
         }
 
+        hasTarget = true;
         yield return new WaitForSeconds(0.4f);
 
         int offsetDiagonal = (playerTileIndex.x != currentTileIndex.x && playerTileIndex.y != currentTileIndex.y) ? 2 : 1;

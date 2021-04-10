@@ -42,16 +42,10 @@ public class CharacterController : MonoBehaviour
     public void Awake()
     {
         Manager.Instance.characterController = this;
-    }
 
-    /// <summary>
-    /// Configura as conexões
-    /// </summary>
-    public void Start()
-    {
         characterCombat = this.GetComponent<CharacterCombat>();
         characterInterface = this.GetComponent<CharacterInterface>();
-        characterInventory = this.GetComponent<CharacterInventory>(); 
+        characterInventory = this.GetComponent<CharacterInventory>();
         characterMoveTileIsometric = this.GetComponent<CharacterMoveTileIsometric>();
         characterStatus = this.GetComponent<CharacterStatus>();
 
@@ -76,6 +70,7 @@ public class CharacterController : MonoBehaviour
 
             if (enemyInTile != null && enemyInTile.enemy.hp>0)
             {
+                StartCoroutine(StartDelay());
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
             }
             else
@@ -132,7 +127,7 @@ public class CharacterController : MonoBehaviour
     public IEnumerator StartDelay()
     {
         delay = true;
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.1f);
         delay = false;
     }
 }

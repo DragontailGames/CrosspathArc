@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class StatusManager : MonoBehaviour
 {
-    public GameObject aboutPlayer, status, attributes, playerBase, availablePoints;
+    public GameObject aboutPlayer, status, attributes, playerBase, availablePointsStatus, availablePointsSkill;
     public ScrollRect skillScrollRect;
     public GameObject skillContentModel;
 
@@ -66,6 +66,7 @@ public class StatusManager : MonoBehaviour
         CreateSkills(character.CharacterCombat.skills);
 
         character.CharacterStatus.levelUpAction += UpdateStatus;
+        character.CharacterStatus.levelUpAction += UpdateSkills;
     }
 
     private void OnEnable()
@@ -95,8 +96,8 @@ public class StatusManager : MonoBehaviour
         hpPlayerBaseTMPro.text = character.CharacterStatus.attributeStatus.GetMaxHP(character.CharacterStatus.Level).ToString();
         mpPlayerBaseTMPro.text = character.CharacterStatus.attributeStatus.GetMaxMP(character.CharacterStatus.Level).ToString();
 
-        availablePoints.gameObject.SetActive(character.CharacterStatus.AvailableStatusPoint > 0);
-        availablePoints.GetComponentInChildren<TextMeshProUGUI>().text = character.CharacterStatus.AvailableStatusPoint.ToString();
+        availablePointsStatus.gameObject.SetActive(character.CharacterStatus.AvailableStatusPoint > 0);
+        availablePointsStatus.GetComponentInChildren<TextMeshProUGUI>().text = character.CharacterStatus.AvailableStatusPoint.ToString();
     }
 
     public void CreateSkills(List<Skill> skills)
@@ -128,6 +129,9 @@ public class StatusManager : MonoBehaviour
 
     public void UpdateSkills()
     {
+        availablePointsSkill.gameObject.SetActive(character.CharacterStatus.AvailableSkillPoint > 0);
+        availablePointsSkill.GetComponentInChildren<TextMeshProUGUI>().text = character.CharacterStatus.AvailableSkillPoint.ToString();
+
         for (int i = 0; i < skillsContent.Count; i++)
         {
             GameObject aux = (GameObject)skillsContent[i];

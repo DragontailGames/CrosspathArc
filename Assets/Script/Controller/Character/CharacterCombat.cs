@@ -49,6 +49,12 @@ public class CharacterCombat : MonoBehaviour
         {
             spellUi[i].GetComponent<Image>().sprite = spells[i].icon;
             spellUi[i].GetComponent<Image>().enabled = true;
+            var btSpell = spellUi[i].AddComponent<Button>();
+            var skillIndex = i;
+            btSpell.onClick.AddListener(() =>
+            {
+                SelectSkill(skillIndex);
+            });
         }
     }
 
@@ -101,9 +107,7 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="playerPos">posição do jogador</param>
     public void TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
     {
-        List<PathFind.Point> path = Manager.Instance.gameManager.GetPath(playerPos, clickPos);
-
-        if (Manager.Instance.gameManager.DetectLOS(path))
+        if (enemy.hasTarget==false)
         {
             StartCoroutine(characterController.StartDelay());
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
@@ -165,7 +169,6 @@ public class CharacterCombat : MonoBehaviour
             enemy.HitEnemy(damage, textDamage); 
             selectedSpell = null; 
             selectedUi.gameObject.SetActive(false);
-            Manager.Instance.gameManager.EndMyTurn(characterController);
         }));
     }
 
@@ -185,16 +188,17 @@ public class CharacterCombat : MonoBehaviour
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
         Transform spellCreated = Instantiate(spell.spellObject, this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(0f, 0f, rot_z - 180)).transform;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.02f);
 
         //Detecta a distancia
         while (Vector3.Distance(spellCreated.position, targetPos) > 0.1f)
         {
-            if (Vector3.Distance(spellCreated.position, targetPos) <= 0.3f)
+            if (Vector3.Distance(spellCreated.position, targetPos) <= 0.2f)
             {
                 //Destroi depois de acertar
                 Destroy(spellCreated.gameObject);
                 hitAction?.Invoke();
+                Manager.Instance.gameManager.EndMyTurn(characterController);
                 break;
             }
             //Move a spell
