@@ -34,7 +34,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         Vector3Int moveCell = Vector3Int.zero;
 
-        if (!gameManager.InPause && characterController.myTurn)//Testa o delay para correção da movimentação por tile
+        if (!gameManager.InPause && characterController.myTurn && characterController.Animator.GetBool("Walk") == false)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 
@@ -52,8 +52,11 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                 if (CanMoveToTile(moveCell))
                 {
                     characterController.direction = characterController.GetDirection(moveCell);
-                    PlayAnimation(characterController.animationName + "_Walk_" + characterController.direction);
-                    characterController.Animator.SetBool("Walk", true);
+                    if (!characterController.Animator.GetBool("Walk"))
+                    {
+                        PlayAnimation(characterController.animationName + "_Walk_" + characterController.direction);
+                        characterController.Animator.SetBool("Walk", true);
+                    }
                     CurrentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
                     this.GetComponent<CharacterStatus>().MoveOneTile();
