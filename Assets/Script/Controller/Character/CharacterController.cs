@@ -50,7 +50,7 @@ public class CharacterController : MonoBehaviour
         characterStatus = this.GetComponent<CharacterStatus>();
 
         Animator = this.GetComponentInChildren<Animator>();
-        animator.speed = 0.7f;
+        animator.speed = 0.6f;
 
         gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;

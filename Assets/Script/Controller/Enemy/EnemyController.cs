@@ -143,6 +143,7 @@ public class EnemyController : MonoBehaviour
 
         if (gameManager.DetectLOS(path))
         {
+            hasTarget = false;
             gameManager.EndMyTurn();
             yield break;
         }

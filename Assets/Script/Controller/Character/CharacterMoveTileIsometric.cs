@@ -52,6 +52,17 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                 if (CanMoveToTile(moveCell))
                 {
                     characterController.direction = characterController.GetDirection(moveCell);
+                    if(characterController.direction != "W" && characterController.direction != "E")
+                    {
+                        movementSpeed = 1.5f;
+                        characterController.Animator.speed = 0.8f;
+                    }
+                    else
+                    {
+                        movementSpeed = 2.0f;
+                        characterController.Animator.speed = 0.7f;
+                    }
+
                     if (!characterController.Animator.GetBool("Walk"))
                     {
                         PlayAnimation(characterController.animationName + "_Walk_" + characterController.direction);
@@ -65,7 +76,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         }
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
 
-        characterController.Animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.1);
+        characterController.Animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05);
     }
 
     /// <summary>
@@ -90,8 +101,8 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
     public void PlayAnimation(string animation)
     {
+        Debug.Log("walk");
         characterController.Animator.Play(animation);
-        characterController.Animator.SetBool("Walk", true);
     }
 }
 
