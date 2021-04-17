@@ -34,7 +34,7 @@ public class CharacterController : MonoBehaviour
     private Animator animator;
 
     internal string direction;
-    public readonly string animationName = "Male_Archer";
+    public string animationName = "";
 
     public bool myTurn = true;
     private bool delay = false;
@@ -49,7 +49,7 @@ public class CharacterController : MonoBehaviour
         characterMoveTileIsometric = this.GetComponent<CharacterMoveTileIsometric>();
         characterStatus = this.GetComponent<CharacterStatus>();
 
-        Animator = this.GetComponentInChildren<Animator>();
+        Animator = this.transform.GetComponentInChildren<Animator>();
         animator.speed = 0.6f;
 
         gameManager = Manager.Instance.gameManager;
@@ -129,5 +129,16 @@ public class CharacterController : MonoBehaviour
         delay = true;
         yield return new WaitForSeconds(0.2f);
         delay = false;
+    }
+
+    public void SetupAnimation(string animName)
+    {
+        animationName = animName;
+        this.transform.GetChild(0).gameObject.SetActive(false);
+        this.transform.GetChild(1).gameObject.SetActive(false);
+        var animatorObject = this.transform.Find(animName);
+
+        animatorObject.gameObject.SetActive(true);
+        Animator = animatorObject.GetComponent<Animator>();
     }
 }

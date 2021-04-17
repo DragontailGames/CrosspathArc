@@ -101,7 +101,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
     public void PlayAnimation(string animation)
     {
-        Debug.Log("walk");
         characterController.Animator.Play(animation);
     }
 }

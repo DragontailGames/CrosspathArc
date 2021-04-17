@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public Tilemap elevationTM;
 
+    public CharacterController controller;
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;
@@ -19,11 +21,12 @@ public class GameManager : MonoBehaviour
 
     public Transform particleClick;
 
-    private bool inPause;
+    private bool inPause = false;
 
     public List<GameObject> creatures = new List<GameObject>();
 
     public int currenteCreature = 0;
+
 
     bool[,] tilesmap;
     PathFind.Grid grid;
@@ -135,5 +138,17 @@ public class GameManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void SelectPlayer_01()
+    {
+        controller.SetupAnimation("Male_Archer");
+        InPause = false;
+    }
+
+    public void SelectPlayer_02()
+    {
+        controller.SetupAnimation("Female_Archer");
+        InPause = false;
     }
 }
