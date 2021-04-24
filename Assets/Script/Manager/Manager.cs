@@ -36,4 +36,6 @@ public class Manager : MonoBehaviour
     public EnemyManager enemyManager;
 
     public CharacterController characterController;
+
+    public SceneLoadManager sceneLoadManager;
 }

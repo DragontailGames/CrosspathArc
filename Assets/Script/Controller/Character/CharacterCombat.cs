@@ -190,12 +190,11 @@ public class CharacterCombat : MonoBehaviour
         Transform spellCreated = Instantiate(spell.spellObject, this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(0f, 0f, rot_z - 180)).transform;
         yield return new WaitForSeconds(0.02f);
 
-        int count = 0;
-
         //Detecta a distancia
-        while (Vector3.Distance(spellCreated.position, targetPos) > 0f)
+        while (Mathf.Abs(Vector3.Distance(spellCreated.position, targetPos)) > 0f)
         {
-            if (Vector3.Distance(spellCreated.position, targetPos) <= 0.3f || count>200)
+            Debug.Log(Mathf.Abs(Vector3.Distance(spellCreated.position, targetPos)));
+            if (Vector3.Distance(spellCreated.position, targetPos) <= 1f)
             {
                 //Destroi depois de acertar
                 Destroy(spellCreated.gameObject);
@@ -203,11 +202,17 @@ public class CharacterCombat : MonoBehaviour
                 Manager.Instance.gameManager.EndMyTurn(characterController);
                 break;
             }
-            count++;
             //Move a spell
             float step = 2f * Time.deltaTime;
             spellCreated.position = Vector3.MoveTowards(spellCreated.position, targetPos, step);
             yield return new WaitForSeconds(0.01f);
+        }
+        if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
+        {
+            //Destroi depois de acertar
+            Destroy(spellCreated.gameObject);
+            hitAction?.Invoke();
+            Manager.Instance.gameManager.EndMyTurn(characterController);
         }
     }
 

@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
     private EnemyManager enemyManager;
     public Enemy enemy;
 
-    public CharacterController player;
+    private CharacterController player;
     public bool hasTarget = false;
     public Animator animator;
 
@@ -27,6 +27,8 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         maxHp = enemy.hp;
+
+        player = Manager.Instance.characterController;
 
         gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;

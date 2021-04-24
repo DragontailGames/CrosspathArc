@@ -95,6 +95,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         //Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o 
 
         return (!gameManager.elevationTM.HasTile(nextTile + new Vector3Int(1,1,0))) &&
+                (!gameManager.collisionTM.HasTile(nextTile)) &&
                 (gameManager.tilemap.HasTile(nextTile)) &&
                 (Manager.Instance.enemyManager.CheckEnemyInTile(nextTile) == null);
     }

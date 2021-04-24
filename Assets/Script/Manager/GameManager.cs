@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,13 +11,36 @@ public class GameManager : MonoBehaviour
 {
     public Tilemap tilemap;
 
-    public Tilemap elevationTM;
+    public Tilemap elevationTM, collisionTM;
 
-    public CharacterController controller;
+    private CharacterController controller;
+
+    public CinemachineVirtualCamera cinemachineVirtualCamera;
 
     private void Awake()
     {
         Manager.Instance.gameManager = this;
+        if (!PlayerPrefs.HasKey("PLAYER"))
+        {
+            Manager.Instance.sceneLoadManager.GotoMenu();
+        }
+        else
+        {
+            if (PlayerPrefs.GetString("PLAYER") == "1")
+            {
+                GameObject main = GameObject.Find("Hero_1");
+                Manager.Instance.characterController = main.GetComponent<CharacterController>();
+                cinemachineVirtualCamera.Follow = main.transform;
+                GameObject.Find("Hero_2").SetActive(false);
+            }
+            if (PlayerPrefs.GetString("PLAYER") == "2")
+            {
+                GameObject main = GameObject.Find("Hero_2");
+                Manager.Instance.characterController = main.GetComponent<CharacterController>();
+                cinemachineVirtualCamera.Follow = main.transform;
+                GameObject.Find("Hero_1").SetActive(false);
+            }
+        }
     }
 
     public Transform particleClick;
@@ -26,6 +50,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> creatures = new List<GameObject>();
 
     public int currenteCreature = 0;
+    public GameObject player01;
+    public GameObject player02;
 
 
     bool[,] tilesmap;
@@ -34,7 +60,7 @@ public class GameManager : MonoBehaviour
     int width;
     int height;
 
-    private void Start()
+    void Start()
     {
         CalculateGrid();
     }
@@ -132,23 +158,11 @@ public class GameManager : MonoBehaviour
         foreach (var aux in path)
         {
             Vector3Int tempPath = new Vector3Int(aux.x, aux.y, 0);
-            if (elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)))
+            if (elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)) || collisionTM.HasTile(tempPath + new Vector3Int(1, 1, 0)))
             {
                 return true;
             }
         }
         return false;
-    }
-
-    public void SelectPlayer_01()
-    {
-        controller.SetupAnimation("Male_Archer");
-        InPause = false;
-    }
-
-    public void SelectPlayer_02()
-    {
-        controller.SetupAnimation("Female_Archer");
-        InPause = false;
     }
 }
