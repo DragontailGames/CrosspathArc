@@ -193,8 +193,7 @@ public class CharacterCombat : MonoBehaviour
         //Detecta a distancia
         while (Mathf.Abs(Vector3.Distance(spellCreated.position, targetPos)) > 0f)
         {
-            Debug.Log(Mathf.Abs(Vector3.Distance(spellCreated.position, targetPos)));
-            if (Vector3.Distance(spellCreated.position, targetPos) <= 1f)
+            if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
             {
                 //Destroi depois de acertar
                 Destroy(spellCreated.gameObject);
@@ -203,9 +202,9 @@ public class CharacterCombat : MonoBehaviour
                 break;
             }
             //Move a spell
-            float step = 2f * Time.deltaTime;
+            float step = 3f * Time.deltaTime;
             spellCreated.position = Vector3.MoveTowards(spellCreated.position, targetPos, step);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.001f);
         }
         if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
         {

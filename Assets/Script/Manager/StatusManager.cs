@@ -19,7 +19,7 @@ public class StatusManager : MonoBehaviour
 
     public List<Button> attributePlusButton = new List<Button>();
 
-    public CharacterController character;
+    private CharacterController character;
 
     public TextMeshProUGUI nameTMPro;
 
@@ -27,6 +27,7 @@ public class StatusManager : MonoBehaviour
 
     void Awake()
     {
+        character = Manager.Instance.characterController;
         for (int i = 0; i < attributes.transform.childCount; i++)
         {
             //Pega as variaveis na ui dos atributos

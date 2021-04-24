@@ -61464,7 +61464,6 @@ MonoBehaviour:
   attributesText: []
   statusText: []
   attributePlusButton: []
-  character: {fileID: 2137639109}
   nameTMPro: {fileID: 784883460}
 --- !u!1 &2088440889
 GameObject:
