@@ -20,7 +20,7 @@ public class AttributeStatus
     public List<Status> modifier = new List<Status>();
 
     /// <summary>
-    /// Construtor da classe
+    /// Construtor da classe normal
     /// </summary>
     public AttributeStatus()
     {
@@ -30,6 +30,39 @@ public class AttributeStatus
             status[i] = new Status { status = (EnumCustom.Status)i, value = 1 };//inicializa as variaveis com 1 de valor
         }
     }
+
+    /// <summary>
+    /// Construtor da classe com level
+    /// </summary>
+    public AttributeStatus(int _level)
+    {
+        if (_level <= 0) return;
+
+        int level = _level;
+        int distributeToLevel = Mathf.FloorToInt(8 / level);
+        for (int i = 0; i < 8; i++)
+        {
+            attributes[i] = new Attributes { name = ((EnumCustom.Attribute)i).ToString(), attribute = (EnumCustom.Attribute)i, value = 1 };//inicializa as variaveis com valor proporicional
+            status[i] = new Status { status = (EnumCustom.Status)i, value = 1 };//inicializa as variaveis com 1 de valor
+        }
+
+        int countWhile = 0;
+        while (level > 0)
+        {
+            attributes[countWhile].value += 1;
+            status[countWhile].value += 1;
+            if (countWhile>=attributes.Length)
+            {
+                countWhile = 0;
+            }
+            else
+            {
+                countWhile++;
+            }
+            level--;
+        }
+    }
+
 
     /// <summary>
     /// Retorna o valor do attributo atual com suas variaveis

@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public CinemachineVirtualCamera cinemachineVirtualCamera;
 
+    public GameObject campfire;
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;
@@ -50,9 +52,11 @@ public class GameManager : MonoBehaviour
     public List<GameObject> creatures = new List<GameObject>();
 
     public int currenteCreature = 0;
+
     public GameObject player01;
     public GameObject player02;
 
+    public int turnCount = 0;
 
     bool[,] tilesmap;
     PathFind.Grid grid;
@@ -103,8 +107,10 @@ public class GameManager : MonoBehaviour
             currenteCreature = 0;
         }
 
-        if(cController != null)
+        if (cController != null)
+        {
             cController.myTurn = false;
+        }
 
         if (creatures[currenteCreature] == null)
             EndMyTurn();
@@ -114,7 +120,10 @@ public class GameManager : MonoBehaviour
             CharacterController playerController = creatures[currenteCreature].GetComponent<CharacterController>();
 
             if (playerController.CharacterStatus.Hp > 0)
-                StartCoroutine(playerController.StartMyTurn());
+            {
+                playerController.waitRest = playerController.StartMyTurn();
+                StartCoroutine(playerController.waitRest);
+            }
         }
         else
         {
@@ -164,5 +173,62 @@ public class GameManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void Btn_Rest()
+    {
+        Vector3Int startTile = Manager.Instance.characterController.CharacterMoveTileIsometric.CurrentTileIndex;
+        int radius = Manager.Instance.configManager.tilesWithoutEnemyForRest;
+
+        bool canRest = true;
+
+        for (int i = startTile.x - radius; i <= startTile.x + radius; i++)
+        {
+            for (int j = startTile.y - radius; j <= startTile.y + radius; j++)
+            {
+                Vector3Int checkTile = new Vector3Int(i, j, 0);
+                if (tilemap.HasTile(checkTile))
+                {
+                    if(Manager.Instance.enemyManager.CheckEnemyInTile(checkTile))
+                    {
+                        Debug.Log("Não pode dormir inimigo em " + checkTile);
+                        canRest = false;
+                        break;
+                    }
+                }
+            }
+            if(!canRest)
+            {
+                break;
+            }
+        }
+        if (canRest)
+        {
+            Manager.Instance.characterController.Rest();
+        }
+        else
+        {
+            Manager.Instance.canvasManager.LogMessage("Não pode dormir com inimigos proximos");
+        }
+    }
+
+    public void StartNewTurn()
+    {
+        turnCount++;
+        Manager.Instance.timeManager.StartNewTurn();
+    }
+
+    public int restCount = 0;
+
+    public bool EndTurnRest()
+    {
+        int rand = Random.Range(0, 100);
+        if (restCount * 20 > rand)
+        {
+            Manager.Instance.enemyManager.CreateEnemies();
+            return false;
+        }
+        restCount++;
+        return true;
     }
 }

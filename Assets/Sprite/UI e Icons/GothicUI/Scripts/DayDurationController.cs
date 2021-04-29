@@ -1,23 +1,20 @@
 ﻿using UnityEngine;
 
-namespace Assets.CrusaderUI.Scripts
+public class DayDurationController : MonoBehaviour
 {
-	public class DayDurationController : MonoBehaviour
+
+	public GameObject Sky;
+	public GameObject Glow;
+
+	public void StartDay ()
 	{
+		Sky.GetComponent<Animator>().Play("SkyDay");
+		Glow.GetComponent<Animator>().Play("Day");
+	}
 
-		public GameObject Sky;
-		public GameObject Glow;
-		[Header("Day Duration in seconds")]
-		public float Duration;
-
-		private void Awake ()
-		{
-			if (Sky == null || Glow == null || Duration <= 0)
-			{
-				return;
-			}
-			Sky.GetComponent<Animator>().speed = 1 / Duration;
-			Glow.GetComponent<Animator>().speed = 1 / Duration;
-		}
+	public void StartNight()
+	{
+		Sky.GetComponent<Animator>().Play("SkyNight");
+		Glow.GetComponent<Animator>().Play("Night");
 	}
 }

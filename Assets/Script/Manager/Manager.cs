@@ -38,4 +38,8 @@ public class Manager : MonoBehaviour
     public CharacterController characterController;
 
     public SceneLoadManager sceneLoadManager;
+
+    public ConfigManager configManager;
+
+    public TimeManager timeManager;
 }

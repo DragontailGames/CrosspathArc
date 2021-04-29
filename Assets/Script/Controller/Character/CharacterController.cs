@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,6 +40,8 @@ public class CharacterController : MonoBehaviour
     public bool myTurn = true;
     private bool delay = false;
 
+    public bool isRest = false;
+
     public void Awake()
     {
         Manager.Instance.characterController = this;
@@ -77,18 +80,45 @@ public class CharacterController : MonoBehaviour
             {
                 characterMoveTileIsometric.Mouse = CharacterMousePosition(mousePos);
             }
+            if(isRest)
+            {
+                StopRest();
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
             gameManager.EndMyTurn(this);
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            StopRest();
+        }
     }
+
+    public IEnumerator waitRest;
 
     public IEnumerator StartMyTurn()
     {
+        gameManager.StartNewTurn();
         yield return new WaitForSeconds(0.1f);
         myTurn = true;
+
+        if(isRest)
+        {
+            characterStatus.Hp += Manager.Instance.configManager.healthRestPerTurn;
+            characterStatus.Mp += Manager.Instance.configManager.manaRestPerTurn;
+            if (gameManager.EndTurnRest())
+            {
+                yield return new WaitForSeconds(1.0f);
+                gameManager.EndMyTurn(this);
+            }
+            else
+            {
+                StopRest();
+            }
+        }
     }
 
     /// <summary>
@@ -140,5 +170,22 @@ public class CharacterController : MonoBehaviour
 
         animatorObject.gameObject.SetActive(true);
         Animator = animatorObject.GetComponent<Animator>();
+    }
+
+    public void Rest()
+    {
+        isRest = true;
+        gameManager.restCount = 0;
+        characterMoveTileIsometric.PlayAnimation(animationName + "_Idle_S");
+        gameManager.campfire.transform.position = this.transform.position;
+        gameManager.campfire.SetActive(true);
+        gameManager.EndMyTurn(this);
+    }
+
+    public void StopRest()
+    {
+        StopCoroutine(waitRest);
+        isRest = false;
+        gameManager.campfire.SetActive(false);
     }
 }
