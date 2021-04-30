@@ -16,11 +16,14 @@ public class Spell
 
     public int maxDamage;
 
-    public EnumCustom.MagicSchool magicSchool;
-
     public Sprite icon;
 
     public GameObject spellObject;
 
     public int manaCost;
+
+    public void Cast()
+    {
+
+    }
 }

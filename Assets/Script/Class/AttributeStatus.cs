@@ -36,15 +36,15 @@ public class AttributeStatus
     /// </summary>
     public AttributeStatus(int _level)
     {
-        if (_level <= 0) return;
-
         int level = _level;
-        int distributeToLevel = Mathf.FloorToInt(8 / level);
         for (int i = 0; i < 8; i++)
         {
             attributes[i] = new Attributes { name = ((EnumCustom.Attribute)i).ToString(), attribute = (EnumCustom.Attribute)i, value = 1 };//inicializa as variaveis com valor proporicional
             status[i] = new Status { status = (EnumCustom.Status)i, value = 1 };//inicializa as variaveis com 1 de valor
         }
+
+        if (_level <= 0) return;
+        int distributeToLevel = Mathf.FloorToInt(8 / level);
 
         int countWhile = 0;
         while (level > 0)
@@ -73,9 +73,12 @@ public class AttributeStatus
     {
         Attributes currentAttribute = Array.Find(attributes, n => n.attribute == enumAttribute);
         float value = currentAttribute.value;
-        foreach(var aux in currentAttribute.modifier)
+        if (currentAttribute.modifier != null)
         {
-            value += aux;
+            foreach (var aux in currentAttribute.modifier)
+            {
+                value += aux;
+            }
         }
         return Mathf.RoundToInt(value);
     }

@@ -30,8 +30,8 @@ public class CharacterStatus : MonoBehaviour
     private int hp, mp;//quantidade de hp e mp
 
     //Gets e Sets para melhor visualização do codigo
-    public int Hp { get => this.hp; set => this.hp = value; }
-    public int Mp { get => this.mp; set => this.mp = value; }
+    public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(Level)); }
+    public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(Level)); }
     public int Level { get => this.level; set => this.level = value; }
     public int AvailableStatusPoint { get => this.availableStatusPoint; set => this.availableStatusPoint = value; }
     public int AvailableSkillPoint { get => this.availableSkillPoint; set => this.availableSkillPoint = value; }
@@ -58,9 +58,6 @@ public class CharacterStatus : MonoBehaviour
         {
             AddExp(addLevelTemp);
         }
-
-        Hp = Mathf.Clamp(Hp, 0, attributeStatus.GetMaxHP(Level));//Define os limetes de hp
-        Mp = Mathf.Clamp(Mp, 0, attributeStatus.GetMaxMP(Level));//Define os limetes de mp
     }
 
     /// <summary>
