@@ -127,7 +127,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Teste");
             EnemyController enemyController = creatures[currentCreature].GetComponent<EnemyController>();
 
             if(enemyController.enemy.hp > 0)

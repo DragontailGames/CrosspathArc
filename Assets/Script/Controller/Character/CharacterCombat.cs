@@ -195,7 +195,6 @@ public class CharacterCombat : MonoBehaviour
         {
             if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
             {
-                //Destroi depois de acertar
                 break;
             }
             //Move a spell
@@ -207,7 +206,6 @@ public class CharacterCombat : MonoBehaviour
         {
             //Destroi depois de acertar
             Destroy(spellCreated.gameObject);
-            Debug.Log("T1");
             hitAction?.Invoke();
             Manager.Instance.gameManager.EndMyTurn(characterController);
         }

@@ -88,7 +88,10 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         if (enemy.hp <= 0)//Correção temporaria
+        {
+            //PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
             return;
+        }
 
         var scale = hpBar.localScale;
         scale.x = Mathf.Clamp((float)enemy.hp / (float)maxHp, 0, 1);//Animação da barra de hp
@@ -130,12 +133,14 @@ public class EnemyController : MonoBehaviour
         //Destroy(this.gameObject);
         this.transform.Find("HealthBar").gameObject.SetActive(false);
         gameManager.creatures.Remove(this.gameObject);
-        gameManager.EndMyTurn();
+        if(gameManager.creatures[gameManager.currentCreature] == this.gameObject)
+        {
+            gameManager.EndMyTurn();
+        }
     }
 
     public IEnumerator StartMyTurn()
     {
-        Debug.Log("Started More " + this.transform.name + " - " + this.transform.GetSiblingIndex());
         if(enemy.hp <= 0)
         {
             yield break;
