@@ -51,13 +51,13 @@ public class AttributeStatus
         {
             attributes[countWhile].value += 1;
             status[countWhile].value += 1;
-            if (countWhile>=attributes.Length)
+            if (countWhile<attributes.Length-1)
             {
-                countWhile = 0;
+                countWhile++;
             }
             else
             {
-                countWhile++;
+                countWhile = 0;
             }
             level--;
         }

@@ -199,9 +199,9 @@ public class CharacterCombat : MonoBehaviour
                 break;
             }
             //Move a spell
-            float step = 3f * Time.deltaTime;
+            float step = 2f * Time.deltaTime;
             spellCreated.position = Vector3.MoveTowards(spellCreated.position, targetPos, step);
-            yield return new WaitForSeconds(0.001f);
+            yield return new WaitForSeconds(0.005f);
         }
         if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
         {

@@ -91,9 +91,12 @@ public class CharacterController : MonoBehaviour
             gameManager.EndMyTurn(this);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StopRest();
+            if (isRest)
+            {
+                StopRest();
+            }
         }
     }
 
