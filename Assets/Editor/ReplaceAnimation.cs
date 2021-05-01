@@ -14,7 +14,7 @@ public class ReplaceAnimation
     public static string oldSprites_folder = "./Assets/Sprite/Male_Archer_Naked_Hand";
     public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
 
-    [MenuItem("Dragon Tail/Command")]
+    [MenuItem("Dragon Tail/Replace Animation")]
     static void LoadFiles()
     {
         foreach (var asset in AssetDatabase.FindAssets("", new[] { newAnimationFolder }))

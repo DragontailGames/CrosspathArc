@@ -46,7 +46,10 @@ public class EnumCustom : MonoBehaviour
     public enum SkillType
     {
         WeaponModifier,
-        MagicSchool
+        Hit,
+        Buff,
+        Debuff,
+        Special
     }
 
     public enum WeaponType
@@ -54,12 +57,5 @@ public class EnumCustom : MonoBehaviour
         Hands,
         Sword,
         Shield
-    }
-
-    public enum MagicSchool
-    {
-        Fire,
-        Water,
-        Necromancy
     }
 }

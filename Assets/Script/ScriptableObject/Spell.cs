@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Classe das spells do jogador
-/// </summary>
-[System.Serializable]
-public class Spell
+[CreateAssetMenu(menuName = "Arc/Spell")]
+public class Spell : ScriptableObject
 {
-    public string name;
+    public string spellName;
 
     public int availableAt = 1;
 
@@ -18,12 +15,7 @@ public class Spell
 
     public Sprite icon;
 
-    public GameObject spellObject;
+    public GameObject spellCastObject;
 
     public int manaCost;
-
-    public void Cast()
-    {
-
-    }
 }

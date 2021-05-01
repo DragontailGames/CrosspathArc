@@ -30,10 +30,7 @@ public class CharacterCombat : MonoBehaviour
 
         foreach(var aux in skills)
         {
-            if(aux.skillType == EnumCustom.SkillType.MagicSchool)
-            {
-                SetupSpells(aux.spells);
-            }
+            SetupSpells(aux.spells);
         }
 
         foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
@@ -187,7 +184,7 @@ public class CharacterCombat : MonoBehaviour
 
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
 
-        Transform spellCreated = Instantiate(spell.spellObject, this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(0f, 0f, rot_z - 180)).transform;
+        Transform spellCreated = Instantiate(spell.spellCastObject, this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(0f, 0f, rot_z - 180)).transform;
         yield return new WaitForSeconds(0.02f);
 
         //Detecta a distancia
