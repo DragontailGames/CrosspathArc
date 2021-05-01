@@ -43,7 +43,7 @@ public class EnemyManager : MonoBehaviour
 
             spawnPos += characterIndex;
 
-            if (Manager.Instance.gameManager.tilemap.HasTile(spawnPos) &&
+            if (Manager.Instance.gameManager.tilemap .HasTile(spawnPos) &&
                 !Manager.Instance.gameManager.collisionTM.HasTile(spawnPos) && 
                 !Manager.Instance.gameManager.elevationTM.HasTile(spawnPos) &&
                 !CheckEnemyInTile(spawnPos) && createEnemies.Find(n => n==spawnPos) != null)

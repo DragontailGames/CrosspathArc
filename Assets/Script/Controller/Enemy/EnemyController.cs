@@ -135,6 +135,7 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator StartMyTurn()
     {
+        Debug.Log("Started More " + this.transform.name + " - " + this.transform.GetSiblingIndex());
         if(enemy.hp <= 0)
         {
             yield break;
@@ -165,9 +166,14 @@ public class EnemyController : MonoBehaviour
         gameManager.EndMyTurn();
     }
 
-    public bool Walk(Vector3Int playerPos, List<PathFind.Point> path)
+    public void Walk(Vector3Int playerPos, List<PathFind.Point> path)
     {
         Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
+
+        if(enemyManager.CheckEnemyInTile(dest))
+        {
+            return;
+        }
 
         animator.SetBool("Walk", true);
         PlayAnimation("Walk", gameManager.GetDirection(currentTileIndex, dest));
@@ -175,8 +181,6 @@ public class EnemyController : MonoBehaviour
         currentTileIndex = dest;
 
         movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
-
-        return true;
     }
 
     public void Attack(CharacterCombat characterCombat)

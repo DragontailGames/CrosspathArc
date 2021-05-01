@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> creatures = new List<GameObject>();
 
-    public int currenteCreature = 0;
+    public int currentCreature = 0;
 
     public GameObject player01;
     public GameObject player02;
@@ -101,10 +101,10 @@ public class GameManager : MonoBehaviour
 
     public void EndMyTurn(CharacterController cController = null)
     {
-        currenteCreature++;
-        if (currenteCreature >= creatures.Count)
+        currentCreature++;
+        if (currentCreature >= creatures.Count)
         {
-            currenteCreature = 0;
+            currentCreature = 0;
         }
 
         if (cController != null)
@@ -112,12 +112,12 @@ public class GameManager : MonoBehaviour
             cController.myTurn = false;
         }
 
-        if (creatures[currenteCreature] == null)
+        if (creatures[currentCreature] == null)
             EndMyTurn();
 
-        if (creatures[currenteCreature].GetComponent<CharacterController>())
+        if (creatures[currentCreature].GetComponent<CharacterController>())
         {
-            CharacterController playerController = creatures[currenteCreature].GetComponent<CharacterController>();
+            CharacterController playerController = creatures[currentCreature].GetComponent<CharacterController>();
 
             if (playerController.CharacterStatus.Hp > 0)
             {
@@ -127,7 +127,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            EnemyController enemyController = creatures[currenteCreature].GetComponent<EnemyController>();
+            Debug.Log("Teste");
+            EnemyController enemyController = creatures[currentCreature].GetComponent<EnemyController>();
 
             if(enemyController.enemy.hp > 0)
                 StartCoroutine(enemyController.StartMyTurn());
