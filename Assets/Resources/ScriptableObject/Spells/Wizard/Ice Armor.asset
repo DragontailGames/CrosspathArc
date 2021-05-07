@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
+  m_Name: Ice Armor
+  m_EditorClassIdentifier: 
+  spellName: Ice Armor
+  description: Increase Armor by 3 for 10 turns
+  spellType: 1
+  availableAt: 2
+  minValue: 0
+  maxValue: 0
+  fixedValue: 0
+  area: 0
+  buffDebuff:
+  - attribute: 0
+    status: 2
+    specialEffect: 0
+    buffDebuffType: 0
+    value: 3
+    turnDuration: 10
+  attributeInfluence: 
+  icon: {fileID: 21300000, guid: 0c07b6f12c4ce43478941a42e9bff81f, type: 3}
+  spellCastObject: {fileID: 2780629017648965886, guid: 0cb55162f7e0af146b86f3996b306727, type: 3}
+  manaCost: 4

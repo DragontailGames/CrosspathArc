@@ -76,6 +76,12 @@ public class CharacterController : MonoBehaviour
                 StartCoroutine(StartDelay());
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
             }
+            else if(characterCombat.selectedSpell != null)
+            {
+                StartCoroutine(StartDelay());
+                direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.CurrentTileIndex, mousePos);
+                characterCombat.CastSpell(null, mousePos);
+            }
             else
             {
                 characterMoveTileIsometric.Mouse = CharacterMousePosition(mousePos);
@@ -122,6 +128,8 @@ public class CharacterController : MonoBehaviour
                 StopRest();
             }
         }
+        CharacterStatus.attributeStatus.StartNewTurn();
+        Manager.Instance.canvasManager.UpdateStatus();
     }
 
     /// <summary>

@@ -22,7 +22,12 @@ public class EnemyController : MonoBehaviour
     public float movementSpeed = 10;
     public int range = 1;
 
+    private bool isDead;
+
     public readonly string mainAnimation = "Wolf";
+
+    private int specialEffectDuration;
+    private EnumCustom.SpecialEffect specialEffect;
 
     void Start()
     {
@@ -74,14 +79,22 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public void SpellEnemy(int damage, string damageText)
+    public void SpellEnemy(int damage, string damageText, Spell spell)
     {
-        enemy.hp -= damage;
-        Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " = <color=red>" + damage + "</color> de dano");
+        if(spell.spellType == EnumCustom.SpellType.Special)
+        {
+            specialEffectDuration = spell.specialEffectDuration;
+            specialEffect = spell.specialEffect;
+        }
+        else
+        {
+            enemy.hp -= damage;
+            Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " = <color=red>" + damage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
+        }
 
         if (enemy.hp <= 0)
         {
-            Defeat();
+            Defeat();//mata o inimigo
         }
     }
 
@@ -89,7 +102,7 @@ public class EnemyController : MonoBehaviour
     {
         if (enemy.hp <= 0)//Correção temporaria
         {
-            //PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
+            Defeat();
             return;
         }
 
@@ -127,23 +140,42 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     void Defeat()
     {
-        PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
-        Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
-        Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
-        //Destroy(this.gameObject);
-        this.transform.Find("HealthBar").gameObject.SetActive(false);
-        gameManager.creatures.Remove(this.gameObject);
-        if(gameManager.creatures[gameManager.currentCreature] == this.gameObject)
+        if (!isDead)
         {
+            PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
+            isDead = true;
+            Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
+            Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
+            //Destroy(this.gameObject);
+            this.transform.Find("HealthBar").gameObject.SetActive(false);
+            gameManager.creatures.Remove(this.gameObject);
+            gameManager.currentCreature--;
             gameManager.EndMyTurn();
         }
     }
 
     public IEnumerator StartMyTurn()
     {
-        if(enemy.hp <= 0)
+        if(isDead)
         {
             yield break;
+        }
+
+        if (specialEffect != EnumCustom.SpecialEffect.None)
+        {
+            specialEffectDuration--;
+            if (specialEffect == EnumCustom.SpecialEffect.Sleep)
+            {
+                gameManager.EndMyTurn();
+                yield break;
+            }
+            if(specialEffect == EnumCustom.SpecialEffect.Poison)
+            {
+
+            }
+
+            if (specialEffectDuration <= 0)
+                specialEffect = EnumCustom.SpecialEffect.None;
         }
 
         Vector3Int playerTileIndex = player.CharacterMoveTileIsometric.CurrentTileIndex;
@@ -173,6 +205,11 @@ public class EnemyController : MonoBehaviour
 
     public void Walk(Vector3Int playerPos, List<PathFind.Point> path)
     {
+        if (isDead)
+        {
+            return;
+        } 
+
         Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
 
         if(enemyManager.CheckEnemyInTile(dest))
@@ -190,6 +227,10 @@ public class EnemyController : MonoBehaviour
 
     public void Attack(CharacterCombat characterCombat)
     {
+        if (isDead)
+        {
+            return;
+        }
         int hitChance = enemy.attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int str = enemy.attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int dodge = characterCombat.CharacterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.Dodge);

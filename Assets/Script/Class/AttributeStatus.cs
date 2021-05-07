@@ -17,7 +17,9 @@ public class AttributeStatus
 
     public float combatDelay = 1.0f;
 
-    public List<Status> modifier = new List<Status>();
+    public List<AttributeModifier> attributeModifiers;
+
+    public List<StatusModifier> statusModifiers;
 
     /// <summary>
     /// Construtor da classe normal
@@ -73,12 +75,10 @@ public class AttributeStatus
     {
         Attributes currentAttribute = Array.Find(attributes, n => n.attribute == enumAttribute);
         float value = currentAttribute.value;
-        if (currentAttribute.modifier != null)
+
+        foreach (var aux in attributeModifiers.FindAll(n => n.attribute == enumAttribute))
         {
-            foreach (var aux in currentAttribute.modifier)
-            {
-                value += aux;
-            }
+            value += aux.value;
         }
         return Mathf.RoundToInt(value);
     }
@@ -92,9 +92,8 @@ public class AttributeStatus
     {
         Status currentStatus = Array.Find(status, n => n.status == enumStatus);
         int value = currentStatus.value;
-        List<Status> modifierTemp = modifier.FindAll(n => n.status == currentStatus.status);
 
-        foreach (var aux in modifierTemp)
+        foreach (var aux in statusModifiers.FindAll(n => n.status == enumStatus))
         {
             value += aux.value;
         }
@@ -170,5 +169,55 @@ public class AttributeStatus
         return 10 + 
             MathfCustom.CalculateStatusByPoints(level, 2) +
             (GetValue(EnumCustom.Attribute.Foc) * 4);
+    }
+
+    public void StartNewTurn()
+    {
+        for (int i = attributeModifiers.Count-1; i >= 0; i--)
+        {
+            attributeModifiers[i].count--;
+            if(attributeModifiers[i].count <= 0)
+            {
+                Manager.Instance.canvasManager.RemoveLogText(statusModifiers[i].spellName);
+                attributeModifiers.RemoveAt(i);
+            }
+        }
+        for (int i = statusModifiers.Count - 1; i >= 0; i--)
+        {
+            statusModifiers[i].count--;
+            if (statusModifiers[i].count <= 0)
+            {
+                Manager.Instance.canvasManager.RemoveLogText(statusModifiers[i].spellName);
+                statusModifiers.RemoveAt(i);
+            }
+        }
+    }
+
+    public void AddModifier(AttributeModifier attributeModifier, StatusModifier statusModifier)
+    {
+        if(attributeModifier != null)
+        {
+            var mod = attributeModifiers.Find(n => n.spellName == attributeModifier.spellName);
+            if (mod != null)
+            {
+                mod.count = attributeModifier.count;
+            }
+            else
+            {
+                attributeModifiers.Add(attributeModifier);
+            }
+        }
+        if(statusModifier != null)
+        {
+            var mod = statusModifiers.Find(n => n.spellName == statusModifier.spellName);
+            if (mod != null)
+            {
+                mod.count = statusModifier.count;
+            }
+            else
+            {
+                statusModifiers.Add(statusModifier);
+            }
+        }
     }
 }

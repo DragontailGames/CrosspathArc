@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Wizard
+  m_EditorClassIdentifier: 
+  skillName: Wizard
+  skillType: 1
+  modifier: []
+  weaponBuffSkills: []
+  spells:
+  - {fileID: 11400000, guid: a7ad9d203a30e204f9d7b9e24154435e, type: 2}
+  - {fileID: 11400000, guid: 59816e1a241add94182a4dbea4de0515, type: 2}
+  - {fileID: 11400000, guid: 70e96af9af10a474ab94c9cc23167413, type: 2}
+  - {fileID: 11400000, guid: 5325168d239ea79438fde01cd51b993f, type: 2}
+  - {fileID: 11400000, guid: 7030018a8d2aa2741bbcb8d72a79a5cc, type: 2}
+  - {fileID: 11400000, guid: 0b73ff7bfe976ba4983c57e2ccff81d0, type: 2}
+  - {fileID: 11400000, guid: e4072af93a9add34bbdcf99f96b1fc72, type: 2}
+  - {fileID: 11400000, guid: 51c8c2cd9e5b55a439085eee01cdbc61, type: 2}

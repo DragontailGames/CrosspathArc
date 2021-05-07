@@ -46,10 +46,16 @@ public class EnumCustom : MonoBehaviour
     public enum SkillType
     {
         WeaponModifier,
+        Spellbook,
+    }
+
+    public enum SpellType
+    {
         Hit,
         Buff,
         Debuff,
-        Special
+        Special,
+        Unlock,
     }
 
     public enum WeaponType
@@ -57,5 +63,21 @@ public class EnumCustom : MonoBehaviour
         Hands,
         Sword,
         Shield
+    }
+
+    public enum SpecialEffect
+    {
+        None,
+        Poison,
+        Sleep,
+        Paralyze,
+        Invisibility,
+    }
+
+    public enum BuffDebuffType
+    {
+        Status,
+        Attribute,
+        Special,
     }
 }

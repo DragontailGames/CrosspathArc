@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
+  m_Name: Frost
+  m_EditorClassIdentifier: 
+  spellName: Frost
+  description: Summon a Frost with damage equals (2-5)+Int
+  spellType: 0
+  availableAt: 3
+  minValue: 2
+  maxValue: 5
+  fixedValue: 0
+  area: 0
+  buffDebuff: []
+  attributeInfluence: 04000000
+  icon: {fileID: 21300000, guid: f1ae94e1f0fa54d76bd257bd774f53ee, type: 3}
+  spellCastObject: {fileID: 2449160739903220631, guid: 3d7e833715e500f4995288dc8fb14c52, type: 3}
+  manaCost: 6

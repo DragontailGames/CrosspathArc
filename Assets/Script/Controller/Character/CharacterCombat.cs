@@ -10,7 +10,8 @@ public class CharacterCombat : MonoBehaviour
     private CharacterStatus characterStatus;
 
     public List<Skill> skills;
-    private List<Spell> spells = new List<Spell>();
+
+    private List<Spell> spells;
 
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
@@ -28,11 +29,6 @@ public class CharacterCombat : MonoBehaviour
         CharacterController = this.GetComponent<CharacterController>();
         characterStatus = CharacterController.CharacterStatus;
 
-        foreach(var aux in skills)
-        {
-            SetupSpells(aux.spells);
-        }
-
         foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
         {
             spellUi.Add(aux.gameObject);
@@ -42,32 +38,57 @@ public class CharacterCombat : MonoBehaviour
             spellUi.Add(aux.gameObject);
         }
 
-        for(int i = 0;i< spells.Count;i++)
-        {
-            spellUi[i].GetComponent<Image>().sprite = spells[i].icon;
-            spellUi[i].GetComponent<Image>().enabled = true;
-            var btSpell = spellUi[i].AddComponent<Button>();
-            var skillIndex = i;
-            btSpell.onClick.AddListener(() =>
-            {
-                SelectSkill(skillIndex);
-            });
-        }
+        SetupSpells();
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no primeiro slot
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SelectSkill(1);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SelectSkill(2);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha4)) SelectSkill(3);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha5)) SelectSkill(4);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha6)) SelectSkill(5);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectSkill(6);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha8)) SelectSkill(7);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha9)) SelectSkill(8);//Ativa a skill no slot
+        if (Input.GetKeyDown(KeyCode.Alpha0)) SelectSkill(9);//Ativa a skill no slot
     }
 
-    public void SetupSpells(List<Spell> _spells)
+    public void SetupSpells()
     {
-        foreach(var aux in _spells)
+        this.spells = new List<Spell>();
+        foreach (var auxSkill in skills)
         {
-            if(!this.spells.Contains(aux) && aux.availableAt <= characterStatus.Level)
+            foreach (var aux in auxSkill.skill.spells)
             {
-                this.spells.Add(aux);
+                if (!this.spells.Contains(aux) && aux.availableAt <= auxSkill.level)
+                {
+                    this.spells.Add(aux);
+                }
             }
+        }
+
+        for (int i = 0; i < spells.Count; i++)
+        {
+            spellUi[i].GetComponent<Image>().sprite = spells[i].icon;
+            spellUi[i].GetComponent<Image>().enabled = true;
+            Button btSpell;
+            if(spellUi[i].GetComponent<Button>())
+            {
+                btSpell = spellUi[i].GetComponent<Button>();
+            }
+            else
+            {
+                btSpell = spellUi[i].AddComponent<Button>();
+            }
+
+            var skillIndex = i;
+            btSpell.onClick.RemoveAllListeners();
+            btSpell.onClick.AddListener(() =>
+            {
+                SelectSkill(skillIndex);
+            });
         }
     }
 
@@ -77,23 +98,37 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="index"></param>
     public void SelectSkill(int index)
     {
-        if(selectedSpell == spells[index])
+        if(selectedSpell!=null)
         {
+            var auxSpell = selectedSpell;
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
-            return;
+            if (auxSpell == spells[index])
+            {
+                return;
+            }
         }
 
-        //Checa mana
+        //Check mana
         if (spells[index].manaCost > CharacterController.CharacterStatus.Mp)
         {
             Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
             return;
         }
 
-        selectedSpell = spells[index];
-        selectedUi = spellUi[index].transform.GetChild(0);
-        selectedUi.gameObject.SetActive(true);
+        if(spells[index].spellType == EnumCustom.SpellType.Hit || spells[index].spellType == EnumCustom.SpellType.Special)
+        {
+            selectedSpell = spells[index];
+            selectedUi = spellUi[index].transform.GetChild(0);
+            selectedUi.gameObject.SetActive(true);
+        }
+        else if(spells[index].spellType == EnumCustom.SpellType.Buff)
+        {
+            spells[index].CastBuff(characterController);
+            Manager.Instance.canvasManager.UpdateStatus();
+            Manager.Instance.gameManager.EndMyTurn(characterController);
+        }
+
     }
 
     /// <summary>
@@ -110,6 +145,8 @@ public class CharacterCombat : MonoBehaviour
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
             return;
         }
+
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
 
         if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
@@ -137,75 +174,105 @@ public class CharacterCombat : MonoBehaviour
     /// Casta a spell
     /// </summary>
     /// <param name="enemy"></param>
-    public void CastSpell(EnemyController enemy)
+    public void CastSpell(EnemyController enemy = null, Vector3Int tile = new Vector3Int())
     {
         CharacterController.CharacterStatus.Mp -= selectedSpell.manaCost;
+
+        CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
 
         int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
         int intAttribute = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
-        CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
+        int spellDamage = selectedSpell.GetValue();
 
-        if (!Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name))//Calcula se o hit errou
+        string extraDamage = "";
+        int damage = spellDamage;
+
+        if(selectedSpell.attributeInfluence.Count>0)
+        {
+            extraDamage = " + ";
+        }
+
+        foreach (var aux in selectedSpell.attributeInfluence)
+        {
+            var auxAttribute = characterStatus.attributeStatus.GetValue(aux);
+            extraDamage += auxAttribute;
+            damage += auxAttribute;
+        }
+
+        string textDamage = "(" + spellDamage + extraDamage + ")";
+
+        if(selectedSpell.area>0)
+        {
+            CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, selectedSpell);
+        }
+        else
+        {
+            CastProjectileSpell(hitChance, intAttribute, enemy, damage, textDamage, selectedSpell);
+        }
+    }
+
+    private void CastProjectileSpell(int hitChance, int intAttribute, EnemyController enemy, int damage, string textDamage, Spell spell)
+    {
+        bool hit = Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name); 
+        if (!hit)
         {
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
-
+            
             Manager.Instance.gameManager.EndMyTurn(characterController);
             return;
         }
 
-        int weaponDamage = Random.Range(selectedSpell.minDamage, selectedSpell.maxDamage+1);
-
-        int damage = weaponDamage + intAttribute;
-        string textDamage = "(" + weaponDamage + " + " + intAttribute + ")";
-
         //Cria a spell e configura para a animação
-        StartCoroutine(AnimateCastSpell(enemy.transform.position, selectedSpell, () => { 
-            enemy.HitEnemy(damage, textDamage); 
-            selectedSpell = null; 
+        selectedSpell.AnimateCastProjectileSpell(enemy.transform.position, this.transform, () => {
+            enemy.SpellEnemy(damage, textDamage, spell);
+            selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
-        }));
+            Manager.Instance.gameManager.EndMyTurn(characterController);
+        });
     }
 
-    /// <summary>
-    /// Animação da spell
-    /// </summary>
-    /// <param name="targetPos">posição do inimigo</param>
-    /// <param name="spell"></param>
-    /// <param name="hitAction">Ação apos o hit</param>
-    /// <returns></returns>
-    public IEnumerator AnimateCastSpell(Vector3 targetPos, Spell spell, UnityAction hitAction)
+    private void CastAreaSpell(int hitChance, int intAttribute, Vector3Int startIndex, int damage, string textDamage, Spell spell)
     {
-        //Corrige a rotação da spell
-        Vector3 diff = targetPos - transform.position;
-        diff.Normalize();
+        List<Vector3Int> tiles = new List<Vector3Int>();
+        int area = selectedSpell.area;
 
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        int endX = Mathf.FloorToInt(area / 2) - ((area % 2 == 0) ? 1 : 0);
+        int endY = Mathf.FloorToInt(area / 2) - ((area % 2 == 0) ? 1 : 0);
 
-        Transform spellCreated = Instantiate(spell.spellCastObject, this.transform.position + Vector3.up * 0.5f, Quaternion.Euler(0f, 0f, rot_z - 180)).transform;
-        yield return new WaitForSeconds(0.02f);
-
-        //Detecta a distancia
-        while (Mathf.Abs(Vector3.Distance(spellCreated.position, targetPos)) > 0f)
+        for (int x = startIndex.x - Mathf.FloorToInt(area/2); x<= startIndex.x + endX; x++)
         {
-            if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
+            for(int y = startIndex.y - Mathf.FloorToInt(area / 2); y <= startIndex.y + endY; y++)
             {
-                break;
+                Vector3Int t = new Vector3Int(x, y, 0);
+                if (x >= 0 && y>=0 && Manager.Instance.gameManager.tilemap.HasTile(t))
+                {
+                    tiles.Add(t);
+                }
             }
-            //Move a spell
-            float step = 2f * Time.deltaTime;
-            spellCreated.position = Vector3.MoveTowards(spellCreated.position, targetPos, step);
-            yield return new WaitForSeconds(0.005f);
         }
-        if (Vector3.Distance(spellCreated.position, targetPos) <= 0.5f)
+
+        foreach(var aux in tiles)
         {
-            //Destroi depois de acertar
-            Destroy(spellCreated.gameObject);
-            hitAction?.Invoke();
-            Manager.Instance.gameManager.EndMyTurn(characterController);
+            EnemyController enemy = Manager.Instance.enemyManager.CheckEnemyInTile(aux);
+
+            selectedSpell.AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux));
+
+            if(enemy!=null)
+            {
+                bool hit = Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
+                if (hit)
+                {
+                    enemy.SpellEnemy(damage, textDamage, spell);
+                }
+            }
         }
+
+        selectedSpell = null;
+        selectedUi.gameObject.SetActive(false);
+
+        Manager.Instance.gameManager.EndMyTurn(characterController);
     }
 
     /// <summary>
@@ -232,14 +299,14 @@ public class CharacterCombat : MonoBehaviour
         int str = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int critical = Combat.Critical(characterStatus.attributeStatus.GetValue(EnumCustom.Status.CriticalHit));
 
-        List<Skill> skillBuffs = skills.FindAll(n => n.skillType == EnumCustom.SkillType.WeaponModifier);
+        List<Skill> skillBuffs = skills.FindAll(n => n.skill.skillType == EnumCustom.SkillType.WeaponModifier);
         int skillModifier = 0;
         //Detecta os buffs
         if(skillBuffs.Count>0)
         {
             foreach(var aux in skillBuffs)
             {
-                var tempweaponBuffSkills = aux.weaponBuffSkills.FindAll(n => n.weaponType == CharacterController.CharacterInventory.weapon.weaponType);
+                var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == CharacterController.CharacterInventory.weapon.weaponType);
 
                 if(tempweaponBuffSkills.Count>0)
                 {

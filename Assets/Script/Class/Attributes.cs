@@ -13,6 +13,4 @@ public class Attributes
     public EnumCustom.Attribute attribute;//tipo
 
     public int value;
-
-    public List<int> modifier;//modificadores que são aplicados(buffs e debuff)
 }

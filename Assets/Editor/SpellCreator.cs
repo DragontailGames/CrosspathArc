@@ -10,6 +10,7 @@ public class SpellCreator : EditorWindow
     {
         SpellCreator window = (SpellCreator)GetWindow(typeof(SpellCreator));
         window.titleContent = new GUIContent("Spell Creator");
+        window.minSize = new Vector2(400, 400);
         window.Show();
     }
 
@@ -37,10 +38,18 @@ public class SpellCreator : EditorWindow
         EditorGUILayout.BeginHorizontal();
 
         content.text = "Min";
-        spell.minDamage = EditorGUILayout.IntField(content, spell.minDamage);
+        spell.minValue = EditorGUILayout.IntField(content, spell.minValue);
         content.text = "Max";
-        spell.maxDamage = EditorGUILayout.IntField(content, spell.maxDamage);
+        spell.maxValue = EditorGUILayout.IntField(content, spell.maxValue);
 
         EditorGUILayout.EndHorizontal();
+
+        content.text = "Fixed";
+        spell.fixedValue = EditorGUILayout.IntField(content, spell.fixedValue);
+
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+        content.text = "Icon";
+        //spell.icon = EditorGUILayout.ObjectField()
     }
 }

@@ -117,6 +117,7 @@ public class StatusManager : MonoBehaviour
                 character.CharacterStatus.AvailableSkillPoint--;
                 UpdateSkill(skills[currentSkill], currentSkill);
                 UpdateSkills();
+                character.CharacterCombat.SetupSpells();
             });
             skillsContent.Add(tempSkillContent);
         }

@@ -18,7 +18,7 @@ public class CanvasManager : MonoBehaviour
 
     public ScrollRect combatLog;//Combat log que aparece na tela
 
-    public GameObject logPrefab;//Prefab da linha de log
+    public GameObject combatLogPrefab;//Prefab da linha de log
 
     public Transform skillPanel;
 
@@ -39,7 +39,7 @@ public class CanvasManager : MonoBehaviour
     /// <param name="text">mensagem a aparecer no log</param>
     public void LogMessage(string text)
     {
-        GameObject log = Instantiate(logPrefab, combatLog.content);
+        GameObject log = Instantiate(combatLogPrefab, combatLog.content);
         log.GetComponent<TextMeshProUGUI>().text = text;
         Invoke("FixPositionScroll", 0.2f);
     }
@@ -47,5 +47,62 @@ public class CanvasManager : MonoBehaviour
     public void FixPositionScroll()
     {
         combatLog.normalizedPosition = new Vector2(0, 0);
+    }
+
+    public ScrollRect statusLog;//Status log que aparece na tela
+
+    public GameObject statusLogPrefab;//Prefab da linha de status
+
+    public List<TextMeshProUGUI> statusLogs;
+
+    private string positiveColorValue = "7EE0F5";
+    private string negativeColorValue = "F34242";
+
+    public void UpdateStatus()
+    {
+        List<AttributeModifier> tempAttributeModifiers = new List<AttributeModifier>();
+        List<StatusModifier> tempStatusModifier = new List<StatusModifier>();
+
+        foreach(var aux in Manager.Instance.characterController.CharacterStatus.attributeStatus.attributeModifiers)
+        {
+            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(aux.spellName));
+            if(tempStatusLog==null)
+            {
+                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+                statusLogs.Add(tempStatusLog);
+            }
+            SetupText(tempStatusLog, aux.spellName, aux.value, aux.attribute.ToString(), aux.count);
+        }
+        foreach (var aux in Manager.Instance.characterController.CharacterStatus.attributeStatus.statusModifiers)
+        {
+            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(aux.spellName));
+            if (tempStatusLog == null)
+            {
+                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+                statusLogs.Add(tempStatusLog);
+            }
+            SetupText(tempStatusLog, aux.spellName, aux.value, aux.status.ToString(), aux.count);
+        }
+    }
+
+    public void SetupText(TextMeshProUGUI tmpStatusText, string spellName, int value, string propName, int count)
+    {
+        if (value > 0)
+        {
+            tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName} (+{value} {propName}) ({count})";
+        }
+        else if (value < 0)
+        {
+            tmpStatusText.text = $"<color=#{negativeColorValue}>{spellName} (-{value} {propName}) ({count})";
+        }
+    }
+
+    public void RemoveLogText(string spellName)
+    {
+        var temp = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(spellName));
+        statusLogs.Remove(temp);
+        DestroyImmediate(temp.gameObject);
     }
 }
