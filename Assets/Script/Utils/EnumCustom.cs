@@ -72,6 +72,7 @@ public class EnumCustom : MonoBehaviour
         Sleep,
         Paralyze,
         Invisibility,
+        Invoke,
     }
 
     public enum BuffDebuffType
@@ -79,5 +80,13 @@ public class EnumCustom : MonoBehaviour
         Status,
         Attribute,
         Special,
+    }
+
+    public enum CastTarget
+    {
+        Target,
+        Area,
+        Tile,
+        None,
     }
 }

@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         {
             EnemyController enemyController = creatures[currentCreature].GetComponent<EnemyController>();
 
-            if(enemyController.enemy.hp > 0)
+            if(enemyController.hp > 0)
                 StartCoroutine(enemyController.StartMyTurn());
         }
     }
@@ -230,5 +230,19 @@ public class GameManager : MonoBehaviour
         }
         restCount++;
         return true;
+    }
+
+    public BotController CheckHasBotInTile(Vector3Int tile)
+    {
+        List<BotController> bots = new List<BotController>();
+        foreach(var aux in creatures)
+        {
+            BotController newBot;
+            if(aux.TryGetComponent<BotController>(out newBot))
+            {
+                bots.Add(newBot);
+            }
+        }
+        return bots.Find(n => n.currentTileIndex == tile && n.hp>0);
     }
 }

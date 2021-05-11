@@ -2,53 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : BotController
 {
-    private GameManager gameManager;
     private EnemyManager enemyManager;
     public Enemy enemy;
 
     private CharacterController player;
-    public bool hasTarget = false;
-    public Animator animator;
-
-    public Vector3 offsetPosition;
 
     public Transform hpBar;
     private int maxHp;
 
-    public Vector3Int currentTileIndex;
-    private Vector3 movePosition;
-    public float movementSpeed = 10;
     public int range = 1;
-
-    private bool isDead;
-
-    public readonly string mainAnimation = "Wolf";
 
     private int specialEffectDuration;
     private EnumCustom.SpecialEffect specialEffect;
+    public int poisonDamage;
 
-    void Start()
+    public override void Start()
     {
-        maxHp = enemy.hp;
+        base.Start();
+
+        maxHp = hp;
 
         player = Manager.Instance.characterController;
 
-        gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;
         enemyManager.enemies.Add(this);
-
-        enemy.tilePos = gameManager.tilemap.WorldToCell(this.transform.position);
-        enemy.tilePos.z = 0;
-
-        this.transform.position = Manager.Instance.gameManager.tilemap.GetCellCenterWorld(enemy.tilePos) + offsetPosition;
-        movePosition = this.transform.position;
-
-        currentTileIndex = enemy.tilePos;
-
-        animator = this.GetComponentInChildren<Animator>();
-        animator.speed = 0.7f;
 
         if (!gameManager.DetectLOS(gameManager.GetPath(currentTileIndex, player.CharacterMoveTileIsometric.CurrentTileIndex)))
         {
@@ -56,22 +35,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Inimigo sofrendo dano de hit
-    /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="damageText"></param>
-    public void HitEnemy(int damage, string damageText)
+    public override void ReceiveHit(int damage, string damageText = "")
     {
-        int armor = enemy.attributeStatus.GetValue(EnumCustom.Status.Armor);
+        base.ReceiveHit(damage, damageText);
+        int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
-        enemy.hp -= trueDamage;
-        Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
 
-        if(enemy.hp<=0)
-        {
-            Defeat();//mata o inimigo
-        }
+        Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
     }
 
     /// <summary>
@@ -79,20 +49,21 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public void SpellEnemy(int damage, string damageText, Spell spell)
+    public void ReceiveSpell(int damage, string damageText, Spell spell, int _poisonDamage = 0)
     {
         if(spell.spellType == EnumCustom.SpellType.Special)
         {
             specialEffectDuration = spell.specialEffectDuration;
             specialEffect = spell.specialEffect;
+            poisonDamage = _poisonDamage;
         }
         else
         {
-            enemy.hp -= damage;
+            hp -= damage;
             Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " = <color=red>" + damage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
         }
 
-        if (enemy.hp <= 0)
+        if (hp <= 0)
         {
             Defeat();//mata o inimigo
         }
@@ -100,14 +71,8 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (enemy.hp <= 0)//Correção temporaria
-        {
-            Defeat();
-            return;
-        }
-
         var scale = hpBar.localScale;
-        scale.x = Mathf.Clamp((float)enemy.hp / (float)maxHp, 0, 1);//Animação da barra de hp
+        scale.x = Mathf.Clamp((float)hp / (float)maxHp, 0, 1);//Animação da barra de hp
         hpBar.localScale = scale;
 
         if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
@@ -126,43 +91,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        if (enemy.hp <= 0)//Correção temporaria
-            return;
-
-        this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
-        animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f && enemy.hp>0);
-    }
-
-    /// <summary>
-    /// Executa se o inimigo morrer
-    /// </summary>
-    void Defeat()
-    {
-        if (!isDead)
-        {
-            PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
-            isDead = true;
-            Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
-            Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
-            //Destroy(this.gameObject);
-            this.transform.Find("HealthBar").gameObject.SetActive(false);
-            gameManager.creatures.Remove(this.gameObject);
-            gameManager.currentCreature--;
-            gameManager.EndMyTurn();
-        }
-    }
-
     public IEnumerator StartMyTurn()
     {
-        if(isDead)
+        if (isDead)
         {
             yield break;
         }
 
+        yield return new WaitForSeconds(0.2f);
+
         if (specialEffect != EnumCustom.SpecialEffect.None)
         {
+            if (specialEffectDuration <= 0)
+            {
+                specialEffect = EnumCustom.SpecialEffect.None;
+            }
             specialEffectDuration--;
             if (specialEffect == EnumCustom.SpecialEffect.Sleep)
             {
@@ -171,11 +114,9 @@ public class EnemyController : MonoBehaviour
             }
             if(specialEffect == EnumCustom.SpecialEffect.Poison)
             {
-
+                hp -= poisonDamage;
+                Manager.Instance.canvasManager.LogMessage($"{enemy.name} sofreu {poisonDamage} do veneno");//Manda mensagem do dano que o inimigo recebeu
             }
-
-            if (specialEffectDuration <= 0)
-                specialEffect = EnumCustom.SpecialEffect.None;
         }
 
         Vector3Int playerTileIndex = player.CharacterMoveTileIsometric.CurrentTileIndex;
@@ -203,51 +144,13 @@ public class EnemyController : MonoBehaviour
         gameManager.EndMyTurn();
     }
 
-    public void Walk(Vector3Int playerPos, List<PathFind.Point> path)
+    public override void Defeat()
     {
-        if (isDead)
-        {
-            return;
-        } 
+        base.Defeat();
 
-        Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
-
-        if(enemyManager.CheckEnemyInTile(dest))
-        {
-            return;
-        }
-
-        animator.SetBool("Walk", true);
-        PlayAnimation("Walk", gameManager.GetDirection(currentTileIndex, dest));
-
-        currentTileIndex = dest;
-
-        movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
+        Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
+        Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
+        this.transform.Find("HealthBar").gameObject.SetActive(false);
     }
 
-    public void Attack(CharacterCombat characterCombat)
-    {
-        if (isDead)
-        {
-            return;
-        }
-        int hitChance = enemy.attributeStatus.GetValue(EnumCustom.Status.HitChance);
-        int str = enemy.attributeStatus.GetValue(EnumCustom.Attribute.Str);
-        int dodge = characterCombat.CharacterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.Dodge);
-
-        PlayAnimation("Attack", gameManager.GetDirection(currentTileIndex, characterCombat.CharacterController.CharacterMoveTileIsometric.CurrentTileIndex));
-
-        if (!Combat.TryHit(hitChance, str, dodge, player.CharacterStatus.nickname))
-        {
-            return;
-        }
-
-        characterCombat.GetHit(str, this);
-    }
-
-    public void PlayAnimation(string animationName, string dir)
-    {
-        string ani = mainAnimation + "_" + animationName + "_" + dir;
-        animator.Play(ani);
-    }
 }

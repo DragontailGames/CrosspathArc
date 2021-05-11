@@ -21,7 +21,7 @@ public class Combat
     /// <param name="attribute">Atribute para ser calculado</param>
     /// <param name="dodge">Chance de dodge do openten</param>
     /// <returns></returns>
-    public static bool TryHit(int hitChance, int attribute, int dodge, string enemy)
+    public static bool TryHit(int hitChance, int attribute, int dodge, string enemy = "")
     {
         int dice = MathfCustom.GetDice(20);
 
@@ -31,7 +31,8 @@ public class Combat
 
         message += value >= 20 ? " <color=green>(acertou)</color>" : " <color=red>(errou)</color>";
 
-        Manager.Instance.canvasManager.LogMessage(message);
+        if(!string.IsNullOrEmpty(enemy))
+            Manager.Instance.canvasManager.LogMessage(message);
 
         return value >= 20;
     }

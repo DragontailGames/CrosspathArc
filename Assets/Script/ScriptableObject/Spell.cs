@@ -10,7 +10,9 @@ public class Spell : ScriptableObject
 
     public string description;
 
-    public EnumCustom.SpellType spellType;
+    public Sprite icon;
+
+    public EnumCustom.CastTarget castTarget;
 
     public int availableAt = 1;
 
@@ -20,21 +22,23 @@ public class Spell : ScriptableObject
 
     public int fixedValue = 0;
 
+    public int manaCost;
+
+    public EnumCustom.SpellType spellType;
+
     public int area;
 
     public List<BuffDebuff> buffDebuff;
 
     public List<EnumCustom.Attribute> attributeInfluence;
 
-    public Sprite icon;
-
     public GameObject spellCastObject;
-
-    public int manaCost;
 
     public EnumCustom.SpecialEffect specialEffect;
 
     public int specialEffectDuration = 0;
+
+    public int invokeLimit = 0;
 
     public int GetValue()
     {

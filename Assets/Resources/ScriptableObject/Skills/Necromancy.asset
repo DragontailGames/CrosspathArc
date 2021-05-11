@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Necromancy
+  m_EditorClassIdentifier: 
+  skillName: Necromancy
+  skillType: 1
+  modifier: []
+  weaponBuffSkills: []
+  spells:
+  - {fileID: 11400000, guid: 2162fe85ffbf6f84091acee313204d3a, type: 2}
+  - {fileID: 11400000, guid: 7b2c111d32e7b424b8bb277e81e7bc56, type: 2}
+  - {fileID: 11400000, guid: 44ab35c4c7b55234892df1d14a97e2ca, type: 2}

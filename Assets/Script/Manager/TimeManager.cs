@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class TimeManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class TimeManager : MonoBehaviour
     private Color dayColor = new Color(1,0.94f,0.64f,1);
     private Color nightColor = new Color(0.76f, 0.81f, 0.9f, 1);
 
+    public UnityAction startNewTurnAction;
+
     public void Awake()
     {
         Manager.Instance.timeManager = this;
@@ -30,6 +33,7 @@ public class TimeManager : MonoBehaviour
 
     public void StartNewTurn()
     {
+        startNewTurnAction?.Invoke();
         nextTimeChange--;
         if(nextTimeChange <= 0)
         {

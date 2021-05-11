@@ -10,13 +10,7 @@ public class Enemy
 {
     public string name;
 
-    public Vector3Int tilePos;
-
     public int size;
-
-    public AttributeStatus attributeStatus;
-
-    public int hp;
 
     public int exp;
 }

@@ -71,7 +71,7 @@ public class CharacterController : MonoBehaviour
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if (enemyInTile != null && enemyInTile.enemy.hp>0)
+            if (enemyInTile != null && enemyInTile.hp>0)
             {
                 StartCoroutine(StartDelay());
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);

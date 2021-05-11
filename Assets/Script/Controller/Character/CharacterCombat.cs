@@ -146,7 +146,7 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
 
         if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
@@ -206,7 +206,7 @@ public class CharacterCombat : MonoBehaviour
         {
             CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, selectedSpell);
         }
-        else
+        else if(enemy!=null)
         {
             CastProjectileSpell(hitChance, intAttribute, enemy, damage, textDamage, selectedSpell);
         }
@@ -214,7 +214,7 @@ public class CharacterCombat : MonoBehaviour
 
     private void CastProjectileSpell(int hitChance, int intAttribute, EnemyController enemy, int damage, string textDamage, Spell spell)
     {
-        bool hit = Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name); 
+        bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name); 
         if (!hit)
         {
             selectedSpell = null;
@@ -224,9 +224,14 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
+        int poisonDamage = 0;
+
+        if(spell.specialEffect == EnumCustom.SpecialEffect.Poison)
+            poisonDamage = Mathf.RoundToInt(skills.Find(n => n.name == "Necromancy").level/2);
+
         //Cria a spell e configura para a animação
         selectedSpell.AnimateCastProjectileSpell(enemy.transform.position, this.transform, () => {
-            enemy.SpellEnemy(damage, textDamage, spell);
+            enemy.ReceiveSpell(damage, textDamage, spell, poisonDamage);
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
             Manager.Instance.gameManager.EndMyTurn(characterController);
@@ -261,10 +266,10 @@ public class CharacterCombat : MonoBehaviour
 
             if(enemy!=null)
             {
-                bool hit = Combat.TryHit(hitChance, intAttribute, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
+                bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
                 if (hit)
                 {
-                    enemy.SpellEnemy(damage, textDamage, spell);
+                    enemy.ReceiveSpell(damage, textDamage, spell);
                 }
             }
         }
@@ -284,12 +289,12 @@ public class CharacterCombat : MonoBehaviour
         int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int dex = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
 
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
         CharacterController.Animator.Play(CharacterController.animationName + "_Punch_" + CharacterController.direction);
 
         Manager.Instance.gameManager.EndMyTurn(characterController);
 
-        if (!Combat.TryHit(hitChance, dex, enemy.enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.enemy.name))//Calcula se o hit errou
+        if (!Combat.TryHit(hitChance, dex, enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.enemy.name))//Calcula se o hit errou
         {
             return;
         }
@@ -322,10 +327,10 @@ public class CharacterCombat : MonoBehaviour
 
         string textDamage = "(" + weaponDamage + " + " + str + " + " + skillModifier + ") * " + critical;//texto do dano
 
-        enemy.HitEnemy(damage, textDamage);
+        enemy.ReceiveHit(damage, textDamage);
     }
 
-    public void GetHit(int damage, EnemyController enemy)
+    public void GetHit(int damage, BotController enemy)
     {
         CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
         CharacterController.Animator.Play(CharacterController.animationName + "_GetHit_" + CharacterController.direction);
@@ -337,7 +342,7 @@ public class CharacterCombat : MonoBehaviour
 
         if (!CharacterController.CharacterStatus.DropHP(trueDamage))
         {
-            CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.enemy.tilePos);
+            CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
             CharacterController.Animator.Play(CharacterController.animationName + "_Die_" + CharacterController.direction);
             Manager.Instance.gameManager.InPause = true;
             Manager.Instance.gameManager.creatures.Remove(this.gameObject);

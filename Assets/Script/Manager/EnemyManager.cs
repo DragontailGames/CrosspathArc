@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
 
     public EnemyController CheckEnemyInTile(Vector3Int tile)
     {
-        return enemies.Find(n => n.currentTileIndex == tile && n.enemy.hp > 0);
+        return enemies.Find(n => n.currentTileIndex == tile && n.hp > 0);
     }
 
     public Vector3Int MaxRangePos(Enemy enemy)
@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour
                 !CheckEnemyInTile(spawnPos) && createEnemies.Find(n => n==spawnPos) != null)
             {
                 GameObject enemie = Instantiate(enemiesCanBeCreated[Random.Range(0, enemiesCanBeCreated.Count)], Manager.Instance.gameManager.tilemap.GetCellCenterLocal(spawnPos) + new Vector3(0, 0, 0.5f), Quaternion.identity);
-                enemie.GetComponent<EnemyController>().enemy.attributeStatus = new AttributeStatus(Manager.Instance.characterController.CharacterStatus.Level - 1);
+                enemie.GetComponent<EnemyController>().attributeStatus = new AttributeStatus(Manager.Instance.characterController.CharacterStatus.Level - 1);
                 createEnemies.Add(spawnPos);
             }
             else

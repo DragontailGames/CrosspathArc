@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Blizzard
   description: 
-  spellType: 0
+  icon: {fileID: 21300000, guid: fa5a893086bfd42a789e084acd9dddf1, type: 3}
+  castTarget: 1
   availableAt: 7
   minValue: 3
   maxValue: 6
   fixedValue: 0
+  manaCost: 14
+  spellType: 0
   area: 5
   buffDebuff: []
   attributeInfluence: 
-  icon: {fileID: 21300000, guid: fa5a893086bfd42a789e084acd9dddf1, type: 3}
   spellCastObject: {fileID: 2768029068666810568, guid: 5bb4c463abb015048be57a0ea4ddd4e0, type: 3}
-  manaCost: 14
+  specialEffect: 0
+  specialEffectDuration: 0
+  invokeLimit: 0
