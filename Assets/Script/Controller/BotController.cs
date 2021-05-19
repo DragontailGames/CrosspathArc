@@ -9,6 +9,8 @@ public class BotController : MonoBehaviour
     public AttributeStatus attributeStatus;
 
     public int hp;
+    public Transform hpBar;
+    private int maxHp;
 
     public bool hasTarget = false;
     public Animator animator;
@@ -24,9 +26,14 @@ public class BotController : MonoBehaviour
 
     public string mainAnimation;
 
+    public Transform target;
+
     public virtual void Start()
     {
         gameManager = Manager.Instance.gameManager;
+
+        maxHp = hp;
+        hpBar = this.transform.Find("HealthBar").GetChild(0);
 
         currentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
         currentTileIndex.z = 0;
@@ -36,6 +43,13 @@ public class BotController : MonoBehaviour
 
         animator = this.GetComponentInChildren<Animator>();
         animator.speed = 0.7f;
+    }
+
+    public virtual void Update()
+    {
+        var scale = hpBar.localScale;
+        scale.x = Mathf.Clamp((float)hp / (float)maxHp, 0, 1);//Animação da barra de hp
+        hpBar.localScale = scale;
     }
 
     public void FixedUpdate()
@@ -75,22 +89,30 @@ public class BotController : MonoBehaviour
     /// </summary>
     public virtual void Defeat()
     {
+        hp = 0;
         if (!isDead)
         {
             PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
             isDead = true;
             gameManager.creatures.Remove(this.gameObject);
-            gameManager.currentCreature--;
-            gameManager.EndMyTurn();
+            //gameManager.currentCreature--;
+            //gameManager.EndMyTurn();
         }
     }
 
-    public void Attack(CharacterCombat characterCombat = null, BotController botController = null)
+    public void Attack(CharacterController characterController = null, BotController botController = null)
     {
         if (isDead)
         {
             return;
         }
+
+        CharacterCombat characterCombat = null;
+        if(characterController != null)
+        {
+            characterCombat = characterController.CharacterCombat;
+        }
+
         int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int dodge = characterCombat != null ? characterCombat.CharacterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.Dodge):
@@ -109,9 +131,55 @@ public class BotController : MonoBehaviour
         if (characterCombat)
             characterCombat.GetHit(str, this);
         else
-            botController.ReceiveHit(str);
+            botController.ReceiveHit(str, str.ToString());
     }
 
+    public virtual IEnumerator StartMyTurn(bool enemy = true)
+    {
+        if (isDead)
+        {
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        CharacterController characterController;
+        BotController botController;
+
+        if (!target)
+        {
+            gameManager.EndMyTurn();
+            yield break;
+        }
+
+        target.TryGetComponent(out characterController);
+        target.TryGetComponent(out botController);
+
+        Vector3Int targetTileIndex = botController==null?characterController.CharacterMoveTileIsometric.CurrentTileIndex:botController.currentTileIndex;
+        List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, targetTileIndex);
+
+        if (gameManager.DetectLOS(path))
+        {
+            hasTarget = false;
+            gameManager.EndMyTurn();
+            yield break;
+        }
+
+        hasTarget = true;
+        yield return new WaitForSeconds(0.4f);
+
+        int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? 2 : 1;
+        if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal)
+        {
+            if(!(characterController != null && !enemy))
+                Attack(characterController, botController);
+        }
+        else
+        {
+            Walk(targetTileIndex, path);
+        }
+        gameManager.EndMyTurn();
+    }
 
     /// <summary>
     /// Inimigo sofrendo dano de hit

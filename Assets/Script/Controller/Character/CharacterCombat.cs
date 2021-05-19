@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Linq;
 
 public class CharacterCombat : MonoBehaviour
 {
@@ -11,13 +12,19 @@ public class CharacterCombat : MonoBehaviour
 
     public List<Skill> skills;
 
-    private List<Spell> spells;
+    public List<Spell> spells = new List<Spell>(10);
 
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
     public Spell selectedSpell = null;//Skill que o jogador escolheu
 
     public Transform selectedUi;
+
+    public List<MinionCount> minionCounts = new List<MinionCount>();
+
+    public int invisibilityDuration = 0;
+
+    private Color32 color;
 
     public CharacterController CharacterController { get => this.characterController; set => this.characterController = value; }
 
@@ -28,6 +35,7 @@ public class CharacterCombat : MonoBehaviour
     {
         CharacterController = this.GetComponent<CharacterController>();
         characterStatus = CharacterController.CharacterStatus;
+        color = this.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
 
         foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
         {
@@ -43,52 +51,49 @@ public class CharacterCombat : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SelectSkill(1);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SelectSkill(2);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SelectSkill(3);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha5)) SelectSkill(4);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha6)) SelectSkill(5);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha7)) SelectSkill(6);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha8)) SelectSkill(7);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha9)) SelectSkill(8);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha0)) SelectSkill(9);//Ativa a skill no slot
+        if (!Manager.Instance.gameManager.InPause)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSkill(0);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha2)) SelectSkill(1);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha3)) SelectSkill(2);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha4)) SelectSkill(3);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha5)) SelectSkill(4);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha6)) SelectSkill(5);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha7)) SelectSkill(6);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha8)) SelectSkill(7);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha9)) SelectSkill(8);//Ativa a skill no slot
+            if (Input.GetKeyDown(KeyCode.Alpha0)) SelectSkill(9);//Ativa a skill no slot
+
+            color.a = invisibilityDuration > 0 ? (byte)100 : (byte)255;
+            this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+        }
     }
 
     public void SetupSpells()
     {
-        this.spells = new List<Spell>();
-        foreach (var auxSkill in skills)
+        for (int i = 0; i < 10; i++)
         {
-            foreach (var aux in auxSkill.skill.spells)
+            if (spells.Count> i && spells[i] != null)
             {
-                if (!this.spells.Contains(aux) && aux.availableAt <= auxSkill.level)
+                spellUi[i].GetComponent<Image>().sprite = spells[i].icon;
+                spellUi[i].GetComponent<Image>().enabled = true;
+                Button btSpell;
+                if (spellUi[i].GetComponent<Button>())
                 {
-                    this.spells.Add(aux);
+                    btSpell = spellUi[i].GetComponent<Button>();
                 }
-            }
-        }
+                else
+                {
+                    btSpell = spellUi[i].AddComponent<Button>();
+                }
 
-        for (int i = 0; i < spells.Count; i++)
-        {
-            spellUi[i].GetComponent<Image>().sprite = spells[i].icon;
-            spellUi[i].GetComponent<Image>().enabled = true;
-            Button btSpell;
-            if(spellUi[i].GetComponent<Button>())
-            {
-                btSpell = spellUi[i].GetComponent<Button>();
+                var skillIndex = i;
+                btSpell.onClick.RemoveAllListeners();
+                btSpell.onClick.AddListener(() =>
+                {
+                    SelectSkill(skillIndex);
+                });
             }
-            else
-            {
-                btSpell = spellUi[i].AddComponent<Button>();
-            }
-
-            var skillIndex = i;
-            btSpell.onClick.RemoveAllListeners();
-            btSpell.onClick.AddListener(() =>
-            {
-                SelectSkill(skillIndex);
-            });
         }
     }
 
@@ -116,7 +121,7 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
-        if(spells[index].spellType == EnumCustom.SpellType.Hit || spells[index].spellType == EnumCustom.SpellType.Special)
+        if (spells[index].castTarget != EnumCustom.CastTarget.None && (spells[index].spellType == EnumCustom.SpellType.Hit || spells[index].spellType == EnumCustom.SpellType.Special || spells[index].spellType == EnumCustom.SpellType.Hit_Special))
         {
             selectedSpell = spells[index];
             selectedUi = spellUi[index].transform.GetChild(0);
@@ -125,8 +130,17 @@ public class CharacterCombat : MonoBehaviour
         else if(spells[index].spellType == EnumCustom.SpellType.Buff)
         {
             spells[index].CastBuff(characterController);
+            invisibilityDuration = 0;
             Manager.Instance.canvasManager.UpdateStatus();
             Manager.Instance.gameManager.EndMyTurn(characterController);
+        }
+        else if(spells[index].spellType == EnumCustom.SpellType.Special)
+        {
+            if (spells[index].specialEffect == EnumCustom.SpecialEffect.Invisibility)
+            {
+                characterStatus.Mp -= spells[index].manaCost;
+                CastInvisibility(spells[index].specialEffectDuration);
+            }
         }
 
     }
@@ -146,10 +160,16 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
+        invisibilityDuration = 0;
+
         CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
 
         if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
+            if(selectedSpell.castTarget == EnumCustom.CastTarget.Target && enemy == null)
+            {
+                return;
+            }
             CastSpell(enemy);
             return;
         }
@@ -176,6 +196,11 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="enemy"></param>
     public void CastSpell(EnemyController enemy = null, Vector3Int tile = new Vector3Int())
     {
+        if (selectedSpell.castTarget == EnumCustom.CastTarget.Target && enemy == null)
+            return;
+
+        invisibilityDuration = 0;
+
         CharacterController.CharacterStatus.Mp -= selectedSpell.manaCost;
 
         CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
@@ -202,13 +227,25 @@ public class CharacterCombat : MonoBehaviour
 
         string textDamage = "(" + spellDamage + extraDamage + ")";
 
-        if(selectedSpell.area>0)
+        if(selectedSpell.castTarget == EnumCustom.CastTarget.Area)
         {
             CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, selectedSpell);
         }
-        else if(enemy!=null)
+        else if (selectedSpell.castTarget == EnumCustom.CastTarget.Tile)
         {
-            CastProjectileSpell(hitChance, intAttribute, enemy, damage, textDamage, selectedSpell);
+            CastSpellInTile(tile, selectedSpell);
+        }
+        else if(selectedSpell.castTarget == EnumCustom.CastTarget.Target)
+        {
+            if (enemy != null)
+            {
+                CastProjectileSpell(hitChance, intAttribute, enemy, damage, textDamage, selectedSpell);
+            }
+            else
+            {
+                selectedSpell = null;
+                selectedUi.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -226,12 +263,23 @@ public class CharacterCombat : MonoBehaviour
 
         int poisonDamage = 0;
 
+        UnityAction extraEffect = null;
+
         if(spell.specialEffect == EnumCustom.SpecialEffect.Poison)
             poisonDamage = Mathf.RoundToInt(skills.Find(n => n.name == "Necromancy").level/2);
+        if(spell.specialEffect == EnumCustom.SpecialEffect.Hp_Regen)
+        {
+            extraEffect += () => { characterStatus.Hp += spell.minSpecialValue != 0 ? Random.Range(spell.minSpecialValue, spell.maxSpecialValue) : spell.fixedSpecialValue; };
+        }
+        if (spell.specialEffect == EnumCustom.SpecialEffect.Mp_Regen)
+        {
+            extraEffect += () => { characterStatus.Mp += spell.minSpecialValue != 0 ? Random.Range(spell.minSpecialValue, spell.maxSpecialValue) : spell.fixedSpecialValue; };
+        }
 
         //Cria a spell e configura para a animação
         selectedSpell.AnimateCastProjectileSpell(enemy.transform.position, this.transform, () => {
             enemy.ReceiveSpell(damage, textDamage, spell, poisonDamage);
+            extraEffect?.Invoke();
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
             Manager.Instance.gameManager.EndMyTurn(characterController);
@@ -271,6 +319,60 @@ public class CharacterCombat : MonoBehaviour
                 {
                     enemy.ReceiveSpell(damage, textDamage, spell);
                 }
+            }
+        }
+
+        selectedSpell = null;
+        selectedUi.gameObject.SetActive(false);
+
+        Manager.Instance.gameManager.EndMyTurn(characterController);
+    }
+
+    public void CastSpellInTile(Vector3Int index, Spell spell)
+    {
+        if (spell.specialEffect == EnumCustom.SpecialEffect.Invoke)
+        {
+            GameObject creature = spell.InvokeCreature(Manager.Instance.gameManager.tilemap.CellToLocal(index));
+            if (minionCounts.Find(n => n.spell == spell) != null)
+            {
+                if (minionCounts.Find(n => n.spell == spell).creatures.Count >= spell.invokeLimit)
+                {
+                    List<GameObject> orderedCreature = minionCounts.Find(n => n.spell == spell).creatures.OrderBy(n => n.GetComponent<MinionController>().duration).ToList();
+                    orderedCreature[0].GetComponent<MinionController>().Defeat();
+                }
+                minionCounts.Find(n => n.spell == spell).creatures.Add(creature);
+            }
+            else
+            {
+                minionCounts.Add(new MinionCount()
+                {
+                    spell = spell,
+                    creatures = new List<GameObject>()
+                {
+                    creature
+                }
+                });
+            }
+        }
+        else if (spell.specialEffect == EnumCustom.SpecialEffect.Blink)
+        {
+            var points = Manager.Instance.gameManager.GetPath(characterController.CharacterMoveTileIsometric.CurrentTileIndex, index);
+            PathFind.Point point = null;
+            for(int i = 0;i < (points.Count > 5 ? 5 : points.Count - 1);i++ )
+            {
+                if(!Manager.Instance.gameManager.elevationTM.HasTile(new Vector3Int(points[i].x + 1, points[i].y + 1, 0)))
+                {
+                    point = points[i];
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (point != null)
+            {
+                Vector3Int pos = new Vector3Int(point.x, point.y, 0);
+                characterController.CharacterMoveTileIsometric.Blink(pos);
             }
         }
 
@@ -347,6 +449,19 @@ public class CharacterCombat : MonoBehaviour
             Manager.Instance.gameManager.InPause = true;
             Manager.Instance.gameManager.creatures.Remove(this.gameObject);
             Debug.Log("Morreu");
+        }
+    }
+
+    public void CastInvisibility(int duration)
+    {
+        invisibilityDuration = duration;
+        foreach(var aux in Manager.Instance.enemyManager.enemies)
+        {
+            if(aux.target == this.gameObject)
+            {
+                aux.hasTarget = false;
+                aux.target = null;
+            }
         }
     }
 }

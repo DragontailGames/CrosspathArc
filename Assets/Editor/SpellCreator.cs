@@ -113,6 +113,11 @@ public class SpellCreator : EditorWindow
         {
             RenderSpecial();
         }
+        else if (spell.spellType == EnumCustom.SpellType.Hit_Special)
+        {
+            RenderDamage();
+            RenderSpecial();
+        }
     }
 
     public void RenderDamage()
@@ -215,10 +220,29 @@ public class SpellCreator : EditorWindow
         content.text = "Special Effect";
         spell.specialEffect = (EnumCustom.SpecialEffect)EditorGUILayout.EnumPopup(content, spell.specialEffect);
 
-        content.text = "Duration";
-        spell.specialEffectDuration = EditorGUILayout.IntField(content, spell.specialEffectDuration);
+        if (spell.specialEffect == EnumCustom.SpecialEffect.Hp_Regen || spell.specialEffect == EnumCustom.SpecialEffect.Mp_Regen)
+        {
+            EditorGUILayout.LabelField("Special Value");
+            EditorGUILayout.BeginHorizontal();
 
-        if(spell.specialEffect == EnumCustom.SpecialEffect.Invoke)
+            content.text = "Min";
+            spell.minSpecialValue = EditorGUILayout.IntField(content, spell.minSpecialValue);
+
+            content.text = "Max";
+            spell.maxSpecialValue = EditorGUILayout.IntField(content, spell.maxSpecialValue);
+
+            EditorGUILayout.EndHorizontal();
+
+            content.text = "Fixed";
+            spell.fixedSpecialValue = EditorGUILayout.IntField(content, spell.fixedSpecialValue);
+        }
+        else
+        {
+            content.text = "Duration";
+            spell.specialEffectDuration = EditorGUILayout.IntField(content, spell.specialEffectDuration);
+        }
+
+        if (spell.specialEffect == EnumCustom.SpecialEffect.Invoke)
         {
             content.text = "Max Invokes";
             spell.invokeLimit = EditorGUILayout.IntField(content, spell.invokeLimit);

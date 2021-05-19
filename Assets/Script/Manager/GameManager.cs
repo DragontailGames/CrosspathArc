@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
     public void EndMyTurn(CharacterController cController = null)
     {
         currentCreature++;
+
         if (currentCreature >= creatures.Count)
         {
             currentCreature = 0;
@@ -112,7 +113,7 @@ public class GameManager : MonoBehaviour
             cController.myTurn = false;
         }
 
-        if (creatures[currentCreature] == null)
+        if (creatures[currentCreature] == null )
             EndMyTurn();
 
         if (creatures[currentCreature].GetComponent<CharacterController>())
@@ -122,15 +123,21 @@ public class GameManager : MonoBehaviour
             if (playerController.CharacterStatus.Hp > 0)
             {
                 playerController.waitRest = playerController.StartMyTurn();
-                StartCoroutine(playerController.waitRest);
+                StartCoroutine(playerController?.waitRest);
             }
         }
         else
         {
-            EnemyController enemyController = creatures[currentCreature].GetComponent<EnemyController>();
+            BotController botController = creatures[currentCreature].GetComponent<BotController>();
 
-            if(enemyController.hp > 0)
-                StartCoroutine(enemyController.StartMyTurn());
+            if (botController.hp > 0)
+            {
+                StartCoroutine(botController.StartMyTurn());
+            }
+            else
+            {
+                EndMyTurn();
+            }
         }
     }
 

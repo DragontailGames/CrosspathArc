@@ -9,9 +9,6 @@ public class EnemyController : BotController
 
     private CharacterController player;
 
-    public Transform hpBar;
-    private int maxHp;
-
     public int range = 1;
 
     private int specialEffectDuration;
@@ -21,8 +18,6 @@ public class EnemyController : BotController
     public override void Start()
     {
         base.Start();
-
-        maxHp = hp;
 
         player = Manager.Instance.characterController;
 
@@ -69,12 +64,8 @@ public class EnemyController : BotController
         }
     }
 
-    void Update()
+    public override void Update()
     {
-        var scale = hpBar.localScale;
-        scale.x = Mathf.Clamp((float)hp / (float)maxHp, 0, 1);//Animação da barra de hp
-        hpBar.localScale = scale;
-
         if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
         {
             if (!gameManager.creatures.Contains(this.gameObject))
@@ -91,15 +82,8 @@ public class EnemyController : BotController
         }
     }
 
-    public IEnumerator StartMyTurn()
+    public override IEnumerator StartMyTurn(bool isEnemy = true)
     {
-        if (isDead)
-        {
-            yield break;
-        }
-
-        yield return new WaitForSeconds(0.2f);
-
         if (specialEffect != EnumCustom.SpecialEffect.None)
         {
             if (specialEffectDuration <= 0)
@@ -118,30 +102,34 @@ public class EnemyController : BotController
                 Manager.Instance.canvasManager.LogMessage($"{enemy.name} sofreu {poisonDamage} do veneno");//Manda mensagem do dano que o inimigo recebeu
             }
         }
+        target = GetTarget();
+        yield return new WaitForSeconds(0.2f);
 
-        Vector3Int playerTileIndex = player.CharacterMoveTileIsometric.CurrentTileIndex;
-        List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, playerTileIndex);
+        StartCoroutine(base.StartMyTurn());
+    }
 
-        if (gameManager.DetectLOS(path))
+    public Transform GetTarget()
+    {
+        var creaturesWithoutEnemy = gameManager.creatures.FindAll(n => n.GetComponent<EnemyController>() == null);
+        var shortestDistance = Mathf.Infinity;
+        Transform smallDistance = null; 
+        foreach (var aux in creaturesWithoutEnemy)
         {
-            hasTarget = false;
-            gameManager.EndMyTurn();
-            yield break;
+            if(aux.GetComponent<CharacterController>())
+            {
+                if(aux.GetComponent<CharacterController>().CharacterCombat.invisibilityDuration>0)
+                {
+                    return null;
+                }
+            }
+            var distance = Vector3.Distance(aux.transform.position, this.transform.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                smallDistance = aux.transform;
+            }
         }
-
-        hasTarget = true;
-        yield return new WaitForSeconds(0.4f);
-
-        int offsetDiagonal = (playerTileIndex.x != currentTileIndex.x && playerTileIndex.y != currentTileIndex.y) ? 2 : 1;
-        if (Vector3.Distance(playerTileIndex, currentTileIndex) <= offsetDiagonal)
-        {
-            Attack(player.CharacterCombat);
-        }
-        else
-        {
-            Walk(playerTileIndex, path);
-        }
-        gameManager.EndMyTurn();
+        return smallDistance;
     }
 
     public override void Defeat()

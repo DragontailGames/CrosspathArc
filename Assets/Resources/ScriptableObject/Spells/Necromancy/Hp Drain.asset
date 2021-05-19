@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
+  m_Name: Hp Drain
+  m_EditorClassIdentifier: 
+  spellName: Hp Drain
+  description: 
+  icon: {fileID: 21300000, guid: c1c1a3f842fae43108c40d88580d6f23, type: 3}
+  castTarget: 0
+  availableAt: 6
+  minValue: 4
+  maxValue: 6
+  fixedValue: 0
+  manaCost: 12
+  spellType: 5
+  area: 0
+  buffDebuff: []
+  attributeInfluence: 
+  spellCastObject: {fileID: 100006, guid: d61fbd4e946771b4f83a69be9e8a5540, type: 3}
+  specialEffect: 6
+  minSpecialValue: 1
+  maxSpecialValue: 4
+  fixedSpecialValue: 0
+  specialEffectDuration: 0
+  invokeLimit: 0

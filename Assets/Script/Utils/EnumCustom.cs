@@ -56,6 +56,9 @@ public class EnumCustom : MonoBehaviour
         Debuff,
         Special,
         Unlock,
+        Hit_Special,
+        Hit_Buff,
+        Hit_Debuff,
     }
 
     public enum WeaponType
@@ -73,6 +76,10 @@ public class EnumCustom : MonoBehaviour
         Paralyze,
         Invisibility,
         Invoke,
+        Hp_Regen,
+        Mp_Regen,
+        Fake_Life,
+        Blink,
     }
 
     public enum BuffDebuffType

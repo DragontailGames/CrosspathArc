@@ -104,5 +104,13 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         characterController.Animator.Play(animation);
     }
+
+    public void Blink(Vector3Int index)
+    {
+        Vector3 pos = Manager.Instance.gameManager.tilemap.GetCellCenterWorld(index) + offsetPosition;
+        this.transform.position = pos;
+        movePosition = pos;
+        currentTileIndex = index;
+    }
 }
 

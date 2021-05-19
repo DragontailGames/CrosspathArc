@@ -113,6 +113,7 @@ public class CharacterController : MonoBehaviour
         gameManager.StartNewTurn();
         yield return new WaitForSeconds(0.1f);
         myTurn = true;
+        characterCombat.invisibilityDuration--;
 
         if(isRest)
         {

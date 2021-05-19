@@ -7,6 +7,8 @@ public class Skill
 {
     public string name;
 
+    public string description;
+
     public SkillSO skill;
 
     public int level;

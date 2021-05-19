@@ -36,6 +36,12 @@ public class Spell : ScriptableObject
 
     public EnumCustom.SpecialEffect specialEffect;
 
+    public int minSpecialValue;
+
+    public int maxSpecialValue;
+
+    public int fixedSpecialValue = 0;
+
     public int specialEffectDuration = 0;
 
     public int invokeLimit = 0;
@@ -78,6 +84,10 @@ public class Spell : ScriptableObject
                         value = aux.value
                     });
                 }
+                if(aux.buffDebuffType == EnumCustom.BuffDebuffType.Special)
+                {
+                    CastBuffSpecial(controller, aux);
+                }
                 GameObject objectSpell = Instantiate(spellCastObject, controller.transform);
                 Destroy(objectSpell, 1.0f);
             }
@@ -109,5 +119,21 @@ public class Spell : ScriptableObject
     {
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
         Destroy(spellCreated, 1.0f);
+    }
+
+    public GameObject InvokeCreature(Vector3 position)
+    {
+        GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
+        spellCreated.GetComponent<MinionController>().duration = specialEffectDuration;
+        return spellCreated;
+    }
+
+    public void CastBuffSpecial(CharacterController controller, BuffDebuff buff)
+    {
+        if(buff.specialEffect == EnumCustom.SpecialEffect.Fake_Life)
+        {
+            controller.CharacterStatus.attributeStatus.fakeLife = buff.value;
+            controller.CharacterStatus.attributeStatus.fakeLifeDuration = buff.turnDuration;
+        }
     }
 }

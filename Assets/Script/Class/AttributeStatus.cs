@@ -21,6 +21,10 @@ public class AttributeStatus
 
     public List<StatusModifier> statusModifiers;
 
+    public int fakeLife = 0;
+
+    public int fakeLifeDuration = 0;
+
     /// <summary>
     /// Construtor da classe normal
     /// </summary>
@@ -155,7 +159,8 @@ public class AttributeStatus
         return 10 +
             MathfCustom.CalculateStatusByPoints(level, 2) + 
             MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Str),2) +
-            (GetValue(EnumCustom.Attribute.Con) * 3);
+            (GetValue(EnumCustom.Attribute.Con) * 3) + 
+            fakeLife;
     }
 
 
@@ -190,6 +195,11 @@ public class AttributeStatus
                 Manager.Instance.canvasManager.RemoveLogText(statusModifiers[i].spellName);
                 statusModifiers.RemoveAt(i);
             }
+        }
+        fakeLifeDuration = Mathf.Clamp(fakeLifeDuration--, 0, fakeLifeDuration);
+        if(fakeLifeDuration<=0)
+        {
+            fakeLife = 0;
         }
     }
 
