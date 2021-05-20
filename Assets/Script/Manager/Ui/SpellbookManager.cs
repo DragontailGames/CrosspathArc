@@ -15,6 +15,8 @@ public class SpellbookManager : MonoBehaviour
     public int indexSkill;
     public int selectedIndex = -1;
 
+    public GameObject assignMessage;
+
     public void OpenSpellbook()
     {
         this.gameObject.SetActive(true);
@@ -47,10 +49,7 @@ public class SpellbookManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha9)) SaveSpellInKeyboard(8);//Ativa a skill no slot
         if (Input.GetKeyDown(KeyCode.Alpha0)) SaveSpellInKeyboard(9);//Ativa a skill no slot
 
-        foreach(var aux in selectedSpells)
-        {
-
-        }
+        assignMessage.SetActive(selectedIndex != -1);
     }
 
     public void ChangeSpellbook(bool next)
@@ -97,6 +96,11 @@ public class SpellbookManager : MonoBehaviour
     public void SaveSpellInKeyboard(int index)
     {
         GameObject spellObject = this.transform.GetChild(0).Find("Content").GetChild(selectedIndex).gameObject;
+        int hasInArray = Array.IndexOf(selectedSpells, spellbookSpellControllers[selectedIndex].spell);
+        if (hasInArray != -1)
+        {
+            selectedSpells[hasInArray] = null;
+        }
         selectedSpells[index] = spellbookSpellControllers[selectedIndex].spell;
         spellObject.transform.Find("selected").gameObject.SetActive(false);
         selectedIndex = -1;

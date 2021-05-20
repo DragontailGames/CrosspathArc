@@ -44,8 +44,10 @@ Describe your project
 ## :computer: Comands ##
 
   Comandos
-      -   Tecla "I" : Abrir o inventario
-      -   Tecla "L" : Adicionar 'x' de exp [Temporario]
+      -   Tecla "I" : Abrir o inventario<br>
+      -   Tecla "L" : Adicionar 'x' de exp [Temporario]<br>
+      -   Tecla "R" : Iniciar o Rest<br>
+      -   Tecla "F" : Abrir/Fechar o spellbook<br>
 
   Tips:
       -   A maior parte das configuração via unity estao no proprio "Hero", valor da exp por comando, quantidade de tiles base para resetar

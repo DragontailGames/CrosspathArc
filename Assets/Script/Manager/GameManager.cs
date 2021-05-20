@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject campfire;
 
+    public SpellbookManager spellbookManager;
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;
@@ -251,5 +253,28 @@ public class GameManager : MonoBehaviour
             }
         }
         return bots.Find(n => n.currentTileIndex == tile && n.hp>0);
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if (inPause == false)
+            {
+                Btn_Rest();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (inPause == false)
+            {
+                spellbookManager.OpenSpellbook();
+            }
+            else
+            {
+                spellbookManager.Close();
+            }
+        }
     }
 }

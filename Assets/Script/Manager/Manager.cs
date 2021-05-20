@@ -42,4 +42,6 @@ public class Manager : MonoBehaviour
     public ConfigManager configManager;
 
     public TimeManager timeManager;
+
+    public MouseTipsManager mouseTipsManager;
 }

@@ -11,6 +11,8 @@ public class SpellbookSpellController : MonoBehaviour
 
     public SpellbookManager spellbookManager;
 
+    private bool locked = false;
+
     public void SetupSpell(SpellbookManager spellbookManager, Spell spell)
     {
         this.spell = spell;
@@ -21,7 +23,8 @@ public class SpellbookSpellController : MonoBehaviour
         this.transform.Find("icon").GetComponent<Image>().enabled = true;
         this.transform.Find("icon").GetComponent<Image>().sprite = spell.icon;
 
-        this.transform.Find("Locked").gameObject.SetActive(spell.availableAt > spellbookManager.skills[spellbookManager.indexSkill].level);
+        locked = spell.availableAt > spellbookManager.skills[spellbookManager.indexSkill].level;
+        this.transform.Find("Locked").gameObject.SetActive(locked);
     }
 
     public void SelectSpell(int index)
@@ -59,6 +62,37 @@ public class SpellbookSpellController : MonoBehaviour
             {
                 this.transform.Find("selected").gameObject.SetActive(false);
             }
+        }
+
+        this.GetComponent<Button>().interactable = !locked;
+    }
+
+    public void ShowTips()
+    {
+        if(spell != null)
+        {
+            string message = $"<b>{spell.name}</b>";
+            if(!string.IsNullOrEmpty(spell.description))
+            {
+                message += $"\n{spell.description}";
+            }
+            if (locked)
+            {
+                message += $"\n<b>*LOCKED* available at {spell.availableAt}</b>";
+            }
+            else
+            {
+                message += $"\n<i>* Select to assign a hotbar</i>";
+            }
+            Manager.Instance.mouseTipsManager.ShowMessage(message);
+        }
+    }
+
+    public void HideTips()
+    {
+        if (spell != null)
+        {
+            Manager.Instance.mouseTipsManager.HideMessage();
         }
     }
 }
