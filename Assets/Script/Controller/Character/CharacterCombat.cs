@@ -94,6 +94,11 @@ public class CharacterCombat : MonoBehaviour
                     SelectSkill(skillIndex);
                 });
             }
+            else
+            {
+                spellUi[i].GetComponent<Image>().sprite = null;
+                spellUi[i].GetComponent<Image>().enabled = false;
+            }
         }
     }
 

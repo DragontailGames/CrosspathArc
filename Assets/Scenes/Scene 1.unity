@@ -25888,7 +25888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 528, y: -612}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1117330735
@@ -33067,11 +33067,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
+  - name: Necromancy
+    description: NecromancyDescription
+    skill: {fileID: 11400000, guid: 30ee79069cf67674d8802cf797249017, type: 2}
+    level: 1
+  - name: Warlock
+    description: Walock descrition but implement more
+    skill: {fileID: 11400000, guid: f4b711a15f4fdbf4e824fac97f2ca142, type: 2}
+    level: 1
   - name: Wizard
-    description: 
+    description: This is wizard description
     skill: {fileID: 11400000, guid: 356e3afa7284baa4d912bca51aacb148, type: 2}
     level: 1
-  - name: Wrestling
+  - name: Wrestiling
     description: 
     skill: {fileID: 11400000, guid: fea6fefaaf5c5c24eba05aff5c0d348f, type: 2}
     level: 1
@@ -66656,8 +66664,12 @@ MonoBehaviour:
     description: NecromancyDescription
     skill: {fileID: 11400000, guid: 30ee79069cf67674d8802cf797249017, type: 2}
     level: 1
+  - name: Warlock
+    description: Walock descrition but implement more
+    skill: {fileID: 11400000, guid: f4b711a15f4fdbf4e824fac97f2ca142, type: 2}
+    level: 1
   - name: Wizard
-    description: WizardDescription
+    description: This is wizard description
     skill: {fileID: 11400000, guid: 356e3afa7284baa4d912bca51aacb148, type: 2}
     level: 1
   - name: Wrestiling
