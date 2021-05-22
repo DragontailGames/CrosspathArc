@@ -3659,9 +3659,9 @@ RectTransform:
   m_Father: {fileID: 1117330734}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 10, y: -10}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &275027013
@@ -4069,11 +4069,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409514348733355553, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
       propertyPath: hp
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7409514348733355553, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
-      propertyPath: mainAnimation
-      value: Wolf
+      propertyPath: hpBar
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
@@ -25168,7 +25168,7 @@ Transform:
   - {fileID: 1499672828}
   - {fileID: 1702331832}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1040748987
 GameObject:
@@ -33083,7 +33083,6 @@ MonoBehaviour:
     description: 
     skill: {fileID: 11400000, guid: fea6fefaaf5c5c24eba05aff5c0d348f, type: 2}
     level: 1
-  spells: []
   spellUi: []
   selectedSpell: {fileID: 0}
   selectedUi: {fileID: 0}
@@ -66676,7 +66675,6 @@ MonoBehaviour:
     description: 
     skill: {fileID: 11400000, guid: fea6fefaaf5c5c24eba05aff5c0d348f, type: 2}
     level: 1
-  spells: []
   spellUi: []
   selectedSpell: {fileID: 0}
   selectedUi: {fileID: 0}
@@ -67454,7 +67452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6499016951078215882, guid: f4e718a551d58ca4b87595ca6f349d2e, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6499016951078215882, guid: f4e718a551d58ca4b87595ca6f349d2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -17,6 +17,11 @@ public class MinionController : BotController
 
     public void StartNewTurn()
     {
+        if(hp<=0)
+        {
+            //gameManager.EndMyTurn();
+            return;
+        }
         duration--;
         if(duration<=0)
         {
@@ -29,19 +34,28 @@ public class MinionController : BotController
         base.Defeat();
 
         Manager.Instance.characterController.CharacterCombat.minionCounts.Find(n => n.creatures.Contains(this.gameObject)).creatures.Remove(this.gameObject);
-        Destroy(this.gameObject, 1.0f);
+        Destroy(this.gameObject, 3.0f);
     }
 
-    public override IEnumerator StartMyTurn(bool enemy = false)
+    public override IEnumerator StartMyTurn(float waitTime, bool enemy = false)
     {
+        if(hp<0)
+        {
+            gameManager.EndMyTurn();
+            yield break;
+        }
         target = GetEnemy();
         if(target == null)
         {
             target = Manager.Instance.characterController.transform;
+            StartCoroutine(base.StartMyTurn(0, false));
         }
-        yield return new WaitForSeconds(0.2f);
+        else
+        {
+            yield return new WaitForSeconds(0.2f);
+            StartCoroutine(base.StartMyTurn(0, false));
+        }
 
-        StartCoroutine(base.StartMyTurn(false));
     }
 
     public Transform GetEnemy()

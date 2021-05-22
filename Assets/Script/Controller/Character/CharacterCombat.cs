@@ -12,7 +12,7 @@ public class CharacterCombat : MonoBehaviour
 
     public List<Skill> skills;
 
-    public List<Spell> spells = new List<Spell>(10);
+    private List<Spell> spells = new List<Spell>(10);
 
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
@@ -108,7 +108,12 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="index"></param>
     public void SelectSkill(int index)
     {
-        if(selectedSpell!=null)
+        if(spells.Count<=index || spells[index] == null)
+        {
+            return;
+        }
+
+        if (selectedSpell!=null)
         {
             var auxSpell = selectedSpell;
             selectedSpell = null;
@@ -147,7 +152,6 @@ public class CharacterCombat : MonoBehaviour
                 CastInvisibility(spells[index].specialEffectDuration);
             }
         }
-
     }
 
     /// <summary>
@@ -468,5 +472,10 @@ public class CharacterCombat : MonoBehaviour
                 aux.target = null;
             }
         }
+    }
+
+    public void SetSpells(List<Spell> spells)
+    {
+        this.spells = spells;
     }
 }

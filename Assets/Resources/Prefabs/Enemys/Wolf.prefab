@@ -312,70 +312,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cabdbe21b3e488d469768c08d1144816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-    name: Wolf
-    tilePos: {x: 20, y: 20, z: 0}
-    size: 1
-    attributeStatus:
-      attributes:
-      - name: Str
-        attribute: 0
-        value: 4
-        modifier: 
-      - name: Con
-        attribute: 1
-        value: 0
-        modifier: 
-      - name: Dex
-        attribute: 2
-        value: 4
-        modifier: 
-      - name: Agi
-        attribute: 3
-        value: 0
-        modifier: 
-      - name: Int
-        attribute: 4
-        value: 0
-        modifier: 
-      - name: Wis
-        attribute: 5
-        value: 0
-        modifier: 
-      - name: Foc
-        attribute: 6
-        value: 0
-        modifier: 
-      - name: Cha
-        attribute: 7
-        value: 1
-        modifier: 
-      status:
-      - status: 0
-        value: 0
-      - status: 1
-        value: 0
-      - status: 2
-        value: 0
-      - status: 3
-        value: 0
-      - status: 4
-        value: 0
-      - status: 5
-        value: 0
-      - status: 6
-        value: 0
-      - status: 7
-        value: 0
-      walkDelay: 0.5
-      combatDelay: 1
-      modifier: []
-    hp: 4
-    exp: 125
+  attributeStatus:
+    attributes:
+    - name: Str
+      attribute: 0
+      value: 1
+    - name: Con
+      attribute: 1
+      value: 1
+    - name: Dex
+      attribute: 2
+      value: 1
+    - name: Agi
+      attribute: 3
+      value: 1
+    - name: Int
+      attribute: 4
+      value: 1
+    - name: Wis
+      attribute: 5
+      value: 1
+    - name: Foc
+      attribute: 6
+      value: 1
+    - name: Cha
+      attribute: 7
+      value: 1
+    status:
+    - status: 0
+      value: 1
+    - status: 1
+      value: 1
+    - status: 2
+      value: 1
+    - status: 3
+      value: 1
+    - status: 4
+      value: 1
+    - status: 5
+      value: 1
+    - status: 6
+      value: 1
+    - status: 7
+      value: 1
+    walkDelay: 0.5
+    combatDelay: 1
+    attributeModifiers: []
+    statusModifiers: []
+    fakeLife: 0
+    fakeLifeDuration: 0
+  hp: 4
+  hpBar: {fileID: 7409514348550913729}
   hasTarget: 0
   animator: {fileID: 0}
-  offsetPosition: {x: 0, y: 0.5, z: 0}
-  hpBar: {fileID: 7409514348550913729}
   currentTileIndex: {x: 0, y: 0, z: 0}
+  offsetPosition: {x: 0, y: 0.5, z: 0}
   movementSpeed: 1
+  mainAnimation: Wolf
+  target: {fileID: 0}
+  enemy:
+    name: Wolf
+    size: 1
+    exp: 125
   range: 0
+  poisonDamage: 0

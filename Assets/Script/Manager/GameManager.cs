@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
 
             if (botController.hp > 0)
             {
-                StartCoroutine(botController.StartMyTurn());
+                StartCoroutine(botController.StartMyTurn(0.2f));
             }
             else
             {

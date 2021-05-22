@@ -134,14 +134,14 @@ public class BotController : MonoBehaviour
             botController.ReceiveHit(str, str.ToString());
     }
 
-    public virtual IEnumerator StartMyTurn(bool enemy = true)
+    public virtual IEnumerator StartMyTurn(float waitTime, bool enemy = true)
     {
         if (isDead)
         {
             yield break;
         }
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(waitTime);
 
         CharacterController characterController;
         BotController botController;
@@ -166,7 +166,7 @@ public class BotController : MonoBehaviour
         }
 
         hasTarget = true;
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(waitTime * 2);
 
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? 2 : 1;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal)

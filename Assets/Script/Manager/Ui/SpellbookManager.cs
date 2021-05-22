@@ -108,7 +108,7 @@ public class SpellbookManager : MonoBehaviour
 
     public void Close()
     {
-        Manager.Instance.characterController.CharacterCombat.spells = new List<Spell>(selectedSpells);
+        Manager.Instance.characterController.CharacterCombat.SetSpells(new List<Spell>(selectedSpells));
         Manager.Instance.characterController.CharacterCombat.SetupSpells();
         this.gameObject.SetActive(false);
         Manager.Instance.gameManager.InPause = false;

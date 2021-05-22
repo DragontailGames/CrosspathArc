@@ -36,6 +36,11 @@ public class EnemyController : BotController
         int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
 
+        if(specialEffect == EnumCustom.SpecialEffect.Sleep)
+        {
+            specialEffect = EnumCustom.SpecialEffect.None;
+        }
+
         Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
     }
 
@@ -54,6 +59,10 @@ public class EnemyController : BotController
         }
         else
         {
+            if (specialEffect == EnumCustom.SpecialEffect.Sleep)
+            {
+                specialEffect = EnumCustom.SpecialEffect.None;
+            }
             hp -= damage;
             Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " = <color=red>" + damage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
         }
@@ -66,6 +75,7 @@ public class EnemyController : BotController
 
     public override void Update()
     {
+        base.Update();
         if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
         {
             if (!gameManager.creatures.Contains(this.gameObject))
@@ -82,7 +92,7 @@ public class EnemyController : BotController
         }
     }
 
-    public override IEnumerator StartMyTurn(bool isEnemy = true)
+    public override IEnumerator StartMyTurn(float waitTime, bool isEnemy = true)
     {
         if (specialEffect != EnumCustom.SpecialEffect.None)
         {
@@ -91,7 +101,7 @@ public class EnemyController : BotController
                 specialEffect = EnumCustom.SpecialEffect.None;
             }
             specialEffectDuration--;
-            if (specialEffect == EnumCustom.SpecialEffect.Sleep)
+            if (specialEffect == EnumCustom.SpecialEffect.Sleep || specialEffect == EnumCustom.SpecialEffect.Paralyze)
             {
                 gameManager.EndMyTurn();
                 yield break;
@@ -105,7 +115,7 @@ public class EnemyController : BotController
         target = GetTarget();
         yield return new WaitForSeconds(0.2f);
 
-        StartCoroutine(base.StartMyTurn());
+        StartCoroutine(base.StartMyTurn(0.2f));
     }
 
     public Transform GetTarget()

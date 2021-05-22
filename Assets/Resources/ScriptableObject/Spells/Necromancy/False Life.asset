@@ -26,7 +26,7 @@ MonoBehaviour:
   buffDebuff:
   - attribute: 0
     status: 0
-    specialEffect: 7
+    specialEffect: 8
     buffDebuffType: 2
     value: 20
     turnDuration: 40
