@@ -131,7 +131,7 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
-        if (spells[index].castTarget != EnumCustom.CastTarget.None && (spells[index].spellType == EnumCustom.SpellType.Hit || spells[index].spellType == EnumCustom.SpellType.Special || spells[index].spellType == EnumCustom.SpellType.Hit_Special))
+        if (spells[index].castTarget == EnumCustom.CastTarget.Target || spells[index].castTarget == EnumCustom.CastTarget.Area)
         {
             selectedSpell = spells[index];
             selectedUi = spellUi[index].transform.GetChild(0);
@@ -148,10 +148,13 @@ public class CharacterCombat : MonoBehaviour
         {
             if (spells[index].specialEffect == EnumCustom.SpecialEffect.Invisibility)
             {
+                Manager.Instance.canvasManager.UpdateStatus();
                 characterStatus.Mp -= spells[index].manaCost;
                 CastInvisibility(spells[index].specialEffectDuration);
             }
         }
+
+        Manager.Instance.canvasManager.UpdateStatus();
     }
 
     /// <summary>

@@ -17,9 +17,9 @@ public class AttributeStatus
 
     public float combatDelay = 1.0f;
 
-    public List<AttributeModifier> attributeModifiers;
+    public List<AttributeModifier> attributeModifiers = new List<AttributeModifier>();
 
-    public List<StatusModifier> statusModifiers;
+    public List<StatusModifier> statusModifiers = new List<StatusModifier>();
 
     public int fakeLife = 0;
 

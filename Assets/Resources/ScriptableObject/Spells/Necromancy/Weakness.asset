@@ -15,6 +15,7 @@ MonoBehaviour:
   spellName: Weakness
   description: 
   icon: {fileID: 21300000, guid: 85e66864b92744fff833f14a8fe4a188, type: 3}
+  castTarget: 0
   availableAt: 2
   minValue: 0
   maxValue: 0
@@ -30,6 +31,10 @@ MonoBehaviour:
     value: 4
     turnDuration: 10
   attributeInfluence: 
-  spellCastObject: {fileID: 0}
+  spellCastObject: {fileID: 100002, guid: 32242d35f7ee6ba488bd4645fa1d8e8b, type: 3}
   specialEffect: 0
+  minSpecialValue: 0
+  maxSpecialValue: 0
+  fixedSpecialValue: 0
   specialEffectDuration: 0
+  invokeLimit: 0

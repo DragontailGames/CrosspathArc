@@ -15,6 +15,8 @@ public class EnemyController : BotController
     private EnumCustom.SpecialEffect specialEffect;
     public int poisonDamage;
 
+    public Transform forceTarget;
+
     public override void Start()
     {
         base.Start();
@@ -42,6 +44,13 @@ public class EnemyController : BotController
         }
 
         Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
+
+        if(target == null)
+        {
+            forceTarget = Manager.Instance.characterController.transform;
+            target = Manager.Instance.characterController.transform;
+            gameManager.creatures.Add(this.gameObject);
+        }
     }
 
     /// <summary>
@@ -71,6 +80,13 @@ public class EnemyController : BotController
         {
             Defeat();//mata o inimigo
         }
+
+        if (target == null)
+        {
+            forceTarget = Manager.Instance.characterController.transform;
+            target = Manager.Instance.characterController.transform;
+            gameManager.creatures.Add(this.gameObject);
+        }
     }
 
     public override void Update()
@@ -83,7 +99,7 @@ public class EnemyController : BotController
                 gameManager.creatures.Add(this.gameObject);
             }
         }
-        else
+        else if(forceTarget == null)
         {
             if (gameManager.creatures.Contains(this.gameObject))
             {

@@ -85,6 +85,29 @@ public class CanvasManager : MonoBehaviour
             }
             SetupText(tempStatusLog, aux.spellName, aux.value, aux.status.ToString(), aux.count);
         }
+        int fakeLife = Manager.Instance.characterController.CharacterStatus.attributeStatus.fakeLife;
+        if (fakeLife > 0)
+        {
+            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith("False Life"));
+            if (tempStatusLog == null)
+            {
+                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+                statusLogs.Add(tempStatusLog);
+            }
+            SetupText(tempStatusLog, "False Life", fakeLife, "", Manager.Instance.characterController.CharacterStatus.attributeStatus.fakeLifeDuration);
+        }
+        if(Manager.Instance.characterController.CharacterCombat.invisibilityDuration>0)
+        {
+            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith("Invisibility"));
+            if (tempStatusLog == null)
+            {
+                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+                statusLogs.Add(tempStatusLog);
+            }
+            SetupText(tempStatusLog, "Invisibility", 0, "", Manager.Instance.characterController.CharacterCombat.invisibilityDuration);
+        }
     }
 
     public void SetupText(TextMeshProUGUI tmpStatusText, string spellName, int value, string propName, int count)
@@ -96,6 +119,10 @@ public class CanvasManager : MonoBehaviour
         else if (value < 0)
         {
             tmpStatusText.text = $"<color=#{negativeColorValue}>{spellName} (-{value} {propName}) ({count})";
+        }
+        if(value == 0)
+        {
+            tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName} ({count})";
         }
     }
 

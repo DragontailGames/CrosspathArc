@@ -38,16 +38,19 @@ public class SpellbookManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SaveSpellInKeyboard(0);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SaveSpellInKeyboard(1);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SaveSpellInKeyboard(2);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha4)) SaveSpellInKeyboard(3);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha5)) SaveSpellInKeyboard(4);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha6)) SaveSpellInKeyboard(5);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha7)) SaveSpellInKeyboard(6);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha8)) SaveSpellInKeyboard(7);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha9)) SaveSpellInKeyboard(8);//Ativa a skill no slot
-        if (Input.GetKeyDown(KeyCode.Alpha0)) SaveSpellInKeyboard(9);//Ativa a skill no slot
+        if (selectedIndex != -1)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) SaveSpellInKeyboard(0);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) SaveSpellInKeyboard(1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) SaveSpellInKeyboard(2);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) SaveSpellInKeyboard(3);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) SaveSpellInKeyboard(4);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) SaveSpellInKeyboard(5);
+            if (Input.GetKeyDown(KeyCode.Alpha7)) SaveSpellInKeyboard(6);
+            if (Input.GetKeyDown(KeyCode.Alpha8)) SaveSpellInKeyboard(7);
+            if (Input.GetKeyDown(KeyCode.Alpha9)) SaveSpellInKeyboard(8);
+            if (Input.GetKeyDown(KeyCode.Alpha0)) SaveSpellInKeyboard(9);
+        }
 
         assignMessage.SetActive(selectedIndex != -1);
     }

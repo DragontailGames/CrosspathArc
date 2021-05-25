@@ -265,7 +265,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             if (inPause == false)
             {
@@ -275,6 +275,12 @@ public class GameManager : MonoBehaviour
             {
                 spellbookManager.Close();
             }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            spellbookManager.Close();
         }
     }
 }
