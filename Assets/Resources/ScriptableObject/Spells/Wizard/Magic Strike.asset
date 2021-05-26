@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Magic Strike
   description: Increases Hit (+10) for 1 turn
-  spellType: 1
+  icon: {fileID: 21300000, guid: fbba967835d634214be5f4e51adc9369, type: 3}
+  castTarget: 3
   availableAt: 6
   minValue: 0
   maxValue: 0
   fixedValue: 0
+  manaCost: 12
+  spellType: 1
   area: 0
   buffDebuff:
   - attribute: 0
@@ -28,6 +31,10 @@ MonoBehaviour:
     value: 10
     turnDuration: 2
   attributeInfluence: 
-  icon: {fileID: 21300000, guid: fbba967835d634214be5f4e51adc9369, type: 3}
   spellCastObject: {fileID: 7876771342403281681, guid: c4846e84cf1856943bb5ec1f6278d9ae, type: 3}
-  manaCost: 12
+  specialEffect: 0
+  minSpecialValue: 0
+  maxSpecialValue: 0
+  fixedSpecialValue: 0
+  specialEffectDuration: 0
+  invokeLimit: 0

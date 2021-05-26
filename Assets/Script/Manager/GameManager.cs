@@ -171,6 +171,32 @@ public class GameManager : MonoBehaviour
         return PathFind.Pathfinding.FindPath(grid, _from, _to);
     }
 
+    public List<PathFind.Point> GetPathWithCustom(Vector3Int startIndex, Vector3Int destIndex)
+    {
+        width = tilemap.size.x;
+        height = tilemap.size.y;
+
+        tilesmap = new bool[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y, 0);
+                bool pathEnable = tilemap.HasTile(pos);
+                pathEnable = Manager.Instance.enemyManager.CheckEnemyInTile(pos) == null;
+                tilesmap[x, y] = pathEnable;
+            }
+        }
+
+        var gridCustom = new PathFind.Grid(width, height, tilesmap);
+
+        PathFind.Point _from = new PathFind.Point(startIndex.x, startIndex.y);
+        PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
+
+        return PathFind.Pathfinding.FindPath(gridCustom, _from, _to);
+    }
+
     public bool DetectLOS(List<PathFind.Point> path)
     {
         foreach (var aux in path)

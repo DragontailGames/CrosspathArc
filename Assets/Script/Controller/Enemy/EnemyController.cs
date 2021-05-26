@@ -94,6 +94,7 @@ public class EnemyController : BotController
         base.Update();
         if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
         {
+            target = GetTarget();
             if (!gameManager.creatures.Contains(this.gameObject))
             {
                 gameManager.creatures.Add(this.gameObject);
@@ -126,6 +127,12 @@ public class EnemyController : BotController
             {
                 hp -= poisonDamage;
                 Manager.Instance.canvasManager.LogMessage($"{enemy.name} sofreu {poisonDamage} do veneno");//Manda mensagem do dano que o inimigo recebeu
+                if(hp <= 0)
+                {
+                    Defeat();
+                    Manager.Instance.gameManager.EndMyTurn();
+                    yield break;
+                }
             }
         }
         target = GetTarget();

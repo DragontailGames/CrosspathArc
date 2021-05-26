@@ -28,7 +28,7 @@ MonoBehaviour:
     status: 0
     specialEffect: 0
     buffDebuffType: 1
-    value: 4
+    value: -4
     turnDuration: 10
   attributeInfluence: 
   spellCastObject: {fileID: 100002, guid: 32242d35f7ee6ba488bd4645fa1d8e8b, type: 3}

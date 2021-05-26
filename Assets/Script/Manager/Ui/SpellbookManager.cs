@@ -12,7 +12,7 @@ public class SpellbookManager : MonoBehaviour
 
     public List<SpellbookSpellController> spellbookSpellControllers = new List<SpellbookSpellController>();
 
-    public int indexSkill;
+    public int indexSkill = 0;
     public int selectedIndex = -1;
 
     public GameObject assignMessage;
@@ -33,7 +33,7 @@ public class SpellbookManager : MonoBehaviour
                 skills.Add(aux);
             }
         }
-        SetupSpellbook(skills[0]);
+        SetupSpellbook(skills[indexSkill]);
     }
 
     public void Update()

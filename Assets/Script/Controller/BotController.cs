@@ -72,7 +72,8 @@ public class BotController : MonoBehaviour
 
         if (Manager.Instance.gameManager.CheckHasBotInTile(dest))
         {
-            return;
+            var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos);
+            dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
         }
 
         animator.SetBool("Walk", true);

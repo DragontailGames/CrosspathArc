@@ -131,7 +131,7 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
-        if (spells[index].castTarget == EnumCustom.CastTarget.Target || spells[index].castTarget == EnumCustom.CastTarget.Area)
+        if (spells[index].castTarget != EnumCustom.CastTarget.None)
         {
             selectedSpell = spells[index];
             selectedUi = spellUi[index].transform.GetChild(0);
