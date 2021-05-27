@@ -241,6 +241,10 @@ public class CharacterCombat : MonoBehaviour
 
         if(selectedSpell.castTarget == EnumCustom.CastTarget.Area)
         {
+            if(tile == new Vector3Int() && enemy != null)
+            {
+                tile = enemy.currentTileIndex;
+            }
             CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, selectedSpell);
         }
         else if (selectedSpell.castTarget == EnumCustom.CastTarget.Tile)

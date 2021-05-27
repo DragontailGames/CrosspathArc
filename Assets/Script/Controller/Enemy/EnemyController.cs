@@ -66,6 +66,32 @@ public class EnemyController : BotController
             specialEffect = spell.specialEffect;
             poisonDamage = _poisonDamage;
         }
+        else if(spell.spellType == EnumCustom.SpellType.Buff)
+        {
+            foreach (var aux in spell.buffDebuff)
+            {
+                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
+                {
+                    this.attributeStatus.AddModifier(new AttributeModifier()
+                    {
+                        spellName = spell.spellName,
+                        attribute = aux.attribute,
+                        count = aux.turnDuration,
+                        value = aux.value
+                    }, null);
+                }
+                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
+                {
+                    this.attributeStatus.AddModifier(null, new StatusModifier()
+                    {
+                        spellName = spell.spellName,
+                        status = aux.status,
+                        count = aux.turnDuration,
+                        value = aux.value
+                    });
+                }
+            }
+        }
         else
         {
             if (specialEffect == EnumCustom.SpecialEffect.Sleep)

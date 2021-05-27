@@ -21,7 +21,7 @@ MonoBehaviour:
   maxValue: 0
   fixedValue: 0
   manaCost: 4
-  spellType: 2
+  spellType: 1
   area: 0
   buffDebuff:
   - attribute: 0
