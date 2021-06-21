@@ -139,6 +139,7 @@ public class BotController : MonoBehaviour
     {
         if (isDead)
         {
+            gameManager.EndMyTurn();
             yield break;
         }
 

@@ -115,8 +115,16 @@ public class GameManager : MonoBehaviour
             cController.myTurn = false;
         }
 
-        if (creatures[currentCreature] == null )
+        if (creatures[currentCreature] == null)
             EndMyTurn();
+
+        if(creatures[currentCreature].GetComponent<BotController>() != null)
+        {
+            if (creatures[currentCreature].GetComponent<BotController>().hp<=0)
+            {
+                EndMyTurn();
+            }
+        }
 
         if (creatures[currentCreature].GetComponent<CharacterController>())
         {
