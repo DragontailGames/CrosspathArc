@@ -118,6 +118,11 @@ public class SpellCreator : EditorWindow
             RenderDamage();
             RenderSpecial();
         }
+        else if (spell.spellType == EnumCustom.SpellType.Area_Hazard)
+        {
+            RenderDamage();
+            RenderAreaHazard();
+        }
     }
 
     public void RenderDamage()
@@ -239,7 +244,7 @@ public class SpellCreator : EditorWindow
         else
         {
             content.text = "Duration";
-            spell.specialEffectDuration = EditorGUILayout.IntField(content, spell.specialEffectDuration);
+            spell.duration = EditorGUILayout.IntField(content, spell.duration);
         }
 
         if (spell.specialEffect == EnumCustom.SpecialEffect.Invoke)
@@ -247,5 +252,15 @@ public class SpellCreator : EditorWindow
             content.text = "Max Invokes";
             spell.invokeLimit = EditorGUILayout.IntField(content, spell.invokeLimit);
         }
+    }
+
+    public void RenderAreaHazard()
+    {
+        GUIContent content = new GUIContent();
+
+        EditorGUILayout.Space(5);
+
+        content.text = "Duration";
+        spell.duration = EditorGUILayout.IntField(content, spell.duration);
     }
 }

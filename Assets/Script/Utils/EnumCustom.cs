@@ -59,6 +59,7 @@ public class EnumCustom : MonoBehaviour
         Hit_Special,
         Hit_Buff,
         Hit_Debuff,
+        Area_Hazard,
     }
 
     public enum WeaponType

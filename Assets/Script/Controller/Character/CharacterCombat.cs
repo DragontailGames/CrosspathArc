@@ -150,7 +150,7 @@ public class CharacterCombat : MonoBehaviour
             {
                 Manager.Instance.canvasManager.UpdateStatus();
                 characterStatus.Mp -= spells[index].manaCost;
-                CastInvisibility(spells[index].specialEffectDuration);
+                CastInvisibility(spells[index].duration);
             }
         }
 
@@ -324,18 +324,21 @@ public class CharacterCombat : MonoBehaviour
 
         foreach(var aux in tiles)
         {
-            EnemyController enemy = Manager.Instance.enemyManager.CheckEnemyInTile(aux);
-
-            selectedSpell.AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux));
-
-            if(enemy!=null)
+            selectedSpell.AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux), aux, spell);
+            if (spell.spellType != EnumCustom.SpellType.Area_Hazard)
             {
-                bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
-                if (hit)
+                EnemyController enemy = Manager.Instance.enemyManager.CheckEnemyInTile(aux);
+
+                if (enemy != null)
                 {
-                    enemy.ReceiveSpell(damage, textDamage, spell);
+                    bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
+                    if (hit)
+                    {
+                        enemy.ReceiveSpell(damage, textDamage, spell);
+                    }
                 }
             }
+            
         }
 
         selectedSpell = null;

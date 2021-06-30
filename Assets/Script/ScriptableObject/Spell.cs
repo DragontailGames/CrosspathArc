@@ -42,7 +42,7 @@ public class Spell : ScriptableObject
 
     public int fixedSpecialValue = 0;
 
-    public int specialEffectDuration = 0;
+    public int duration = 0;
 
     public int invokeLimit = 0;
 
@@ -115,16 +115,27 @@ public class Spell : ScriptableObject
         spellCreated.GetComponent<SpellProjectileController>().StartHit(targetPos, hitAction);
     }
 
-    public void AnimateCastAreaSpell(Vector3 position)
+    public void AnimateCastAreaSpell(Vector3 position, Vector3Int index, Spell spell)
     {
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
-        Destroy(spellCreated, 1.0f);
+        spellCreated.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(0, 360)));
+        if(spell.spellType == EnumCustom.SpellType.Area_Hazard)
+        {
+            SpellAreaHazard spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
+            spellAreaHazard.duration = spell.duration;
+            spellAreaHazard.damage = spell.fixedValue != 0 ? spell.fixedValue : UnityEngine.Random.Range(spell.minValue, spell.maxValue);
+            spellAreaHazard.position = index;
+        }
+        else
+        {
+            Destroy(spellCreated, 1.0f);
+        }
     }
 
     public GameObject InvokeCreature(Vector3 position)
     {
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
-        spellCreated.GetComponent<MinionController>().duration = specialEffectDuration;
+        spellCreated.GetComponent<MinionController>().duration = duration;
         return spellCreated;
     }
 

@@ -34,6 +34,7 @@ public class EnemyController : BotController
 
     public override void ReceiveHit(int damage, string damageText = "")
     {
+        Debug.Log("DAMAGE " + damage);
         base.ReceiveHit(damage, damageText);
         int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
@@ -62,7 +63,7 @@ public class EnemyController : BotController
     {
         if(spell.spellType == EnumCustom.SpellType.Special)
         {
-            specialEffectDuration = spell.specialEffectDuration;
+            specialEffectDuration = spell.duration;
             specialEffect = spell.specialEffect;
             poisonDamage = _poisonDamage;
         }
