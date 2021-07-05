@@ -42,6 +42,10 @@ public class CharacterStatus : MonoBehaviour
 
     public UnityAction levelUpAction;//Ação para ser executada quando o jogador subir de nivel;
 
+    public int hpRegen = 0;
+
+    public int hpRegenDuration = 0;
+
     public void Start()
     {
         ResetHp_Mp();//Reseta o hp e o mp com base no max
@@ -50,6 +54,8 @@ public class CharacterStatus : MonoBehaviour
 
         tilesToRegenHp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.HpRegen);//Reseta os tiles para regenerar o Hp
         tilesToRegenMp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.MpRegen);//Reseta os tiles para regenerar o Mp
+
+        Manager.Instance.timeManager.startNewTurnAction += () => StartNewTurn();
     }
 
     public void Update()
@@ -125,5 +131,21 @@ public class CharacterStatus : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public void StartNewTurn()
+    {
+        hpRegenDuration = Mathf.Clamp(hpRegenDuration--, 0, hpRegenDuration);
+        if(hpRegenDuration>0)
+        {
+            hp = Mathf.Clamp(hp + hpRegen, 0,attributeStatus.GetMaxHP(level));
+
+            Manager.Instance.canvasManager.StatusSpecial("Hp Regen",hpRegen, hpRegenDuration);
+        }
+        else if(hpRegen>0)
+        {
+            hpRegen = 0;
+            Manager.Instance.canvasManager.RemoveLogText("Hp Regen");
+        }
     }
 }

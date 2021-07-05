@@ -16,4 +16,6 @@ public class BuffDebuff
     public int value;
 
     public int turnDuration;
+
+    public AttributeInfluence attributeInfluence;
 }

@@ -21,11 +21,14 @@ MonoBehaviour:
   maxValue: 0
   fixedValue: 0
   manaCost: 8
-  spellType: 4
+  spellType: 3
   area: 0
   buffDebuff: []
   attributeInfluence: 
   spellCastObject: {fileID: 0}
-  specialEffect: 0
-  specialEffectDuration: 0
+  specialEffect: 10
+  minSpecialValue: 0
+  maxSpecialValue: 0
+  fixedSpecialValue: 0
+  duration: 0
   invokeLimit: 0

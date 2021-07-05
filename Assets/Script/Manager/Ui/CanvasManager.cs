@@ -110,6 +110,18 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+    public void StatusSpecial(string startText, int value, int duration)
+    {
+        var tempStatusLog = Manager.Instance.canvasManager.statusLogs.Find(n => n.text.Split('>')[1].StartsWith(startText));
+        if (tempStatusLog == null)
+        {
+            var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+            tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+            statusLogs.Add(tempStatusLog);
+        }
+        Manager.Instance.canvasManager.SetupText(tempStatusLog, startText, value, "", duration);
+    }
+
     public void SetupText(TextMeshProUGUI tmpStatusText, string spellName, int value, string propName, int count)
     {
         if (value > 0)
@@ -124,12 +136,19 @@ public class CanvasManager : MonoBehaviour
         {
             tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName} ({count})";
         }
+        if(count == 0)
+        {
+            tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName}";
+        }
     }
 
     public void RemoveLogText(string spellName)
     {
         var temp = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(spellName));
-        statusLogs.Remove(temp);
-        DestroyImmediate(temp.gameObject);
+        if (temp != null)
+        {
+            statusLogs.Remove(temp);
+            DestroyImmediate(temp.gameObject);
+        }
     }
 }

@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
-  m_Name: Field of Thorns
+  m_Name: Tornado
   m_EditorClassIdentifier: 
-  spellName: Field of Thorns
+  spellName: Tornado
   description: 
-  icon: {fileID: 21300000, guid: 40fb584d8a1674661989a02c89c5e6b0, type: 3}
+  icon: {fileID: 21300000, guid: 439113b36ff3d9743b7d83d56d311b87, type: 3}
   castTarget: 1
-  availableAt: 2
-  minValue: 0
-  maxValue: 0
-  fixedValue: 3
-  manaCost: 4
-  spellType: 7
-  area: 5
+  availableAt: 10
+  minValue: 12
+  maxValue: 16
+  fixedValue: 0
+  manaCost: 20
+  spellType: 0
+  area: 3
   buffDebuff: []
   attributeInfluence: []
-  spellCastObject: {fileID: 8761519321041914438, guid: a6fc7bd1a6087d34587c66702b35c3cb, type: 3}
+  spellCastObject: {fileID: 8197244078019548936, guid: 50e2d3898bbe16243adb6bb560d70719, type: 3}
   specialEffect: 0
   minSpecialValue: 0
   maxSpecialValue: 0
   fixedSpecialValue: 0
-  duration: 5
+  duration: 0
   invokeLimit: 0

@@ -26,6 +26,8 @@ public class CharacterCombat : MonoBehaviour
 
     private Color32 color;
 
+    public int spikeValue;
+
     public CharacterController CharacterController { get => this.characterController; set => this.characterController = value; }
 
     /// <summary>
@@ -232,7 +234,7 @@ public class CharacterCombat : MonoBehaviour
 
         foreach (var aux in selectedSpell.attributeInfluence)
         {
-            var auxAttribute = characterStatus.attributeStatus.GetValue(aux);
+            var auxAttribute = aux.GetValue(characterStatus.attributeStatus.GetValue(aux.attribute));
             extraDamage += auxAttribute;
             damage += auxAttribute;
         }
@@ -460,6 +462,11 @@ public class CharacterCombat : MonoBehaviour
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
 
         Manager.Instance.canvasManager.LogMessage(characterController.CharacterStatus.nickname + " sofreu " + damage + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");
+
+        if(spikeValue>0)
+        {
+            enemy.ReceiveHit(spikeValue, spikeValue + "(spike)");
+        }
 
         if (!CharacterController.CharacterStatus.DropHP(trueDamage))
         {

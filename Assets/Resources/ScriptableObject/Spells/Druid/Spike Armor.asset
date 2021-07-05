@@ -10,25 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
-  m_Name: Invisibility
+  m_Name: Spike Armor
   m_EditorClassIdentifier: 
-  spellName: Invisibility
+  spellName: Spike Armor
   description: 
-  icon: {fileID: 21300000, guid: c7267900a0bad4cc0a034ba07c441d70, type: 3}
+  icon: {fileID: 21300000, guid: f8e648a0160edd94989ad9e3f713749d, type: 3}
   castTarget: 3
-  availableAt: 6
+  availableAt: 7
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  manaCost: 12
-  spellType: 3
+  manaCost: 14
+  spellType: 1
   area: 0
-  buffDebuff: []
+  buffDebuff:
+  - attribute: 0
+    status: 0
+    specialEffect: 12
+    buffDebuffType: 2
+    value: 0
+    turnDuration: 0
+    attributeInfluence:
+      attribute: 5
+      value: 0
+      multiplier: -2
   attributeInfluence: []
-  spellCastObject: {fileID: 100000, guid: baac5c87ba2ab704cb81c2db85274bb3, type: 3}
-  specialEffect: 4
+  spellCastObject: {fileID: 7744328422421035050, guid: ddd94c41340346d4396cbffbba339ad3, type: 3}
+  specialEffect: 12
   minSpecialValue: 0
   maxSpecialValue: 0
   fixedSpecialValue: 0
-  duration: 5
+  duration: 0
   invokeLimit: 0

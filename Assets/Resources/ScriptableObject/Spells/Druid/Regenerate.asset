@@ -10,25 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
-  m_Name: Field of Thorns
+  m_Name: Regenerate
   m_EditorClassIdentifier: 
-  spellName: Field of Thorns
+  spellName: Regenerate
   description: 
-  icon: {fileID: 21300000, guid: 40fb584d8a1674661989a02c89c5e6b0, type: 3}
-  castTarget: 1
-  availableAt: 2
+  icon: {fileID: 21300000, guid: 465f3f56802507a498fa6a9e5484394f, type: 3}
+  castTarget: 3
+  availableAt: 9
   minValue: 0
   maxValue: 0
-  fixedValue: 3
-  manaCost: 4
-  spellType: 7
-  area: 5
-  buffDebuff: []
+  fixedValue: 0
+  manaCost: 18
+  spellType: 1
+  area: 0
+  buffDebuff:
+  - attribute: 0
+    status: 0
+    specialEffect: 6
+    buffDebuffType: 2
+    value: 0
+    turnDuration: 30
+    attributeInfluence:
+      attribute: 5
+      value: 0
+      multiplier: -5
   attributeInfluence: []
-  spellCastObject: {fileID: 8761519321041914438, guid: a6fc7bd1a6087d34587c66702b35c3cb, type: 3}
+  spellCastObject: {fileID: 7861014062925696046, guid: d0a7694c05542f8438703c57c1fa017b, type: 3}
   specialEffect: 0
   minSpecialValue: 0
   maxSpecialValue: 0
   fixedSpecialValue: 0
-  duration: 5
+  duration: 0
   invokeLimit: 0

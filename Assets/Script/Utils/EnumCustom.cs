@@ -55,7 +55,6 @@ public class EnumCustom : MonoBehaviour
         Buff,
         Debuff,
         Special,
-        Unlock,
         Hit_Special,
         Hit_Buff,
         Hit_Debuff,
@@ -81,6 +80,9 @@ public class EnumCustom : MonoBehaviour
         Mp_Regen,
         Fake_Life,
         Blink,
+        Unlock,
+        Create_Food,
+        Spike,
     }
 
     public enum BuffDebuffType

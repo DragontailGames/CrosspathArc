@@ -200,7 +200,9 @@ public class AttributeStatus
         if(fakeLifeDuration<=0)
         {
             fakeLife = 0;
+            Manager.Instance.canvasManager.RemoveLogText("Invisibility");
         }
+
     }
 
     public void AddModifier(AttributeModifier attributeModifier, StatusModifier statusModifier)

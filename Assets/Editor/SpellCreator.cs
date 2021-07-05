@@ -10,7 +10,7 @@ public class SpellCreator : EditorWindow
     {
         SpellCreator window = (SpellCreator)GetWindow(typeof(SpellCreator));
         window.titleContent = new GUIContent("Spell Creator");
-        window.minSize = new Vector2(400, 400);
+        //window.minSize = new Vector2(400, 400);
         window.Show();
     }
 
@@ -19,6 +19,8 @@ public class SpellCreator : EditorWindow
     Spell[] spells;
 
     string folder;
+
+    Vector2 scrollPos;
 
     private void OnEnable()
     {
@@ -30,12 +32,14 @@ public class SpellCreator : EditorWindow
         spell = CreateInstance("Spell") as Spell;
         folder = "Wizard";
         spell.buffDebuff = new List<BuffDebuff>();
-        spell.attributeInfluence = new List<EnumCustom.Attribute>();
+        spell.attributeInfluence = new List<AttributeInfluence>();
         spells = Resources.LoadAll<Spell>("ScriptableObject/Spells/");
     }
 
     void OnGUI()
     {
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, false, false);
+
         EditorGUIUtility.labelWidth = 130;
         GUIContent content = new GUIContent();
 
@@ -92,6 +96,7 @@ public class SpellCreator : EditorWindow
             ProjectWindowUtil.CreateAsset(spell, $"Assets/Resources/ScriptableObject/Spells/{folder}{spell.spellName}.asset");
             CreateSpell();
         }
+        EditorGUILayout.EndScrollView();
     }
 
     public void RenderSpecialType()
@@ -150,20 +155,21 @@ public class SpellCreator : EditorWindow
 
         for (int i = 0; i < spell.attributeInfluence.Count; i++)
         {
-            EditorGUILayout.BeginHorizontal();
-
-            spell.attributeInfluence[i] = (EnumCustom.Attribute)EditorGUILayout.EnumPopup(spell.attributeInfluence[i]);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
+            RenderAttributeInfluence(spell.attributeInfluence[i]);
 
             if(GUILayout.Button("Remove"))
             {
                 spell.attributeInfluence.RemoveAt(i);
             }
-            EditorGUILayout.EndHorizontal();
+
+            GUILayout.EndVertical();
+            GUILayout.Space(5);
         }
 
         if(GUILayout.Button("Add Attribute Influece"))
         {
-            spell.attributeInfluence.Add(new EnumCustom.Attribute());
+            spell.attributeInfluence.Add(new AttributeInfluence());
         }
     }
 
@@ -262,5 +268,24 @@ public class SpellCreator : EditorWindow
 
         content.text = "Duration";
         spell.duration = EditorGUILayout.IntField(content, spell.duration);
+    }
+
+    public void RenderAttributeInfluence(AttributeInfluence attributeInfluence)
+    {
+        GUIContent content = new GUIContent();
+        EditorGUILayout.Space(2);
+
+        content.text = "Attribute";
+        attributeInfluence.attribute = (EnumCustom.Attribute)EditorGUILayout.EnumPopup(content, attributeInfluence.attribute);
+
+        content.text = "Value";
+        attributeInfluence.value = EditorGUILayout.IntField(content, attributeInfluence.value);
+
+        content.text = "Multiplier";
+        attributeInfluence.multiplier = EditorGUILayout.IntField(content, attributeInfluence.multiplier);
+        EditorGUILayout.HelpBox("Use a positive value to multiply and negative value to divide", MessageType.Info);
+
+
+        EditorGUILayout.Space(2);
     }
 }

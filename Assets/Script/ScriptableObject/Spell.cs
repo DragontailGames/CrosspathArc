@@ -30,7 +30,7 @@ public class Spell : ScriptableObject
 
     public List<BuffDebuff> buffDebuff;
 
-    public List<EnumCustom.Attribute> attributeInfluence;
+    public List<AttributeInfluence> attributeInfluence;
 
     public GameObject spellCastObject;
 
@@ -128,7 +128,7 @@ public class Spell : ScriptableObject
         }
         else
         {
-            Destroy(spellCreated, 1.0f);
+            Destroy(spellCreated, 1.2f);
         }
     }
 
@@ -141,10 +141,26 @@ public class Spell : ScriptableObject
 
     public void CastBuffSpecial(CharacterController controller, BuffDebuff buff)
     {
+        int value = 0;
         if(buff.specialEffect == EnumCustom.SpecialEffect.Fake_Life)
         {
             controller.CharacterStatus.attributeStatus.fakeLife = buff.value;
             controller.CharacterStatus.attributeStatus.fakeLifeDuration = buff.turnDuration;
+            value = buff.value;
         }
+        else if(buff.specialEffect == EnumCustom.SpecialEffect.Hp_Regen)
+        {
+            value = buff.attributeInfluence.GetValue(controller.CharacterStatus.attributeStatus.GetValue(buff.attributeInfluence.attribute));
+            controller.CharacterStatus.hpRegen = value;
+            controller.CharacterStatus.hpRegenDuration = buff.turnDuration;
+
+        }
+        else if(buff.specialEffect == EnumCustom.SpecialEffect.Spike)
+        {
+            value = buff.attributeInfluence.GetValue(controller.CharacterStatus.attributeStatus.GetValue(buff.attributeInfluence.attribute));
+            controller.CharacterCombat.spikeValue = value;
+        }
+
+        Manager.Instance.canvasManager.StatusSpecial(buff.specialEffect.ToString().Replace('_', ' '), value, 0);
     }
 }
