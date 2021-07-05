@@ -188,10 +188,10 @@ public class BotController : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public virtual void ReceiveHit(int damage, string damageText = "")
+    public virtual void ReceiveHit(int damage, string damageText = "", bool ignoreArmor = false)
     {
         int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
-        int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
+        int trueDamage = ignoreArmor ? damage : Mathf.Clamp(damage - armor, 0, damage);
         hp -= trueDamage;
 
         if (hp <= 0)

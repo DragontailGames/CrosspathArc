@@ -27,6 +27,7 @@ public class CharacterCombat : MonoBehaviour
     private Color32 color;
 
     public int spikeValue;
+    public int spikeDuration;
 
     public CharacterController CharacterController { get => this.characterController; set => this.characterController = value; }
 
@@ -49,6 +50,8 @@ public class CharacterCombat : MonoBehaviour
         }
 
         SetupSpells();
+
+        Manager.Instance.timeManager.startNewTurnAction += () => StartNewTurn();
     }
 
     public void Update()
@@ -465,9 +468,7 @@ public class CharacterCombat : MonoBehaviour
 
         if(spikeValue>0)
         {
-            enemy.ReceiveHit(spikeValue, spikeValue + "(spike)");
-            spikeValue = 0;
-            Manager.Instance.canvasManager.RemoveLogText("Spike");
+            enemy.ReceiveHit(spikeValue, spikeValue + "(spike)", true);
         }
 
         if (!CharacterController.CharacterStatus.DropHP(trueDamage))
@@ -496,5 +497,18 @@ public class CharacterCombat : MonoBehaviour
     public void SetSpells(List<Spell> spells)
     {
         this.spells = spells;
+    }
+
+    public void StartNewTurn()
+    {
+        spikeDuration = Mathf.Clamp(spikeDuration--, 0, spikeDuration);
+        if (spikeDuration > 0)
+        {
+            Manager.Instance.canvasManager.StatusSpecial("Spike", spikeValue, spikeDuration);
+        }
+        else if (spikeDuration <= 0)
+        {
+            Manager.Instance.canvasManager.RemoveLogText("Hp Regen");
+        }
     }
 }

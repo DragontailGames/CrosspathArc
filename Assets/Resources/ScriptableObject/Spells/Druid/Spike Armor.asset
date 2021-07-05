@@ -29,7 +29,7 @@ MonoBehaviour:
     specialEffect: 12
     buffDebuffType: 2
     value: 0
-    turnDuration: 0
+    turnDuration: 10
     attributeInfluence:
       attribute: 5
       value: 0

@@ -32,9 +32,9 @@ public class EnemyController : BotController
         }
     }
 
-    public override void ReceiveHit(int damage, string damageText = "")
+    public override void ReceiveHit(int damage, string damageText = "", bool ignoreArmor = false)
     {
-        base.ReceiveHit(damage, damageText);
+        base.ReceiveHit(damage, damageText, ignoreArmor);
         int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
 
@@ -43,7 +43,14 @@ public class EnemyController : BotController
             specialEffect = EnumCustom.SpecialEffect.None;
         }
 
-        Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
+        if (!ignoreArmor)
+        {
+            Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
+        }
+        else
+        {
+            Manager.Instance.canvasManager.LogMessage(enemy.name + " sofreu <color=red>" + damageText + "</color> de dano direto");//Manda mensagem do dano que o inimigo recebeu direto
+        }
 
         if(target == null)
         {

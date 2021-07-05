@@ -159,8 +159,9 @@ public class Spell : ScriptableObject
         {
             value = buff.attributeInfluence.GetValue(controller.CharacterStatus.attributeStatus.GetValue(buff.attributeInfluence.attribute));
             controller.CharacterCombat.spikeValue = value;
+            controller.CharacterCombat.spikeDuration = buff.turnDuration;
         }
 
-        Manager.Instance.canvasManager.StatusSpecial(buff.specialEffect.ToString().Replace('_', ' '), value, 0);
+        Manager.Instance.canvasManager.StatusSpecial(buff.specialEffect.ToString().Replace('_', ' '), value, buff.turnDuration);
     }
 }
