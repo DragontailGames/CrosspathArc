@@ -466,6 +466,8 @@ public class CharacterCombat : MonoBehaviour
         if(spikeValue>0)
         {
             enemy.ReceiveHit(spikeValue, spikeValue + "(spike)");
+            spikeValue = 0;
+            Manager.Instance.canvasManager.RemoveLogText("Spike");
         }
 
         if (!CharacterController.CharacterStatus.DropHP(trueDamage))

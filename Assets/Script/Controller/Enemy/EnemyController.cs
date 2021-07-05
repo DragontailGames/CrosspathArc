@@ -34,7 +34,6 @@ public class EnemyController : BotController
 
     public override void ReceiveHit(int damage, string damageText = "")
     {
-        Debug.Log("DAMAGE " + damage);
         base.ReceiveHit(damage, damageText);
         int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
