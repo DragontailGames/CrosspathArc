@@ -237,15 +237,15 @@ public class SpellCreator : EditorWindow
             EditorGUILayout.BeginHorizontal();
 
             content.text = "Min";
-            spell.minSpecialValue = EditorGUILayout.IntField(content, spell.minSpecialValue);
+            spell.minValue = EditorGUILayout.IntField(content, spell.minValue);
 
             content.text = "Max";
-            spell.maxSpecialValue = EditorGUILayout.IntField(content, spell.maxSpecialValue);
+            spell.maxValue = EditorGUILayout.IntField(content, spell.maxValue);
 
             EditorGUILayout.EndHorizontal();
 
             content.text = "Fixed";
-            spell.fixedSpecialValue = EditorGUILayout.IntField(content, spell.fixedSpecialValue);
+            spell.fixedValue = EditorGUILayout.IntField(content, spell.fixedValue);
         }
         else
         {
@@ -253,7 +253,7 @@ public class SpellCreator : EditorWindow
             spell.duration = EditorGUILayout.IntField(content, spell.duration);
         }
 
-        if (spell.specialEffect == EnumCustom.SpecialEffect.Invoke)
+        if (spell.spellType == EnumCustom.SpellType.Invoke)
         {
             content.text = "Max Invokes";
             spell.invokeLimit = EditorGUILayout.IntField(content, spell.invokeLimit);

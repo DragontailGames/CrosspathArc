@@ -15,15 +15,22 @@ MonoBehaviour:
   spellName: Poison
   description: 
   icon: {fileID: 21300000, guid: 5aa48cbedd0154482bfd9455d5a8f1c8, type: 3}
+  castTarget: 0
   availableAt: 3
   minValue: 0
   maxValue: 0
   fixedValue: 0
+  formula: v/2
+  formulaType: 1
   manaCost: 8
   spellType: 3
   area: 0
   buffDebuff: []
-  attributeInfluence: 
+  attributeInfluence: []
   spellCastObject: {fileID: 100000, guid: 7620607eaa1001d41885516052b3e8c8, type: 3}
   specialEffect: 1
-  specialEffectDuration: 10
+  minSpecialValue: 0
+  maxSpecialValue: 0
+  fixedSpecialValue: 0
+  duration: 0
+  invokeLimit: 0

@@ -12,12 +12,12 @@ public class MinionController : BotController
         base.Start();
         Manager.Instance.timeManager.startNewTurnAction += () => { StartNewTurn(); };
 
-        gameManager.creatures.Add(this.gameObject);
+        gameManager.creatures.Add(this);
     }
 
     public void StartNewTurn()
     {
-        if(hp<=0)
+        if(Hp<=0)
         {
             //gameManager.EndMyTurn();
             return;
@@ -37,23 +37,23 @@ public class MinionController : BotController
         Destroy(this.gameObject, 3.0f);
     }
 
-    public override IEnumerator StartMyTurn(float waitTime, bool enemy = false)
+    public override IEnumerator StartMyTurn()
     {
-        if(hp<0)
+        if(Hp<0)
         {
-            gameManager.EndMyTurn();
+            gameManager.EndMyTurn(this);
             yield break;
         }
         target = GetEnemy();
         if(target == null)
         {
             target = Manager.Instance.characterController.transform;
-            StartCoroutine(base.StartMyTurn(0, false));
+            StartCoroutine(base.StartMyTurn());
         }
         else
         {
             yield return new WaitForSeconds(0.2f);
-            StartCoroutine(base.StartMyTurn(0, false));
+            StartCoroutine(base.StartMyTurn());
         }
 
     }

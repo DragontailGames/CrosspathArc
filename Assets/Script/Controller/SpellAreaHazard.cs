@@ -29,7 +29,6 @@ public class SpellAreaHazard : MonoBehaviour
             return;
         }
         EnemyController enemy = Manager.Instance.enemyManager.CheckEnemyInTile(position);
-        Debug.Log(enemy);
-        enemy?.ReceiveHit(damage, damage.ToString());
+        enemy?.ReceiveHit(null, damage, damage.ToString());
     }
 }

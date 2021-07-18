@@ -14,14 +14,22 @@ public class AttributeInfluence
 
     public int GetValue(int baseValue)
     {
-        float fullValue = baseValue += value;
+        float fullValue = 0;
         if (multiplier > 0)
         {
-            fullValue *= (float)multiplier;
+            fullValue += baseValue * (float)multiplier;
         }
         else if(multiplier<0)
         {
-            fullValue /= Mathf.Abs((float)multiplier);
+            fullValue += baseValue / Mathf.Abs((float)multiplier);
+        }
+        if(value>0)
+        {
+            fullValue += baseValue + value;
+        }
+        else if(value<0)
+        {
+            fullValue += baseValue - value;
         }
 
         return Mathf.CeilToInt(fullValue);

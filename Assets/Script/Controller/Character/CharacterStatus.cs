@@ -5,13 +5,11 @@ using UnityEngine.Events;
 
 public class CharacterStatus : MonoBehaviour
 {
-    public AttributeStatus attributeStatus = new AttributeStatus();
+    public CharacterController controller;
 
     private int exp = 0;//pontos de experiencia atual
 
     private int nextLevelExp = 100;//pontos para o proximo nivel
-
-    private int level = 1;//level atual
 
     private int availableStatusPoint = 0;//pontos de status para serem distribuído
 
@@ -27,12 +25,6 @@ public class CharacterStatus : MonoBehaviour
     [Tooltip("Valor para adicionar no total da exp")]
     public int addLevelTemp = 25;//Temporario para desenvolvimento
 
-    private int hp, mp;//quantidade de hp e mp
-
-    //Gets e Sets para melhor visualização do codigo
-    public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(Level)); }
-    public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(Level)); }
-    public int Level { get => this.level; set => this.level = value; }
     public int AvailableStatusPoint { get => this.availableStatusPoint; set => this.availableStatusPoint = value; }
     public int AvailableSkillPoint { get => this.availableSkillPoint; set => this.availableSkillPoint = value; }
     public int NextLevelExp { get => this.nextLevelExp; set => this.nextLevelExp = value; }
@@ -49,11 +41,11 @@ public class CharacterStatus : MonoBehaviour
     public void Start()
     {
         ResetHp_Mp();//Reseta o hp e o mp com base no max
-        NextLevelExp = MathfCustom.TotalLevelExp(Level);//Calcula o total de exp necessario
+        NextLevelExp = MathfCustom.TotalLevelExp(controller.level);//Calcula o total de exp necessario
         Manager.Instance.canvasManager.SetupExpBar(Exp, NextLevelExp);//Define a exp na barra visual
 
-        tilesToRegenHp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.HpRegen);//Reseta os tiles para regenerar o Hp
-        tilesToRegenMp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.MpRegen);//Reseta os tiles para regenerar o Mp
+        tilesToRegenHp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.HpRegen);//Reseta os tiles para regenerar o Hp
+        tilesToRegenMp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.MpRegen);//Reseta os tiles para regenerar o Mp
 
         Manager.Instance.timeManager.startNewTurnAction += () => StartNewTurn();
     }
@@ -85,21 +77,21 @@ public class CharacterStatus : MonoBehaviour
     /// </summary>
     public void LevelUp()
     {
-        Level++;
+        controller.level++;
         AvailableStatusPoint++;
         AvailableSkillPoint++;
         ResetHp_Mp();
         levelUpAction?.Invoke();
         Exp -= NextLevelExp;
-        NextLevelExp = MathfCustom.TotalLevelExp(Level);//Calcula o total de exp necessario para subir de nivel
+        NextLevelExp = MathfCustom.TotalLevelExp(controller.level);//Calcula o total de exp necessario para subir de nivel
         Manager.Instance.canvasManager.SetupExpBar(Exp, NextLevelExp);//Mostra exp na barra visual da UI
         Manager.Instance.canvasManager.LogMessage("<color=#f2af11><b>Subiu de Nivel !!!</b></color>");//Manda mensagem para o log
     }
 
     public void ResetHp_Mp()
     {
-        Hp = attributeStatus.GetMaxHP(Level);//Define o hp para o max atual
-        Mp = attributeStatus.GetMaxMP(Level);//Define o mp para o max atual
+        controller.Hp = controller.attributeStatus.GetMaxHP(controller.level);//Define o hp para o max atual
+        controller.Mp = controller.attributeStatus.GetMaxMP(controller.level);//Define o mp para o max atual
     }
 
     /// <summary>
@@ -111,22 +103,22 @@ public class CharacterStatus : MonoBehaviour
         tilesToRegenHp--;
         if(tilesToRegenHp<=0)
         {
-            Hp += 1;
-            tilesToRegenHp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.HpRegen);
+            controller.Hp += 1;
+            tilesToRegenHp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.HpRegen);
         }
 
         tilesToRegenMp--;
         if (tilesToRegenMp <= 0)
         {
-            Mp += 1;
-            tilesToRegenMp = totalTilesToRegen - attributeStatus.GetValue(EnumCustom.Status.MpRegen);
+            controller.Mp += 1;
+            tilesToRegenMp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.MpRegen);
         }
     }
 
     public bool DropHP(int value)
     {
-        Hp = Mathf.Clamp(Hp - value, 0, Hp);
-        if(Hp<=0)
+        controller.Hp = Mathf.Clamp(controller.Hp - value, 0, controller.Hp);
+        if(controller.Hp <=0)
         {
             return false;
         }
@@ -138,7 +130,7 @@ public class CharacterStatus : MonoBehaviour
         hpRegenDuration = Mathf.Clamp(hpRegenDuration--, 0, hpRegenDuration);
         if(hpRegenDuration>0)
         {
-            hp = Mathf.Clamp(hp + hpRegen, 0,attributeStatus.GetMaxHP(level));
+            controller.Hp = Mathf.Clamp(controller.Hp + hpRegen, 0, controller.attributeStatus.GetMaxHP(controller.level));
 
             Manager.Instance.canvasManager.StatusSpecial("Hp Regen",hpRegen, hpRegenDuration);
         }

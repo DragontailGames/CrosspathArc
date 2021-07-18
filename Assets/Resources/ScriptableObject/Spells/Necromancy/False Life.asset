@@ -19,22 +19,15 @@ MonoBehaviour:
   availableAt: 7
   minValue: 0
   maxValue: 0
-  fixedValue: 0
+  fixedValue: 20
+  formula: 
+  formulaType: 0
   manaCost: 14
-  spellType: 1
+  spellType: 3
   area: 0
-  buffDebuff:
-  - attribute: 0
-    status: 0
-    specialEffect: 8
-    buffDebuffType: 2
-    value: 20
-    turnDuration: 40
-  attributeInfluence: 
+  buffDebuff: []
+  attributeInfluence: []
   spellCastObject: {fileID: 100000, guid: 2efa81fe74891db4495e462c7e208c00, type: 3}
-  specialEffect: 0
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
-  specialEffectDuration: 0
+  specialEffect: 7
+  duration: 40
   invokeLimit: 0

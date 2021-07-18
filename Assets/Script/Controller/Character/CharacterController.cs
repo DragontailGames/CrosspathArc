@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// Controlador geral do jogador para fazer relação entre as classes
 /// </summary>
-public class CharacterController : MonoBehaviour
+public class CharacterController : CreatureController
 {
     #region SetupCharacter
     CharacterCombat characterCombat;
@@ -26,39 +26,39 @@ public class CharacterController : MonoBehaviour
     public CharacterInventory CharacterInventory { get => this.characterInventory; set => this.characterInventory = value; }
     public CharacterMoveTileIsometric CharacterMoveTileIsometric { get => this.characterMoveTileIsometric; set => this.characterMoveTileIsometric = value; }
     public CharacterStatus CharacterStatus { get => this.characterStatus; set => this.characterStatus = value; }
-    public Animator Animator { get => this.animator; set => this.animator = value; }
 
     #endregion
 
-    private GameManager gameManager;
+    public Animator animator;
+
     private EnemyManager enemyManager;
-    private Animator animator;
 
-    internal string direction;
-    public string animationName = "";
-
-    public bool myTurn = true;
     private bool delay = false;
 
     public bool isRest = false;
 
-    public void Awake()
+    public override void Awake()
     {
+        base.Awake();
         Manager.Instance.characterController = this;
 
         characterCombat = this.GetComponent<CharacterCombat>();
+        characterCombat.controller = this;
         characterInterface = this.GetComponent<CharacterInterface>();
+        characterInterface.controller = this;
         characterInventory = this.GetComponent<CharacterInventory>();
+        characterInventory.controller = this;
         characterMoveTileIsometric = this.GetComponent<CharacterMoveTileIsometric>();
+        characterMoveTileIsometric.controller = this;
         characterStatus = this.GetComponent<CharacterStatus>();
+        characterStatus.controller = this;
 
-        Animator = this.transform.GetComponentInChildren<Animator>();
+        animator = this.transform.GetComponentInChildren<Animator>();
         animator.speed = 0.6f;
 
-        gameManager = Manager.Instance.gameManager;
         enemyManager = Manager.Instance.enemyManager;
 
-        gameManager.creatures.Add(this.gameObject);
+        gameManager.creatures.Add(this);
     }
 
     public void Update()
@@ -71,13 +71,21 @@ public class CharacterController : MonoBehaviour
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if (enemyInTile != null && enemyInTile.hp>0)
+            if (enemyInTile != null && enemyInTile.Hp>0)
             {
+                foreach (var aux in specialSpell)
+                {
+                    aux.HandleAttack(this);
+                }
                 StartCoroutine(StartDelay());
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
             }
             else if(characterCombat.selectedSpell != null)
             {
+                foreach (var aux in specialSpell)
+                {
+                    aux.HandleAttack(this);
+                }
                 StartCoroutine(StartDelay());
                 direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.CurrentTileIndex, mousePos);
                 characterCombat.CastSpell(null, mousePos);
@@ -106,19 +114,14 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    public IEnumerator waitRest;
-
-    public IEnumerator StartMyTurn()
+    public override IEnumerator StartMyTurn()
     {
-        gameManager.StartNewTurn();
-        yield return new WaitForSeconds(0.1f);
-        myTurn = true;
-        characterCombat.invisibilityDuration--;
+        yield return base.StartMyTurn();
 
-        if(isRest)
+        if (isRest)
         {
-            characterStatus.Hp += Manager.Instance.configManager.healthRestPerTurn;
-            characterStatus.Mp += Manager.Instance.configManager.manaRestPerTurn;
+            Hp += Manager.Instance.configManager.healthRestPerTurn;
+            Mp += Manager.Instance.configManager.manaRestPerTurn;
             if (gameManager.EndTurnRest())
             {
                 yield return new WaitForSeconds(1.0f);
@@ -129,8 +132,6 @@ public class CharacterController : MonoBehaviour
                 StopRest();
             }
         }
-        CharacterStatus.attributeStatus.StartNewTurn();
-        Manager.Instance.canvasManager.UpdateStatus();
     }
 
     /// <summary>
@@ -152,27 +153,6 @@ public class CharacterController : MonoBehaviour
         return MathfCustom.Sign(pos);//Retorna o sinal do valor(-1,+1 ou 0)
     }
 
-    public string GetDirection(Vector3Int index)
-    {
-        if (index == new Vector3Int(1, 1, 0)) return "N";
-        if (index == new Vector3Int(1, 0, 0)) return "NE";
-        if (index == new Vector3Int(1, -1, 0)) return "E";
-        if (index == new Vector3Int(0, -1, 0)) return "SE";
-        if (index == new Vector3Int(-1, -1, 0)) return "S";
-        if (index == new Vector3Int(-1, 0, 0)) return "SW";
-        if (index == new Vector3Int(-1, 1, 0)) return "W";
-        if (index == new Vector3Int(0, 1, 0)) return "NW";
-
-        return "DirectionWrong";
-    }
-
-    public IEnumerator StartDelay()
-    {
-        delay = true;
-        yield return new WaitForSeconds(0.2f);
-        delay = false;
-    }
-
     public void SetupAnimation(string animName)
     {
         animationName = animName;
@@ -181,7 +161,14 @@ public class CharacterController : MonoBehaviour
         var animatorObject = this.transform.Find(animName);
 
         animatorObject.gameObject.SetActive(true);
-        Animator = animatorObject.GetComponent<Animator>();
+        animator = animatorObject.GetComponent<Animator>();
+    }
+
+    public IEnumerator StartDelay()
+    {
+        delay = true;
+        yield return new WaitForSeconds(0.2f);
+        delay = false;
     }
 
     public void Rest()
@@ -196,7 +183,6 @@ public class CharacterController : MonoBehaviour
 
     public void StopRest()
     {
-        StopCoroutine(waitRest);
         isRest = false;
         gameManager.campfire.SetActive(false);
     }

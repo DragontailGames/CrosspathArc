@@ -13,22 +13,21 @@ MonoBehaviour:
   m_Name: Field of Thorns
   m_EditorClassIdentifier: 
   spellName: Field of Thorns
-  description: 
+  description: "\xC1rea 5x5,5 turnos.Causa 3dano quem anda em cima"
   icon: {fileID: 21300000, guid: 40fb584d8a1674661989a02c89c5e6b0, type: 3}
   castTarget: 1
   availableAt: 2
   minValue: 0
   maxValue: 0
   fixedValue: 3
+  formula: 
+  formulaType: 0
   manaCost: 4
-  spellType: 7
+  spellType: 11
   area: 5
   buffDebuff: []
   attributeInfluence: []
   spellCastObject: {fileID: 8761519321041914438, guid: a6fc7bd1a6087d34587c66702b35c3cb, type: 3}
   specialEffect: 0
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
   duration: 5
   invokeLimit: 0

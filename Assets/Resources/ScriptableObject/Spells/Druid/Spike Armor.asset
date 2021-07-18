@@ -13,32 +13,24 @@ MonoBehaviour:
   m_Name: Spike Armor
   m_EditorClassIdentifier: 
   spellName: Spike Armor
-  description: 
+  description: Inimigos que ferem o player levam wisdom/2dano por 10 turnos
   icon: {fileID: 21300000, guid: f8e648a0160edd94989ad9e3f713749d, type: 3}
   castTarget: 3
   availableAt: 7
   minValue: 0
   maxValue: 0
   fixedValue: 0
+  formula: v/2
+  formulaType: 0
   manaCost: 14
-  spellType: 1
+  spellType: 3
   area: 0
-  buffDebuff:
-  - attribute: 0
-    status: 0
-    specialEffect: 12
-    buffDebuffType: 2
+  buffDebuff: []
+  attributeInfluence:
+  - attribute: 5
     value: 0
-    turnDuration: 10
-    attributeInfluence:
-      attribute: 5
-      value: 0
-      multiplier: -2
-  attributeInfluence: []
+    multiplier: -2
   spellCastObject: {fileID: 7744328422421035050, guid: ddd94c41340346d4396cbffbba339ad3, type: 3}
-  specialEffect: 12
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
-  duration: 0
+  specialEffect: 8
+  duration: 10
   invokeLimit: 0

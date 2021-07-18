@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class CharacterMoveTileIsometric : MonoBehaviour
 {
-    private CharacterController characterController;
+    public CharacterController controller;
+
     public GameManager gameManager;
 
     public float movementSpeed = 1;
@@ -23,8 +24,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     //Resets iniciais
     public void Start()
     {
-        characterController = this.GetComponent<CharacterController>();
-
         CurrentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
 
         movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
@@ -34,7 +33,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         Vector3Int moveCell = Vector3Int.zero;
 
-        if (!gameManager.InPause && characterController.myTurn && characterController.Animator.GetBool("Walk") == false)//Testa o delay para correção da movimentação por tile
+        if (!gameManager.InPause && controller.myTurn && controller.animator.GetBool("Walk") == false)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 
@@ -42,7 +41,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
             if (moveCell != Vector3Int.zero)
             {
-                gameManager.EndMyTurn(characterController);
+                gameManager.EndMyTurn(controller);
             }
 
             if (moveCell != Vector3Int.zero)
@@ -51,22 +50,22 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
                 if (CanMoveToTile(moveCell))
                 {
-                    characterController.direction = characterController.GetDirection(moveCell);
-                    if(characterController.direction != "W" && characterController.direction != "E")
+                    controller.direction = controller.GetDirection(moveCell);
+                    if(controller.direction != "W" && controller.direction != "E")
                     {
                         movementSpeed = 1.5f;
-                        characterController.Animator.speed = 0.8f;
+                        controller.animator.speed = 0.8f;
                     }
                     else
                     {
                         movementSpeed = 2.0f;
-                        characterController.Animator.speed = 0.7f;
+                        controller.animator.speed = 0.7f;
                     }
 
-                    if (!characterController.Animator.GetBool("Walk"))
+                    if (!controller.animator.GetBool("Walk"))
                     {
-                        PlayAnimation(characterController.animationName + "_Walk_" + characterController.direction);
-                        characterController.Animator.SetBool("Walk", true);
+                        PlayAnimation(controller.animationName + "_Walk_" + controller.direction);
+                        controller.animator.SetBool("Walk", true);
                     }
                     CurrentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
@@ -76,7 +75,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         }
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
 
-        characterController.Animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05);
+        controller.animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05);
     }
 
     /// <summary>
@@ -102,7 +101,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
     public void PlayAnimation(string animation)
     {
-        characterController.Animator.Play(animation);
+        controller.animator.Play(animation);
     }
 
     public void Blink(Vector3Int index)

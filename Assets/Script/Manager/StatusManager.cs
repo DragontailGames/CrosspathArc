@@ -19,7 +19,7 @@ public class StatusManager : MonoBehaviour
 
     public List<Button> attributePlusButton = new List<Button>();
 
-    private CharacterController character;
+    private CharacterController controller;
 
     public TextMeshProUGUI nameTMPro;
 
@@ -27,7 +27,7 @@ public class StatusManager : MonoBehaviour
 
     void Awake()
     {
-        character = Manager.Instance.characterController;
+        controller = Manager.Instance.characterController;
         for (int i = 0; i < attributes.transform.childCount; i++)
         {
             //Pega as variaveis na ui dos atributos
@@ -42,8 +42,8 @@ public class StatusManager : MonoBehaviour
             //Botao para adicionar pontos ao atributo
             bt.onClick.AddListener(() => 
             {
-                character.CharacterStatus.attributeStatus.attributes[tempI].value++;
-                character.CharacterStatus.AvailableStatusPoint--;
+                controller.attributeStatus.attributes[tempI].value++;
+                controller.CharacterStatus.AvailableStatusPoint--;
                 UpdateStatus();
             });
 
@@ -58,16 +58,16 @@ public class StatusManager : MonoBehaviour
             statusText.Add(stats.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
         }
 
-        nameTMPro.text = character.CharacterStatus.nickname;
+        nameTMPro.text = controller.CharacterStatus.nickname;
 
         levelPlayerBaseTMPro = playerBase.transform.Find("Level").GetChild(0).GetComponent<TextMeshProUGUI>();
         hpPlayerBaseTMPro = playerBase.transform.Find("Hp").GetChild(0).GetComponent<TextMeshProUGUI>();
         mpPlayerBaseTMPro = playerBase.transform.Find("Mp").GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        CreateSkills(character.CharacterCombat.skills);
+        CreateSkills(controller.CharacterCombat.skills);
 
-        character.CharacterStatus.levelUpAction += UpdateStatus;
-        character.CharacterStatus.levelUpAction += UpdateSkills;
+        controller.CharacterStatus.levelUpAction += UpdateStatus;
+        controller.CharacterStatus.levelUpAction += UpdateSkills;
     }
 
     private void OnEnable()
@@ -83,22 +83,22 @@ public class StatusManager : MonoBehaviour
     {
         for (int i = 0; i < attributesText.Count; i++)
         {
-            attributesText[i].text = character.CharacterStatus.attributeStatus.attributes[i].value.ToString();
+            attributesText[i].text = controller.attributeStatus.attributes[i].value.ToString();
 
             Button currentButton = attributePlusButton[i];
-            currentButton.targetGraphic.enabled = character.CharacterStatus.AvailableStatusPoint > 0 && character.CharacterStatus.attributeStatus.attributes[i].value < 10;
+            currentButton.targetGraphic.enabled = controller.CharacterStatus.AvailableStatusPoint > 0 && controller.attributeStatus.attributes[i].value < 10;
         }
         for (int i = 0; i < statusText.Count; i++)
         {
-            statusText[i].text = character.CharacterStatus.attributeStatus.GetValue(character.CharacterStatus.attributeStatus.status[i].status).ToString();
+            statusText[i].text = controller.attributeStatus.GetValue(controller.attributeStatus.status[i].status).ToString();
         }
 
-        levelPlayerBaseTMPro.text = character.CharacterStatus.Level.ToString();
-        hpPlayerBaseTMPro.text = character.CharacterStatus.attributeStatus.GetMaxHP(character.CharacterStatus.Level).ToString();
-        mpPlayerBaseTMPro.text = character.CharacterStatus.attributeStatus.GetMaxMP(character.CharacterStatus.Level).ToString();
+        levelPlayerBaseTMPro.text = controller.level.ToString();
+        hpPlayerBaseTMPro.text = controller.attributeStatus.GetMaxHP(controller.level).ToString();
+        mpPlayerBaseTMPro.text = controller.attributeStatus.GetMaxMP(controller.level).ToString();
 
-        availablePointsStatus.gameObject.SetActive(character.CharacterStatus.AvailableStatusPoint > 0);
-        availablePointsStatus.GetComponentInChildren<TextMeshProUGUI>().text = character.CharacterStatus.AvailableStatusPoint.ToString();
+        availablePointsStatus.gameObject.SetActive(controller.CharacterStatus.AvailableStatusPoint > 0);
+        availablePointsStatus.GetComponentInChildren<TextMeshProUGUI>().text = controller.CharacterStatus.AvailableStatusPoint.ToString();
     }
 
     public void CreateSkills(List<Skill> skills)
@@ -113,11 +113,11 @@ public class StatusManager : MonoBehaviour
             var currentSkill = i;
             skillLevel.GetChild(1).GetComponent<Button>().onClick.AddListener(() =>
             {
-                character.CharacterCombat.skills[currentSkill].level++;
-                character.CharacterStatus.AvailableSkillPoint--;
+                controller.CharacterCombat.skills[currentSkill].level++;
+                controller.CharacterStatus.AvailableSkillPoint--;
                 UpdateSkill(skills[currentSkill], currentSkill);
                 UpdateSkills();
-                character.CharacterCombat.SetupSpells();
+                controller.CharacterCombat.SetupSpells();
             });
             skillsContent.Add(tempSkillContent);
         }
@@ -131,14 +131,14 @@ public class StatusManager : MonoBehaviour
 
     public void UpdateSkills()
     {
-        availablePointsSkill.gameObject.SetActive(character.CharacterStatus.AvailableSkillPoint > 0);
-        availablePointsSkill.GetComponentInChildren<TextMeshProUGUI>().text = character.CharacterStatus.AvailableSkillPoint.ToString();
+        availablePointsSkill.gameObject.SetActive(controller.CharacterStatus.AvailableSkillPoint > 0);
+        availablePointsSkill.GetComponentInChildren<TextMeshProUGUI>().text = controller.CharacterStatus.AvailableSkillPoint.ToString();
 
         for (int i = 0; i < skillsContent.Count; i++)
         {
             GameObject aux = (GameObject)skillsContent[i];
             Transform skillLevel = aux.transform.Find("SkillLevel");
-            skillLevel.GetChild(1).gameObject.SetActive(character.CharacterStatus.AvailableSkillPoint > 0 && character.CharacterCombat.skills[i].level < 10);
+            skillLevel.GetChild(1).gameObject.SetActive(controller.CharacterStatus.AvailableSkillPoint > 0 && controller.CharacterCombat.skills[i].level < 10);
         }
     }
 }

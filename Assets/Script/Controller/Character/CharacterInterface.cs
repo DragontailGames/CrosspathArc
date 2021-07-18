@@ -10,6 +10,8 @@ using TMPro;
 /// </summary>
 public class CharacterInterface : MonoBehaviour
 {
+    public CharacterController controller;
+
     public GameObject hpInterface, mpInterface;
 
     private int maxHp, maxMp;
@@ -18,8 +20,6 @@ public class CharacterInterface : MonoBehaviour
 
     private TextMeshProUGUI txtHp, txtMp;
 
-    private CharacterStatus characterStatus;
-
     private void Start()
     {
         //Configura as varaiveis
@@ -27,20 +27,18 @@ public class CharacterInterface : MonoBehaviour
         mpFlowController = mpInterface.GetComponentInChildren<HPFlowController>();
         txtHp = hpInterface.GetComponentInChildren<TextMeshProUGUI>();
         txtMp = mpInterface.GetComponentInChildren<TextMeshProUGUI>();
-
-        characterStatus = this.GetComponent<CharacterStatus>();
     }
 
     private void Update()
     {
         //Define as variaveis dinamicamente
-        maxHp = characterStatus.attributeStatus.GetMaxHP(characterStatus.Level);
-        maxMp = characterStatus.attributeStatus.GetMaxMP(characterStatus.Level);
+        maxHp = controller.attributeStatus.GetMaxHP(controller.level);
+        maxMp = controller.attributeStatus.GetMaxMP(controller.level);
 
-        hpFlowController.SetValue((float)characterStatus.Hp/ (float)maxHp);
-        mpFlowController.SetValue((float)characterStatus.Mp / (float)maxMp);
+        hpFlowController.SetValue((float)controller.Hp/ (float)maxHp);
+        mpFlowController.SetValue((float)controller.Mp / (float)maxMp);
 
-        txtHp.text = characterStatus.Hp + "/" + maxHp;
-        txtMp.text = characterStatus.Mp + "/" + maxMp;
+        txtHp.text = controller.Hp + "/" + maxHp;
+        txtMp.text = controller.Mp + "/" + maxMp;
     }
 }

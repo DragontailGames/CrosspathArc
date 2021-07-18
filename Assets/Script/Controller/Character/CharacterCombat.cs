@@ -7,8 +7,7 @@ using System.Linq;
 
 public class CharacterCombat : MonoBehaviour
 {
-    private CharacterController characterController;
-    private CharacterStatus characterStatus;
+    public CharacterController controller;
 
     public List<Skill> skills;
 
@@ -22,24 +21,15 @@ public class CharacterCombat : MonoBehaviour
 
     public List<MinionCount> minionCounts = new List<MinionCount>();
 
-    public int invisibilityDuration = 0;
-
-    private Color32 color;
-
     public int spikeValue;
     public int spikeDuration;
 
-    public CharacterController CharacterController { get => this.characterController; set => this.characterController = value; }
 
     /// <summary>
     /// Configs
     /// </summary>
     public void Start()
     {
-        CharacterController = this.GetComponent<CharacterController>();
-        characterStatus = CharacterController.CharacterStatus;
-        color = this.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
-
         foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
         {
             spellUi.Add(aux.gameObject);
@@ -50,8 +40,6 @@ public class CharacterCombat : MonoBehaviour
         }
 
         SetupSpells();
-
-        Manager.Instance.timeManager.startNewTurnAction += () => StartNewTurn();
     }
 
     public void Update()
@@ -68,9 +56,6 @@ public class CharacterCombat : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha8)) SelectSkill(7);//Ativa a skill no slot
             if (Input.GetKeyDown(KeyCode.Alpha9)) SelectSkill(8);//Ativa a skill no slot
             if (Input.GetKeyDown(KeyCode.Alpha0)) SelectSkill(9);//Ativa a skill no slot
-
-            color.a = invisibilityDuration > 0 ? (byte)100 : (byte)255;
-            this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
         }
     }
 
@@ -130,7 +115,7 @@ public class CharacterCombat : MonoBehaviour
         }
 
         //Check mana
-        if (spells[index].manaCost > CharacterController.CharacterStatus.Mp)
+        if (spells[index].manaCost > controller.Mp)
         {
             Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
             return;
@@ -144,19 +129,19 @@ public class CharacterCombat : MonoBehaviour
         }
         else if(spells[index].spellType == EnumCustom.SpellType.Buff)
         {
-            spells[index].CastBuff(characterController);
-            invisibilityDuration = 0;
+            spells[index].CastBuff(controller);
+            foreach (var aux in controller.specialSpell)
+            {
+                aux.HandleAttack(controller);
+            }
             Manager.Instance.canvasManager.UpdateStatus();
-            Manager.Instance.gameManager.EndMyTurn(characterController);
+            Manager.Instance.gameManager.EndMyTurn(controller);
         }
         else if(spells[index].spellType == EnumCustom.SpellType.Special)
         {
-            if (spells[index].specialEffect == EnumCustom.SpecialEffect.Invisibility)
-            {
-                Manager.Instance.canvasManager.UpdateStatus();
-                characterStatus.Mp -= spells[index].manaCost;
-                CastInvisibility(spells[index].duration);
-            }
+            controller.Mp -= spells[index].manaCost;
+            spells[index].CastSpecial(controller);
+            Manager.Instance.canvasManager.UpdateStatus();
         }
 
         Manager.Instance.canvasManager.UpdateStatus();
@@ -172,14 +157,14 @@ public class CharacterCombat : MonoBehaviour
     {
         if (enemy.hasTarget==false)
         {
-            StartCoroutine(characterController.StartDelay());
+            StartCoroutine(controller.StartDelay());
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
             return;
         }
 
-        invisibilityDuration = 0;
+        //controller.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration = 0;//pedro maybe
 
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
 
         if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
@@ -196,14 +181,14 @@ public class CharacterCombat : MonoBehaviour
         if(clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (Vector3Int.Distance(clickPos, playerPos) <= CharacterController.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+        if (Vector3Int.Distance(clickPos, playerPos) <= controller.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
         {
             HitEnemy(enemy);
         }
         else
         {
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
-            StartCoroutine(characterController.StartDelay());
+            StartCoroutine(controller.StartDelay());
         }
     }
 
@@ -216,16 +201,16 @@ public class CharacterCombat : MonoBehaviour
         if (selectedSpell.castTarget == EnumCustom.CastTarget.Target && enemy == null)
             return;
 
-        invisibilityDuration = 0;
+        //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
 
-        CharacterController.CharacterStatus.Mp -= selectedSpell.manaCost;
+        controller.Mp -= selectedSpell.manaCost;
 
-        CharacterController.Animator.Play(CharacterController.animationName + "_Cast_" + CharacterController.direction);
+        controller.animator.Play(controller.animationName + "_Cast_" + controller.direction);
 
-        int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
-        int intAttribute = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Int);
+        int hitChance = controller.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
+        int intAttribute = controller.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
-        int spellDamage = selectedSpell.GetValue();
+        int spellDamage = selectedSpell.GetValue(controller.attributeStatus);
 
         string extraDamage = "";
         int damage = spellDamage;
@@ -237,7 +222,7 @@ public class CharacterCombat : MonoBehaviour
 
         foreach (var aux in selectedSpell.attributeInfluence)
         {
-            var auxAttribute = aux.GetValue(characterStatus.attributeStatus.GetValue(aux.attribute));
+            var auxAttribute = aux.GetValue(controller.attributeStatus.GetValue(aux.attribute));
             extraDamage += auxAttribute;
             damage += auxAttribute;
         }
@@ -278,7 +263,7 @@ public class CharacterCombat : MonoBehaviour
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
             
-            Manager.Instance.gameManager.EndMyTurn(characterController);
+            Manager.Instance.gameManager.EndMyTurn(controller);
             return;
         }
 
@@ -286,24 +271,24 @@ public class CharacterCombat : MonoBehaviour
 
         UnityAction extraEffect = null;
 
-        if(spell.specialEffect == EnumCustom.SpecialEffect.Poison)
+        if(spell.specialEffect == EnumCustom.SpecialEffect.Poison)//PEDRo poison
             poisonDamage = Mathf.RoundToInt(skills.Find(n => n.name == "Necromancy").level/2);
         if(spell.specialEffect == EnumCustom.SpecialEffect.Hp_Regen)
         {
-            extraEffect += () => { characterStatus.Hp += spell.minSpecialValue != 0 ? Random.Range(spell.minSpecialValue, spell.maxSpecialValue) : spell.fixedSpecialValue; };
+            extraEffect += () => { controller.Hp += spell.minValue != 0 ? Random.Range(spell.minValue, spell.maxValue) : spell.fixedValue; };
         }
         if (spell.specialEffect == EnumCustom.SpecialEffect.Mp_Regen)
         {
-            extraEffect += () => { characterStatus.Mp += spell.minSpecialValue != 0 ? Random.Range(spell.minSpecialValue, spell.maxSpecialValue) : spell.fixedSpecialValue; };
+            extraEffect += () => { controller.Mp += spell.minValue != 0 ? Random.Range(spell.minValue, spell.maxValue) : spell.fixedValue; };//Pedro
         }
 
         //Cria a spell e configura para a animação
         selectedSpell.AnimateCastProjectileSpell(enemy.transform.position, this.transform, () => {
-            enemy.ReceiveSpell(damage, textDamage, spell, poisonDamage);
+            enemy.ReceiveSpell(controller, damage, textDamage, spell);
             extraEffect?.Invoke();
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
-            Manager.Instance.gameManager.EndMyTurn(characterController);
+            Manager.Instance.gameManager.EndMyTurn(controller);
         });
     }
 
@@ -339,7 +324,7 @@ public class CharacterCombat : MonoBehaviour
                     bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
                     if (hit)
                     {
-                        enemy.ReceiveSpell(damage, textDamage, spell);
+                        enemy.ReceiveSpell(controller, damage, textDamage, spell);
                     }
                 }
             }
@@ -349,12 +334,12 @@ public class CharacterCombat : MonoBehaviour
         selectedSpell = null;
         selectedUi.gameObject.SetActive(false);
 
-        Manager.Instance.gameManager.EndMyTurn(characterController);
+        Manager.Instance.gameManager.EndMyTurn(controller);
     }
 
     public void CastSpellInTile(Vector3Int index, Spell spell)
     {
-        if (spell.specialEffect == EnumCustom.SpecialEffect.Invoke)
+        if (spell.spellType == EnumCustom.SpellType.Invoke)
         {
             GameObject creature = spell.InvokeCreature(Manager.Instance.gameManager.tilemap.CellToLocal(index));
             if (minionCounts.Find(n => n.spell == spell) != null)
@@ -378,9 +363,9 @@ public class CharacterCombat : MonoBehaviour
                 });
             }
         }
-        else if (spell.specialEffect == EnumCustom.SpecialEffect.Blink)
+        else if (spell.spellType == EnumCustom.SpellType.Blink)
         {
-            var points = Manager.Instance.gameManager.GetPath(characterController.CharacterMoveTileIsometric.CurrentTileIndex, index);
+            var points = Manager.Instance.gameManager.GetPath(controller.CharacterMoveTileIsometric.CurrentTileIndex, index);
             PathFind.Point point = null;
             for(int i = 0;i < (points.Count > 5 ? 5 : points.Count - 1);i++ )
             {
@@ -396,14 +381,14 @@ public class CharacterCombat : MonoBehaviour
             if (point != null)
             {
                 Vector3Int pos = new Vector3Int(point.x, point.y, 0);
-                characterController.CharacterMoveTileIsometric.Blink(pos);
+                controller.CharacterMoveTileIsometric.Blink(pos);
             }
         }
 
         selectedSpell = null;
         selectedUi.gameObject.SetActive(false);
 
-        Manager.Instance.gameManager.EndMyTurn(characterController);
+        Manager.Instance.gameManager.EndMyTurn(controller);
     }
 
     /// <summary>
@@ -412,13 +397,13 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="enemy"></param>
     public void HitEnemy(EnemyController enemy)
     {
-        int hitChance = characterStatus.attributeStatus.GetValue(EnumCustom.Status.HitChance);
-        int dex = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
+        int hitChance = controller.attributeStatus.GetValue(EnumCustom.Status.HitChance);
+        int dex = controller.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
 
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
-        CharacterController.Animator.Play(CharacterController.animationName + "_Punch_" + CharacterController.direction);
+        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+        controller.animator.Play(controller.animationName + "_Punch_" + controller.direction);
 
-        Manager.Instance.gameManager.EndMyTurn(characterController);
+        Manager.Instance.gameManager.EndMyTurn(controller);
 
         if (!Combat.TryHit(hitChance, dex, enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.enemy.name))//Calcula se o hit errou
         {
@@ -426,9 +411,9 @@ public class CharacterCombat : MonoBehaviour
         }
 
         //Define o dano do ataque
-        int weaponDamage = Random.Range(CharacterController.CharacterInventory.weapon.damageMin, CharacterController.CharacterInventory.weapon.damageMax+1);
-        int str = characterStatus.attributeStatus.GetValue(EnumCustom.Attribute.Str);
-        int critical = Combat.Critical(characterStatus.attributeStatus.GetValue(EnumCustom.Status.CriticalHit));
+        int weaponDamage = Random.Range(controller.CharacterInventory.weapon.damageMin, controller.CharacterInventory.weapon.damageMax+1);
+        int str = controller.attributeStatus.GetValue(EnumCustom.Attribute.Str);
+        int critical = Combat.Critical(controller.attributeStatus.GetValue(EnumCustom.Status.CriticalHit));
 
         List<Skill> skillBuffs = skills.FindAll(n => n.skill.skillType == EnumCustom.SkillType.WeaponModifier);
         int skillModifier = 0;
@@ -437,7 +422,7 @@ public class CharacterCombat : MonoBehaviour
         {
             foreach(var aux in skillBuffs)
             {
-                var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == CharacterController.CharacterInventory.weapon.weaponType);
+                var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == controller.CharacterInventory.weapon.weaponType);
 
                 if(tempweaponBuffSkills.Count>0)
                 {
@@ -453,62 +438,36 @@ public class CharacterCombat : MonoBehaviour
 
         string textDamage = "(" + weaponDamage + " + " + str + " + " + skillModifier + ") * " + critical;//texto do dano
 
-        enemy.ReceiveHit(damage, textDamage);
+        enemy.ReceiveHit(controller, damage, textDamage);
     }
 
     public void GetHit(int damage, BotController enemy)
     {
-        CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
-        CharacterController.Animator.Play(CharacterController.animationName + "_GetHit_" + CharacterController.direction);
+        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+        controller.animator.Play(controller.animationName + "_GetHit_" + controller.direction);
 
-        int armor = characterStatus.attributeStatus.GetValue(EnumCustom.Status.Armor);
+        int armor = controller.attributeStatus.GetValue(EnumCustom.Status.Armor);
         int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
 
-        Manager.Instance.canvasManager.LogMessage(characterController.CharacterStatus.nickname + " sofreu " + damage + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");
+        Manager.Instance.canvasManager.LogMessage(controller.CharacterStatus.nickname + " sofreu " + damage + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");
 
         if(spikeValue>0)
         {
-            enemy.ReceiveHit(spikeValue, spikeValue + "(spike)", true);
+            enemy.ReceiveHit(controller, spikeValue, spikeValue + "(spike)", true);
         }
 
-        if (!CharacterController.CharacterStatus.DropHP(trueDamage))
+        if (!controller.CharacterStatus.DropHP(trueDamage))
         {
-            CharacterController.direction = Manager.Instance.gameManager.GetDirection(CharacterController.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
-            CharacterController.Animator.Play(CharacterController.animationName + "_Die_" + CharacterController.direction);
+            controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+            controller.animator.Play(controller.animationName + "_Die_" + controller.direction);
             Manager.Instance.gameManager.InPause = true;
-            Manager.Instance.gameManager.creatures.Remove(this.gameObject);
+            Manager.Instance.gameManager.creatures.Remove(controller);
             Debug.Log("Morreu");
-        }
-    }
-
-    public void CastInvisibility(int duration)
-    {
-        invisibilityDuration = duration;
-        foreach(var aux in Manager.Instance.enemyManager.enemies)
-        {
-            if(aux.target == this.gameObject)
-            {
-                aux.hasTarget = false;
-                aux.target = null;
-            }
         }
     }
 
     public void SetSpells(List<Spell> spells)
     {
         this.spells = spells;
-    }
-
-    public void StartNewTurn()
-    {
-        spikeDuration = Mathf.Clamp(spikeDuration--, 0, spikeDuration);
-        if (spikeDuration > 0)
-        {
-            Manager.Instance.canvasManager.StatusSpecial("Spike", spikeValue, spikeDuration);
-        }
-        else if (spikeDuration <= 0)
-        {
-            Manager.Instance.canvasManager.RemoveLogText("Hp Regen");
-        }
     }
 }

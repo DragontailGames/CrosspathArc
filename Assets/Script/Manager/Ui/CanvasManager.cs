@@ -63,10 +63,10 @@ public class CanvasManager : MonoBehaviour
         List<AttributeModifier> tempAttributeModifiers = new List<AttributeModifier>();
         List<StatusModifier> tempStatusModifier = new List<StatusModifier>();
 
-        foreach(var aux in Manager.Instance.characterController.CharacterStatus.attributeStatus.attributeModifiers)
+        foreach(var aux in Manager.Instance.characterController.attributeStatus.attributeModifiers)
         {
-            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(aux.spellName));
-            if(tempStatusLog==null)
+            var tempStatusLog = statusLogs.Find(n => n.text.Contains(aux.spellName) && n.text.Contains(aux.attribute.ToString()));
+            if (tempStatusLog==null)
             {
                 var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
                 tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
@@ -74,9 +74,9 @@ public class CanvasManager : MonoBehaviour
             }
             SetupText(tempStatusLog, aux.spellName, aux.value, aux.attribute.ToString(), aux.count);
         }
-        foreach (var aux in Manager.Instance.characterController.CharacterStatus.attributeStatus.statusModifiers)
+        foreach (var aux in Manager.Instance.characterController.attributeStatus.statusModifiers)
         {
-            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(aux.spellName));
+            var tempStatusLog = statusLogs.Find(n => n.text.Contains(aux.spellName) && n.text.Contains(aux.status.ToString()));
             if (tempStatusLog == null)
             {
                 var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
@@ -85,7 +85,7 @@ public class CanvasManager : MonoBehaviour
             }
             SetupText(tempStatusLog, aux.spellName, aux.value, aux.status.ToString(), aux.count);
         }
-        int fakeLife = Manager.Instance.characterController.CharacterStatus.attributeStatus.fakeLife;
+        /*int fakeLife = Manager.Instance.characterController.attributeStatus.fakeLife;
         if (fakeLife > 0)
         {
             var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith("False Life"));
@@ -95,7 +95,7 @@ public class CanvasManager : MonoBehaviour
                 tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
                 statusLogs.Add(tempStatusLog);
             }
-            SetupText(tempStatusLog, "False Life", fakeLife, "", Manager.Instance.characterController.CharacterStatus.attributeStatus.fakeLifeDuration);
+            SetupText(tempStatusLog, "False Life", fakeLife, "", Manager.Instance.characterController.attributeStatus.fakeLifeDuration);
         }
         if(Manager.Instance.characterController.CharacterCombat.invisibilityDuration>0)
         {
@@ -107,6 +107,11 @@ public class CanvasManager : MonoBehaviour
                 statusLogs.Add(tempStatusLog);
             }
             SetupText(tempStatusLog, "Invisibility", 0, "", Manager.Instance.characterController.CharacterCombat.invisibilityDuration);
+        }*/
+
+        foreach(var specialStatus in Manager.Instance.characterController.specialSpell)
+        {
+            SetupText(null, specialStatus.effect.ToString(), specialStatus.value, "", specialStatus.duration);
         }
     }
 
@@ -124,26 +129,39 @@ public class CanvasManager : MonoBehaviour
 
     public void SetupText(TextMeshProUGUI tmpStatusText, string spellName, int value, string propName, int count)
     {
+        TextMeshProUGUI statusTmp = tmpStatusText;
+        if (statusTmp == null)
+        {
+            spellName = spellName.Replace("_", " ");
+            statusTmp = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(spellName));
+            if (statusTmp == null)
+            {
+                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+                statusTmp = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+                statusLogs.Add(statusTmp);
+            }
+        }
         if (value > 0)
         {
-            tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName} (+{value} {propName}) ({count})";
+            statusTmp.text = $"<color=#{positiveColorValue}>{spellName} (+{value} {propName}) ({count})";
         }
         else if (value < 0)
         {
-            tmpStatusText.text = $"<color=#{negativeColorValue}>{spellName} (-{value} {propName}) ({count})";
+            statusTmp.text = $"<color=#{negativeColorValue}>{spellName} (-{value} {propName}) ({count})";
         }
         if(value == 0)
         {
-            tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName} ({count})";
+            statusTmp.text = $"<color=#{positiveColorValue}>{spellName} ({count})";
         }
         if(count == 0)
         {
-            tmpStatusText.text = $"<color=#{positiveColorValue}>{spellName}";
+            statusTmp.text = $"<color=#{positiveColorValue}>{spellName}";
         }
     }
 
     public void RemoveLogText(string spellName)
     {
+        spellName = spellName.Replace("_", " ");
         var temp = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(spellName));
         if (temp != null)
         {

@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BotController : MonoBehaviour
+public class BotController : CreatureController
 {
-    protected GameManager gameManager;
-
-    public AttributeStatus attributeStatus;
-
-    public int hp;
-    public Transform hpBar;
+    public Transform HpBar;
     private int maxHp;
 
     public bool hasTarget = false;
@@ -28,12 +23,15 @@ public class BotController : MonoBehaviour
 
     public Transform target;
 
+    public Transform forceTarget;
+
     public virtual void Start()
     {
         gameManager = Manager.Instance.gameManager;
 
-        maxHp = hp;
-        hpBar = this.transform.Find("HealthBar").GetChild(0);
+        maxHp = attributeStatus.GetMaxHP(level);
+        Hp = maxHp;
+        HpBar = this.transform.Find("HealthBar").GetChild(0);
 
         currentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
         currentTileIndex.z = 0;
@@ -47,18 +45,18 @@ public class BotController : MonoBehaviour
 
     public virtual void Update()
     {
-        var scale = hpBar.localScale;
-        scale.x = Mathf.Clamp((float)hp / (float)maxHp, 0, 1);//Animação da barra de hp
-        hpBar.localScale = scale;
+        var scale = HpBar.localScale;
+        scale.x = Mathf.Clamp((float)Hp / (float)maxHp, 0, 1);//Animação da barra de Hp
+        HpBar.localScale = scale;
     }
 
     public void FixedUpdate()
     {
-        if (hp <= 0)//Correção temporaria
+        if (Hp <= 0)//Correção temporaria
             return;
 
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
-        animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f && hp > 0);
+        animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f && Hp > 0);
     }
 
     public void Walk(Vector3Int playerPos, List<PathFind.Point> path)
@@ -90,12 +88,12 @@ public class BotController : MonoBehaviour
     /// </summary>
     public virtual void Defeat()
     {
-        hp = 0;
+        Hp = 0;
         if (!isDead)
         {
             PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
             isDead = true;
-            gameManager.creatures.Remove(this.gameObject);
+            gameManager.creatures.Remove(this);
             //gameManager.currentCreature--;
             //gameManager.EndMyTurn();
         }
@@ -116,15 +114,15 @@ public class BotController : MonoBehaviour
 
         int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
-        int dodge = characterCombat != null ? characterCombat.CharacterController.CharacterStatus.attributeStatus.GetValue(EnumCustom.Status.Dodge):
+        int dodge = characterCombat != null ? characterController.attributeStatus.GetValue(EnumCustom.Status.Dodge):
             botController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
 
-        Vector3Int destTileIndex = characterCombat != null ? characterCombat.CharacterController.CharacterMoveTileIsometric.CurrentTileIndex :
+        Vector3Int destTileIndex = characterCombat != null ? characterController.CharacterMoveTileIsometric.CurrentTileIndex :
             botController.currentTileIndex;
 
         PlayAnimation("Attack", gameManager.GetDirection(currentTileIndex, destTileIndex));
 
-        if (!Combat.TryHit(hitChance, str, dodge, characterCombat?.CharacterController.CharacterStatus.nickname))
+        if (!Combat.TryHit(hitChance, str, dodge, characterController?.CharacterStatus.nickname))
         {
             return;
         }
@@ -132,25 +130,27 @@ public class BotController : MonoBehaviour
         if (characterCombat)
             characterCombat.GetHit(str, this);
         else
-            botController.ReceiveHit(str, str.ToString());
+            botController.ReceiveHit(this, str, str.ToString());
     }
 
-    public virtual IEnumerator StartMyTurn(float waitTime, bool enemy = true)
+    public override IEnumerator StartMyTurn()
     {
+        yield return base.StartMyTurn();
+
         if (isDead)
         {
-            gameManager.EndMyTurn();
+            gameManager.EndMyTurn(this);
             yield break;
         }
 
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(0.2f);
 
         CharacterController characterController;
         BotController botController;
 
-        if (!target)
+        if (!target || !canMove)
         {
-            gameManager.EndMyTurn();
+            gameManager.EndMyTurn(this);
             yield break;
         }
 
@@ -163,24 +163,33 @@ public class BotController : MonoBehaviour
         if (gameManager.DetectLOS(path))
         {
             hasTarget = false;
-            gameManager.EndMyTurn();
+            gameManager.EndMyTurn(this);
             yield break;
         }
 
         hasTarget = true;
-        yield return new WaitForSeconds(waitTime * 2);
+        yield return new WaitForSeconds(0.2f * 2);
 
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? 2 : 1;
-        if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal)
+        if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
         {
-            if(!(characterController != null && !enemy))
-                Attack(characterController, botController);
+            Attack(characterController, botController);
         }
         else
         {
             Walk(targetTileIndex, path);
         }
-        gameManager.EndMyTurn();
+        gameManager.EndMyTurn(this);
+    }
+
+    public bool CheckMinionAndPlayer(CharacterController characterController)
+    {
+        bool isMinion = this.GetType() == typeof(MinionController);
+        if(characterController && isMinion)
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -188,16 +197,96 @@ public class BotController : MonoBehaviour
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public virtual void ReceiveHit(int damage, string damageText = "", bool ignoreArmor = false)
+    public virtual void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
     {
         int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
-        int trueDamage = ignoreArmor ? damage : Mathf.Clamp(damage - armor, 0, damage);
-        hp -= trueDamage;
 
-        if (hp <= 0)
+        int trueDamage = ignoreArmor ? damage : Mathf.Clamp(damage - armor, 0, damage);
+        Hp -= trueDamage;
+
+        if (!ignoreArmor)
+        {
+            Manager.Instance.canvasManager.LogMessage(name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
+        }
+        else
+        {
+            Manager.Instance.canvasManager.LogMessage(name + " sofreu <color=red>" + damageText + "</color> de dano direto");//Manda mensagem do dano que o inimigo recebeu direto
+        }
+
+        if (target == null)
+        {
+            forceTarget = Manager.Instance.characterController.transform;
+            target = Manager.Instance.characterController.transform;
+            gameManager.creatures.Add(this);
+        }
+
+        if (Hp <= 0)
         {
             Defeat();//mata o inimigo
         }
+
+        if(trueDamage>0)
+            base.ReceiveDamage(attacker);
+    }
+
+
+    /// <summary>
+    /// Inimigo sofrendo dano de speel
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="damageText"></param>
+    public void ReceiveSpell(CreatureController attacker, int damage, string damageText, Spell spell)
+    {
+        if (spell.spellType == EnumCustom.SpellType.Special)
+        {
+            spell.CastSpecial(this);
+        }
+        else if (spell.spellType == EnumCustom.SpellType.Buff)
+        {
+            foreach (var aux in spell.buffDebuff)
+            {
+                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
+                {
+                    this.attributeStatus.AddModifier(new AttributeModifier()
+                    {
+                        spellName = spell.spellName,
+                        attribute = aux.attribute,
+                        count = aux.turnDuration,
+                        value = aux.value
+                    }, null);
+                }
+                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
+                {
+                    this.attributeStatus.AddModifier(null, new StatusModifier()
+                    {
+                        spellName = spell.spellName,
+                        status = aux.status,
+                        count = aux.turnDuration,
+                        value = aux.value
+                    });
+                }
+            }
+        }
+        else
+        {
+            Hp -= damage;
+            Manager.Instance.canvasManager.LogMessage(name + " sofreu " + damageText + " = <color=red>" + damage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
+        }
+
+        if (Hp <= 0)
+        {
+            Defeat();//mata o inimigo
+        }
+
+        if (target == null)
+        {
+            forceTarget = Manager.Instance.characterController.transform;
+            target = Manager.Instance.characterController.transform;
+            gameManager.creatures.Add(this);
+        }
+
+        if (damage > 0)
+            base.ReceiveDamage(attacker);
     }
 
     public void PlayAnimation(string animationName, string dir)

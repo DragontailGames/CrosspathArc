@@ -13,22 +13,20 @@ MonoBehaviour:
   m_Name: Mp Drain
   m_EditorClassIdentifier: 
   spellName: Mp Drain
-  description: 
+  description: Regenera Mp ao atingir inimigo regenera 5-10
   icon: {fileID: 21300000, guid: c02e7e2ba55344161bc977bb4fe7a8fd, type: 3}
   castTarget: 0
   availableAt: 2
-  minValue: 0
-  maxValue: 0
+  minValue: 5
+  maxValue: 10
   fixedValue: 0
+  formula: 
   manaCost: 4
   spellType: 3
   area: 0
   buffDebuff: []
-  attributeInfluence: 
-  spellCastObject: {fileID: 100002, guid: fd01b6a72e637544484fccdadb8a2c03, type: 3}
-  specialEffect: 7
-  minSpecialValue: 5
-  maxSpecialValue: 10
-  fixedSpecialValue: 0
-  specialEffectDuration: 0
+  attributeInfluence: []
+  spellCastObject: {fileID: 2080321190856422329, guid: 8d0af40bd65f657479dbbb73971dbc2e, type: 3}
+  specialEffect: 6
+  duration: 1
   invokeLimit: 0

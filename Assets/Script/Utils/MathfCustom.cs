@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MathfCustom
 {
@@ -27,6 +28,44 @@ public class MathfCustom
 
     public static int GetDice(int sides)
     {
-        return (Random.Range(1, sides+1));
+        return (UnityEngine.Random.Range(1, sides+1));
+    }
+
+    public static int MathWithFormula(float vValue, string operation)
+    {
+        if(operation.Contains("/"))
+        {
+            var opFormula = operation.Split('/');
+            if(opFormula[0] == "v")
+                return Mathf.RoundToInt(vValue / int.Parse(opFormula[1]));
+            else
+                return Mathf.RoundToInt(int.Parse(opFormula[1]) / vValue);
+        }
+        if (operation.Contains("*"))
+        {
+            var opFormula = operation.Split('*');
+            if (opFormula[0] == "v")
+                return Mathf.RoundToInt(vValue * int.Parse(opFormula[1]));
+            else
+                return Mathf.RoundToInt(int.Parse(opFormula[1]) * vValue);
+        }
+        if (operation.Contains("+"))
+        {
+            var opFormula = operation.Split('+');
+            if (opFormula[0] == "v")
+                return Mathf.RoundToInt(vValue + int.Parse(opFormula[1]));
+            else
+                return Mathf.RoundToInt(int.Parse(opFormula[1]) + vValue);
+        }
+        if (operation.Contains("-"))
+        {
+            var opFormula = operation.Split('-');
+            if (opFormula[0] == "v")
+                return Mathf.RoundToInt(vValue - int.Parse(opFormula[1]));
+            else
+                return Mathf.RoundToInt(int.Parse(opFormula[1]) - vValue);
+        }
+
+        return 0;
     }
 }

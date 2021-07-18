@@ -51,9 +51,9 @@ public class GameManager : MonoBehaviour
 
     private bool inPause = false;
 
-    public List<GameObject> creatures = new List<GameObject>();
+    public List<CreatureController> creatures = new List<CreatureController>();
 
-    public int currentCreature = 0;
+    public int currentCreatureIndex = 0;
 
     public GameObject player01;
     public GameObject player02;
@@ -101,54 +101,34 @@ public class GameManager : MonoBehaviour
         return lastDirection;
     }
 
-    public void EndMyTurn(CharacterController cController = null)
+    public void EndMyTurn(CreatureController lastController)
     {
-        currentCreature++;
-
-        if (currentCreature >= creatures.Count)
+        currentCreatureIndex++;
+        if (currentCreatureIndex >= creatures.Count)
         {
-            currentCreature = 0;
+            currentCreatureIndex = 0;
         }
 
-        if (cController != null)
+        CreatureController currentCreature = creatures[currentCreatureIndex];
+
+        if (lastController != null)
         {
-            cController.myTurn = false;
+            lastController.myTurn = false;
         }
 
-        if (creatures[currentCreature] == null)
-            EndMyTurn();
-
-        if(creatures[currentCreature].GetComponent<BotController>() != null)
+        if (currentCreature == null)
         {
-            if (creatures[currentCreature].GetComponent<BotController>().hp<=0)
-            {
-                EndMyTurn();
-            }
+            EndMyTurn(null);
+            return;
         }
 
-        if (creatures[currentCreature].GetComponent<CharacterController>())
+        if(currentCreature.Hp <= 0 )
         {
-            CharacterController playerController = creatures[currentCreature].GetComponent<CharacterController>();
-
-            if (playerController.CharacterStatus.Hp > 0)
-            {
-                playerController.waitRest = playerController.StartMyTurn();
-                StartCoroutine(playerController?.waitRest);
-            }
+            EndMyTurn(null);
+            return;
         }
-        else
-        {
-            BotController botController = creatures[currentCreature].GetComponent<BotController>();
 
-            if (botController.hp > 0)
-            {
-                StartCoroutine(botController.StartMyTurn(0.2f));
-            }
-            else
-            {
-                EndMyTurn();
-            }
-        }
+        StartCoroutine(currentCreature.StartMyTurn());
     }
 
     private void CalculateGrid()
@@ -286,7 +266,7 @@ public class GameManager : MonoBehaviour
                 bots.Add(newBot);
             }
         }
-        return bots.Find(n => n.currentTileIndex == tile && n.hp>0);
+        return bots.Find(n => n.currentTileIndex == tile && n.Hp>0);
     }
 
     void Update()

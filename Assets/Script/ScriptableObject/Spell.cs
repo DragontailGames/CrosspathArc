@@ -22,6 +22,8 @@ public class Spell : ScriptableObject
 
     public int fixedValue = 0;
 
+    public string formula;
+
     public int manaCost;
 
     public EnumCustom.SpellType spellType;
@@ -36,17 +38,11 @@ public class Spell : ScriptableObject
 
     public EnumCustom.SpecialEffect specialEffect;
 
-    public int minSpecialValue;
-
-    public int maxSpecialValue;
-
-    public int fixedSpecialValue = 0;
-
     public int duration = 0;
 
     public int invokeLimit = 0;
 
-    public int GetValue()
+    public int GetValue(AttributeStatus attributeStatus)
     {
         int value = 0;
 
@@ -55,7 +51,23 @@ public class Spell : ScriptableObject
         else
             value = fixedValue;
 
+        foreach (var aux in attributeInfluence)
+        {
+            var auxAttribute = aux.GetValue(attributeStatus.GetValue(aux.attribute));
+            value += auxAttribute;
+        }
+
         return value;
+    }
+
+    public int GetFormulaValue(EnumCustom.FormulaType formulaType, CharacterCombat cCombat)
+    {
+        if(formulaType == EnumCustom.FormulaType.SkillLevel)
+        {
+            int level = cCombat.skills.Find(n => n.skill.spells.Contains(this)).level;
+            return MathfCustom.MathWithFormula(level, formula);//Melhorar
+        }
+        return 0;
     }
 
     public void CastBuff(CharacterController controller)
@@ -66,7 +78,7 @@ public class Spell : ScriptableObject
             {
                 if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
                 {
-                    controller.CharacterStatus.attributeStatus.AddModifier(new AttributeModifier()
+                    controller.attributeStatus.AddModifier(new AttributeModifier()
                     {
                         spellName = spellName,
                         attribute = aux.attribute,
@@ -76,7 +88,7 @@ public class Spell : ScriptableObject
                 }
                 if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
                 {
-                    controller.CharacterStatus.attributeStatus.AddModifier(null, new StatusModifier()
+                    controller.attributeStatus.AddModifier(null, new StatusModifier()
                     {
                         spellName = spellName,
                         status = aux.status,
@@ -84,15 +96,16 @@ public class Spell : ScriptableObject
                         value = aux.value
                     });
                 }
-                if(aux.buffDebuffType == EnumCustom.BuffDebuffType.Special)
-                {
-                    CastBuffSpecial(controller, aux);
-                }
                 GameObject objectSpell = Instantiate(spellCastObject, controller.transform);
                 Destroy(objectSpell, 1.0f);
             }
         }
-        controller.CharacterStatus.Mp -= manaCost;
+        controller.Mp -= manaCost;
+    }
+
+    public void CastSpecial(CreatureController controller)
+    {
+        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(controller.attributeStatus), controller, specialEffect));
     }
 
     /// <summary>
@@ -137,31 +150,5 @@ public class Spell : ScriptableObject
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
         spellCreated.GetComponent<MinionController>().duration = duration;
         return spellCreated;
-    }
-
-    public void CastBuffSpecial(CharacterController controller, BuffDebuff buff)
-    {
-        int value = 0;
-        if(buff.specialEffect == EnumCustom.SpecialEffect.Fake_Life)
-        {
-            controller.CharacterStatus.attributeStatus.fakeLife = buff.value;
-            controller.CharacterStatus.attributeStatus.fakeLifeDuration = buff.turnDuration;
-            value = buff.value;
-        }
-        else if(buff.specialEffect == EnumCustom.SpecialEffect.Hp_Regen)
-        {
-            value = buff.attributeInfluence.GetValue(controller.CharacterStatus.attributeStatus.GetValue(buff.attributeInfluence.attribute));
-            controller.CharacterStatus.hpRegen = value;
-            controller.CharacterStatus.hpRegenDuration = buff.turnDuration;
-
-        }
-        else if(buff.specialEffect == EnumCustom.SpecialEffect.Spike)
-        {
-            value = buff.attributeInfluence.GetValue(controller.CharacterStatus.attributeStatus.GetValue(buff.attributeInfluence.attribute));
-            controller.CharacterCombat.spikeValue = value;
-            controller.CharacterCombat.spikeDuration = buff.turnDuration;
-        }
-
-        Manager.Instance.canvasManager.StatusSpecial(buff.specialEffect.ToString().Replace('_', ' '), value, buff.turnDuration);
     }
 }

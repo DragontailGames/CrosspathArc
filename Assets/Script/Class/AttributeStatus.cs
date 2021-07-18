@@ -23,8 +23,6 @@ public class AttributeStatus
 
     public int fakeLife = 0;
 
-    public int fakeLifeDuration = 0;
-
     /// <summary>
     /// Construtor da classe normal
     /// </summary>
@@ -177,7 +175,7 @@ public class AttributeStatus
     }
 
     public void StartNewTurn()
-    {
+    {//PEDRO
         for (int i = attributeModifiers.Count-1; i >= 0; i--)
         {
             attributeModifiers[i].count--;
@@ -196,20 +194,13 @@ public class AttributeStatus
                 statusModifiers.RemoveAt(i);
             }
         }
-        fakeLifeDuration = Mathf.Clamp(fakeLifeDuration--, 0, fakeLifeDuration);
-        if(fakeLifeDuration<=0)
-        {
-            fakeLife = 0;
-            Manager.Instance.canvasManager.RemoveLogText("Invisibility");
-        }
-
     }
 
     public void AddModifier(AttributeModifier attributeModifier, StatusModifier statusModifier)
     {
         if(attributeModifier != null)
         {
-            var mod = attributeModifiers.Find(n => n.spellName == attributeModifier.spellName);
+            var mod = attributeModifiers.Find(n => n.spellName == attributeModifier.spellName && n.attribute == attributeModifier.attribute);
             if (mod != null)
             {
                 mod.count = attributeModifier.count;
@@ -221,7 +212,7 @@ public class AttributeStatus
         }
         if(statusModifier != null)
         {
-            var mod = statusModifiers.Find(n => n.spellName == statusModifier.spellName);
+            var mod = statusModifiers.Find(n => n.spellName == statusModifier.spellName && n.status == statusModifier.status);
             if (mod != null)
             {
                 mod.count = statusModifier.count;

@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class CharacterInventory : MonoBehaviour
 {
+    public CharacterController controller;
+
     public Weapon weapon;
 
     public Weapon secondaryWeapon;

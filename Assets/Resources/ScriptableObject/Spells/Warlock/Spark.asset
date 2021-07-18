@@ -13,22 +13,20 @@ MonoBehaviour:
   m_Name: Spark
   m_EditorClassIdentifier: 
   spellName: Spark
-  description: 
+  description: Dano de eletricidade 3-6 dano
   icon: {fileID: 21300000, guid: 4d2744f52d9a64aa0be852f74973d429, type: 3}
   castTarget: 0
   availableAt: 1
   minValue: 3
   maxValue: 6
   fixedValue: 0
+  formula: 
   manaCost: 2
   spellType: 0
   area: 0
   buffDebuff: []
-  attributeInfluence: 
-  spellCastObject: {fileID: 100000, guid: 6738a0513223973409c80997582c9bcb, type: 3}
+  attributeInfluence: []
+  spellCastObject: {fileID: 634907630171624356, guid: f6ef18658e91fd945ac395355767d40e, type: 3}
   specialEffect: 0
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
-  specialEffectDuration: 0
+  duration: 0
   invokeLimit: 0

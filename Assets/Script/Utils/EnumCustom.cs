@@ -55,9 +55,13 @@ public class EnumCustom : MonoBehaviour
         Buff,
         Debuff,
         Special,
+        Invoke,
+        Blink,
+        Unlock,
         Hit_Special,
         Hit_Buff,
         Hit_Debuff,
+        Create_Food,
         Area_Hazard,
     }
 
@@ -75,14 +79,11 @@ public class EnumCustom : MonoBehaviour
         Sleep,
         Paralyze,
         Invisibility,
-        Invoke,
         Hp_Regen,
         Mp_Regen,
         Fake_Life,
-        Blink,
-        Unlock,
-        Create_Food,
         Spike,
+        Cannot_Walk,
     }
 
     public enum BuffDebuffType
@@ -98,5 +99,11 @@ public class EnumCustom : MonoBehaviour
         Area,
         Tile,
         None,
+    }
+
+    public enum FormulaType
+    {
+        None,
+        SkillLevel,
     }
 }

@@ -13,22 +13,20 @@ MonoBehaviour:
   m_Name: Soul Cage
   m_EditorClassIdentifier: 
   spellName: Soul Cage
-  description: 
+  description: Se acertar, Causa Paralyze no alvo por 4 turnos
   icon: {fileID: 21300000, guid: 7b2e48ef30545475e9cc20355f31f359, type: 3}
   castTarget: 0
   availableAt: 7
   minValue: 0
   maxValue: 0
   fixedValue: 0
+  formula: 
   manaCost: 14
   spellType: 3
   area: 0
   buffDebuff: []
-  attributeInfluence: 
-  spellCastObject: {fileID: 100006, guid: bf8e264aa75b6a24280ede9a9ec9ecd6, type: 3}
+  attributeInfluence: []
+  spellCastObject: {fileID: 6906973132922050986, guid: e2c88838079e88848b750b00bb63c345, type: 3}
   specialEffect: 3
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
-  specialEffectDuration: 4
+  duration: 4
   invokeLimit: 0

@@ -13,22 +13,20 @@ MonoBehaviour:
   m_Name: Breath of Lightning
   m_EditorClassIdentifier: 
   spellName: Breath of Lightning
-  description: 
+  description: "V\xE1rias anima\xE7\xF5es d Lightning Area 5x5 12-24 dano"
   icon: {fileID: 21300000, guid: 9e79e15dcce1b4288aa6638e0f2c455b, type: 3}
   castTarget: 1
   availableAt: 10
   minValue: 12
   maxValue: 24
   fixedValue: 0
+  formula: 
   manaCost: 20
   spellType: 0
   area: 5
   buffDebuff: []
-  attributeInfluence: 
+  attributeInfluence: []
   spellCastObject: {fileID: 1138703419575206918, guid: 0d925a29222f23549a8b614be14f0387, type: 3}
   specialEffect: 0
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
-  specialEffectDuration: 0
+  duration: 0
   invokeLimit: 0

@@ -4088,6 +4088,10 @@ PrefabInstance:
       propertyPath: hpBar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7409514348733355553, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
 --- !u!1 &286623774
@@ -24607,7 +24611,7 @@ MonoBehaviour:
   spellbookManager: {fileID: 208384269}
   particleClick: {fileID: 1762381165}
   creatures: []
-  currentCreature: 0
+  currentCreatureIndex: 0
   player01: {fileID: 0}
   player02: {fileID: 0}
   turnCount: 0
@@ -34022,6 +34026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb63a853a47997438966e85c2a00efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   skills:
   - name: Necromancy
     description: NecromancyDescription
@@ -34043,7 +34048,8 @@ MonoBehaviour:
   selectedSpell: {fileID: 0}
   selectedUi: {fileID: 0}
   minionCounts: []
-  invisibilityDuration: 0
+  spikeValue: 0
+  spikeDuration: 0
 --- !u!114 &1643090269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34056,6 +34062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7abb0ef00e66e542b834fc7194a812d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   weapon:
     equipmentType: 8
     itemName: "M\xE3os"
@@ -34092,6 +34099,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be43a47e7b4334a459a830c498b3cc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  totalTilesToRegen: 20
+  addLevelTemp: 250
+  nickname: Pedro
+  hpRegen: 0
+  hpRegenDuration: 0
+--- !u!114 &1643090271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643090267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0f580d5dd1eb7419b3d9506fa6ed63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  hpInterface: {fileID: 4742661168552907054}
+  mpInterface: {fileID: 7960335488561324358}
+--- !u!114 &1643090272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643090267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048e81a3eaf425e4c9f6a3b4a976fafd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  gameManager: {fileID: 977288732}
+  movementSpeed: 2
+  tileMove: 1
+  offsetPosition: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1643090273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643090267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe1ad8eb74aacb4bb87c85c04c745f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   attributeStatus:
     attributes:
     - name: Str
@@ -34140,54 +34198,13 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
-    fakeLifeDuration: 0
-  totalTilesToRegen: 20
-  addLevelTemp: 250
-  nickname: Pedro
---- !u!114 &1643090271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643090267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce0f580d5dd1eb7419b3d9506fa6ed63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpInterface: {fileID: 4742661168552907054}
-  mpInterface: {fileID: 7960335488561324358}
---- !u!114 &1643090272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643090267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048e81a3eaf425e4c9f6a3b4a976fafd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 977288732}
-  movementSpeed: 2
-  tileMove: 1
-  offsetPosition: {x: 0, y: 0.5, z: 0}
---- !u!114 &1643090273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643090267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbe1ad8eb74aacb4bb87c85c04c745f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationName: Female_Archer
   myTurn: 1
+  animationName: Female_Archer
+  direction: 
+  level: 1
+  canMove: 1
+  specialSpell: []
+  animator: {fileID: 0}
   isRest: 0
 --- !u!60 &1643090274
 PolygonCollider2D:
@@ -69479,6 +69496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0f580d5dd1eb7419b3d9506fa6ed63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   hpInterface: {fileID: 4742661168552907054}
   mpInterface: {fileID: 7960335488561324358}
 --- !u!50 &2137639104
@@ -69543,6 +69561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048e81a3eaf425e4c9f6a3b4a976fafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   gameManager: {fileID: 977288732}
   movementSpeed: 2
   tileMove: 1
@@ -69559,6 +69578,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be43a47e7b4334a459a830c498b3cc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  totalTilesToRegen: 20
+  addLevelTemp: 250
+  nickname: Pedro
+  hpRegen: 0
+  hpRegenDuration: 0
+--- !u!114 &2137639108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137639101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7abb0ef00e66e542b834fc7194a812d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  weapon:
+    equipmentType: 8
+    itemName: "M\xE3os"
+    icon: {fileID: 0}
+    statuses: []
+    twoHanded: 1
+    damageMin: 1
+    damageMax: 2
+    mainHand: 0
+    offHand: 0
+    range: 1
+    weaponType: 0
+  secondaryWeapon:
+    equipmentType: 0
+    itemName: 
+    icon: {fileID: 0}
+    statuses: []
+    twoHanded: 0
+    damageMin: 0
+    damageMax: 10
+    mainHand: 0
+    offHand: 0
+    range: 1
+    weaponType: 0
+--- !u!114 &2137639109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137639101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe1ad8eb74aacb4bb87c85c04c745f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   attributeStatus:
     attributes:
     - name: Str
@@ -69607,60 +69682,13 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
-    fakeLifeDuration: 0
-  totalTilesToRegen: 20
-  addLevelTemp: 250
-  nickname: Pedro
---- !u!114 &2137639108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137639101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7abb0ef00e66e542b834fc7194a812d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon:
-    equipmentType: 8
-    itemName: "M\xE3os"
-    icon: {fileID: 0}
-    statuses: []
-    twoHanded: 1
-    damageMin: 1
-    damageMax: 2
-    mainHand: 0
-    offHand: 0
-    range: 1
-    weaponType: 0
-  secondaryWeapon:
-    equipmentType: 0
-    itemName: 
-    icon: {fileID: 0}
-    statuses: []
-    twoHanded: 0
-    damageMin: 0
-    damageMax: 10
-    mainHand: 0
-    offHand: 0
-    range: 1
-    weaponType: 0
---- !u!114 &2137639109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137639101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbe1ad8eb74aacb4bb87c85c04c745f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationName: Male_Archer
   myTurn: 1
+  animationName: Male_Archer
+  direction: 
+  level: 1
+  canMove: 1
+  specialSpell: []
+  animator: {fileID: 0}
   isRest: 0
 --- !u!114 &2137639110
 MonoBehaviour:
@@ -69674,6 +69702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb63a853a47997438966e85c2a00efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   skills:
   - name: Necromancy
     description: NecromancyDescription
@@ -69695,11 +69724,16 @@ MonoBehaviour:
     description: A druid in a tree
     skill: {fileID: 11400000, guid: d40dbd9cfaf306f45acf032960686d1a, type: 2}
     level: 1
+  - name: Priest
+    description: Heal the priest
+    skill: {fileID: 11400000, guid: ae70ddb987ffd7d408989aeee80e928d, type: 2}
+    level: 1
   spellUi: []
   selectedSpell: {fileID: 0}
   selectedUi: {fileID: 0}
   minionCounts: []
-  invisibilityDuration: 0
+  spikeValue: 0
+  spikeDuration: 0
 --- !u!1 &2143093968
 GameObject:
   m_ObjectHideFlags: 0
