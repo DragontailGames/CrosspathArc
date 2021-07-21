@@ -71,24 +71,31 @@ public class CharacterController : CreatureController
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if (enemyInTile != null && enemyInTile.Hp>0)
+            if (characterCombat.selectedSpell?.castTarget == EnumCustom.CastTarget.Enemy && enemyInTile != null && enemyInTile.Hp>0)
             {
                 foreach (var aux in specialSpell)
                 {
                     aux.HandleAttack(this);
                 }
                 StartCoroutine(StartDelay());
-                characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.CurrentTileIndex);
+                characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.controller.currentTileIndex);
             }
             else if(characterCombat.selectedSpell != null)
             {
+                StartCoroutine(StartDelay());
+                direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, mousePos);
                 foreach (var aux in specialSpell)
                 {
                     aux.HandleAttack(this);
                 }
-                StartCoroutine(StartDelay());
-                direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.CurrentTileIndex, mousePos);
-                characterCombat.CastSpell(null, mousePos);
+                if (characterCombat.selectedSpell.castTarget == EnumCustom.CastTarget.Target)
+                {
+                    characterCombat.CastSpell(gameManager.GetCreatureInTile(mousePos), mousePos);
+                }
+                else
+                {
+                    characterCombat.CastSpell(null, mousePos);
+                }
             }
             else
             {
@@ -148,7 +155,7 @@ public class CharacterController : CreatureController
 
     public Vector3Int CharacterMousePosition(Vector3Int pos)
     {
-        pos -= characterMoveTileIsometric.CurrentTileIndex;
+        pos -= characterMoveTileIsometric.controller.currentTileIndex;
 
         return MathfCustom.Sign(pos);//Retorna o sinal do valor(-1,+1 ou 0)
     }
@@ -185,5 +192,30 @@ public class CharacterController : CreatureController
     {
         isRest = false;
         gameManager.campfire.SetActive(false);
+    }
+
+    public override void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
+    {
+        base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
+
+        direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, attacker.currentTileIndex);
+        animator.Play(animationName + "_GetHit_" + direction);
+    }
+
+    public override void Defeat()
+    {
+        animator.Play(animationName + "_Die_" + direction);
+        Manager.Instance.gameManager.InPause = true;
+        Manager.Instance.gameManager.creatures.Remove(this);
+        Debug.Log("Morreu");
+    }
+
+    public void GetHit(int damage, BotController enemy)
+    {
+        /*if (spikeValue > 0)
+        {
+            enemy.ReceiveHit(controller, spikeValue, spikeValue + "(spike)", true);
+        }*/
+
     }
 }

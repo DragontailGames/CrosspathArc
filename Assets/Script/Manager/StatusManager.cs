@@ -58,7 +58,7 @@ public class StatusManager : MonoBehaviour
             statusText.Add(stats.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>());
         }
 
-        nameTMPro.text = controller.CharacterStatus.nickname;
+        nameTMPro.text = controller.nickname;
 
         levelPlayerBaseTMPro = playerBase.transform.Find("Level").GetChild(0).GetComponent<TextMeshProUGUI>();
         hpPlayerBaseTMPro = playerBase.transform.Find("Hp").GetChild(0).GetComponent<TextMeshProUGUI>();

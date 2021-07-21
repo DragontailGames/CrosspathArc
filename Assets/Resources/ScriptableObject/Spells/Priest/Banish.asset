@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
-  m_Name: Poison
+  m_Name: Banish
   m_EditorClassIdentifier: 
-  spellName: Poison
-  description: 
-  icon: {fileID: 21300000, guid: 5aa48cbedd0154482bfd9455d5a8f1c8, type: 3}
+  spellName: Banish
+  description: Dano de Luz em inimigos, 1+wisdom dano
+  icon: {fileID: 21300000, guid: a1ae1a5095368a9428ffcf6e8c66b59f, type: 3}
   castTarget: 0
-  availableAt: 3
+  availableAt: 9
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 0
-  manaCost: 8
-  spellType: 3
+  formula: 
+  manaCost: 18
+  spellType: 0
   area: 0
   buffDebuff: []
   attributeInfluence:
-  - attribute: 0
-    levelOfSkill: Necromancy
-    value: 0
-    multiplier: -2
-  spellCastObject: {fileID: 100000, guid: 7620607eaa1001d41885516052b3e8c8, type: 3}
-  specialEffect: 1
-  duration: 10
+  - attribute: 5
+    levelOfSkill: 
+    value: 1
+    multiplier: 0
+  spellCastObject: {fileID: 100002, guid: 3a9110d43e9087440820f1a2449029de, type: 3}
+  specialEffect: 0
+  duration: 0
   invokeLimit: 0

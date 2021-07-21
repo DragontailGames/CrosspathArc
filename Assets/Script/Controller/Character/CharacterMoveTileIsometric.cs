@@ -14,19 +14,16 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     public int tileMove = 1;
 
     public Vector3 offsetPosition;
-    private Vector3Int currentTileIndex;
     private Vector3 movePosition;
     Vector3Int mouse = Vector3Int.zero;
 
     public Vector3Int Mouse { get => this.mouse; set => this.mouse = value; }
-    public Vector3Int CurrentTileIndex { get => this.currentTileIndex; set => this.currentTileIndex = value; }
 
     //Resets iniciais
     public void Start()
     {
-        CurrentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
 
-        movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
+        movePosition = gameManager.tilemap.GetCellCenterWorld(controller.currentTileIndex) + offsetPosition;
     }
 
     public void FixedUpdate()
@@ -67,8 +64,8 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                         PlayAnimation(controller.animationName + "_Walk_" + controller.direction);
                         controller.animator.SetBool("Walk", true);
                     }
-                    CurrentTileIndex += moveCell * tileMove;
-                    movePosition = gameManager.tilemap.GetCellCenterWorld(CurrentTileIndex) + offsetPosition;
+                    controller.currentTileIndex += moveCell * tileMove;
+                    movePosition = gameManager.tilemap.GetCellCenterWorld(controller.currentTileIndex) + offsetPosition;
                     this.GetComponent<CharacterStatus>().MoveOneTile();
                 }
             }
@@ -90,7 +87,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
     public bool CanMoveToTile(Vector3Int moveCell)
     {
-        Vector3Int nextTile = CurrentTileIndex + moveCell * tileMove;
+        Vector3Int nextTile = controller.currentTileIndex + moveCell * tileMove;
         //Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o 
 
         return (!gameManager.elevationTM.HasTile(nextTile + new Vector3Int(1,1,0))) &&
@@ -109,7 +106,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         Vector3 pos = Manager.Instance.gameManager.tilemap.GetCellCenterWorld(index) + offsetPosition;
         this.transform.position = pos;
         movePosition = pos;
-        currentTileIndex = index;
+        controller.currentTileIndex = index;
     }
 }
 

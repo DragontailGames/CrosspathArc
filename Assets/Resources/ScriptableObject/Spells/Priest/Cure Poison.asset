@@ -10,27 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
-  m_Name: Poison
+  m_Name: Cure Poison
   m_EditorClassIdentifier: 
-  spellName: Poison
-  description: 
-  icon: {fileID: 21300000, guid: 5aa48cbedd0154482bfd9455d5a8f1c8, type: 3}
-  castTarget: 0
-  availableAt: 3
+  spellName: Cure Poison
+  description: Cura Poison debuff
+  icon: {fileID: 21300000, guid: ae40f4533c133a54b8fcadbf0625b6b9, type: 3}
+  castTarget: 1
+  availableAt: 2
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 0
-  manaCost: 8
-  spellType: 3
+  formula: 
+  manaCost: 4
+  spellType: 12
   area: 0
   buffDebuff: []
-  attributeInfluence:
-  - attribute: 0
-    levelOfSkill: Necromancy
-    value: 0
-    multiplier: -2
-  spellCastObject: {fileID: 100000, guid: 7620607eaa1001d41885516052b3e8c8, type: 3}
+  attributeInfluence: []
+  spellCastObject: {fileID: 100006, guid: 26a4758189999ff4ea07cfee2eae783a, type: 3}
   specialEffect: 1
-  duration: 10
+  duration: 0
   invokeLimit: 0

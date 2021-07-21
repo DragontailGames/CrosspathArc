@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour
 
     public void Btn_Rest()
     {
-        Vector3Int startTile = Manager.Instance.characterController.CharacterMoveTileIsometric.CurrentTileIndex;
+        Vector3Int startTile = Manager.Instance.characterController.CharacterMoveTileIsometric.controller.currentTileIndex;
         int radius = Manager.Instance.configManager.tilesWithoutEnemyForRest;
 
         bool canRest = true;
@@ -296,5 +296,10 @@ public class GameManager : MonoBehaviour
         {
             spellbookManager.Close();
         }
+    }
+
+    public CreatureController GetCreatureInTile(Vector3Int tile)
+    {
+        return creatures.Find(n => n.currentTileIndex == tile && n.Hp > 0);
     }
 }

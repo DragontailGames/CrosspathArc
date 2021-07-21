@@ -21,7 +21,7 @@ public class EnemyController : BotController
         level = Mathf.Clamp(Manager.Instance.characterController.level - 1, 1, Manager.Instance.characterController.level);
         attributeStatus = new AttributeStatus(level);
 
-        if (!gameManager.DetectLOS(gameManager.GetPath(currentTileIndex, player.CharacterMoveTileIsometric.CurrentTileIndex)))
+        if (!gameManager.DetectLOS(gameManager.GetPath(currentTileIndex, player.CharacterMoveTileIsometric.controller.currentTileIndex)))
         {
             hasTarget = true;
         }
@@ -33,9 +33,9 @@ public class EnemyController : BotController
     public override void Update()
     {
         base.Update();
-        if (Vector3Int.Distance(player.CharacterMoveTileIsometric.CurrentTileIndex, currentTileIndex) < 10)
+        if (Vector3Int.Distance(player.CharacterMoveTileIsometric.controller.currentTileIndex, currentTileIndex) < 10)
         {
-            target = GetTarget();
+            target = GetTarget(typeof(EnemyController));
             if (!gameManager.creatures.Contains(this))
             {
                 gameManager.creatures.Add(this);
@@ -52,31 +52,10 @@ public class EnemyController : BotController
 
     public override IEnumerator StartMyTurn()
     {
-        target = GetTarget();
+        target = GetTarget(typeof(EnemyController));
         yield return new WaitForSeconds(0.2f);
 
         yield return base.StartMyTurn();
-    }
-
-    public Transform GetTarget()
-    {
-        var creaturesWithoutEnemy = gameManager.creatures.FindAll(n => n.GetComponent<EnemyController>() == null);
-        var shortestDistance = Mathf.Infinity;
-        Transform smallDistance = null; 
-        foreach (var aux in creaturesWithoutEnemy)
-        {
-            if (aux.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration > 0)
-            {
-                return null;
-            }
-            var distance = Vector3.Distance(aux.transform.position, this.transform.position);
-            if (distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                smallDistance = aux.transform;
-            }
-        }
-        return smallDistance;
     }
 
     public override void Defeat()
@@ -84,7 +63,7 @@ public class EnemyController : BotController
         base.Defeat();
 
         Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
-        Manager.Instance.canvasManager.LogMessage(enemy.name + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
+        Manager.Instance.canvasManager.LogMessage(nickname + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
         this.transform.Find("HealthBar").gameObject.SetActive(false);
     }
 

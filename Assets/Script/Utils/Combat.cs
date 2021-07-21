@@ -31,7 +31,7 @@ public class Combat
 
         message += value >= 20 ? " <color=green>(acertou)</color>" : " <color=red>(errou)</color>";
 
-        if(!string.IsNullOrEmpty(enemy))
+        if (!string.IsNullOrEmpty(enemy) && hitChance != 100)
             Manager.Instance.canvasManager.LogMessage(message);
 
         return value >= 20;

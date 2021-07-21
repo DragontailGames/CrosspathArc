@@ -21,10 +21,6 @@ public class CharacterCombat : MonoBehaviour
 
     public List<MinionCount> minionCounts = new List<MinionCount>();
 
-    public int spikeValue;
-    public int spikeDuration;
-
-
     /// <summary>
     /// Configs
     /// </summary>
@@ -140,7 +136,7 @@ public class CharacterCombat : MonoBehaviour
         else if(spells[index].spellType == EnumCustom.SpellType.Special)
         {
             controller.Mp -= spells[index].manaCost;
-            spells[index].CastSpecial(controller);
+            spells[index].CastSpecial(controller, controller);
             Manager.Instance.canvasManager.UpdateStatus();
         }
 
@@ -164,11 +160,11 @@ public class CharacterCombat : MonoBehaviour
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration = 0;//pedro maybe
 
-        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.controller.currentTileIndex, enemy.currentTileIndex);
 
         if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
-            if(selectedSpell.castTarget == EnumCustom.CastTarget.Target && enemy == null)
+            if(selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
             {
                 return;
             }
@@ -195,10 +191,10 @@ public class CharacterCombat : MonoBehaviour
     /// <summary>
     /// Casta a spell
     /// </summary>
-    /// <param name="enemy"></param>
-    public void CastSpell(EnemyController enemy = null, Vector3Int tile = new Vector3Int())
+    /// <param name="creature"></param>
+    public void CastSpell(CreatureController creature = null, Vector3Int tile = new Vector3Int())
     {
-        if (selectedSpell.castTarget == EnumCustom.CastTarget.Target && enemy == null)
+        if (selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
             return;
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
@@ -210,7 +206,7 @@ public class CharacterCombat : MonoBehaviour
         int hitChance = controller.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
         int intAttribute = controller.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
-        int spellDamage = selectedSpell.GetValue(controller.attributeStatus);
+        int spellDamage = selectedSpell.GetValue(controller);
 
         string extraDamage = "";
         int damage = spellDamage;
@@ -222,7 +218,7 @@ public class CharacterCombat : MonoBehaviour
 
         foreach (var aux in selectedSpell.attributeInfluence)
         {
-            var auxAttribute = aux.GetValue(controller.attributeStatus.GetValue(aux.attribute));
+            var auxAttribute = aux.GetValue(controller);
             extraDamage += auxAttribute;
             damage += auxAttribute;
         }
@@ -231,9 +227,9 @@ public class CharacterCombat : MonoBehaviour
 
         if(selectedSpell.castTarget == EnumCustom.CastTarget.Area)
         {
-            if(tile == new Vector3Int() && enemy != null)
+            if(tile == new Vector3Int() && creature != null)
             {
-                tile = enemy.currentTileIndex;
+                tile = creature.currentTileIndex;
             }
             CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, selectedSpell);
         }
@@ -241,11 +237,11 @@ public class CharacterCombat : MonoBehaviour
         {
             CastSpellInTile(tile, selectedSpell);
         }
-        else if(selectedSpell.castTarget == EnumCustom.CastTarget.Target)
+        else if(selectedSpell.castTarget == EnumCustom.CastTarget.Enemy)
         {
-            if (enemy != null)
+            if (creature != null && creature.GetType() == typeof(EnemyController))
             {
-                CastProjectileSpell(hitChance, intAttribute, enemy, damage, textDamage, selectedSpell);
+                CastProjectileSpell(hitChance, intAttribute, creature as EnemyController, damage, textDamage, selectedSpell);
             }
             else
             {
@@ -253,11 +249,15 @@ public class CharacterCombat : MonoBehaviour
                 selectedUi.gameObject.SetActive(false);
             }
         }
+        else if (selectedSpell.castTarget == EnumCustom.CastTarget.Target)
+        {
+            CastProjectileSpell(100, intAttribute, creature, damage, textDamage, selectedSpell);
+        }
     }
 
-    private void CastProjectileSpell(int hitChance, int intAttribute, EnemyController enemy, int damage, string textDamage, Spell spell)
+    private void CastProjectileSpell(int hitChance, int intAttribute, CreatureController creature, int damage, string textDamage, Spell spell)
     {
-        bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name); 
+        bool hit = Combat.TryHit(hitChance, intAttribute, creature.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), creature.nickname); 
         if (!hit)
         {
             selectedSpell = null;
@@ -267,24 +267,12 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
-        int poisonDamage = 0;
-
         UnityAction extraEffect = null;
 
-        if(spell.specialEffect == EnumCustom.SpecialEffect.Poison)//PEDRo poison
-            poisonDamage = Mathf.RoundToInt(skills.Find(n => n.name == "Necromancy").level/2);
-        if(spell.specialEffect == EnumCustom.SpecialEffect.Hp_Regen)
-        {
-            extraEffect += () => { controller.Hp += spell.minValue != 0 ? Random.Range(spell.minValue, spell.maxValue) : spell.fixedValue; };
-        }
-        if (spell.specialEffect == EnumCustom.SpecialEffect.Mp_Regen)
-        {
-            extraEffect += () => { controller.Mp += spell.minValue != 0 ? Random.Range(spell.minValue, spell.maxValue) : spell.fixedValue; };//Pedro
-        }
-
         //Cria a spell e configura para a animação
-        selectedSpell.AnimateCastProjectileSpell(enemy.transform.position, this.transform, () => {
-            enemy.ReceiveSpell(controller, damage, textDamage, spell);
+        selectedSpell.AnimateCastProjectileSpell(creature.transform.position, this.transform, () => {
+            creature.ReceiveSpell(controller, damage, textDamage, spell);
+            spell.Cast(controller, creature);
             extraEffect?.Invoke();
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
@@ -314,14 +302,14 @@ public class CharacterCombat : MonoBehaviour
 
         foreach(var aux in tiles)
         {
-            selectedSpell.AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux), aux, spell);
+            spell.AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux), aux);
             if (spell.spellType != EnumCustom.SpellType.Area_Hazard)
             {
                 EnemyController enemy = Manager.Instance.enemyManager.CheckEnemyInTile(aux);
 
                 if (enemy != null)
                 {
-                    bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.enemy.name);
+                    bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.nickname);
                     if (hit)
                     {
                         enemy.ReceiveSpell(controller, damage, textDamage, spell);
@@ -365,7 +353,7 @@ public class CharacterCombat : MonoBehaviour
         }
         else if (spell.spellType == EnumCustom.SpellType.Blink)
         {
-            var points = Manager.Instance.gameManager.GetPath(controller.CharacterMoveTileIsometric.CurrentTileIndex, index);
+            var points = Manager.Instance.gameManager.GetPath(controller.CharacterMoveTileIsometric.controller.currentTileIndex, index);
             PathFind.Point point = null;
             for(int i = 0;i < (points.Count > 5 ? 5 : points.Count - 1);i++ )
             {
@@ -400,12 +388,12 @@ public class CharacterCombat : MonoBehaviour
         int hitChance = controller.attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int dex = controller.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
 
-        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
+        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.controller.currentTileIndex, enemy.currentTileIndex);
         controller.animator.Play(controller.animationName + "_Punch_" + controller.direction);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
 
-        if (!Combat.TryHit(hitChance, dex, enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.enemy.name))//Calcula se o hit errou
+        if (!Combat.TryHit(hitChance, dex, enemy.attributeStatus.GetValue(EnumCustom.Status.Dodge), enemy.nickname))//Calcula se o hit errou
         {
             return;
         }
@@ -439,31 +427,6 @@ public class CharacterCombat : MonoBehaviour
         string textDamage = "(" + weaponDamage + " + " + str + " + " + skillModifier + ") * " + critical;//texto do dano
 
         enemy.ReceiveHit(controller, damage, textDamage);
-    }
-
-    public void GetHit(int damage, BotController enemy)
-    {
-        controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
-        controller.animator.Play(controller.animationName + "_GetHit_" + controller.direction);
-
-        int armor = controller.attributeStatus.GetValue(EnumCustom.Status.Armor);
-        int trueDamage = Mathf.Clamp(damage - armor, 0, damage);
-
-        Manager.Instance.canvasManager.LogMessage(controller.CharacterStatus.nickname + " sofreu " + damage + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");
-
-        if(spikeValue>0)
-        {
-            enemy.ReceiveHit(controller, spikeValue, spikeValue + "(spike)", true);
-        }
-
-        if (!controller.CharacterStatus.DropHP(trueDamage))
-        {
-            controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.CurrentTileIndex, enemy.currentTileIndex);
-            controller.animator.Play(controller.animationName + "_Die_" + controller.direction);
-            Manager.Instance.gameManager.InPause = true;
-            Manager.Instance.gameManager.creatures.Remove(controller);
-            Debug.Log("Morreu");
-        }
     }
 
     public void SetSpells(List<Spell> spells)

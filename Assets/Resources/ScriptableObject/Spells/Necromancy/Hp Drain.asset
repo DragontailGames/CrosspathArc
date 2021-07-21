@@ -21,14 +21,23 @@ MonoBehaviour:
   maxValue: 6
   fixedValue: 0
   manaCost: 12
-  spellType: 5
+  spellType: 0
   area: 0
   buffDebuff: []
-  attributeInfluence: 
+  attributeInfluence: []
   spellCastObject: {fileID: 100006, guid: d61fbd4e946771b4f83a69be9e8a5540, type: 3}
-  specialEffect: 6
-  minSpecialValue: 1
-  maxSpecialValue: 4
-  fixedSpecialValue: 0
-  specialEffectDuration: 0
+  specialEffect: 5
+  duration: 0
   invokeLimit: 0
+  subSpell:
+  - minValue: 1
+    maxValue: 4
+    fixedValue: 0
+    castTarget: 5
+    spellType: 3
+    area: 0
+    buffDebuff: []
+    attributeInfluence: []
+    specialEffect: 5
+    duration: 0
+    invokeLimit: 0

@@ -58,11 +58,9 @@ public class EnumCustom : MonoBehaviour
         Invoke,
         Blink,
         Unlock,
-        Hit_Special,
-        Hit_Buff,
-        Hit_Debuff,
         Create_Food,
         Area_Hazard,
+        Cure_Disease,
     }
 
     public enum WeaponType
@@ -84,6 +82,7 @@ public class EnumCustom : MonoBehaviour
         Fake_Life,
         Spike,
         Cannot_Walk,
+        All,
     }
 
     public enum BuffDebuffType
@@ -95,10 +94,12 @@ public class EnumCustom : MonoBehaviour
 
     public enum CastTarget
     {
-        Target,
+        Enemy,
         Area,
         Tile,
         None,
+        Caster,
+        Target,
     }
 
     public enum FormulaType

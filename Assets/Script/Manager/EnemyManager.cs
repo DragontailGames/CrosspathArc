@@ -29,7 +29,7 @@ public class EnemyManager : MonoBehaviour
         List<Vector3Int> createEnemies = new List<Vector3Int>();
         for (int i = 0; i < enemiesCount; i++)
         {
-            Vector3Int characterIndex = Manager.Instance.characterController.CharacterMoveTileIsometric.CurrentTileIndex;
+            Vector3Int characterIndex = Manager.Instance.characterController.CharacterMoveTileIsometric.controller.currentTileIndex;
             int min = Manager.Instance.configManager.minRangeRestEnemySpawn;
             int max = Manager.Instance.configManager.maxRangeRestEnemySpawn;
             Vector3Int spawnPos = new Vector3Int(0,0,0);

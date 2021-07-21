@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BotController : CreatureController
 {
@@ -9,8 +10,6 @@ public class BotController : CreatureController
 
     public bool hasTarget = false;
     public Animator animator;
-
-    public Vector3Int currentTileIndex;
 
     public Vector3 offsetPosition = new Vector3(0,0.5f,0);
 
@@ -21,9 +20,9 @@ public class BotController : CreatureController
 
     public string mainAnimation;
 
-    public Transform target;
+    public CreatureController target;
 
-    public Transform forceTarget;
+    public CreatureController forceTarget;
 
     public virtual void Start()
     {
@@ -32,9 +31,6 @@ public class BotController : CreatureController
         maxHp = attributeStatus.GetMaxHP(level);
         Hp = maxHp;
         HpBar = this.transform.Find("HealthBar").GetChild(0);
-
-        currentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
-        currentTileIndex.z = 0;
 
         this.transform.position = Manager.Instance.gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
         movePosition = this.transform.position;
@@ -83,54 +79,27 @@ public class BotController : CreatureController
     }
 
 
-    /// <summary>
-    /// Executa quando morrer
-    /// </summary>
-    public virtual void Defeat()
-    {
-        Hp = 0;
-        if (!isDead)
-        {
-            PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
-            isDead = true;
-            gameManager.creatures.Remove(this);
-            //gameManager.currentCreature--;
-            //gameManager.EndMyTurn();
-        }
-    }
-
-    public void Attack(CharacterController characterController = null, BotController botController = null)
+    public void Attack(CreatureController creatureController)
     {
         if (isDead)
         {
             return;
         }
 
-        CharacterCombat characterCombat = null;
-        if(characterController != null)
-        {
-            characterCombat = characterController.CharacterCombat;
-        }
-
         int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
-        int dodge = characterCombat != null ? characterController.attributeStatus.GetValue(EnumCustom.Status.Dodge):
-            botController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
+        int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
 
-        Vector3Int destTileIndex = characterCombat != null ? characterController.CharacterMoveTileIsometric.CurrentTileIndex :
-            botController.currentTileIndex;
+        Vector3Int destTileIndex = creatureController.currentTileIndex;
 
         PlayAnimation("Attack", gameManager.GetDirection(currentTileIndex, destTileIndex));
 
-        if (!Combat.TryHit(hitChance, str, dodge, characterController?.CharacterStatus.nickname))
+        if (!Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
         {
             return;
         }
 
-        if (characterCombat)
-            characterCombat.GetHit(str, this);
-        else
-            botController.ReceiveHit(this, str, str.ToString());
+        creatureController.ReceiveHit(this, str, str.ToString());
     }
 
     public override IEnumerator StartMyTurn()
@@ -146,7 +115,6 @@ public class BotController : CreatureController
         yield return new WaitForSeconds(0.2f);
 
         CharacterController characterController;
-        BotController botController;
 
         if (!target || !canMove)
         {
@@ -155,9 +123,8 @@ public class BotController : CreatureController
         }
 
         target.TryGetComponent(out characterController);
-        target.TryGetComponent(out botController);
 
-        Vector3Int targetTileIndex = botController==null?characterController.CharacterMoveTileIsometric.CurrentTileIndex:botController.currentTileIndex;
+        Vector3Int targetTileIndex = target.currentTileIndex;
         List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, targetTileIndex);
 
         if (gameManager.DetectLOS(path))
@@ -173,7 +140,7 @@ public class BotController : CreatureController
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? 2 : 1;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
         {
-            Attack(characterController, botController);
+            Attack(target);
         }
         else
         {
@@ -197,36 +164,16 @@ public class BotController : CreatureController
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public virtual void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
+    public override void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
     {
-        int armor = attributeStatus.GetValue(EnumCustom.Status.Armor);
-
-        int trueDamage = ignoreArmor ? damage : Mathf.Clamp(damage - armor, 0, damage);
-        Hp -= trueDamage;
-
-        if (!ignoreArmor)
-        {
-            Manager.Instance.canvasManager.LogMessage(name + " sofreu " + damageText + " - " + armor + " = <color=red>" + trueDamage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
-        }
-        else
-        {
-            Manager.Instance.canvasManager.LogMessage(name + " sofreu <color=red>" + damageText + "</color> de dano direto");//Manda mensagem do dano que o inimigo recebeu direto
-        }
+        base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
 
         if (target == null)
         {
-            forceTarget = Manager.Instance.characterController.transform;
-            target = Manager.Instance.characterController.transform;
+            forceTarget = Manager.Instance.characterController;
+            target = Manager.Instance.characterController;
             gameManager.creatures.Add(this);
         }
-
-        if (Hp <= 0)
-        {
-            Defeat();//mata o inimigo
-        }
-
-        if(trueDamage>0)
-            base.ReceiveDamage(attacker);
     }
 
 
@@ -235,63 +182,58 @@ public class BotController : CreatureController
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public void ReceiveSpell(CreatureController attacker, int damage, string damageText, Spell spell)
+    public override void ReceiveSpell(CreatureController attacker, int damage, string damageText, Spell spell)
     {
-        if (spell.spellType == EnumCustom.SpellType.Special)
-        {
-            spell.CastSpecial(this);
-        }
-        else if (spell.spellType == EnumCustom.SpellType.Buff)
-        {
-            foreach (var aux in spell.buffDebuff)
-            {
-                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
-                {
-                    this.attributeStatus.AddModifier(new AttributeModifier()
-                    {
-                        spellName = spell.spellName,
-                        attribute = aux.attribute,
-                        count = aux.turnDuration,
-                        value = aux.value
-                    }, null);
-                }
-                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
-                {
-                    this.attributeStatus.AddModifier(null, new StatusModifier()
-                    {
-                        spellName = spell.spellName,
-                        status = aux.status,
-                        count = aux.turnDuration,
-                        value = aux.value
-                    });
-                }
-            }
-        }
-        else
-        {
-            Hp -= damage;
-            Manager.Instance.canvasManager.LogMessage(name + " sofreu " + damageText + " = <color=red>" + damage + "</color> de dano");//Manda mensagem do dano que o inimigo recebeu
-        }
-
-        if (Hp <= 0)
-        {
-            Defeat();//mata o inimigo
-        }
+        base.ReceiveSpell(attacker, damage, damageText, spell);
 
         if (target == null)
         {
-            forceTarget = Manager.Instance.characterController.transform;
-            target = Manager.Instance.characterController.transform;
+            forceTarget = Manager.Instance.characterController;
+            target = Manager.Instance.characterController;
             gameManager.creatures.Add(this);
         }
+    }
 
-        if (damage > 0)
-            base.ReceiveDamage(attacker);
+    public override void Defeat()
+    {
+        base.Defeat();
+
+        Hp = 0;
+        if (!isDead)
+        {
+            PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
+            isDead = true;
+            gameManager.creatures.Remove(this);
+            //gameManager.currentCreature--;
+            //gameManager.EndMyTurn();
+        }
     }
 
     public void PlayAnimation(string animationName, string dir)
     {
         string ani = mainAnimation + "_" + animationName + "_" + dir;
         animator.Play(ani);
+    }
+
+    public CreatureController GetTarget(Type exept)
+    {
+        var creaturesWithoutEnemy = gameManager.creatures.FindAll(n => n.GetType() != exept);
+        var shortestDistance = Mathf.Infinity;
+        Transform smallDistance = null;
+        foreach (var aux in creaturesWithoutEnemy)
+        {
+            if (aux.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration > 0)
+            {
+                return null;
+            }
+            var distance = Vector3.Distance(aux.transform.position, this.transform.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                smallDistance = aux.transform;
+            }
+        }
+
+        return gameManager.GetCreatureInTile(gameManager.tilemap.WorldToCell(smallDistance.position));
     }
 }

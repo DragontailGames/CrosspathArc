@@ -118,11 +118,6 @@ public class SpellCreator : EditorWindow
         {
             RenderSpecial();
         }
-        else if (spell.spellType == EnumCustom.SpellType.Hit_Special)
-        {
-            RenderDamage();
-            RenderSpecial();
-        }
         else if (spell.spellType == EnumCustom.SpellType.Area_Hazard)
         {
             RenderDamage();

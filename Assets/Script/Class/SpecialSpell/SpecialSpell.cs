@@ -23,31 +23,43 @@ public class SpecialSpell
         this.value = value;
         this.controller = controller;
         this.effect = effect;
+
+        if(duration == 0)
+        {
+            Cast(controller, value);
+            EndOfDuration(controller);
+        }
     }
 
     public virtual void SetupSpell() {}
 
     public void AddToSpecialSpellList(SpecialSpell specialSpell)
     {
-        var existingSpell = controller.specialSpell.Find(n => n.effect == this.effect);
-        if (existingSpell != null)
+        if (duration > 0)
         {
-            existingSpell.duration = duration;
-        }
-        else
-        {
-            controller.specialSpell.Add(specialSpell);
+            var existingSpell = controller.specialSpell.Find(n => n.effect == this.effect);
+            if (existingSpell != null)
+            {
+                existingSpell.duration = duration;
+            }
+            else
+            {
+                controller.specialSpell.Add(specialSpell);
+            }
         }
     }
 
     public virtual void StartNewTurn(CreatureController creatureController)
     {
-        Cast(creatureController, value);
-        duration--;
-        if (duration<=0)
+        if (duration > 0)
         {
-            EndOfDuration(creatureController);
-            creatureController.specialSpell.Remove(this);
+            Cast(creatureController, value);
+            duration--;
+            if (duration <= 0)
+            {
+                EndOfDuration(creatureController);
+                creatureController.specialSpell.Remove(this);
+            }
         }
     }
 
@@ -55,6 +67,7 @@ public class SpecialSpell
 
     public virtual void EndOfDuration(CreatureController creatureController)
     {
+        creatureController.specialSpell.Remove(this);
         Manager.Instance.canvasManager.RemoveLogText(effect.ToString());
     }
 

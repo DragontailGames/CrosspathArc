@@ -22,8 +22,6 @@ public class Spell : ScriptableObject
 
     public int fixedValue = 0;
 
-    public string formula;
-
     public int manaCost;
 
     public EnumCustom.SpellType spellType;
@@ -42,7 +40,9 @@ public class Spell : ScriptableObject
 
     public int invokeLimit = 0;
 
-    public int GetValue(AttributeStatus attributeStatus)
+    public List<SubSpell> subSpell = new List<SubSpell>();
+
+    public int GetValue(CreatureController creatureController)
     {
         int value = 0;
 
@@ -53,21 +53,20 @@ public class Spell : ScriptableObject
 
         foreach (var aux in attributeInfluence)
         {
-            var auxAttribute = aux.GetValue(attributeStatus.GetValue(aux.attribute));
+            var auxAttribute = aux.GetValue(creatureController);
             value += auxAttribute;
         }
 
         return value;
     }
 
-    public int GetFormulaValue(EnumCustom.FormulaType formulaType, CharacterCombat cCombat)
+    public void Cast(CreatureController caster, CreatureController target)
     {
-        if(formulaType == EnumCustom.FormulaType.SkillLevel)
+        //PEDRO MELHORA ISSO E COLOCA TUDO AQUI
+        foreach (var aux in subSpell)
         {
-            int level = cCombat.skills.Find(n => n.skill.spells.Contains(this)).level;
-            return MathfCustom.MathWithFormula(level, formula);//Melhorar
+            aux.Cast(caster, target);
         }
-        return 0;
     }
 
     public void CastBuff(CharacterController controller)
@@ -100,12 +99,13 @@ public class Spell : ScriptableObject
                 Destroy(objectSpell, 1.0f);
             }
         }
+
         controller.Mp -= manaCost;
     }
 
-    public void CastSpecial(CreatureController controller)
+    public void CastSpecial(CreatureController controller, CreatureController attacker)
     {
-        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(controller.attributeStatus), controller, specialEffect));
+        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(attacker), controller, specialEffect));
     }
 
     /// <summary>
@@ -128,15 +128,15 @@ public class Spell : ScriptableObject
         spellCreated.GetComponent<SpellProjectileController>().StartHit(targetPos, hitAction);
     }
 
-    public void AnimateCastAreaSpell(Vector3 position, Vector3Int index, Spell spell)
+    public void AnimateCastAreaSpell(Vector3 position, Vector3Int index)
     {
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
         spellCreated.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(0, 360)));
-        if(spell.spellType == EnumCustom.SpellType.Area_Hazard)
+        if(spellType == EnumCustom.SpellType.Area_Hazard)
         {
             SpellAreaHazard spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
-            spellAreaHazard.duration = spell.duration;
-            spellAreaHazard.damage = spell.fixedValue != 0 ? spell.fixedValue : UnityEngine.Random.Range(spell.minValue, spell.maxValue);
+            spellAreaHazard.duration = duration;
+            spellAreaHazard.damage = fixedValue != 0 ? fixedValue : UnityEngine.Random.Range(minValue, maxValue);
             spellAreaHazard.position = index;
         }
         else
@@ -150,5 +150,42 @@ public class Spell : ScriptableObject
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
         spellCreated.GetComponent<MinionController>().duration = duration;
         return spellCreated;
+    }
+    
+    public void CureDesease(CreatureController creatureController)
+    {
+        if(specialEffect != EnumCustom.SpecialEffect.None)
+        {
+            if (specialEffect != EnumCustom.SpecialEffect.All)
+            {
+                creatureController.specialSpell.Find(n => n.effect == specialEffect).EndOfDuration(creatureController);
+            }
+            else
+            {
+                var auxSpecialSpell = creatureController.specialSpell.FindAll(n => n.effect == EnumCustom.SpecialEffect.Cannot_Walk || 
+                n.effect == EnumCustom.SpecialEffect.Paralyze || 
+                n.effect == EnumCustom.SpecialEffect.Poison || 
+                n.effect == EnumCustom.SpecialEffect.Sleep);
+                auxSpecialSpell[UnityEngine.Random.Range(0, auxSpecialSpell.Count)].EndOfDuration(creatureController);
+            }
+        }
+        foreach(var bfAux in buffDebuff)
+        {
+            if (bfAux.value < 0)
+            {
+                if (bfAux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
+                {
+                    var statusToRemove = creatureController.attributeStatus.statusModifiers.Find(n => n.status == bfAux.status);    
+                    Manager.Instance.canvasManager.RemoveLogText(statusToRemove.spellName);
+                    creatureController.attributeStatus.statusModifiers.Remove(statusToRemove);
+                }
+                if(bfAux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
+                {
+                    var attribute = creatureController.attributeStatus.attributeModifiers.Find(n => n.attribute == bfAux.attribute);
+                    Manager.Instance.canvasManager.RemoveLogText(attribute.spellName);
+                    creatureController.attributeStatus.attributeModifiers.Remove(attribute);
+                }
+            }
+        }
     }
 }

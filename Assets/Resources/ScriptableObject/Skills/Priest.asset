@@ -17,4 +17,11 @@ MonoBehaviour:
   modifier: []
   weaponBuffSkills: []
   spells:
+  - {fileID: 11400000, guid: 9cf09d32f75c8f244a99cd8f1c1756a8, type: 2}
+  - {fileID: 11400000, guid: d1c9a3315b6a4f545b9e47ddbbceed4d, type: 2}
+  - {fileID: 11400000, guid: a1249abffa035c04e875e8f500a40021, type: 2}
+  - {fileID: 11400000, guid: b2a9761c0588aa142a09743cace65ccf, type: 2}
   - {fileID: 11400000, guid: 53afe9cadc1a7674ea92081bc33ab0c8, type: 2}
+  - {fileID: 11400000, guid: 14a407444410c8f4ebd5379f9f44b033, type: 2}
+  - {fileID: 11400000, guid: 44fbc78128b429945822f145573c3b38, type: 2}
+  - {fileID: 11400000, guid: 4643718092a7c6947aa289acc76e0798, type: 2}
