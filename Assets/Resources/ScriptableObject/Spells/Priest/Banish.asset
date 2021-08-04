@@ -20,7 +20,6 @@ MonoBehaviour:
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 
   manaCost: 18
   spellType: 0
   area: 0
@@ -30,7 +29,8 @@ MonoBehaviour:
     levelOfSkill: 
     value: 1
     multiplier: 0
-  spellCastObject: {fileID: 100002, guid: 3a9110d43e9087440820f1a2449029de, type: 3}
+  spellCastObject: {fileID: 2029466217586909510, guid: 1aa8cf67eee477f48a2379f9c449d1d2, type: 3}
   specialEffect: 0
   duration: 0
   invokeLimit: 0
+  subSpell: []

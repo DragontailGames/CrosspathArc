@@ -15,12 +15,11 @@ MonoBehaviour:
   spellName: Protect
   description: Aumenta 2 Armor por 40 turno
   icon: {fileID: 21300000, guid: b6f379b857fdb401483a13b43bd890bf, type: 3}
-  castTarget: 1
+  castTarget: 5
   availableAt: 3
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 
   manaCost: 6
   spellType: 1
   area: 0
@@ -37,7 +36,8 @@ MonoBehaviour:
       value: 0
       multiplier: 0
   attributeInfluence: []
-  spellCastObject: {fileID: 100000, guid: 301751ef24ed1bc40a41b0f38b0dc5cb, type: 3}
+  spellCastObject: {fileID: 5271356475728970572, guid: db0f17dfb44b542428c10cd3826ef92e, type: 3}
   specialEffect: 0
   duration: 0
   invokeLimit: 0
+  subSpell: []

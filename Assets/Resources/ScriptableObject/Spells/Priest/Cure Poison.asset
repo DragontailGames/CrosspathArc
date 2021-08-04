@@ -15,18 +15,18 @@ MonoBehaviour:
   spellName: Cure Poison
   description: Cura Poison debuff
   icon: {fileID: 21300000, guid: ae40f4533c133a54b8fcadbf0625b6b9, type: 3}
-  castTarget: 1
+  castTarget: 5
   availableAt: 2
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 
   manaCost: 4
   spellType: 12
   area: 0
   buffDebuff: []
   attributeInfluence: []
-  spellCastObject: {fileID: 100006, guid: 26a4758189999ff4ea07cfee2eae783a, type: 3}
+  spellCastObject: {fileID: 7432152127829560434, guid: 18ddd17cbcf33b441a2f5f4336000e91, type: 3}
   specialEffect: 1
   duration: 0
   invokeLimit: 0
+  subSpell: []

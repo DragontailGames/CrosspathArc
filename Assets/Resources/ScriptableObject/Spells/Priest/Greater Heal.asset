@@ -15,12 +15,11 @@ MonoBehaviour:
   spellName: Greater Heal
   description: Melhor cura de Hp. 10+wisdom Hp
   icon: {fileID: 21300000, guid: 3233a552fb3ab45a0a36fd8251895efd, type: 3}
-  castTarget: 1
+  castTarget: 5
   availableAt: 10
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 
   manaCost: 20
   spellType: 3
   area: 0
@@ -30,7 +29,8 @@ MonoBehaviour:
     levelOfSkill: 
     value: 10
     multiplier: 0
-  spellCastObject: {fileID: 100002, guid: 956d2c7e53b246d47af5ee645d98b37a, type: 3}
+  spellCastObject: {fileID: 8160160607782547256, guid: b7299c32f244984479fdc51138783997, type: 3}
   specialEffect: 5
   duration: 0
   invokeLimit: 0
+  subSpell: []

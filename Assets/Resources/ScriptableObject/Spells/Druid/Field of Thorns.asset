@@ -20,10 +20,8 @@ MonoBehaviour:
   minValue: 0
   maxValue: 0
   fixedValue: 3
-  formula: 
-  formulaType: 0
   manaCost: 4
-  spellType: 11
+  spellType: 8
   area: 5
   buffDebuff: []
   attributeInfluence: []
@@ -31,3 +29,4 @@ MonoBehaviour:
   specialEffect: 0
   duration: 5
   invokeLimit: 0
+  subSpell: []

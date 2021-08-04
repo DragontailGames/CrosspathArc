@@ -15,12 +15,11 @@ MonoBehaviour:
   spellName: Bless
   description: Aumenta 2 Hitchance por 40 turnos
   icon: {fileID: 21300000, guid: dc869a09748593d409fabee41eba7224, type: 3}
-  castTarget: 1
+  castTarget: 5
   availableAt: 4
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 
   manaCost: 6
   spellType: 1
   area: 0
@@ -37,7 +36,8 @@ MonoBehaviour:
       value: 0
       multiplier: 0
   attributeInfluence: []
-  spellCastObject: {fileID: 100000, guid: 301751ef24ed1bc40a41b0f38b0dc5cb, type: 3}
+  spellCastObject: {fileID: 40596445472403150, guid: ababc1338452e7b43b94e802c20fe64b, type: 3}
   specialEffect: 0
   duration: 0
   invokeLimit: 0
+  subSpell: []

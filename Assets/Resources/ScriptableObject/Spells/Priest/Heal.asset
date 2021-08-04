@@ -15,12 +15,11 @@ MonoBehaviour:
   spellName: Heal
   description: Cura 1+wisdom/2 Hp
   icon: {fileID: 21300000, guid: c1ed7200100554164aa5cabac1d5f70c, type: 3}
-  castTarget: 1
+  castTarget: 5
   availableAt: 1
   minValue: 0
   maxValue: 0
   fixedValue: 1
-  formula: 
   manaCost: 2
   spellType: 3
   area: 0
@@ -30,7 +29,8 @@ MonoBehaviour:
     levelOfSkill: 
     value: 0
     multiplier: -2
-  spellCastObject: {fileID: 100004, guid: 6c5f6b61a73ca8c4898b0715238d20be, type: 3}
+  spellCastObject: {fileID: 2199321631256272767, guid: c7d1e45248909b4439632bb64f8d883c, type: 3}
   specialEffect: 5
   duration: 0
   invokeLimit: 0
+  subSpell: []

@@ -15,18 +15,18 @@ MonoBehaviour:
   spellName: Cure Affliction
   description: Cura alguns debuffs no jogador
   icon: {fileID: 21300000, guid: 0a1e1edc7656d9b42b1c27875cb1fcdb, type: 3}
-  castTarget: 1
+  castTarget: 5
   availableAt: 7
   minValue: 0
   maxValue: 0
   fixedValue: 0
-  formula: 
   manaCost: 14
   spellType: 12
   area: 0
   buffDebuff: []
   attributeInfluence: []
-  spellCastObject: {fileID: 100000, guid: 54f96934e8283bc4aa55cbd051f6e73e, type: 3}
+  spellCastObject: {fileID: 6411502512552812915, guid: b96ecb3de70870345b0f481a6d3e82b7, type: 3}
   specialEffect: 10
   duration: 0
   invokeLimit: 0
+  subSpell: []
