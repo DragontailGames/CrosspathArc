@@ -175,7 +175,7 @@ public class AttributeStatus
     }
 
     public void StartNewTurn()
-    {//PEDRO
+    {
         for (int i = attributeModifiers.Count-1; i >= 0; i--)
         {
             attributeModifiers[i].count--;

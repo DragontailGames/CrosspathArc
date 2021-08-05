@@ -47,6 +47,8 @@ public class CreatureController : MonoBehaviour
             aux.StartNewTurn(this);
         }
 
+        attributeStatus.StartNewTurn();
+
         yield return new WaitForSeconds(0.1f);
         myTurn = true;
 

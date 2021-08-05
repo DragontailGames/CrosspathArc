@@ -107,7 +107,7 @@ public class CharacterController : CreatureController
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && myTurn)
         {
             gameManager.EndMyTurn(this);
         }
