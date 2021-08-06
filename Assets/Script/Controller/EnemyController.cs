@@ -33,13 +33,11 @@ public class EnemyController : BotController
     public override void Update()
     {
         base.Update();
-        if (Vector3Int.Distance(player.CharacterMoveTileIsometric.controller.currentTileIndex, currentTileIndex) < 10)
+
+        //target = GetTarget(typeof(EnemyController), null, 10);
+        /*if (!gameManager.creatures.Contains(this))
         {
-            target = GetTarget(typeof(EnemyController));
-            if (!gameManager.creatures.Contains(this))
-            {
-                gameManager.creatures.Add(this);
-            }
+            gameManager.creatures.Add(this);
         }
         else if(forceTarget == null)
         {
@@ -47,12 +45,12 @@ public class EnemyController : BotController
             {
                 gameManager.creatures.Remove(this);
             }
-        }
+        }*/
     }
 
     public override IEnumerator StartMyTurn()
     {
-        target = GetTarget(typeof(EnemyController));
+        target = GetTarget(typeof(EnemyController), null, 10);
         yield return new WaitForSeconds(0.2f);
 
         yield return base.StartMyTurn();

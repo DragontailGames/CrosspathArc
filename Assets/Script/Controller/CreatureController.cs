@@ -9,7 +9,7 @@ public class CreatureController : MonoBehaviour
 
     public AttributeStatus attributeStatus;
 
-    public bool myTurn = true;
+    public bool myTurn = false;
 
     public string animationName = "";
 
@@ -36,6 +36,8 @@ public class CreatureController : MonoBehaviour
 
         currentTileIndex = gameManager.tilemap.WorldToCell(this.transform.position);
         currentTileIndex.z = 0;
+
+        gameManager.creatures.Add(this);
     }
 
     public virtual IEnumerator StartMyTurn()

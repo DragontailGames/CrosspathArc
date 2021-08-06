@@ -57,8 +57,6 @@ public class CharacterController : CreatureController
         animator.speed = 0.6f;
 
         enemyManager = Manager.Instance.enemyManager;
-
-        gameManager.creatures.Add(this);
     }
 
     public void Update()

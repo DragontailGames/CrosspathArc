@@ -11,8 +11,6 @@ public class MinionController : BotController
     {
         base.Start();
         Manager.Instance.timeManager.startNewTurnAction += () => { StartNewTurn(); };
-
-        gameManager.creatures.Add(this);
     }
 
     public void StartNewTurn()
@@ -44,14 +42,16 @@ public class MinionController : BotController
             gameManager.EndMyTurn(this);
             yield break;
         }
-        target = GetTarget(typeof(CharacterController));
+        target = GetTarget(null, typeof(EnemyController),10);
         if(target == null)
         {
+            Debug.Log("target a merda do zombie é nulo");
             target = Manager.Instance.characterController;
             StartCoroutine(base.StartMyTurn());
         }
         else
         {
+            Debug.Log("target a merda do zombie não é nulo");
             yield return new WaitForSeconds(0.2f);
             StartCoroutine(base.StartMyTurn());
         }

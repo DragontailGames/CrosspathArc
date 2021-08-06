@@ -172,7 +172,6 @@ public class BotController : CreatureController
         {
             forceTarget = Manager.Instance.characterController;
             target = Manager.Instance.characterController;
-            gameManager.creatures.Add(this);
         }
     }
 
@@ -190,7 +189,6 @@ public class BotController : CreatureController
         {
             forceTarget = Manager.Instance.characterController;
             target = Manager.Instance.characterController;
-            gameManager.creatures.Add(this);
         }
     }
 
@@ -215,11 +213,20 @@ public class BotController : CreatureController
         animator.Play(ani);
     }
 
-    public CreatureController GetTarget(Type exept)
+    public CreatureController GetTarget(Type exept, Type only, int limit)
     {
-        var creaturesWithoutEnemy = gameManager.creatures.FindAll(n => n.GetType() != exept);
+        List<CreatureController> creaturesWithoutEnemy = new List<CreatureController>();
+        if (exept != null)
+        {
+            creaturesWithoutEnemy = gameManager.creatures.FindAll(n => n.GetType() != exept);
+        }
+        else if(only != null)
+        {
+            creaturesWithoutEnemy = gameManager.creatures.FindAll(n => n.GetType() == only);
+        }
+
         var shortestDistance = Mathf.Infinity;
-        Transform smallDistance = null;
+        CreatureController smallCreatureDistance = null;
         foreach (var aux in creaturesWithoutEnemy)
         {
             if (aux.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration > 0)
@@ -227,13 +234,16 @@ public class BotController : CreatureController
                 return null;
             }
             var distance = Vector3.Distance(aux.transform.position, this.transform.position);
-            if (distance < shortestDistance)
+            if (Vector3Int.Distance(aux.currentTileIndex, currentTileIndex) < limit)
             {
-                shortestDistance = distance;
-                smallDistance = aux.transform;
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    smallCreatureDistance = aux;
+                }
             }
         }
 
-        return gameManager.GetCreatureInTile(gameManager.tilemap.WorldToCell(smallDistance.position));
+        return smallCreatureDistance;
     }
 }
