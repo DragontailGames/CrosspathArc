@@ -6,12 +6,12 @@ using System.IO;
 
 public class ReplaceAnimation
 {
-    public static string oldFolder = "./Assets/Animation/Male_Archer";
-    public static string newFolder = "./Assets/Animation/Female_Archer";
-    public static string newAnimationFolder = "Assets/Animation/Female_Archer";
-    public static string oldName = "Male_Archer";
-    public static string newName = "Female_Archer";
-    public static string oldSprites_folder = "./Assets/Sprite/Male_Archer_Naked_Hand";
+    public static string oldFolder = "./Assets/Animation/Wolf";
+    public static string newFolder = "./Assets/Animation/GiantBat";
+    public static string newAnimationFolder = "Assets/Animation/Dragon";
+    public static string oldName = "Zombie";
+    public static string newName = "Dragon";
+    public static string oldSprites_folder = "./Assets/Sprite/Wolf Inimigo";
     public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
 
     [MenuItem("Dragon Tail/Replace Animation")]
@@ -25,6 +25,7 @@ public class ReplaceAnimation
             AssetDatabase.RenameAsset(path, name);
         }
 
+        /*
         DirectoryInfo d = new DirectoryInfo(newFolder);
 
         foreach (var file in d.GetDirectories())
@@ -36,7 +37,7 @@ public class ReplaceAnimation
         processFiles();
         processController();
 
-        Debug.Log("---------------------ACABOU---------------------");
+        Debug.Log("---------------------ACABOU---------------------");*/
     }
 
     public static void RunDirectory(string path)

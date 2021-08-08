@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using System.Linq;
 
 public class CharacterCombat : MonoBehaviour
 {
@@ -203,180 +202,12 @@ public class CharacterCombat : MonoBehaviour
 
         controller.animator.Play(controller.animationName + "_Cast_" + controller.direction);
 
-        int hitChance = controller.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
-        int intAttribute = controller.attributeStatus.GetValue(EnumCustom.Attribute.Int);
-
-        int spellDamage = selectedSpell.GetValue(controller);
-
-        string extraDamage = "";
-        int damage = spellDamage;
-
-        if(selectedSpell.attributeInfluence.Count>0)
-        {
-            extraDamage = " + ";
-        }
-
-        foreach (var aux in selectedSpell.attributeInfluence)
-        {
-            var auxAttribute = aux.GetValue(controller);
-            extraDamage += auxAttribute;
-            damage += auxAttribute;
-        }
-
-        string textDamage = "(" + spellDamage + extraDamage + ")";
-
-        if(selectedSpell.castTarget == EnumCustom.CastTarget.Area)
-        {
-            if(tile == new Vector3Int() && creature != null)
-            {
-                tile = creature.currentTileIndex;
-            }
-            CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, selectedSpell);
-        }
-        else if (selectedSpell.castTarget == EnumCustom.CastTarget.Tile)
-        {
-            CastSpellInTile(tile, selectedSpell);
-        }
-        else if(selectedSpell.castTarget == EnumCustom.CastTarget.Enemy)
-        {
-            if (creature != null && creature.GetType() == typeof(EnemyController))
-            {
-                CastProjectileSpell(hitChance, intAttribute, creature as EnemyController, damage, textDamage, selectedSpell);
-            }
-            else
-            {
-                selectedSpell = null;
-                selectedUi.gameObject.SetActive(false);
-            }
-        }
-        else if (selectedSpell.castTarget == EnumCustom.CastTarget.Target)
-        {
-            CastProjectileSpell(100, intAttribute, creature, damage, textDamage, selectedSpell);
-        }
-    }
-
-    private void CastProjectileSpell(int hitChance, int intAttribute, CreatureController creature, int damage, string textDamage, Spell spell)
-    {
-        bool hit = Combat.TryHit(hitChance, intAttribute, creature.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), creature.nickname); 
-        if (!hit)
-        {
-            selectedSpell = null;
-            selectedUi.gameObject.SetActive(false);
-            
-            Manager.Instance.gameManager.EndMyTurn(controller);
-            return;
-        }
-
-        UnityAction extraEffect = null;
-
-        //Cria a spell e configura para a animação
-        selectedSpell.AnimateCastProjectileSpell(creature.transform.position, this.transform, () => {
-            creature.ReceiveSpell(controller, damage, textDamage, spell);
-            spell.Cast(controller, creature);
-            extraEffect?.Invoke();
+        selectedSpell.Cast(() => 
+        { 
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
             Manager.Instance.gameManager.EndMyTurn(controller);
-        });
-    }
-
-    private void CastAreaSpell(int hitChance, int intAttribute, Vector3Int startIndex, int damage, string textDamage, Spell spell)
-    {
-        List<Vector3Int> tiles = new List<Vector3Int>();
-        int area = selectedSpell.area;
-
-        int endX = Mathf.FloorToInt(area / 2) - ((area % 2 == 0) ? 1 : 0);
-        int endY = Mathf.FloorToInt(area / 2) - ((area % 2 == 0) ? 1 : 0);
-
-        for (int x = startIndex.x - Mathf.FloorToInt(area/2); x<= startIndex.x + endX; x++)
-        {
-            for(int y = startIndex.y - Mathf.FloorToInt(area / 2); y <= startIndex.y + endY; y++)
-            {
-                Vector3Int t = new Vector3Int(x, y, 0);
-                if (x >= 0 && y>=0 && Manager.Instance.gameManager.tilemap.HasTile(t))
-                {
-                    tiles.Add(t);
-                }
-            }
-        }
-
-        foreach(var aux in tiles)
-        {
-            spell.AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux), aux);
-            if (spell.spellType != EnumCustom.SpellType.Area_Hazard)
-            {
-                EnemyController enemy = Manager.Instance.enemyManager.CheckEnemyInTile(aux);
-
-                if (enemy != null)
-                {
-                    bool hit = Combat.TryHit(hitChance, intAttribute, enemy.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), enemy.nickname);
-                    if (hit)
-                    {
-                        enemy.ReceiveSpell(controller, damage, textDamage, spell);
-                    }
-                }
-            }
-            
-        }
-
-        selectedSpell = null;
-        selectedUi.gameObject.SetActive(false);
-
-        Manager.Instance.gameManager.EndMyTurn(controller);
-    }
-
-    public void CastSpellInTile(Vector3Int index, Spell spell)
-    {
-        if (spell.spellType == EnumCustom.SpellType.Invoke)
-        {
-            GameObject creature = spell.InvokeCreature(Manager.Instance.gameManager.tilemap.CellToLocal(index));
-            if (minionCounts.Find(n => n.spell == spell) != null)
-            {
-                if (minionCounts.Find(n => n.spell == spell).creatures.Count >= spell.invokeLimit)
-                {
-                    List<GameObject> orderedCreature = minionCounts.Find(n => n.spell == spell).creatures.OrderBy(n => n.GetComponent<MinionController>().duration).ToList();
-                    orderedCreature[0].GetComponent<MinionController>().Defeat();
-                }
-                minionCounts.Find(n => n.spell == spell).creatures.Add(creature);
-            }
-            else
-            {
-                minionCounts.Add(new MinionCount()
-                {
-                    spell = spell,
-                    creatures = new List<GameObject>()
-                {
-                    creature
-                }
-                });
-            }
-        }
-        else if (spell.spellType == EnumCustom.SpellType.Blink)
-        {
-            var points = Manager.Instance.gameManager.GetPath(controller.CharacterMoveTileIsometric.controller.currentTileIndex, index);
-            PathFind.Point point = null;
-            for(int i = 0;i < (points.Count > 5 ? 5 : points.Count - 1);i++ )
-            {
-                if(!Manager.Instance.gameManager.elevationTM.HasTile(new Vector3Int(points[i].x + 1, points[i].y + 1, 0)))
-                {
-                    point = points[i];
-                }
-                else
-                {
-                    break;
-                }
-            }
-            if (point != null)
-            {
-                Vector3Int pos = new Vector3Int(point.x, point.y, 0);
-                controller.CharacterMoveTileIsometric.Blink(pos);
-            }
-        }
-
-        selectedSpell = null;
-        selectedUi.gameObject.SetActive(false);
-
-        Manager.Instance.gameManager.EndMyTurn(controller);
+        },controller, creature, tile, minionCounts);
     }
 
     /// <summary>

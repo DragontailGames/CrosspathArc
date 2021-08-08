@@ -24,6 +24,12 @@ public class BotController : CreatureController
 
     public CreatureController forceTarget;
 
+    public List<Spell> spells;
+
+    public int range = 1;
+
+    public bool meleeAndRanged = false;
+
     public virtual void Start()
     {
         gameManager = Manager.Instance.gameManager;
@@ -86,6 +92,13 @@ public class BotController : CreatureController
             return;
         }
 
+        int offsetDiagonal = (creatureController.currentTileIndex.x != currentTileIndex.x && creatureController.currentTileIndex.y != currentTileIndex.y) ? 2 : 1;
+        if (spells.Count>0 && (!meleeAndRanged || meleeAndRanged && Vector3.Distance(creatureController.currentTileIndex, currentTileIndex) > offsetDiagonal))
+        {
+            Spell spell = spells[UnityEngine.Random.Range(0, spells.Count)];
+            spell.Cast(null,this, creatureController, creatureController.currentTileIndex, null);
+        }
+
         int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
         int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
@@ -106,21 +119,15 @@ public class BotController : CreatureController
     {
         yield return base.StartMyTurn();
 
-        if (isDead)
+        if (isDead || !target || !canMove)
         {
             gameManager.EndMyTurn(this);
             yield break;
         }
-
-        yield return new WaitForSeconds(0.2f);
 
         CharacterController characterController;
 
-        if (!target || !canMove)
-        {
-            gameManager.EndMyTurn(this);
-            yield break;
-        }
+        yield return new WaitForSeconds(0.2f);
 
         target.TryGetComponent(out characterController);
 
@@ -137,7 +144,7 @@ public class BotController : CreatureController
         hasTarget = true;
         yield return new WaitForSeconds(0.2f * 2);
 
-        int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? 2 : 1;
+        int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
         {
             Attack(target);
@@ -209,7 +216,15 @@ public class BotController : CreatureController
 
     public void PlayAnimation(string animationName, string dir)
     {
-        string ani = mainAnimation + "_" + animationName + "_" + dir;
+        string ani = "";
+        if (!string.IsNullOrEmpty(mainAnimation))
+        {
+            ani = mainAnimation + "_" + animationName + "_" + dir;
+        }
+        else
+        {
+            ani = animationName + "_" + dir;
+        }
         animator.Play(ani);
     }
 

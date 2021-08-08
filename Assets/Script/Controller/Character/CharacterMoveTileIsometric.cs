@@ -108,5 +108,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         movePosition = pos;
         controller.currentTileIndex = index;
     }
+
 }
 

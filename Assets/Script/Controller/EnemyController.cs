@@ -9,7 +9,6 @@ public class EnemyController : BotController
 
     private CharacterController player;
 
-    public int range = 1;
 
     public override void Start()
     {
@@ -50,7 +49,14 @@ public class EnemyController : BotController
 
     public override IEnumerator StartMyTurn()
     {
-        target = GetTarget(typeof(EnemyController), null, 10);
+        var newTarget = GetTarget(typeof(EnemyController), null, 10);
+        if (forceTarget)
+        {
+            if (newTarget)
+            {
+                target = newTarget;
+            }
+        }
         yield return new WaitForSeconds(0.2f);
 
         yield return base.StartMyTurn();
