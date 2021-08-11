@@ -21,7 +21,7 @@ public class CreatureController : MonoBehaviour
 
     public string nickname;//Apelido do jogador para ser exibido
 
-    private int hp, mp;//quantidade de hp e mp
+    public int hp, mp;//quantidade de hp e mp
 
     public bool canMove = true;
 

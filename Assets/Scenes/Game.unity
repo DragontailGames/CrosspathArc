@@ -3664,9 +3664,9 @@ RectTransform:
   m_Father: {fileID: 1117330734}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -10}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 10, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &275027013
@@ -4026,11 +4026,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409514348733355550, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.01
+      value: 1.02
       objectReference: {fileID: 0}
     - target: {fileID: 7409514348733355550, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.85
+      value: 5.36
       objectReference: {fileID: 0}
     - target: {fileID: 7409514348733355550, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4070,7 +4070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409514348733355551, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90c5632b5e0730445859bfe3e553e483, type: 3}
@@ -34175,12 +34175,15 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
+    baseHp: 0
   myTurn: 1
   animationName: Female_Archer
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
   nickname: 
+  hp: 0
+  mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   multipleTilesIndex: []
@@ -69463,7 +69466,7 @@ Transform:
   - {fileID: 1195350928}
   - {fileID: 1700479350}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2137639103
 MonoBehaviour:
@@ -69662,12 +69665,15 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
+    baseHp: 0
   myTurn: 1
   animationName: Male_Archer
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
   nickname: Herlyke
+  hp: 0
+  mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   multipleTilesIndex: []
@@ -70557,7 +70563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6499016951078215882, guid: f4e718a551d58ca4b87595ca6f349d2e, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6499016951078215882, guid: f4e718a551d58ca4b87595ca6f349d2e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -70803,6 +70809,10 @@ PrefabInstance:
     - target: {fileID: 4818289207768367255, guid: b55bcdc3f720ba94e9de872e3cf390ce, type: 3}
       propertyPath: m_Name
       value: Skeleton Mage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4818289207768367255, guid: b55bcdc3f720ba94e9de872e3cf390ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4818289207768367273, guid: b55bcdc3f720ba94e9de872e3cf390ce, type: 3}
       propertyPath: spells.Array.size

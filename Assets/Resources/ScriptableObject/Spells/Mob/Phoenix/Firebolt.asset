@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Firebolt
   m_EditorClassIdentifier: 
   spellName: Firebolt
-  description: Summon a Firebolt with damage equals (1-4)+Int
-  icon: {fileID: 21300000, guid: 55e7652de7586a043a565554e78f3d78, type: 3}
+  description: 
+  icon: {fileID: 0}
   castTarget: 0
   availableAt: 1
   minValue: 1

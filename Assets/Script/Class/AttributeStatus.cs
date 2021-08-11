@@ -23,6 +23,8 @@ public class AttributeStatus
 
     public int fakeLife = 0;
 
+    public int baseHp = 0;
+
     /// <summary>
     /// Construtor da classe normal
     /// </summary>
@@ -158,7 +160,7 @@ public class AttributeStatus
             MathfCustom.CalculateStatusByPoints(level, 2) + 
             MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Str),2) +
             (GetValue(EnumCustom.Attribute.Con) * 3) + 
-            fakeLife;
+            fakeLife + baseHp;
     }
 
 

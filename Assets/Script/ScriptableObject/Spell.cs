@@ -158,7 +158,7 @@ public class Spell : ScriptableObject
         bool isEnemy = false;
 
         if(caster.GetType() == typeof(EnemyController) && target.GetType() != typeof(EnemyController) ||
-           caster.GetType() == typeof(CharacterController) && target.GetType() == typeof(EnemyController))
+           caster.GetType() == typeof(CharacterController) || caster.GetType() == typeof(MinionController) && target.GetType() == typeof(EnemyController))
         {
             isEnemy = true;
         }
