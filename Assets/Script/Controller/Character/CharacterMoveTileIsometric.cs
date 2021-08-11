@@ -93,7 +93,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         return (!gameManager.elevationTM.HasTile(nextTile + new Vector3Int(1,1,0))) &&
                 (!gameManager.collisionTM.HasTile(nextTile)) &&
                 (gameManager.tilemap.HasTile(nextTile)) &&
-                (Manager.Instance.enemyManager.CheckEnemyInTile(nextTile) == null);
+                (Manager.Instance.gameManager.GetCreatureInTile(nextTile) == null);
     }
 
     public void PlayAnimation(string animation)

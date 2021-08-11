@@ -276,7 +276,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4501543531920598202}
-  - component: {fileID: 4501543531920598149}
   - component: {fileID: 1465535712350407022}
   m_Layer: 0
   m_Name: Skeleton Warrior
@@ -301,92 +300,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4501543531920598149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4501543531920598203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cabdbe21b3e488d469768c08d1144816, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  attributeStatus:
-    attributes:
-    - name: Str
-      attribute: 0
-      value: 1
-    - name: Con
-      attribute: 1
-      value: 1
-    - name: Dex
-      attribute: 2
-      value: 1
-    - name: Agi
-      attribute: 3
-      value: 1
-    - name: Int
-      attribute: 4
-      value: 1
-    - name: Wis
-      attribute: 5
-      value: 1
-    - name: Foc
-      attribute: 6
-      value: 1
-    - name: Cha
-      attribute: 7
-      value: 1
-    status:
-    - status: 0
-      value: 1
-    - status: 1
-      value: 1
-    - status: 2
-      value: 1
-    - status: 3
-      value: 1
-    - status: 4
-      value: 1
-    - status: 5
-      value: 1
-    - status: 6
-      value: 1
-    - status: 7
-      value: 1
-    walkDelay: 0.5
-    combatDelay: 1
-    attributeModifiers: []
-    statusModifiers: []
-    fakeLife: 0
-  myTurn: 1
-  animationName: 
-  direction: 
-  offsetSpell: {x: 0, y: 0}
-  level: 1
-  nickname: Skeleton Warrior
-  canMove: 1
-  currentTileIndex: {x: 0, y: 0, z: 0}
-  multipleTilesIndex: []
-  specialSpell: []
-  HpBar: {fileID: 0}
-  hasTarget: 0
-  animator: {fileID: 0}
-  offsetPosition: {x: 0, y: 0.5, z: 0}
-  movementSpeed: 1
-  mainAnimation: 
-  target: {fileID: 0}
-  forceTarget: {fileID: 0}
-  spells: []
-  range: 0
-  meleeAndRanged: 0
-  enemy:
-    name: Wolf
-    size: 1
-    exp: 125
 --- !u!114 &1465535712350407022
 MonoBehaviour:
   m_ObjectHideFlags: 0

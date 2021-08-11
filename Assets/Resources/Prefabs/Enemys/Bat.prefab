@@ -282,10 +282,12 @@ MonoBehaviour:
   myTurn: 1
   animationName: 
   direction: 
+  offsetSpell: {x: 0, y: 0}
   level: 1
   nickname: Bat
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
+  multipleTilesIndex: []
   specialSpell: []
   HpBar: {fileID: 0}
   hasTarget: 0
@@ -295,11 +297,13 @@ MonoBehaviour:
   mainAnimation: 
   target: {fileID: 0}
   forceTarget: {fileID: 0}
+  spells: []
+  range: 1
+  meleeAndRanged: 0
   enemy:
     name: Wolf
     size: 1
     exp: 125
-  range: 0
 --- !u!1 &1087364343467967577
 GameObject:
   m_ObjectHideFlags: 0

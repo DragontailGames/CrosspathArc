@@ -380,7 +380,7 @@ MonoBehaviour:
   target: {fileID: 0}
   forceTarget: {fileID: 0}
   spells: []
-  range: 0
+  range: 1
   meleeAndRanged: 0
   enemy:
     name: Wolf
