@@ -18,7 +18,7 @@ public class CharacterCombat : MonoBehaviour
 
     public Transform selectedUi;
 
-    public List<MinionCount> minionCounts = new List<MinionCount>();
+    public List<CharacterMinions> minionCounts = new List<CharacterMinions>();
 
     /// <summary>
     /// Configs
@@ -122,24 +122,10 @@ public class CharacterCombat : MonoBehaviour
             selectedUi = spellUi[index].transform.GetChild(0);
             selectedUi.gameObject.SetActive(true);
         }
-        else if(spells[index].spellType == EnumCustom.SpellType.Buff)
+        else
         {
-            spells[index].CastBuff(controller);
-            foreach (var aux in controller.specialSpell)
-            {
-                aux.HandleAttack(controller);
-            }
-            Manager.Instance.canvasManager.UpdateStatus();
-            Manager.Instance.gameManager.EndMyTurn(controller);
+            spells[index].Cast(()=> { controller.gameManager.EndMyTurn(controller); },controller,null, new Vector3Int(), minionCounts);
         }
-        else if(spells[index].spellType == EnumCustom.SpellType.Special)
-        {
-            controller.Mp -= spells[index].manaCost;
-            spells[index].CastSpecial(controller, controller);
-            Manager.Instance.canvasManager.UpdateStatus();
-        }
-
-        Manager.Instance.canvasManager.UpdateStatus();
     }
 
     /// <summary>

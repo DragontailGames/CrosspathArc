@@ -18,4 +18,6 @@ public class BuffDebuff
     public int turnDuration;
 
     public AttributeInfluence attributeInfluence;
+
+    public bool minionModifier;
 }

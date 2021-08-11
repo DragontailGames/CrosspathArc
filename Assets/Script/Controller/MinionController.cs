@@ -31,7 +31,7 @@ public class MinionController : BotController
     {
         base.Defeat();
 
-        Manager.Instance.characterController.CharacterCombat.minionCounts.Find(n => n.creatures.Contains(this.gameObject)).creatures.Remove(this.gameObject);
+        Manager.Instance.characterController.CharacterCombat.minionCounts.Find(n => n.creatures.Contains(this)).creatures.Remove(this);
         Destroy(this.gameObject, 3.0f);
     }
 
@@ -45,13 +45,11 @@ public class MinionController : BotController
         target = GetTarget(null, typeof(EnemyController),10);
         if(target == null)
         {
-            Debug.Log("target a merda do zombie é nulo");
             target = Manager.Instance.characterController;
             StartCoroutine(base.StartMyTurn());
         }
         else
         {
-            Debug.Log("target a merda do zombie não é nulo");
             yield return new WaitForSeconds(0.2f);
             StartCoroutine(base.StartMyTurn());
         }

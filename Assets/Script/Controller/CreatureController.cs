@@ -15,6 +15,8 @@ public class CreatureController : MonoBehaviour
 
     public string direction;
 
+    public Vector2 offsetSpell;
+
     public int level = 1;//level atual
 
     public string nickname;//Apelido do jogador para ser exibido
@@ -24,6 +26,8 @@ public class CreatureController : MonoBehaviour
     public bool canMove = true;
 
     public Vector3Int currentTileIndex;
+
+    public List<Vector3Int> multipleTilesIndex;
 
     public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(level)); }
     public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(level)); }
@@ -44,6 +48,7 @@ public class CreatureController : MonoBehaviour
     {
         gameManager.StartNewTurn();
 
+
         foreach (var aux in specialSpell.ToList())
         {
             aux.StartNewTurn(this);
@@ -52,10 +57,19 @@ public class CreatureController : MonoBehaviour
         attributeStatus.StartNewTurn();
 
         yield return new WaitForSeconds(0.1f);
-        myTurn = true;
 
         //CharacterStatus.attributeStatus.StartNewTurn();
         Manager.Instance.canvasManager.UpdateStatus();
+
+        if (canMove == false)
+        {
+            yield return new WaitForSeconds(1.0f);
+            gameManager.EndMyTurn(this);
+        }
+        else
+        {
+            myTurn = true;
+        }
     }
 
     public string GetDirection(Vector3Int index)
@@ -111,11 +125,11 @@ public class CreatureController : MonoBehaviour
             ReceiveDamage(attacker);
     }
 
-    public virtual void ReceiveSpell(CreatureController attacker, int damage, string damageText, Spell spell)
+    public virtual void ReceiveSpell(CreatureController caster, int damage, string damageText, Spell spell)
     {
         if (spell.spellType == EnumCustom.SpellType.Special)
         {
-            spell.CastSpecial(this, attacker);
+            spell.CastSpecial(this, caster);
         }
         else if (spell.spellType == EnumCustom.SpellType.Buff)
         {
@@ -128,7 +142,7 @@ public class CreatureController : MonoBehaviour
                         spellName = spell.spellName,
                         attribute = aux.attribute,
                         count = aux.turnDuration,
-                        value = aux.value
+                        value = aux.value + aux.attributeInfluence.GetValue(caster)
                     }, null);
                 }
                 if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
@@ -138,7 +152,7 @@ public class CreatureController : MonoBehaviour
                         spellName = spell.spellName,
                         status = aux.status,
                         count = aux.turnDuration,
-                        value = aux.value
+                        value = aux.value + aux.attributeInfluence.GetValue(caster)
                     });
                 }
             }
@@ -159,7 +173,7 @@ public class CreatureController : MonoBehaviour
         }
 
         if (damage > 0)
-            ReceiveDamage(attacker);
+            ReceiveDamage(caster);
     }
 
     /// <summary>
@@ -167,5 +181,18 @@ public class CreatureController : MonoBehaviour
     /// </summary>
     public virtual void Defeat()
     {
+    }
+
+    public bool IsInTile(Vector3Int tile)
+    {
+        if(multipleTilesIndex.Count>0)
+        {
+            var tIndex = multipleTilesIndex.Find(n => n == tile);
+            return tIndex != null;
+        }
+        else
+        {
+            return tile == currentTileIndex;
+        }
     }
 }

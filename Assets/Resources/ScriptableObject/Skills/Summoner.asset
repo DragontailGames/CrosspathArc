@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Summoner
+  m_EditorClassIdentifier: 
+  skillName: Summoner
+  skillType: 1
+  modifier: []
+  weaponBuffSkills: []
+  spells:
+  - {fileID: 11400000, guid: 7e32c070708940743af3bcdc46545d69, type: 2}
+  - {fileID: 11400000, guid: 6f1dfea8dc8e0a04e988255093bcacae, type: 2}
+  - {fileID: 11400000, guid: f13cd2ef54feb83489e1d144b1423d5e, type: 2}
+  - {fileID: 11400000, guid: f63ba9d47d8b7eb48900bd5e02af643d, type: 2}
+  - {fileID: 11400000, guid: 47e2b6b2852b56e49b3b3216898a95bd, type: 2}
+  - {fileID: 11400000, guid: 64e4743d14fe5e04e86c68b78a6b9d4a, type: 2}
+  - {fileID: 11400000, guid: 3ef0fbb2e6a224d4385002155e031a97, type: 2}
+  - {fileID: 11400000, guid: 3511e576c5a1d0740a393509935111af, type: 2}

@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomClass
-{ 
-}
-
 [System.Serializable]
-public class MinionCount
+public class CharacterMinions
 {
-    public List<GameObject> creatures;
+    public List<MinionController> creatures;
 
     public Spell spell;
 }

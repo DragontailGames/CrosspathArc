@@ -70,14 +70,20 @@ public class BotController : CreatureController
 
         Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
 
+        if (Manager.Instance.gameManager.GetCreatureInTile(dest))
+        {
+            return;
+        }
+
         if (Manager.Instance.gameManager.CheckHasBotInTile(dest))
         {
             var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos);
             dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
         }
 
+        direction = gameManager.GetDirection(currentTileIndex, dest);
         animator.SetBool("Walk", true);
-        PlayAnimation("Walk", gameManager.GetDirection(currentTileIndex, dest));
+        PlayAnimation("Walk",direction);
         
         currentTileIndex = dest;
 
@@ -92,38 +98,40 @@ public class BotController : CreatureController
             return;
         }
 
+        Vector3Int destTileIndex = creatureController.currentTileIndex;
+        direction = gameManager.GetDirection(currentTileIndex, destTileIndex);
+
         int offsetDiagonal = (creatureController.currentTileIndex.x != currentTileIndex.x && creatureController.currentTileIndex.y != currentTileIndex.y) ? 2 : 1;
         if (spells.Count>0 && (!meleeAndRanged || meleeAndRanged && Vector3.Distance(creatureController.currentTileIndex, currentTileIndex) > offsetDiagonal))
         {
             Spell spell = spells[UnityEngine.Random.Range(0, spells.Count)];
             spell.Cast(null,this, creatureController, creatureController.currentTileIndex, null);
         }
-
-        int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
-        int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
-        int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
-
-        Vector3Int destTileIndex = creatureController.currentTileIndex;
-
-        PlayAnimation("Attack", gameManager.GetDirection(currentTileIndex, destTileIndex));
-
-        if (!Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
+        else
         {
-            return;
+            int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
+            int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
+            int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
+
+            if (!Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
+            {
+                return;
+            }
+
+            creatureController.ReceiveHit(this, str, str.ToString());
         }
 
-        creatureController.ReceiveHit(this, str, str.ToString());
+        PlayAnimation("Attack", direction);
     }
 
     public override IEnumerator StartMyTurn()
     {
-        yield return base.StartMyTurn();
-
         if (isDead || !target || !canMove)
         {
             gameManager.EndMyTurn(this);
             yield break;
         }
+        yield return base.StartMyTurn();
 
         CharacterController characterController;
 

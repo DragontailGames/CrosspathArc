@@ -8,9 +8,9 @@ public class ReplaceAnimation
 {
     public static string oldFolder = "./Assets/Animation/Wolf";
     public static string newFolder = "./Assets/Animation/GiantBat";
-    public static string newAnimationFolder = "Assets/Animation/Dragon";
-    public static string oldName = "Zombie";
-    public static string newName = "Dragon";
+    public static string newAnimationFolder = "Assets/Animation/Skeleton Mage";
+    public static string oldName = "Skeleton Warrior";
+    public static string newName = "Skeleton Mage";
     public static string oldSprites_folder = "./Assets/Sprite/Wolf Inimigo";
     public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
 

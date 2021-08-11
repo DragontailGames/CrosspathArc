@@ -100,6 +100,7 @@ public class EnumCustom : MonoBehaviour
         None,
         Caster,
         Target,
+        Minions,
     }
 
     public enum FormulaType
