@@ -18,7 +18,7 @@ public class EnemyController : BotController
         enemyManager.enemies.Add(this);
 
         level = Mathf.Clamp(Manager.Instance.characterController.level - 1, 1, Manager.Instance.characterController.level);
-        attributeStatus = new AttributeStatus(level);
+        attributeStatus.SetupAttributeStatus(level);
 
         if (!gameManager.DetectLOS(gameManager.GetPath(currentTileIndex, player.CharacterMoveTileIsometric.controller.currentTileIndex)))
         {

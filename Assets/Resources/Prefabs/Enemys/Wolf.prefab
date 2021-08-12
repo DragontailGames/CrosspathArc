@@ -283,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7409514348733355550
 Transform:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
     attributes:
     - name: Str
       attribute: 0
-      value: 1
+      value: 8
     - name: Con
       attribute: 1
       value: 1
@@ -361,12 +361,15 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
+    baseHp: 0
   myTurn: 0
   animationName: 
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
   nickname: Wolf
+  hp: 0
+  mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   multipleTilesIndex: []
@@ -379,7 +382,8 @@ MonoBehaviour:
   mainAnimation: Wolf
   target: {fileID: 0}
   forceTarget: {fileID: 0}
-  spells: []
+  spells:
+  - {fileID: 11400000, guid: 69a76364e42207645ad1207e27d2924e, type: 2}
   range: 1
   meleeAndRanged: 0
   enemy:

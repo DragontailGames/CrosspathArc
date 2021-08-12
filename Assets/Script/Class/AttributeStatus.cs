@@ -9,9 +9,9 @@ using System;
 [System.Serializable]
 public class AttributeStatus
 {
-    public Attributes[] attributes = new Attributes[Enum.GetNames(typeof(EnumCustom.Attribute)).Length];//array com os attributos
+    public Attributes[] attributes; //= new Attributes[Enum.GetNames(typeof(EnumCustom.Attribute)).Length];//array com os attributos
 
-    public Status[] status = new Status[Enum.GetNames(typeof(EnumCustom.Status)).Length];//array com os status
+    public Status[] status;//= new Status[Enum.GetNames(typeof(EnumCustom.Status)).Length];//array com os status
 
     public float walkDelay = 0.5f;
 
@@ -26,27 +26,15 @@ public class AttributeStatus
     public int baseHp = 0;
 
     /// <summary>
-    /// Construtor da classe normal
-    /// </summary>
-    public AttributeStatus()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            attributes[i] = new Attributes {name=((EnumCustom.Attribute)i).ToString(), attribute = (EnumCustom.Attribute)i, value = 1 };//inicializa as variaveis com 1 de valor
-            status[i] = new Status { status = (EnumCustom.Status)i, value = 1 };//inicializa as variaveis com 1 de valor
-        }
-    }
-
-    /// <summary>
     /// Construtor da classe com level
     /// </summary>
-    public AttributeStatus(int _level)
+    public void SetupAttributeStatus(int _level)
     {
         int level = _level;
         for (int i = 0; i < 8; i++)
         {
-            attributes[i] = new Attributes { name = ((EnumCustom.Attribute)i).ToString(), attribute = (EnumCustom.Attribute)i, value = 1 };//inicializa as variaveis com valor proporicional
-            status[i] = new Status { status = (EnumCustom.Status)i, value = 1 };//inicializa as variaveis com 1 de valor
+            attributes[i] = new Attributes { name = ((EnumCustom.Attribute)i).ToString(), attribute = (EnumCustom.Attribute)i, value = attributes[i].value != 0 ? attributes[i].value: 1 };//inicializa as variaveis com valor proporicional
+            status[i] = new Status { status = (EnumCustom.Status)i, value = status[i].value != 0 ? status[i].value : 1 };//inicializa as variaveis com 1 de valor
         }
 
         if (_level <= 0) return;
@@ -224,5 +212,14 @@ public class AttributeStatus
                 statusModifiers.Add(statusModifier);
             }
         }
+    }
+
+    public bool HasBuff(string spellName)
+    {
+        if(attributeModifiers.Find(n => n.spellName == spellName) != null || statusModifiers.Find(n => n.spellName == spellName) != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

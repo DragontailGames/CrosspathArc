@@ -102,10 +102,16 @@ public class BotController : CreatureController
         direction = gameManager.GetDirection(currentTileIndex, destTileIndex);
 
         int offsetDiagonal = (creatureController.currentTileIndex.x != currentTileIndex.x && creatureController.currentTileIndex.y != currentTileIndex.y) ? 2 : 1;
-        if (spells.Count>0 && (!meleeAndRanged || meleeAndRanged && Vector3.Distance(creatureController.currentTileIndex, currentTileIndex) > offsetDiagonal))
+
+        Spell selectedSpell = null;
+        if (spells.Count > 0)
         {
-            Spell spell = spells[UnityEngine.Random.Range(0, spells.Count)];
-            spell.Cast(null,this, creatureController, creatureController.currentTileIndex, null);
+            selectedSpell = spells[UnityEngine.Random.Range(0, spells.Count)];
+        }
+
+        if (spells.Count>0 && (!meleeAndRanged || meleeAndRanged && Vector3.Distance(creatureController.currentTileIndex, currentTileIndex) > offsetDiagonal) && !attributeStatus.HasBuff(selectedSpell.spellName))
+        {
+            selectedSpell.Cast(null,this, creatureController, creatureController.currentTileIndex, null);
         }
         else
         {
