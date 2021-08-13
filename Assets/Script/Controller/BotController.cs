@@ -75,13 +75,25 @@ public class BotController : CreatureController
             return;
         }*/
 
-        if (Manager.Instance.gameManager.CheckHasBotInTile(dest))
-        {
-            var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos);
-            dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
-        }
+        CreatureController creatureInNextTile = Manager.Instance.gameManager.GetCreatureInTile(dest);
 
         direction = gameManager.GetDirection(currentTileIndex, dest);
+
+        if (creatureInNextTile != null)
+        {
+            var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos);
+            if (destPath.Count > 0)
+            {
+                dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
+                direction = gameManager.GetDirection(currentTileIndex, dest);
+            }
+            else
+            {
+                dest = currentTileIndex;
+                direction = gameManager.GetDirection(currentTileIndex, playerPos);
+            }
+        }
+
         animator.SetBool("Walk", true);
         PlayAnimation("Walk",direction);
         

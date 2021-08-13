@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
                 bool pathEnable = tilemap.HasTile(pos);
-                pathEnable = Manager.Instance.enemyManager.CheckEnemyInTile(pos) == null;
+                pathEnable = Manager.Instance.gameManager.GetCreatureInTile(pos) == null;
                 tilesmap[x, y] = pathEnable;
             }
         }
