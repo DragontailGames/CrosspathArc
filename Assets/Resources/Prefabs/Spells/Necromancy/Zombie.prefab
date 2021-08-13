@@ -94,12 +94,15 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
+    baseHp: 0
   myTurn: 0
   animationName: 
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
   nickname: Zombie
+  hp: 0
+  mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   multipleTilesIndex: []
@@ -108,7 +111,7 @@ MonoBehaviour:
   hasTarget: 0
   animator: {fileID: 0}
   offsetPosition: {x: 0, y: 0.5, z: 0}
-  movementSpeed: 10
+  movementSpeed: 1
   mainAnimation: 
   target: {fileID: 0}
   forceTarget: {fileID: 0}
@@ -291,7 +294,7 @@ Animator:
   m_GameObject: {fileID: 8621467817818249932}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dd8bb53679dbd0e40b5f88ae7b6605fc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 189bff861ef437a4283da76c009509c1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

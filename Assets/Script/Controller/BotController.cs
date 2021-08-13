@@ -70,10 +70,10 @@ public class BotController : CreatureController
 
         Vector3Int dest = new Vector3Int(path[0].x, path[0].y, 0);
 
-        if (Manager.Instance.gameManager.GetCreatureInTile(dest))
+        /*if (Manager.Instance.gameManager.GetCreatureInTile(dest))
         {
             return;
-        }
+        }*/
 
         if (Manager.Instance.gameManager.CheckHasBotInTile(dest))
         {
@@ -119,12 +119,10 @@ public class BotController : CreatureController
             int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
             int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
 
-            if (!Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
+            if (Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
             {
-                return;
+                creatureController.ReceiveHit(this, str, str.ToString());
             }
-
-            creatureController.ReceiveHit(this, str, str.ToString());
         }
 
         PlayAnimation("Attack", direction);
@@ -141,7 +139,7 @@ public class BotController : CreatureController
 
         CharacterController characterController;
 
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
 
         target.TryGetComponent(out characterController);
 
@@ -156,7 +154,7 @@ public class BotController : CreatureController
         }
 
         hasTarget = true;
-        yield return new WaitForSeconds(0.2f * 2);
+        yield return new WaitForSeconds(0.3f);
 
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))

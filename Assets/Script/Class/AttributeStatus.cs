@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 /// <summary>
 /// Classe para tratar os atributos (str, win, ...) e os status (crit, hpRegen, ...)
@@ -166,22 +167,22 @@ public class AttributeStatus
 
     public void StartNewTurn()
     {
-        for (int i = attributeModifiers.Count-1; i >= 0; i--)
+        foreach(var aux in attributeModifiers.ToList())
         {
-            attributeModifiers[i].count--;
-            if(attributeModifiers[i].count <= 0)
+            aux.count--;
+            if (aux.count <= 0)
             {
-                Manager.Instance.canvasManager.RemoveLogText(statusModifiers[i].spellName);
-                attributeModifiers.RemoveAt(i);
+                Manager.Instance.canvasManager.RemoveLogText(aux.spellName);
+                attributeModifiers.Remove(aux);
             }
         }
-        for (int i = statusModifiers.Count - 1; i >= 0; i--)
+        foreach (var aux in statusModifiers.ToList())
         {
-            statusModifiers[i].count--;
-            if (statusModifiers[i].count <= 0)
+            aux.count--;
+            if (aux.count <= 0)
             {
-                Manager.Instance.canvasManager.RemoveLogText(statusModifiers[i].spellName);
-                statusModifiers.RemoveAt(i);
+                Manager.Instance.canvasManager.RemoveLogText(aux.spellName);
+                statusModifiers.Remove(aux);
             }
         }
     }
