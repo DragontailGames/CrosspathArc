@@ -69,7 +69,7 @@ public class CharacterController : CreatureController
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if (characterCombat.selectedSpell == null || characterCombat.selectedSpell?.castTarget == EnumCustom.CastTarget.Enemy && enemyInTile != null && enemyInTile.Hp>0)
+            if ((characterCombat.selectedSpell == null || characterCombat.selectedSpell?.castTarget == EnumCustom.CastTarget.Enemy) && enemyInTile != null && enemyInTile.Hp>0)
             {
                 foreach (var aux in specialSpell)
                 {

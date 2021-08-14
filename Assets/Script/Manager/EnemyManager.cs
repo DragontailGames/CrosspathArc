@@ -15,7 +15,6 @@ public class EnemyManager : MonoBehaviour
 
     public EnemyController CheckEnemyInTile(Vector3Int tile)
     {
-        Debug.Log("MANO " + tile);
         return enemies.Find(n => n.currentTileIndex == tile && n.Hp > 0);
     }
 
