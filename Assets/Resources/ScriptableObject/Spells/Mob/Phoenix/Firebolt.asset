@@ -24,7 +24,11 @@ MonoBehaviour:
   spellType: 0
   area: 0
   buffDebuff: []
-  attributeInfluence: []
+  attributeInfluence:
+  - attribute: 4
+    levelOfSkill: 
+    value: 0
+    multiplier: 0
   spellCastObject: {fileID: 100006, guid: 62e591f72f5fa4d46a89b7cccc7a5003, type: 3}
   specialEffect: 0
   duration: 0

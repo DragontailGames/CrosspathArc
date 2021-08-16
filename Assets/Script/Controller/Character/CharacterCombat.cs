@@ -70,6 +70,9 @@ public class CharacterCombat : MonoBehaviour
                 else
                 {
                     btSpell = spellUi[i].AddComponent<Button>();
+                    var navigation = btSpell.navigation;
+                    navigation.mode = Navigation.Mode.None;
+                    btSpell.navigation = navigation;
                 }
 
                 var skillIndex = i;
@@ -112,6 +115,7 @@ public class CharacterCombat : MonoBehaviour
         //Check mana
         if (spells[index].manaCost > controller.Mp)
         {
+            Debug.Log("selectedSpell not null");
             Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
             return;
         }
@@ -124,6 +128,7 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
+            Debug.Log("Chegou no casT");
             spells[index].Cast(()=> { controller.gameManager.EndMyTurn(controller); },controller,null, new Vector3Int(), minionCounts);
         }
     }

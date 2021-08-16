@@ -83,7 +83,8 @@ public class Spell : ScriptableObject
         {
             var auxAttribute = aux.GetValue(caster);
             extraDamage += auxAttribute;
-            damage += auxAttribute;
+            //damage += auxAttribute;
+            spellDamage -= auxAttribute;
         }
         string textDamage = "(" + spellDamage + extraDamage + ")";
 

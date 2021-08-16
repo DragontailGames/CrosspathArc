@@ -94,12 +94,15 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
+    baseHp: 0
   myTurn: 1
   animationName: 
   direction: 
   offsetSpell: {x: -0.2, y: 1}
   level: 1
   nickname: Dragon
+  hp: 0
+  mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   multipleTilesIndex: []
@@ -273,7 +276,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 12aa53f2acc0e2f46b2fd9cb643df404, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
