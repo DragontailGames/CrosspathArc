@@ -194,18 +194,19 @@ public class CharacterController : CreatureController
 
     public override void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
     {
-        base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
-
         direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, attacker.currentTileIndex);
+        Debug.Log("TESTE " + direction);
         animator.Play(animationName + "_GetHit_" + direction);
+        base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
     }
 
     public override void Defeat()
     {
-        animator.Play(animationName + "_Die_" + direction);
+        string dieAnimationName = animationName + "_Die_" + direction;
+        Debug.Log("Name " + dieAnimationName);
+        animator.Play(dieAnimationName);
         Manager.Instance.gameManager.InPause = true;
         Manager.Instance.gameManager.creatures.Remove(this);
-        Debug.Log("Morreu");
     }
 
     public void GetHit(int damage, BotController enemy)

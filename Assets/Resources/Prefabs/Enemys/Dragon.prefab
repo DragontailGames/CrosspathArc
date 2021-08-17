@@ -50,7 +50,7 @@ MonoBehaviour:
     attributes:
     - name: Str
       attribute: 0
-      value: 1
+      value: 10
     - name: Con
       attribute: 1
       value: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
       value: 1
     - name: Int
       attribute: 4
-      value: 1
+      value: 10
     - name: Wis
       attribute: 5
       value: 1
@@ -74,17 +74,17 @@ MonoBehaviour:
       value: 1
     status:
     - status: 0
-      value: 1
+      value: 10
     - status: 1
       value: 1
     - status: 2
-      value: 1
+      value: 3
     - status: 3
-      value: 1
+      value: 10
     - status: 4
       value: 1
     - status: 5
-      value: 1
+      value: 6
     - status: 6
       value: 1
     - status: 7
@@ -94,7 +94,7 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
-    baseHp: 0
+    baseHp: 100
   myTurn: 1
   animationName: 
   direction: 

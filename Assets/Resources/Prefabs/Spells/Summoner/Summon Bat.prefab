@@ -235,7 +235,7 @@ MonoBehaviour:
     attributes:
     - name: Str
       attribute: 0
-      value: 1
+      value: 3
     - name: Con
       attribute: 1
       value: 1
@@ -247,7 +247,7 @@ MonoBehaviour:
       value: 1
     - name: Int
       attribute: 4
-      value: 1
+      value: 3
     - name: Wis
       attribute: 5
       value: 1
@@ -259,13 +259,13 @@ MonoBehaviour:
       value: 1
     status:
     - status: 0
-      value: 1
+      value: 3
     - status: 1
-      value: 1
+      value: 2
     - status: 2
       value: 1
     - status: 3
-      value: 1
+      value: 3
     - status: 4
       value: 1
     - status: 5
@@ -279,12 +279,15 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
+    baseHp: 15
   myTurn: 0
   animationName: 
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
   nickname: Bat
+  hp: 0
+  mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   multipleTilesIndex: []

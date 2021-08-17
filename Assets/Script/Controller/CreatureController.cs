@@ -169,6 +169,7 @@ public class CreatureController : MonoBehaviour
 
         if (Hp <= 0)
         {
+            direction = Manager.Instance.gameManager.GetDirection(currentTileIndex, caster.currentTileIndex);
             Defeat();//mata o inimigo
         }
 

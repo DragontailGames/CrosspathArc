@@ -132,7 +132,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(currentCreature.StartMyTurn());
+        if (Manager.Instance.characterController.hp > 0)
+        {
+            StartCoroutine(currentCreature.StartMyTurn());
+        }
     }
 
     private void CalculateGrid()

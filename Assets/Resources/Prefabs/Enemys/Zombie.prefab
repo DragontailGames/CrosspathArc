@@ -50,7 +50,7 @@ MonoBehaviour:
     attributes:
     - name: Str
       attribute: 0
-      value: 1
+      value: 4
     - name: Con
       attribute: 1
       value: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
       value: 1
     - name: Int
       attribute: 4
-      value: 1
+      value: 2
     - name: Wis
       attribute: 5
       value: 1
@@ -74,13 +74,13 @@ MonoBehaviour:
       value: 1
     status:
     - status: 0
-      value: 1
+      value: 2
     - status: 1
       value: 1
     - status: 2
-      value: 1
+      value: 2
     - status: 3
-      value: 1
+      value: 5
     - status: 4
       value: 1
     - status: 5
@@ -94,7 +94,7 @@ MonoBehaviour:
     attributeModifiers: []
     statusModifiers: []
     fakeLife: 0
-    baseHp: 0
+    baseHp: 20
   myTurn: 1
   animationName: 
   direction: 
@@ -230,7 +230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8621467817818249932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalPosition: {x: 0, y: -0.2, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8621467816789713633}
@@ -297,7 +297,7 @@ Animator:
   m_GameObject: {fileID: 8621467817818249932}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dd8bb53679dbd0e40b5f88ae7b6605fc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 189bff861ef437a4283da76c009509c1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -331,7 +331,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8621467818155054332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.29, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8621467817018296894}
