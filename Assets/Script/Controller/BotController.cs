@@ -96,7 +96,7 @@ public class BotController : CreatureController
 
         animator.SetBool("Walk", true);
         PlayAnimation("Walk",direction);
-        
+
         currentTileIndex = dest;
 
         movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
@@ -233,9 +233,15 @@ public class BotController : CreatureController
             PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
             isDead = true;
             gameManager.creatures.Remove(this);
+            Invoke("TurnOffSprite", 1f);
             //gameManager.currentCreature--;
             //gameManager.EndMyTurn();
         }
+    }
+
+    public void TurnOffSprite()
+    {
+        this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void PlayAnimation(string animationName, string dir)

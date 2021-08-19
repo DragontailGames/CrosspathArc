@@ -100,7 +100,7 @@ MonoBehaviour:
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
-  nickname: Zombie
+  nickname: Skeleton Mage
   hp: 0
   mp: 0
   canMove: 1

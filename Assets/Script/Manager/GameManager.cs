@@ -168,19 +168,17 @@ public class GameManager : MonoBehaviour
 
     public List<PathFind.Point> GetPathWithCustom(Vector3Int startIndex, Vector3Int destIndex)
     {
-        width = tilemap.size.x;
-        height = tilemap.size.y;
+        width = 40;
+        height = 40;
 
         tilesmap = new bool[width, height];
 
-        for (int x = 0; x < width; x++)
+        for (int x = Mathf.Clamp(startIndex.x - 20,0, startIndex.x + width); x < startIndex.x + 20; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = Mathf.Clamp(startIndex.y - 20, 0, startIndex.y + width); y < startIndex.y + 20; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                bool pathEnable = tilemap.HasTile(pos);
-                pathEnable = Manager.Instance.gameManager.GetCreatureInTile(pos) == null;
-                tilesmap[x, y] = pathEnable;
+                tilesmap[x, y] = tilemap.HasTile(pos) && Manager.Instance.gameManager.GetCreatureInTile(pos) == null;
             }
         }
 
@@ -189,7 +187,14 @@ public class GameManager : MonoBehaviour
         PathFind.Point _from = new PathFind.Point(startIndex.x, startIndex.y);
         PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
 
-        return PathFind.Pathfinding.FindPath(gridCustom, _from, _to);
+        var path = PathFind.Pathfinding.FindPath(gridCustom, _from, _to);
+
+        foreach(var aux in path)
+        {
+            Debug.Log("PATH " + aux);
+        }
+
+        return path;
     }
 
     public bool DetectLOS(List<PathFind.Point> path)
@@ -253,7 +258,7 @@ public class GameManager : MonoBehaviour
     public bool EndTurnRest()
     {
         int rand = Random.Range(0, 100);
-        if (restCount * 20 > rand)
+        if (restCount * Manager.Instance.configManager.chanceToSpawnInRest > rand)
         {
             Manager.Instance.enemyManager.CreateEnemies();
             return false;

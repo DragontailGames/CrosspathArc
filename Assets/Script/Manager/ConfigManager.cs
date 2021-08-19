@@ -22,4 +22,6 @@ public class ConfigManager : MonoBehaviour
     public int minRangeRestEnemySpawn = 2;
 
     public int maxRangeRestEnemySpawn = 4;
+
+    public int chanceToSpawnInRest = 20;
 }

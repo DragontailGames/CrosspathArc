@@ -195,7 +195,6 @@ public class CharacterController : CreatureController
     public override void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
     {
         direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, attacker.currentTileIndex);
-        Debug.Log("TESTE " + direction);
         animator.Play(animationName + "_GetHit_" + direction);
         base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
     }
