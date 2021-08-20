@@ -82,7 +82,7 @@ public class BotController : CreatureController
         if (creatureInNextTile != null)
         {
             var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos);
-            if (destPath.Count > 0)
+            if (destPath.Count > 0 && !creatureInNextTile.GetComponent<CharacterController>())
             {
                 dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
                 direction = gameManager.GetDirection(currentTileIndex, dest);

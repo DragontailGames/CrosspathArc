@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
             for (int y = Mathf.Clamp(startIndex.y - 20, 0, startIndex.y + width); y < startIndex.y + 20; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                tilesmap[x, y] = tilemap.HasTile(pos) && Manager.Instance.gameManager.GetCreatureInTile(pos) == null;
+                tilesmap[x, y] = tilemap.HasTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos) == null;
             }
         }
 
@@ -188,11 +188,6 @@ public class GameManager : MonoBehaviour
         PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
 
         var path = PathFind.Pathfinding.FindPath(gridCustom, _from, _to);
-
-        foreach(var aux in path)
-        {
-            Debug.Log("PATH " + aux);
-        }
 
         return path;
     }
@@ -313,5 +308,10 @@ public class GameManager : MonoBehaviour
     public CreatureController GetCreatureInTile(Vector3Int tile)
     {
         return creatures.Find(n => n.currentTileIndex == tile && n.Hp > 0);
+    }
+
+    public CreatureController GetBotInTile(Vector3Int tile)
+    {
+        return creatures.Find(n => n.currentTileIndex == tile && n.Hp > 0 && n.GetComponent<BotController>());
     }
 }
