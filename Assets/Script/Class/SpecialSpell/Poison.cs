@@ -16,7 +16,8 @@ public class Poison : SpecialSpell
     public override void Cast(CreatureController creatureController, int value)
     {
         base.Cast(creatureController, value);
-        creatureController.Hp -= value;
-        Manager.Instance.canvasManager.LogMessage($"{creatureController.name} sofreu {value} do veneno");//Manda mensagem do dano que o inimigo recebeu
+        creatureController.ReceiveHit(creatureController, value, $"sofreu {value} de veneno", true);
+        //creatureController.Hp -= value;
+        //Manager.Instance.canvasManager.LogMessage($"{creatureController.name} sofreu {value} do veneno");//Manda mensagem do dano que o inimigo recebeu
     }
 }

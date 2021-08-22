@@ -115,7 +115,10 @@ MonoBehaviour:
   mainAnimation: 
   target: {fileID: 0}
   forceTarget: {fileID: 0}
-  spells: []
+  spells:
+  - {fileID: 11400000, guid: e4ba797d5c2e6d44b92c1cef22ec1145, type: 2}
+  - {fileID: 11400000, guid: 446843c6d98d60c419c0630894bf57c3, type: 2}
+  - {fileID: 11400000, guid: 63232e03ae956c647bf36c806ef341f3, type: 2}
   range: 10
   meleeAndRanged: 0
   enemy:

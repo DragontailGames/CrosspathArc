@@ -151,6 +151,8 @@ public class GameManager : MonoBehaviour
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
                 bool pathEnable = tilemap.HasTile(pos);
+                pathEnable = collisionTM.HasTile(pos);
+                pathEnable = !elevationTM.HasTile(pos + new Vector3Int(1, 1, 0));
                 tilesmap[x, y] = pathEnable;
             }
         }
@@ -256,6 +258,7 @@ public class GameManager : MonoBehaviour
         if (restCount * Manager.Instance.configManager.chanceToSpawnInRest > rand)
         {
             Manager.Instance.enemyManager.CreateEnemies();
+            restCount = 0;
             return false;
         }
         restCount++;
