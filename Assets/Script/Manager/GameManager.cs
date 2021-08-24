@@ -179,8 +179,15 @@ public class GameManager : MonoBehaviour
         {
             for (int y = Mathf.Clamp(startIndex.y - 20, 0, startIndex.y + width); y < startIndex.y + 20; y++)
             {
-                Vector3Int pos = new Vector3Int(x, y, 0);
-                tilesmap[x, y] = tilemap.HasTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos) == null;
+                try
+                {
+                    Vector3Int pos = new Vector3Int(x, y, 0);
+                    tilesmap[x, y] = tilemap.HasTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos) == null;
+                }
+                catch(System.Exception e)
+                {
+                    Debug.Log("Tilesmap na posição" + new Vector2(x, y) + " esta vazio por isso o erro: " + e);
+                }
             }
         }
 
