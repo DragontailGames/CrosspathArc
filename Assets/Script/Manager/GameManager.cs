@@ -173,11 +173,11 @@ public class GameManager : MonoBehaviour
         width = 40;
         height = 40;
 
-        tilesmap = new bool[width, height];
+        tilesmap = new bool[startIndex.x + width, startIndex.y + height];
 
-        for (int x = Mathf.Clamp(startIndex.x - 20,0, startIndex.x + width); x < startIndex.x + 20; x++)
+        for (int x = Mathf.Clamp(startIndex.x - 20,0, startIndex.x + width); x < startIndex.x + 40; x++)
         {
-            for (int y = Mathf.Clamp(startIndex.y - 20, 0, startIndex.y + width); y < startIndex.y + 20; y++)
+            for (int y = Mathf.Clamp(startIndex.y - 20, 0, startIndex.y + width); y < startIndex.y + 40; y++)
             {
                 try
                 {
@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        var gridCustom = new PathFind.Grid(width, height, tilesmap);
+        var gridCustom = new PathFind.Grid(startIndex.x + width, startIndex.y + height, tilesmap);
 
         PathFind.Point _from = new PathFind.Point(startIndex.x, startIndex.y);
         PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
