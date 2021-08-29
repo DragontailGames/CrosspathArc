@@ -142,12 +142,11 @@ public class BotController : CreatureController
 
     public override IEnumerator StartMyTurn()
     {
+        yield return base.StartMyTurn();
         if (isDead || !target || !canMove)
         {
-            gameManager.EndMyTurn(this);
             yield break;
         }
-        yield return base.StartMyTurn();
 
         CharacterController characterController;
 
@@ -156,7 +155,7 @@ public class BotController : CreatureController
         target.TryGetComponent(out characterController);
 
         Vector3Int targetTileIndex = target.currentTileIndex;
-        List<PathFind.Point> path = gameManager.GetPath(currentTileIndex, targetTileIndex);
+        List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, targetTileIndex);
 
         if (gameManager.DetectLOS(path))
         {

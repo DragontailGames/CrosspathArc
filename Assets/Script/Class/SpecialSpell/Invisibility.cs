@@ -8,24 +8,26 @@ public class Invisibility : SpecialSpell
     {
         base.EndOfDuration(creatureController);
 
-        Color32 color = controller.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+        Color32 color = target.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
         color.a = (byte)255;
-        controller.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+        target.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
     }
 
-    public Invisibility(int duration, int value, CreatureController controller, EnumCustom.SpecialEffect effect) : base(duration, value, controller, effect)
+    public Invisibility(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
     {
         clearAfterDoAttack = true;
         foreach (var aux in Manager.Instance.enemyManager.enemies)
         {
-            if (aux.target == controller)
+            if (aux.target == target)
             {
                 aux.hasTarget = false;
                 aux.target = null;
             }
         }
-        Color32 color = controller.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+        Color32 color = target.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
         color.a = (byte)100;
-        controller.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+        target.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+
+        AddToSpecialSpellList(this);
     }
 }

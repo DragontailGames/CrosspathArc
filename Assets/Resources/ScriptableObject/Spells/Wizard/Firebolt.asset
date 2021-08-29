@@ -14,14 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Firebolt
   description: Summon a Firebolt with damage equals (1-4)+Int
-  spellType: 0
+  icon: {fileID: 21300000, guid: 55e7652de7586a043a565554e78f3d78, type: 3}
+  castTarget: 0
   availableAt: 1
   minValue: 1
   maxValue: 4
   fixedValue: 0
+  manaCost: 2
+  spellType: 0
   area: 0
   buffDebuff: []
-  attributeInfluence: 04000000
-  icon: {fileID: 21300000, guid: 55e7652de7586a043a565554e78f3d78, type: 3}
+  attributeInfluence:
+  - attribute: 4
+    levelOfSkill: 
+    value: 0
+    multiplier: -2
   spellCastObject: {fileID: 100006, guid: 62e591f72f5fa4d46a89b7cccc7a5003, type: 3}
-  manaCost: 2
+  specialEffect: 0
+  duration: 0
+  invokeLimit: 0
+  subSpell: []
+  onlyMinions: 0

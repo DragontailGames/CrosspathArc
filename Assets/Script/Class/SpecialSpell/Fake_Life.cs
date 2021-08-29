@@ -7,18 +7,18 @@ public class Fake_Life : SpecialSpell
     public override void EndOfDuration(CreatureController creatureController)
     {
         base.EndOfDuration(creatureController);
-        controller.attributeStatus.fakeLife = 0;
+        target.attributeStatus.fakeLife = 0;
     }
 
-    public Fake_Life(int duration, int value, CreatureController controller, EnumCustom.SpecialEffect effect) : base(duration, value, controller, effect)
+    public Fake_Life(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
     {
-        controller.attributeStatus.fakeLife = value;
+        target.attributeStatus.fakeLife = value;
         AddToSpecialSpellList(this);
     }
 
-    public Fake_Life(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.controller, specialSpell.effect)
+    public Fake_Life(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
     {
-        controller.attributeStatus.fakeLife = value;
+        target.attributeStatus.fakeLife = value;
         AddToSpecialSpellList(this);
     }
 }

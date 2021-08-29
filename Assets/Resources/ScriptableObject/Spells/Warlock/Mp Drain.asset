@@ -20,7 +20,6 @@ MonoBehaviour:
   minValue: 5
   maxValue: 10
   fixedValue: 0
-  formula: 
   manaCost: 4
   spellType: 3
   area: 0
@@ -30,3 +29,16 @@ MonoBehaviour:
   specialEffect: 6
   duration: 1
   invokeLimit: 0
+  subSpell:
+  - minValue: 5
+    maxValue: 10
+    fixedValue: 0
+    castTarget: 4
+    spellType: 3
+    area: 0
+    buffDebuff: []
+    attributeInfluence: []
+    specialEffect: 6
+    duration: 0
+    invokeLimit: 0
+  onlyMinions: 0

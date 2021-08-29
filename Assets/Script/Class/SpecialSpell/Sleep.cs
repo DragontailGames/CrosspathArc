@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Sleep : SpecialSpell
 {
-    public Sleep(int duration, int value, CreatureController controller, EnumCustom.SpecialEffect effect) : base(duration, value, controller, effect)
+    public Sleep(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
     {
+        clearAfterReceiveHit = true;
         AddToSpecialSpellList(this);
     }
 
-    public Sleep(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.controller, specialSpell.effect)
+    public Sleep(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
     {
+        clearAfterReceiveHit = true;
         AddToSpecialSpellList(this);
     }
 
@@ -24,7 +26,13 @@ public class Sleep : SpecialSpell
     {
         base.ReceiveHit(attacker, creatureTarget);
 
-        creatureTarget.specialSpell.Remove(creatureTarget.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Sleep));
+        //creatureTarget.specialSpell.Remove(creatureTarget.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Sleep));
         creatureTarget.canMove = true;
+    }
+
+    public override void EndOfDuration(CreatureController creatureController)
+    {
+        base.EndOfDuration(creatureController);
+        creatureController.canMove = true;
     }
 }

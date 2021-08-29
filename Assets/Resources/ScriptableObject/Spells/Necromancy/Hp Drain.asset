@@ -33,7 +33,7 @@ MonoBehaviour:
   - minValue: 1
     maxValue: 4
     fixedValue: 0
-    castTarget: 5
+    castTarget: 4
     spellType: 3
     area: 0
     buffDebuff: []
@@ -41,3 +41,4 @@ MonoBehaviour:
     specialEffect: 5
     duration: 0
     invokeLimit: 0
+  onlyMinions: 0

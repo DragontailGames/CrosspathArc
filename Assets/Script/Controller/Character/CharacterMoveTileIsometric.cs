@@ -30,7 +30,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         Vector3Int moveCell = Vector3Int.zero;
 
-        if (!gameManager.InPause && controller.myTurn && controller.animator.GetBool("Walk") == false)//Testa o delay para correção da movimentação por tile
+        if (!gameManager.InPause && controller.animator.GetBool("Walk") == false)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 

@@ -28,5 +28,6 @@ MonoBehaviour:
   spellCastObject: {fileID: 1959303273074991823, guid: b20cd223f6a22544f940e523153071b5, type: 3}
   specialEffect: 0
   duration: 40
-  invokeLimit: 3
+  invokeLimit: 1
   subSpell: []
+  onlyMinions: 0

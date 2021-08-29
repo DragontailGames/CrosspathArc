@@ -20,7 +20,7 @@ public class EnemyController : BotController
         level = Mathf.Clamp(Manager.Instance.characterController.level - 1, 1, Manager.Instance.characterController.level);
         attributeStatus.SetupAttributeStatus(level);
 
-        if (!gameManager.DetectLOS(gameManager.GetPath(currentTileIndex, player.CharacterMoveTileIsometric.controller.currentTileIndex)))
+        if (!gameManager.DetectLOS(gameManager.GetPathForLOS(currentTileIndex, player.CharacterMoveTileIsometric.controller.currentTileIndex)))
         {
             hasTarget = true;
         }

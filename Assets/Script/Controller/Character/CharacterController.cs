@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 /// <summary>
 /// Controlador geral do jogador para fazer relação entre as classes
@@ -65,13 +66,15 @@ public class CharacterController : CreatureController
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
+            myTurn = false;
+
             Vector3Int mousePos = MousePosition();
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
             if ((characterCombat.selectedSpell == null || characterCombat.selectedSpell?.castTarget == EnumCustom.CastTarget.Enemy) && enemyInTile != null && enemyInTile.Hp>0)
             {
-                foreach (var aux in specialSpell)
+                foreach (var aux in specialSpell.ToList())
                 {
                     aux.HandleAttack(this);
                 }
@@ -98,6 +101,7 @@ public class CharacterController : CreatureController
             else
             {
                 characterMoveTileIsometric.Mouse = CharacterMousePosition(mousePos);
+                myTurn = true;
             }
             if(isRest)
             {
@@ -121,6 +125,8 @@ public class CharacterController : CreatureController
 
     public override IEnumerator StartMyTurn()
     {
+        gameManager.StartNewTurn();
+
         yield return base.StartMyTurn();
 
         if (isRest)
@@ -206,14 +212,5 @@ public class CharacterController : CreatureController
         animator.Play(dieAnimationName);
         Manager.Instance.gameManager.InPause = true;
         Manager.Instance.gameManager.creatures.Remove(this);
-    }
-
-    public void GetHit(int damage, BotController enemy)
-    {
-        /*if (spikeValue > 0)
-        {
-            enemy.ReceiveHit(controller, spikeValue, spikeValue + "(spike)", true);
-        }*/
-
     }
 }

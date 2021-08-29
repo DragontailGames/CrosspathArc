@@ -58,6 +58,7 @@ public class Spell : ScriptableObject
         foreach (var aux in attributeInfluence)
         {
             var auxAttribute = aux.GetValue(creatureController);
+            Debug.Log("OEDROI " + auxAttribute);
             value += auxAttribute;
         }
 
@@ -88,11 +89,7 @@ public class Spell : ScriptableObject
         }
         string textDamage = "(" + spellDamage + extraDamage + ")";
 
-        foreach (var aux in subSpell)
-        {
-            aux.Cast(caster, target, this);
-            Manager.Instance.canvasManager.UpdateStatus();
-        }
+        action += () => { CastSubspells(caster, target); };
 
         if (castTarget == EnumCustom.CastTarget.Area)
         {
@@ -225,10 +222,10 @@ public class Spell : ScriptableObject
         }
     }
 
-    public void CastSpecial(CreatureController controller, CreatureController attacker)
+    public void CastSpecial(CreatureController target, CreatureController caster)
     {
-        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(attacker), controller, specialEffect));
-        GameObject objectSpell = Instantiate(spellCastObject, controller.transform);
+        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
+        GameObject objectSpell = Instantiate(spellCastObject, target.transform);
         Destroy(objectSpell, 1.0f);
     }
 
@@ -459,6 +456,15 @@ public class Spell : ScriptableObject
                     creatureController.attributeStatus.attributeModifiers.Remove(attribute);
                 }
             }
+        }
+    }
+
+    public void CastSubspells(CreatureController caster, CreatureController target)
+    {
+        foreach (var aux in subSpell)
+        {
+            aux.Cast(caster, target, this);
+            Manager.Instance.canvasManager.UpdateStatus();
         }
     }
 }

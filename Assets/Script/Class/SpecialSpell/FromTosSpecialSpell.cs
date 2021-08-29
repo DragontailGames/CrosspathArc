@@ -10,7 +10,7 @@ public class FromTosSpecialSpell : MonoBehaviour
         {
             case EnumCustom.SpecialEffect.Poison:
             {
-                specialSpell = new Poison(specialSpell.duration, specialSpell.value, specialSpell.controller, specialSpell.effect);
+                specialSpell = new Poison(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect);
                 break;
             }
         }

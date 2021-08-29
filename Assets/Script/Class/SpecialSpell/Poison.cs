@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Poison : SpecialSpell
 {
-    public Poison(int duration, int value, CreatureController controller, EnumCustom.SpecialEffect effect) : base(duration, value, controller, effect)
+    public Poison(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
     {
         AddToSpecialSpellList(this);
     }
-    public Poison(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.controller, specialSpell.effect)
+    public Poison(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
     {
         AddToSpecialSpellList(this);
     }

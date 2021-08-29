@@ -46,9 +46,6 @@ public class CreatureController : MonoBehaviour
 
     public virtual IEnumerator StartMyTurn()
     {
-        gameManager.StartNewTurn();
-
-
         foreach (var aux in specialSpell.ToList())
         {
             aux.StartNewTurn(this);

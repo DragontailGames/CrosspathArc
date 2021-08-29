@@ -10,12 +10,12 @@ public class Mp_Regen : SpecialSpell
         creatureController.Mp += value;
     }
 
-    public Mp_Regen(int duration, int value, CreatureController controller, EnumCustom.SpecialEffect effect) : base(duration, value, controller, effect)
+    public Mp_Regen(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
     {
         AddToSpecialSpellList(this);
     }
 
-    public Mp_Regen(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.controller, specialSpell.effect)
+    public Mp_Regen(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
     {
         AddToSpecialSpellList(this);
     }

@@ -9,7 +9,9 @@ public class SpecialSpell
 
     public int value;
 
-    public CreatureController controller;
+    public CreatureController caster;
+
+    public CreatureController target;
 
     public EnumCustom.SpecialEffect effect;
 
@@ -17,17 +19,18 @@ public class SpecialSpell
 
     public bool clearAfterDoAttack = false;
 
-    public SpecialSpell(int duration, int value, CreatureController controller, EnumCustom.SpecialEffect effect)
+    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect)
     {
         this.duration = duration;
         this.value = value;
-        this.controller = controller;
+        this.caster = caster;
+        this.target = target;
         this.effect = effect;
 
         if(duration == 0)
         {
-            Cast(controller, value);
-            EndOfDuration(controller);
+            Cast(target, value);
+            EndOfDuration(target);
         }
     }
 
@@ -37,14 +40,15 @@ public class SpecialSpell
     {
         if (duration > 0)
         {
-            var existingSpell = controller.specialSpell.Find(n => n.effect == this.effect);
+            var existingSpell = target.specialSpell.Find(n => n.effect == this.effect);
             if (existingSpell != null)
             {
                 existingSpell.duration = duration;
+                existingSpell.value = value;
             }
             else
             {
-                controller.specialSpell.Add(specialSpell);
+                target.specialSpell.Add(specialSpell);
             }
         }
     }

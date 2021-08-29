@@ -45,23 +45,23 @@ public class SubSpell
         return value;
     }
 
-    public void Cast(CreatureController caster, CreatureController controller, Spell originalSpell)
+    public void Cast(CreatureController caster, CreatureController target, Spell originalSpell)
     {
         if(castTarget == EnumCustom.CastTarget.Caster)
         {
-            controller = caster;
+            target = caster;
         }
 
         switch(spellType)
         {
             case EnumCustom.SpellType.Special:
                 {
-                    ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), controller, specialEffect));
+                    ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
                     break;
                 }
             case EnumCustom.SpellType.Buff:
                 {
-                    originalSpell.CastBuff(controller);
+                    originalSpell.CastBuff(target);
                     break;
                 }
         }

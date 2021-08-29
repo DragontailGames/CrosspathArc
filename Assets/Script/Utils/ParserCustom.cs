@@ -25,7 +25,7 @@ public static class ParserCustom
                 }
             case EnumCustom.SpecialEffect.Invisibility:
                 {
-                    new Invisibility(specialSpell.duration, specialSpell.value,specialSpell.controller, specialSpell.effect);
+                    new Invisibility(specialSpell);
                     break;
                 }
             case EnumCustom.SpecialEffect.Mp_Regen:

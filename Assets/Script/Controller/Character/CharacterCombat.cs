@@ -115,7 +115,6 @@ public class CharacterCombat : MonoBehaviour
         //Check mana
         if (spells[index].manaCost > controller.Mp)
         {
-            Debug.Log("selectedSpell not null");
             Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
             return;
         }
@@ -128,7 +127,7 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
-            Debug.Log("Chegou no casT");
+            controller.Mp -= spells[index].manaCost;
             spells[index].Cast(()=> { controller.gameManager.EndMyTurn(controller); },controller,null, new Vector3Int(), minionCounts);
         }
     }
@@ -141,10 +140,11 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="playerPos">posição do jogador</param>
     public void TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
     {
-        if (enemy.hasTarget==false)
+        if (Manager.Instance.gameManager.DetectLOS(Manager.Instance.gameManager.GetPathForLOS(playerPos, enemy.currentTileIndex)))
         {
             StartCoroutine(controller.StartDelay());
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
+            controller.myTurn = true;
             return;
         }
 
@@ -175,6 +175,8 @@ public class CharacterCombat : MonoBehaviour
         {
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
             StartCoroutine(controller.StartDelay());
+
+            controller.myTurn = true;
         }
     }
 
@@ -185,7 +187,10 @@ public class CharacterCombat : MonoBehaviour
     public void CastSpell(CreatureController creature = null, Vector3Int tile = new Vector3Int())
     {
         if (selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
+        {
+            controller.myTurn = true;
             return;
+        }
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
 

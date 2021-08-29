@@ -150,9 +150,7 @@ public class GameManager : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                bool pathEnable = tilemap.HasTile(pos);
-                pathEnable = collisionTM.HasTile(pos);
-                pathEnable = !elevationTM.HasTile(pos + new Vector3Int(1, 1, 0));
+                bool pathEnable = tilemap.HasTile(pos) && !collisionTM.HasTile(pos + new Vector3Int(1, 1, 0)) && !elevationTM.HasTile(pos + new Vector3Int(1, 1, 0));
                 tilesmap[x, y] = pathEnable;
             }
         }
@@ -166,6 +164,30 @@ public class GameManager : MonoBehaviour
         PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
 
         return PathFind.Pathfinding.FindPath(grid, _from, _to);
+    }
+
+    public List<PathFind.Point> GetPathForLOS(Vector3Int startIndex, Vector3Int destIndex)
+    {
+        width = tilemap.size.x;
+        height = tilemap.size.y;
+
+        tilesmap = new bool[width, height];
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector3Int pos = new Vector3Int(x, y, 0);
+                tilesmap[x, y] = tilemap.HasTile(pos);
+            }
+        }
+
+        var newGrid = new PathFind.Grid(width, height, tilesmap);
+
+        PathFind.Point _from = new PathFind.Point(startIndex.x, startIndex.y);
+        PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
+
+        return PathFind.Pathfinding.FindPath(newGrid, _from, _to);
     }
 
     public List<PathFind.Point> GetPathWithCustom(Vector3Int startIndex, Vector3Int destIndex)

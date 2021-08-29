@@ -14,14 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Frost
   description: Summon a Frost with damage equals (2-5)+Int
-  spellType: 0
+  icon: {fileID: 21300000, guid: f1ae94e1f0fa54d76bd257bd774f53ee, type: 3}
+  castTarget: 0
   availableAt: 3
   minValue: 2
   maxValue: 5
   fixedValue: 0
+  manaCost: 6
+  spellType: 0
   area: 0
   buffDebuff: []
-  attributeInfluence: 04000000
-  icon: {fileID: 21300000, guid: f1ae94e1f0fa54d76bd257bd774f53ee, type: 3}
+  attributeInfluence:
+  - attribute: 4
+    levelOfSkill: 
+    value: 0
+    multiplier: -2
   spellCastObject: {fileID: 2449160739903220631, guid: 3d7e833715e500f4995288dc8fb14c52, type: 3}
-  manaCost: 6
+  specialEffect: 0
+  duration: 0
+  invokeLimit: 0
+  subSpell: []
+  onlyMinions: 0
