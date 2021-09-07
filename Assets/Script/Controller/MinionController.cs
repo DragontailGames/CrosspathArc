@@ -30,7 +30,7 @@ public class MinionController : BotController
         Destroy(this.gameObject, 3.0f);
     }
 
-    public override IEnumerator StartMyTurn()
+    public override IEnumerator StartMyTurn(bool canStartTurn)
     {
         duration--;
         if (duration <= 0)

@@ -11,6 +11,8 @@ public class CreatureController : MonoBehaviour
 
     public bool myTurn = false;
 
+    public bool inCombat = false;
+
     public string animationName = "";
 
     public string direction;
@@ -27,7 +29,7 @@ public class CreatureController : MonoBehaviour
 
     public Vector3Int currentTileIndex;
 
-    public List<Vector3Int> multipleTilesIndex;
+    public BotMultipleTile botMultipleTile;
 
     public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(level)); }
     public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(level)); }
@@ -44,7 +46,7 @@ public class CreatureController : MonoBehaviour
         gameManager.creatures.Add(this);
     }
 
-    public virtual IEnumerator StartMyTurn()
+    public virtual IEnumerator StartMyTurn(bool canStartTurn = true)
     {
         foreach (var aux in specialSpell.ToList())
         {
@@ -60,10 +62,10 @@ public class CreatureController : MonoBehaviour
 
         if (canMove == false)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.2f);
             gameManager.EndMyTurn(this);
         }
-        else
+        else if(canStartTurn)
         {
             myTurn = true;
         }
@@ -179,18 +181,5 @@ public class CreatureController : MonoBehaviour
     /// </summary>
     public virtual void Defeat()
     {
-    }
-
-    public bool IsInTile(Vector3Int tile)
-    {
-        if(multipleTilesIndex.Count>0)
-        {
-            var tIndex = multipleTilesIndex.Find(n => n == tile);
-            return tIndex != null;
-        }
-        else
-        {
-            return tile == currentTileIndex;
-        }
     }
 }

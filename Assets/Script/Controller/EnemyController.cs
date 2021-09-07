@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyController : BotController
 {
     private EnemyManager enemyManager;
-    public Enemy enemy;
 
     private CharacterController player;
 
@@ -47,7 +46,7 @@ public class EnemyController : BotController
         }*/
     }
 
-    public override IEnumerator StartMyTurn()
+    public override IEnumerator StartMyTurn(bool canStartTurn = true)
     {
         var newTarget = GetTarget(typeof(EnemyController), null, 10);
         if (forceTarget)
@@ -62,7 +61,6 @@ public class EnemyController : BotController
             target = newTarget;
         }
         //yield return new WaitForSeconds(0.2f);
-
         yield return base.StartMyTurn();
     }
 
@@ -70,8 +68,8 @@ public class EnemyController : BotController
     {
         base.Defeat();
 
-        Manager.Instance.characterController.CharacterStatus.AddExp(enemy.exp);
-        Manager.Instance.canvasManager.LogMessage(nickname + " foi derrotado, <color=yellow>" + enemy.exp + "</color> exp ganha");
+        Manager.Instance.characterController.CharacterStatus.AddExp(exp);
+        Manager.Instance.canvasManager.LogMessage(nickname + " foi derrotado, <color=yellow>" + exp + "</color> exp ganha");
         this.transform.Find("HealthBar").gameObject.SetActive(false);
     }
 

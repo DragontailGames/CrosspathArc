@@ -58,7 +58,6 @@ public class Spell : ScriptableObject
         foreach (var aux in attributeInfluence)
         {
             var auxAttribute = aux.GetValue(creatureController);
-            Debug.Log("OEDROI " + auxAttribute);
             value += auxAttribute;
         }
 
@@ -311,7 +310,7 @@ public class Spell : ScriptableObject
             for (int y = startIndex.y - Mathf.FloorToInt(area / 2); y <= startIndex.y + endY; y++)
             {
                 Vector3Int t = new Vector3Int(x, y, 0);
-                if (x >= 0 && y >= 0 && Manager.Instance.gameManager.tilemap.HasTile(t))
+                if (x >= 0 && y >= 0 && Manager.Instance.gameManager.HasAvailableTile(t))
                 {
                     tiles.Add(t);
                 }

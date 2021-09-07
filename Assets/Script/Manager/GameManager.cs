@@ -73,6 +73,8 @@ public class GameManager : MonoBehaviour
         CreatureController firstCC = creatures[0];
         creatures[0] = creatures[indexPlayer];
         creatures[indexPlayer] = firstCC;
+
+        StartCoroutine(FixMyTurn());
     }
 
     public bool InPause { get => this.inPause; set => this.inPause = value; }//pausa o jogo quando abrir o menu
@@ -150,7 +152,7 @@ public class GameManager : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                bool pathEnable = tilemap.HasTile(pos) && !collisionTM.HasTile(pos + new Vector3Int(1, 1, 0)) && !elevationTM.HasTile(pos + new Vector3Int(1, 1, 0));
+                bool pathEnable = Manager.Instance.gameManager.HasAvailableTile(pos) ;
                 tilesmap[x, y] = pathEnable;
             }
         }
@@ -190,7 +192,7 @@ public class GameManager : MonoBehaviour
         return PathFind.Pathfinding.FindPath(newGrid, _from, _to);
     }
 
-    public List<PathFind.Point> GetPathWithCustom(Vector3Int startIndex, Vector3Int destIndex)
+    public List<PathFind.Point> GetPathWithCustom(Vector3Int startIndex, Vector3Int destIndex, CreatureController owner)
     {
         width = 40;
         height = 40;
@@ -204,9 +206,52 @@ public class GameManager : MonoBehaviour
                 try
                 {
                     Vector3Int pos = new Vector3Int(x, y, 0);
-                    tilesmap[x, y] = tilemap.HasTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos) == null;
+                    tilesmap[x, y] = Manager.Instance.gameManager.HasAvailableTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos, owner) == null;
                 }
                 catch(System.Exception e)
+                {
+                    Debug.Log("Tilesmap na posição" + new Vector2(x, y) + " esta vazio por isso o erro: " + e);
+                }
+            }
+        }
+
+        var gridCustom = new PathFind.Grid(startIndex.x + width, startIndex.y + height, tilesmap);
+
+        PathFind.Point _from = new PathFind.Point(startIndex.x, startIndex.y);
+        PathFind.Point _to = new PathFind.Point(destIndex.x, destIndex.y);
+
+        var path = PathFind.Pathfinding.FindPath(gridCustom, _from, _to);
+
+        return path;
+    }
+
+    public List<PathFind.Point> GetPathWithExcept(Vector3Int startIndex, Vector3Int destIndex, CreatureController owner, List<Vector3Int> exceptList)
+    {
+        width = 40;
+        height = 40;
+
+        tilesmap = new bool[startIndex.x + width, startIndex.y + height];
+
+        for (int x = Mathf.Clamp(startIndex.x - 20, 0, startIndex.x + width); x < startIndex.x + 40; x++)
+        {
+            for (int y = Mathf.Clamp(startIndex.y - 20, 0, startIndex.y + width); y < startIndex.y + 40; y++)
+            {
+                try
+                {
+                    bool exception = true;
+                    Vector3Int pos = new Vector3Int(x, y, 0);
+
+                    foreach (var aux in exceptList)
+                    {
+                        //Debug.Log("Testando " + aux + " - " + pos);
+                        if (aux == pos)
+                        {
+                            exception = false;
+                        }
+                    }
+                    tilesmap[x, y] = Manager.Instance.gameManager.HasAvailableTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos, owner) == null && exception;
+                }
+                catch (System.Exception e)
                 {
                     Debug.Log("Tilesmap na posição" + new Vector2(x, y) + " esta vazio por isso o erro: " + e);
                 }
@@ -337,13 +382,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public CreatureController GetCreatureInTile(Vector3Int tile)
+    IEnumerator FixMyTurn()
     {
-        return creatures.Find(n => n.currentTileIndex == tile && n.Hp > 0);
+        if(creatures.Find(n => n.myTurn == true) == null)
+        {
+            Manager.Instance.characterController.myTurn = true;
+        }
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(FixMyTurn());
     }
 
-    public CreatureController GetBotInTile(Vector3Int tile)
+    public CreatureController GetCreatureInTile(Vector3Int tile)
+    { 
+        return creatures.Find(n => (n.currentTileIndex == tile || (n.botMultipleTile != null && n.botMultipleTile.HasBotInTile(tile))) && n.Hp > 0);
+    }
+
+    public CreatureController GetBotInTile(Vector3Int tile, CreatureController except)
     {
-        return creatures.Find(n => n.currentTileIndex == tile && n.Hp > 0 && n.GetComponent<BotController>());
+        return creatures.Find(n => (n.currentTileIndex == tile || (n.botMultipleTile != null && n.botMultipleTile.HasBotInTile(tile))) && n.Hp > 0 && n.GetComponent<BotController>() && n != except);
+    }
+
+    public bool HasAvailableTile(Vector3Int dest)
+    {
+        return !elevationTM.HasTile(dest + new Vector3Int(1, 1, 0)) &&
+                  (!collisionTM.HasTile(dest + new Vector3Int(1, 1, 0))) &&
+                  (tilemap.HasTile(dest));
     }
 }

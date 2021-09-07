@@ -8,9 +8,6 @@ using UnityEngine;
 [System.Serializable]
 public class Enemy
 {
-    public string name;
 
-    public int size;
 
-    public int exp;
 }

@@ -39,10 +39,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
             if (moveCell != Vector3Int.zero)
             {
                 gameManager.EndMyTurn(controller);
-            }
-
-            if (moveCell != Vector3Int.zero)
-            {
                 Mouse = Vector3Int.zero;
 
                 if (CanMoveToTile(moveCell))
@@ -90,10 +86,8 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         Vector3Int nextTile = controller.currentTileIndex + moveCell * tileMove;
         //Detecta se o proximo tile que iria se movimentar é um tile de colisão, se for nao realiza o 
 
-        return (!gameManager.elevationTM.HasTile(nextTile + new Vector3Int(1,1,0))) &&
-                (!gameManager.collisionTM.HasTile(nextTile)) &&
-                (gameManager.tilemap.HasTile(nextTile)) &&
-                (Manager.Instance.gameManager.GetCreatureInTile(nextTile) == null);
+        return (gameManager.HasAvailableTile(nextTile) &&
+                (Manager.Instance.gameManager.GetCreatureInTile(nextTile) == null));
     }
 
     public void PlayAnimation(string animation)

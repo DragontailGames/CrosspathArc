@@ -18,7 +18,7 @@ public class EnemyManager : MonoBehaviour
         return enemies.Find(n => n.currentTileIndex == tile && n.Hp > 0);
     }
 
-    public Vector3Int MaxRangePos(Enemy enemy)
+    public Vector3Int MaxRangePos(EnemyController enemy)
     {
         return Vector3Int.one * enemy.size;
     }

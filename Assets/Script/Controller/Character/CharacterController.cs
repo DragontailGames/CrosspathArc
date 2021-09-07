@@ -62,7 +62,7 @@ public class CharacterController : CreatureController
 
     public void Update()
     {
-        if (Input.GetMouseButton(0) && !gameManager.InPause && myTurn && !delay)//Detecta o click do jogador
+        if (MouseOn() && !gameManager.InPause && myTurn && !delay)//Detecta o click do jogador
         {
             if (EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -101,7 +101,6 @@ public class CharacterController : CreatureController
             else
             {
                 characterMoveTileIsometric.Mouse = CharacterMousePosition(mousePos);
-                myTurn = true;
             }
             if(isRest)
             {
@@ -123,7 +122,12 @@ public class CharacterController : CreatureController
         }
     }
 
-    public override IEnumerator StartMyTurn()
+    public bool MouseOn()
+    {
+        return inCombat ? Input.GetMouseButtonDown(0) : Input.GetMouseButton(0);
+    }
+
+    public override IEnumerator StartMyTurn(bool canStartTurn = true)
     {
         gameManager.StartNewTurn();
 

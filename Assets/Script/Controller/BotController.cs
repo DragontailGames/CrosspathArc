@@ -30,6 +30,10 @@ public class BotController : CreatureController
 
     public bool meleeAndRanged = false;
 
+    public int size;
+
+    public int exp;
+
     public virtual void Start()
     {
         gameManager = Manager.Instance.gameManager;
@@ -43,6 +47,12 @@ public class BotController : CreatureController
 
         animator = this.GetComponentInChildren<Animator>();
         animator.speed = 0.7f;
+
+        if(!this.GetComponent<BotMultipleTile>() && size>1)
+        {
+            botMultipleTile = gameObject.AddComponent(typeof(BotMultipleTile)) as BotMultipleTile;
+            botMultipleTile.botController = this;
+        }
     }
 
     public virtual void Update()
@@ -79,10 +89,12 @@ public class BotController : CreatureController
 
         direction = gameManager.GetDirection(currentTileIndex, dest);
 
-        if (creatureInNextTile != null)
+        bool canWalk = botMultipleTile.Walk(dest);
+
+        if (creatureInNextTile != null || !canWalk)
         {
-            var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos);
-            if (destPath.Count > 0 && !creatureInNextTile.GetComponent<CharacterController>())
+            var destPath = gameManager.GetPathWithCustom(currentTileIndex, playerPos, this);
+            if (destPath.Count > 0 && (creatureInNextTile != null && !creatureInNextTile.GetComponent<CharacterController>()) || !canWalk)
             {
                 dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
                 direction = gameManager.GetDirection(currentTileIndex, dest);
@@ -94,12 +106,51 @@ public class BotController : CreatureController
             }
         }
 
-        animator.SetBool("Walk", true);
-        PlayAnimation("Walk",direction);
+        canWalk = botMultipleTile.Walk(dest);
+        if (botMultipleTile == null || canWalk)
+        {
+            animator.SetBool("Walk", true);
+            PlayAnimation("Walk", direction);
 
-        currentTileIndex = dest;
+            currentTileIndex = dest;
 
-        movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
+            movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
+        }
+        else
+        {
+            int count = 10;
+            List<Vector3Int> exceptList = new List<Vector3Int>();
+            exceptList.Add(dest);
+
+            while(count>0)
+            {
+                var destPath = gameManager.GetPathWithExcept(currentTileIndex, playerPos, this, exceptList);
+
+                if (destPath.Count > 0 )
+                {
+                    dest = new Vector3Int(destPath[0].x, destPath[0].y, 0);
+                    direction = gameManager.GetDirection(currentTileIndex, dest);
+
+                    canWalk = botMultipleTile.Walk(dest);
+
+                    if (botMultipleTile == null || canWalk)
+                    {
+                        animator.SetBool("Walk", true);
+                        PlayAnimation("Walk", direction);
+
+                        currentTileIndex = dest;
+
+                        movePosition = gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
+                        count = 0;
+                    }
+                    else
+                    {
+                        exceptList.Add(dest);
+                    }
+                }
+                count--;
+            }
+        }
     }
 
 
@@ -140,17 +191,23 @@ public class BotController : CreatureController
         PlayAnimation("Attack", direction);
     }
 
-    public override IEnumerator StartMyTurn()
+    public override IEnumerator StartMyTurn(bool canStartTurn = true)
     {
-        yield return base.StartMyTurn();
-        if (isDead || !target || !canMove)
+        if (isDead || target == null || !canMove)
         {
+            canStartTurn = false;
+            yield return base.StartMyTurn(canStartTurn);
+            gameManager.EndMyTurn(this);
             yield break;
+        }
+        else
+        {
+            yield return base.StartMyTurn();
         }
 
         CharacterController characterController;
 
-        //yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.2f);
 
         target.TryGetComponent(out characterController);
 
@@ -166,6 +223,8 @@ public class BotController : CreatureController
 
         hasTarget = true;
         yield return new WaitForSeconds(0.3f);
+        target.inCombat = true;
+        this.inCombat = true;
 
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
