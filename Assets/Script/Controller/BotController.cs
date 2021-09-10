@@ -89,7 +89,7 @@ public class BotController : CreatureController
 
         direction = gameManager.GetDirection(currentTileIndex, dest);
 
-        bool canWalk = botMultipleTile.Walk(dest);
+        bool canWalk = botMultipleTile ? botMultipleTile.Walk(dest) : true;
 
         if (creatureInNextTile != null || !canWalk)
         {
@@ -106,7 +106,7 @@ public class BotController : CreatureController
             }
         }
 
-        canWalk = botMultipleTile.Walk(dest);
+        canWalk = botMultipleTile ? botMultipleTile.Walk(dest) : true;
         if (botMultipleTile == null || canWalk)
         {
             animator.SetBool("Walk", true);
