@@ -60,6 +60,15 @@ public class EnemyController : BotController
         {
             target = newTarget;
         }
+        if(target !=null)
+        {
+            target.inCombat = true;
+            this.inCombat = true;
+        }
+        else
+        {
+            this.inCombat = false;
+        }
         //yield return new WaitForSeconds(0.2f);
         yield return base.StartMyTurn();
     }

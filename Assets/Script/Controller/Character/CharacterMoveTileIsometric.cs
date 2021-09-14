@@ -65,6 +65,10 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                     this.GetComponent<CharacterStatus>().MoveOneTile();
                 }
             }
+            else
+            {
+                controller.myTurn = true;
+            }
         }
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
 

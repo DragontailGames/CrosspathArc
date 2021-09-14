@@ -205,11 +205,9 @@ public class BotController : CreatureController
             yield return base.StartMyTurn();
         }
 
-        CharacterController characterController;
-
         yield return new WaitForSeconds(0.2f);
 
-        target.TryGetComponent(out characterController);
+        CharacterController characterController = target.GetComponent<CharacterController>();
 
         Vector3Int targetTileIndex = target.currentTileIndex;
         List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, targetTileIndex);
@@ -217,14 +215,14 @@ public class BotController : CreatureController
         if (gameManager.DetectLOS(path))
         {
             hasTarget = false;
+            target.inCombat = false;
+            this.inCombat = false;
             gameManager.EndMyTurn(this);
             yield break;
         }
 
         hasTarget = true;
         yield return new WaitForSeconds(0.3f);
-        target.inCombat = true;
-        this.inCombat = true;
 
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
