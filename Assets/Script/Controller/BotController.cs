@@ -156,7 +156,7 @@ public class BotController : CreatureController
 
     public void Attack(CreatureController creatureController)
     {
-        if (isDead)
+        if (isDead || creatureController == null)
         {
             return;
         }
@@ -205,9 +205,8 @@ public class BotController : CreatureController
             yield return base.StartMyTurn();
         }
 
-        yield return new WaitForSeconds(0.2f);
-
         CharacterController characterController = target.GetComponent<CharacterController>();
+        yield return new WaitForSeconds(0.1f);
 
         Vector3Int targetTileIndex = target.currentTileIndex;
         List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, targetTileIndex);
@@ -222,7 +221,6 @@ public class BotController : CreatureController
         }
 
         hasTarget = true;
-        yield return new WaitForSeconds(0.3f);
 
         int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
         if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
@@ -233,6 +231,9 @@ public class BotController : CreatureController
         {
             Walk(targetTileIndex, path);
         }
+        Debug.Log("Acabou o turno 1");
+        yield return new WaitForSeconds(0.2f);
+        Debug.Log("Acabou o turno 2");
         gameManager.EndMyTurn(this);
     }
 

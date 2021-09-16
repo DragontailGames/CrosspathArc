@@ -142,9 +142,7 @@ public class CharacterCombat : MonoBehaviour
     {
         if (Manager.Instance.gameManager.DetectLOS(Manager.Instance.gameManager.GetPathForLOS(playerPos, enemy.currentTileIndex)))
         {
-            StartCoroutine(controller.StartDelay());
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
-            controller.myTurn = true;
             return;
         }
 
@@ -174,9 +172,6 @@ public class CharacterCombat : MonoBehaviour
         else
         {
             Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
-            StartCoroutine(controller.StartDelay());
-
-            controller.myTurn = true;
         }
     }
 
@@ -188,7 +183,6 @@ public class CharacterCombat : MonoBehaviour
     {
         if (selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
         {
-            controller.myTurn = true;
             return;
         }
 

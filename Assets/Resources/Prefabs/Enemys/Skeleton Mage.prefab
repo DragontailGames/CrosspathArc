@@ -96,6 +96,7 @@ MonoBehaviour:
     fakeLife: 0
     baseHp: 15
   myTurn: 1
+  inCombat: 0
   animationName: 
   direction: 
   offsetSpell: {x: 0, y: 0}
@@ -105,13 +106,13 @@ MonoBehaviour:
   mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
-  multipleTilesIndex: []
+  botMultipleTile: {fileID: 0}
   specialSpell: []
   HpBar: {fileID: 0}
   hasTarget: 0
   animator: {fileID: 0}
   offsetPosition: {x: 0, y: 0.5, z: 0}
-  movementSpeed: 1
+  movementSpeed: 1.25
   mainAnimation: 
   target: {fileID: 0}
   forceTarget: {fileID: 0}
@@ -121,10 +122,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63232e03ae956c647bf36c806ef341f3, type: 2}
   range: 10
   meleeAndRanged: 0
-  enemy:
-    name: Wolf
-    size: 1
-    exp: 125
+  size: 0
+  exp: 0
 --- !u!1 &4818289207996966966
 GameObject:
   m_ObjectHideFlags: 0

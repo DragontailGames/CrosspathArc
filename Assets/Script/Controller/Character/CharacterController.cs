@@ -34,7 +34,7 @@ public class CharacterController : CreatureController
 
     private EnemyManager enemyManager;
 
-    private bool delay = false;
+    public bool delay = false;
 
     public bool isRest = false;
 
@@ -62,11 +62,15 @@ public class CharacterController : CreatureController
 
     public void Update()
     {
-        if (MouseOn() && !gameManager.InPause && myTurn && !delay)//Detecta o click do jogador
+        if(!myTurn)
         {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
+            return;
+        }
+        if (MouseOn() && !gameManager.InPause && !delay)//Detecta o click do jogador
+        {
+            StartCoroutine(StartDelay());
 
-            myTurn = false;
+            if (EventSystem.current.IsPointerOverGameObject()) return;
 
             Vector3Int mousePos = MousePosition();
 
@@ -78,12 +82,10 @@ public class CharacterController : CreatureController
                 {
                     aux.HandleAttack(this);
                 }
-                StartCoroutine(StartDelay());
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.controller.currentTileIndex);
             }
             else if(characterCombat.selectedSpell != null)
             {
-                StartCoroutine(StartDelay());
                 direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, mousePos);
                 foreach (var aux in specialSpell)
                 {
@@ -108,7 +110,7 @@ public class CharacterController : CreatureController
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && myTurn)
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             gameManager.EndMyTurn(this);
         }
@@ -182,7 +184,7 @@ public class CharacterController : CreatureController
     public IEnumerator StartDelay()
     {
         delay = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         delay = false;
     }
 

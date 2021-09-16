@@ -73,8 +73,6 @@ public class GameManager : MonoBehaviour
         CreatureController firstCC = creatures[0];
         creatures[0] = creatures[indexPlayer];
         creatures[indexPlayer] = firstCC;
-
-        StartCoroutine(FixMyTurn());
     }
 
     public bool InPause { get => this.inPause; set => this.inPause = value; }//pausa o jogo quando abrir o menu
@@ -380,16 +378,6 @@ public class GameManager : MonoBehaviour
         {
             spellbookManager.Close();
         }
-    }
-
-    IEnumerator FixMyTurn()
-    {
-        if(creatures.Find(n => n.myTurn == true) == null)
-        {
-            Manager.Instance.characterController.myTurn = true;
-        }
-        yield return new WaitForSeconds(0.2f);
-        StartCoroutine(FixMyTurn());
     }
 
     public CreatureController GetCreatureInTile(Vector3Int tile)
