@@ -55,14 +55,12 @@ public class CreatureController : MonoBehaviour
 
         attributeStatus.StartNewTurn();
 
-        yield return new WaitForSeconds(0.1f);
-
         //CharacterStatus.attributeStatus.StartNewTurn();
         Manager.Instance.canvasManager.UpdateStatus();
 
         if (canMove == false)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return null;
             gameManager.EndMyTurn(this);
         }
         else if(canStartTurn)

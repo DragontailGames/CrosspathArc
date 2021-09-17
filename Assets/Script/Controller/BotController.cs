@@ -206,7 +206,7 @@ public class BotController : CreatureController
         }
 
         CharacterController characterController = target.GetComponent<CharacterController>();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
 
         Vector3Int targetTileIndex = target.currentTileIndex;
         List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, targetTileIndex);
@@ -231,9 +231,7 @@ public class BotController : CreatureController
         {
             Walk(targetTileIndex, path);
         }
-        Debug.Log("Acabou o turno 1");
         yield return new WaitForSeconds(0.2f);
-        Debug.Log("Acabou o turno 2");
         gameManager.EndMyTurn(this);
     }
 
