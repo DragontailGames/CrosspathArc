@@ -62,7 +62,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                     }
                     controller.currentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(controller.currentTileIndex) + offsetPosition;
-                    this.GetComponent<CharacterStatus>().MoveOneTile();
                 }
             }
         }

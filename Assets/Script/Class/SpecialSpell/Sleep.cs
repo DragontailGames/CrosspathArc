@@ -25,7 +25,6 @@ public class Sleep : SpecialSpell
     public override void ReceiveHit(CreatureController attacker, CreatureController creatureTarget)
     {
         base.ReceiveHit(attacker, creatureTarget);
-
         //creatureTarget.specialSpell.Remove(creatureTarget.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Sleep));
         creatureTarget.canMove = true;
     }

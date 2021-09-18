@@ -24,11 +24,10 @@ MonoBehaviour:
   spellType: 0
   area: 0
   buffDebuff: []
-  attributeInfluence: 
-  spellCastObject: {fileID: 100000, guid: eaa74d9111563334baddba37e1949b91, type: 3}
+  attributeInfluence: []
+  spellCastObject: {fileID: 5485386221458962284, guid: a9ebb113270027841bdd71c7d7afbe4b, type: 3}
   specialEffect: 0
-  minSpecialValue: 0
-  maxSpecialValue: 0
-  fixedSpecialValue: 0
-  specialEffectDuration: 0
+  duration: 0
   invokeLimit: 0
+  subSpell: []
+  onlyMinions: 0

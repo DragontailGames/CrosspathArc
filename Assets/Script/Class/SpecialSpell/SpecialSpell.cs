@@ -71,6 +71,7 @@ public class SpecialSpell
 
     public virtual void EndOfDuration(CreatureController creatureController)
     {
+        Debug.Log("Acaboyu awaui");
         creatureController.specialSpell.Remove(this);
         Manager.Instance.canvasManager.RemoveLogText(effect.ToString());
     }
@@ -79,6 +80,7 @@ public class SpecialSpell
     { 
         if (clearAfterReceiveHit)
         {
+            Debug.Log("Entrou aqui? ");
             duration = 0;
             EndOfDuration(creatureTarget);
         }
@@ -93,6 +95,7 @@ public class SpecialSpell
     {
         if (clearAfterDoAttack)
         {
+            Debug.Log("FOI AQUI");
             duration = 0;
             EndOfDuration(creatureController);
         }

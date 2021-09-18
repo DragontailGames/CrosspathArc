@@ -94,7 +94,7 @@ public class CharacterStatus : MonoBehaviour
     /// <summary>
     /// Função chamada quando o usuario se move um tile
     /// </summary>
-    public void MoveOneTile()
+    public void StartTurn()
     {
         //diminui um tile para regenerar se for 0 ele regenera e reseta o total de tiles
         tilesToRegenHp--;

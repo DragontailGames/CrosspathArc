@@ -87,7 +87,7 @@ public class CharacterController : CreatureController
             else if(characterCombat.selectedSpell != null)
             {
                 direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, mousePos);
-                foreach (var aux in specialSpell)
+                foreach (var aux in specialSpell.ToList())
                 {
                     aux.HandleAttack(this);
                 }
@@ -134,6 +134,8 @@ public class CharacterController : CreatureController
         gameManager.StartNewTurn();
 
         yield return base.StartMyTurn();
+
+        characterStatus.StartTurn();
 
         if (isRest)
         {

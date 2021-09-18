@@ -4779,7 +4779,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4903,6 +4903,3 @@ MonoBehaviour:
   duration: 0
   damage: 0
   position: {x: 0, y: 0, z: 0}
-  sortingLayerName: Default
-  orderInLayer: -1
-  MyRenderer: {fileID: 8761519321041914439}

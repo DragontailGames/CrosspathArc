@@ -16,10 +16,12 @@ public class AttributeInfluence
 
     public int GetValue(CreatureController controller)
     {
-        
+        if (value == 0)
+            return 0;
+
         int baseValue = 0;
 
-        if (string.IsNullOrEmpty(levelOfSkill))
+        if (string.IsNullOrEmpty(levelOfSkill) )
         {
             baseValue = controller.attributeStatus.GetValue(attribute);
         }
@@ -46,6 +48,8 @@ public class AttributeInfluence
             fullValue += baseValue - value;
         }
 
+
+        Debug.Log("baseValue2 " + fullValue + " - " + baseValue);
         return Mathf.CeilToInt(fullValue != 0 ? fullValue : baseValue);
     }
 }

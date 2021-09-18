@@ -129,7 +129,6 @@ public class Spell : ScriptableObject
             }
             else if (this.spellType == EnumCustom.SpellType.Special)
             {
-                //controller.Mp -= this.manaCost;
                 if (this.onlyMinions)
                 {
                     foreach (var minion in minionCounts)
@@ -193,8 +192,6 @@ public class Spell : ScriptableObject
                 }
             }
         }
-
-        controller.Mp -= manaCost;
     }
 
     public void ApplyBuffDebuff(CreatureController controller, BuffDebuff buffDebuff, CreatureController caster = null)
@@ -223,6 +220,7 @@ public class Spell : ScriptableObject
 
     public void CastSpecial(CreatureController target, CreatureController caster)
     {
+
         ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
         GameObject objectSpell = Instantiate(spellCastObject, target.transform);
         Destroy(objectSpell, 1.0f);
@@ -279,7 +277,8 @@ public class Spell : ScriptableObject
             PathFind.Point point = null;
             for (int i = 0; i < (points.Count > 5 ? 5 : points.Count - 1); i++)
             {
-                if (!Manager.Instance.gameManager.elevationTM.HasTile(new Vector3Int(points[i].x + 1, points[i].y + 1, 0)))
+                
+                if (Manager.Instance.gameManager.HasAvailableTile(new Vector3Int(points[i].x, points[i].y, 0)))
                 {
                     point = points[i];
                 }

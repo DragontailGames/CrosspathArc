@@ -118,6 +118,10 @@ public class CharacterCombat : MonoBehaviour
             Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
             return;
         }
+        else
+        {
+            controller.Mp -= spells[index].manaCost;
+        }
 
         if (spells[index].castTarget != EnumCustom.CastTarget.None)
         {
@@ -127,7 +131,6 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
-            controller.Mp -= spells[index].manaCost;
             spells[index].Cast(()=> { controller.gameManager.EndMyTurn(controller); },controller,null, new Vector3Int(), minionCounts);
         }
     }
@@ -140,11 +143,6 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="playerPos">posição do jogador</param>
     public void TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
     {
-        if (Manager.Instance.gameManager.DetectLOS(Manager.Instance.gameManager.GetPathForLOS(playerPos, enemy.currentTileIndex)))
-        {
-            Manager.Instance.canvasManager.LogMessage("Inimigo fora do campo de visão");
-            return;
-        }
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration = 0;//pedro maybe
 
@@ -181,14 +179,18 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="creature"></param>
     public void CastSpell(CreatureController creature = null, Vector3Int tile = new Vector3Int())
     {
+
+        if (Manager.Instance.gameManager.DetectLOS(Manager.Instance.gameManager.GetPathForLOS(controller.currentTileIndex, tile)))
+        {
+            Manager.Instance.canvasManager.LogMessage("Inimigo ou Tile fora do campo de visão");
+            return;
+        }
         if (selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
         {
             return;
         }
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
-
-        controller.Mp -= selectedSpell.manaCost;
 
         controller.animator.Play(controller.animationName + "_Cast_" + controller.direction);
 
