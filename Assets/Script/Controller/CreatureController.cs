@@ -63,6 +63,11 @@ public class CreatureController : MonoBehaviour
             myTurn = true;
             yield return null;
         }
+        else
+        {
+            yield return new WaitForSeconds(0.2f);
+            gameManager.EndMyTurn(this);
+        }
     }
 
     public string GetDirection(Vector3Int index)

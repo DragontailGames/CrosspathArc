@@ -66,6 +66,7 @@ public class Spell : ScriptableObject
 
     public void Cast(UnityAction action, CreatureController caster, CreatureController target, Vector3Int tile, List<CharacterMinions> minionCounts)
     {
+        Debug.Log("Agora esta no cast ");
         int hitChance = caster.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
         int intAttribute = caster.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
@@ -409,7 +410,7 @@ public class Spell : ScriptableObject
         }
         else
         {
-            Destroy(spellCreated, 1.2f);
+            //Destroy(spellCreated, 1.2f);
         }
     }
 

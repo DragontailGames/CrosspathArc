@@ -179,8 +179,7 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="creature"></param>
     public void CastSpell(CreatureController creature = null, Vector3Int tile = new Vector3Int())
     {
-
-        if (Manager.Instance.gameManager.DetectLOS(Manager.Instance.gameManager.GetPathForLOS(controller.currentTileIndex, tile)))
+        if (Manager.Instance.gameManager.DetectLOS(Manager.Instance.gameManager.GetPathForLOS(controller.currentTileIndex, tile != Vector3Int.zero ? tile : creature.currentTileIndex)))
         {
             Manager.Instance.canvasManager.LogMessage("Inimigo ou Tile fora do campo de visão");
             return;

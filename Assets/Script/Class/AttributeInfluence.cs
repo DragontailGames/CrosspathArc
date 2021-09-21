@@ -16,7 +16,7 @@ public class AttributeInfluence
 
     public int GetValue(CreatureController controller)
     {
-        if (value == 0)
+        if (value == 0 && multiplier == 0)
             return 0;
 
         int baseValue = 0;

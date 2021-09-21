@@ -133,7 +133,7 @@ public class CharacterController : CreatureController
     {
         gameManager.StartNewTurn();
 
-        yield return base.StartMyTurn();
+        yield return base.StartMyTurn(canMove);
 
         characterStatus.StartTurn();
 
