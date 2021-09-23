@@ -131,7 +131,8 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
-            spells[index].Cast(()=> { controller.gameManager.EndMyTurn(controller); },controller,null, new Vector3Int(), minionCounts);
+            controller.gameManager.EndMyTurn(controller);
+            spells[index].Cast(()=> {  },controller,null, new Vector3Int(), minionCounts);
         }
     }
 
@@ -193,11 +194,11 @@ public class CharacterCombat : MonoBehaviour
 
         controller.animator.Play(controller.animationName + "_Cast_" + controller.direction);
 
+        Manager.Instance.gameManager.EndMyTurn(controller);
         selectedSpell.Cast(() => 
         { 
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
-            Manager.Instance.gameManager.EndMyTurn(controller);
         },controller, creature, tile, minionCounts);
     }
 
