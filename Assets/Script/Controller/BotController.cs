@@ -197,13 +197,10 @@ public class BotController : CreatureController
         {
             canStartTurn = false;
             yield return base.StartMyTurn(canStartTurn);
-            gameManager.EndMyTurn(this);
             yield break;
         }
-        else
-        {
-            yield return base.StartMyTurn();
-        }
+
+        yield return base.StartMyTurn();
 
         CharacterController characterController = target.GetComponent<CharacterController>();
         yield return new WaitForSeconds(0.2f);
