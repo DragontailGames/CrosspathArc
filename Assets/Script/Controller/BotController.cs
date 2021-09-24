@@ -282,6 +282,7 @@ public class BotController : CreatureController
         Hp = 0;
         if (!isDead)
         {
+            Manager.Instance.characterController.inCombat = false;
             PlayAnimation("Dead", gameManager.GetDirection(currentTileIndex, currentTileIndex));
             isDead = true;
             gameManager.creatures.Remove(this);
