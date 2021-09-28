@@ -12,6 +12,8 @@ public class Spell : ScriptableObject
 
     public string description;
 
+    public string spellLogName;
+
     public Sprite icon;
 
     public EnumCustom.CastTarget castTarget;
@@ -46,6 +48,8 @@ public class Spell : ScriptableObject
 
     public bool onlyMinions = false;
 
+    public EnumCustom.CostType costType = EnumCustom.CostType.Mana;
+
     public int GetValue(CreatureController creatureController)
     {
         int value = 0;
@@ -66,7 +70,6 @@ public class Spell : ScriptableObject
 
     public void Cast(UnityAction action, CreatureController caster, CreatureController target, Vector3Int tile, List<CharacterMinions> minionCounts)
     {
-        Debug.Log("Agora esta no cast ");
         int hitChance = caster.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
         int intAttribute = caster.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
@@ -201,7 +204,7 @@ public class Spell : ScriptableObject
         {
             controller.attributeStatus.AddModifier(new AttributeModifier()
             {
-                spellName = spellName,
+                spellName = spellLogName == "" ? spellName : spellLogName,
                 attribute = buffDebuff.attribute,
                 count = buffDebuff.turnDuration,
                 value = buffDebuff.value + buffDebuff.attributeInfluence.GetValue(caster != null ? caster : controller)
@@ -211,7 +214,7 @@ public class Spell : ScriptableObject
         {
             controller.attributeStatus.AddModifier(null, new StatusModifier()
             {
-                spellName = spellName,
+                spellName = spellLogName == "" ? spellName : spellLogName,
                 status = buffDebuff.status,
                 count = buffDebuff.turnDuration,
                 value = buffDebuff.value + buffDebuff.attributeInfluence.GetValue(caster != null ? caster : controller)
@@ -221,7 +224,6 @@ public class Spell : ScriptableObject
 
     public void CastSpecial(CreatureController target, CreatureController caster)
     {
-
         ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
         GameObject objectSpell = Instantiate(spellCastObject, target.transform);
         Destroy(objectSpell, 1.0f);

@@ -112,15 +112,32 @@ public class CharacterCombat : MonoBehaviour
             }
         }
 
-        //Check mana
-        if (spells[index].manaCost > controller.Mp)
+        if (spells[index].costType == EnumCustom.CostType.Mana)
         {
-            Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
-            return;
+            //Check mana
+            if (spells[index].manaCost > controller.Mp)
+            {
+                Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
+                return;
+            }
+            else
+            {
+                controller.Mp -= spells[index].manaCost;
+            }
         }
         else
         {
-            controller.Mp -= spells[index].manaCost;
+            var specialSpellWisp = controller.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Invoke_Wisp) as Invoke_Wisp;
+            //Check mana
+            if (specialSpellWisp == null || spells[index].manaCost > specialSpellWisp.value)
+            {
+                Manager.Instance.canvasManager.LogMessage("<color=grey>Wisps insuficiente</color>");
+                return;
+            }
+            else
+            {
+                specialSpellWisp.Cast(controller, spells[index].manaCost);
+            }
         }
 
         if (spells[index].castTarget != EnumCustom.CastTarget.None)

@@ -136,7 +136,7 @@ public class CreatureController : MonoBehaviour
                 {
                     this.attributeStatus.AddModifier(new AttributeModifier()
                     {
-                        spellName = spell.spellName,
+                        spellName = spell.spellLogName == "" ? spell.spellName : spell.spellLogName,
                         attribute = aux.attribute,
                         count = aux.turnDuration,
                         value = aux.value + aux.attributeInfluence.GetValue(caster)
