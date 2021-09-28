@@ -58,6 +58,12 @@ public static class ParserCustom
                     new Invoke_Wisp(specialSpell);
                     break;
                 }
+            case EnumCustom.SpecialEffect.Visibility:
+                {
+                    Debug.Log("Chegou aqui");
+                    new Visibility(specialSpell);
+                    break;
+                }
         }
     }
 }
