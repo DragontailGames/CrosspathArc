@@ -26,7 +26,7 @@ MonoBehaviour:
   area: 0
   buffDebuff: []
   attributeInfluence: []
-  spellCastObject: {fileID: 100002, guid: 0ceb35173c436f94cbb51d6f97ada5b9, type: 3}
+  spellCastObject: {fileID: 6661411421474754461, guid: fd15c54d91650f34f8e0d197b16f89ed, type: 3}
   specialEffect: 12
   duration: 50
   invokeLimit: 0

@@ -30,7 +30,7 @@ MonoBehaviour:
     levelOfSkill: Sorcerer
     value: 0
     multiplier: -2
-  spellCastObject: {fileID: 100002, guid: 0ceb35173c436f94cbb51d6f97ada5b9, type: 3}
+  spellCastObject: {fileID: 3082904949898948397, guid: ee498bf499cd0514e83a7ff7b3f7a656, type: 3}
   specialEffect: 11
   duration: -1
   invokeLimit: 0

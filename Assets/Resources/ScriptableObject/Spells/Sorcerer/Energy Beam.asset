@@ -15,7 +15,7 @@ MonoBehaviour:
   spellName: Energy Beam
   description: Energy Beam
   spellLogName: 
-  icon: {fileID: 21300000, guid: 385da099954d14cc28853d00b4f705b0, type: 3}
+  icon: {fileID: 21300000, guid: b3656cc41ed074c1db404624639a7f4a, type: 3}
   castTarget: 0
   availableAt: 10
   minValue: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     levelOfSkill: Sorcerer
     value: 0
     multiplier: 1
-  spellCastObject: {fileID: 100002, guid: 0ceb35173c436f94cbb51d6f97ada5b9, type: 3}
+  spellCastObject: {fileID: 8314280195297674803, guid: c32283494ae30b740af6262547721250, type: 3}
   specialEffect: 0
   duration: 0
   invokeLimit: 0

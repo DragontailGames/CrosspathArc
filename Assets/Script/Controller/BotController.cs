@@ -14,7 +14,7 @@ public class BotController : CreatureController
     public Vector3 offsetPosition = new Vector3(0,0.5f,0);
 
     private Vector3 movePosition;
-    public float movementSpeed = 10;
+    public float movementSpeed = 1.25f;
 
     protected bool isDead;
 

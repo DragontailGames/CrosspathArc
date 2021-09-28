@@ -39,9 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: EnergyBeam
-    uniqueID: 3746222009
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ilumination
+    uniqueID: 2410511693
     locked: 0
