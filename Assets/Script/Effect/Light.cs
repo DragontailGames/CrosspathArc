@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Light : MonoBehaviour
+public class Light : CenarioEntity
 {
     public int size = 10;
 
-    public void Start()
+    public override void Start()
     {
+        base.Start();
         SetupLightSize();
     }
 
     public void SetupLightSize()
     {
-        this.transform.localScale = Vector3.one * size / 10;
+        this.transform.GetChild(0).localScale = Vector3.one * size / 10;
     }
 }

@@ -44,7 +44,7 @@ public class TimeManager : MonoBehaviour
                 nextTimeChange = Manager.Instance.configManager.nigthTurns;
                 glow.color = nightColor;
                 rect.x = 0.5f;
-                lowVisionPanel.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                lowVisionPanel.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 255);
             }
             else
             {
@@ -52,7 +52,7 @@ public class TimeManager : MonoBehaviour
                 nextTimeChange = Manager.Instance.configManager.dayTurns;
                 glow.color = dayColor;
                 rect.x = 0;
-                lowVisionPanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+                lowVisionPanel.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, 0);
             }
             sky.uvRect = rect;
         }
@@ -75,7 +75,7 @@ public class TimeManager : MonoBehaviour
             glow.color = Color.Lerp(dayColor, nightColor, percent);
             rect.x = Mathf.Lerp(0f, 0.5f, percent);
             sky.uvRect = rect;
-            lowVisionPanel.GetComponent<Image>().color = new Color32(255, 255, 255, (byte)alpha);
+            lowVisionPanel.GetComponent<SpriteRenderer>().color = new Color32(255, 255, 255, (byte)alpha);
         }
     }
 }

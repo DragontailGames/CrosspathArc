@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800757842086043490}
-  - component: {fileID: 800757842086043491}
-  - component: {fileID: 800757842086043488}
-  - component: {fileID: 800757842086043489}
+  - component: {fileID: 6370892157508240789}
+  - component: {fileID: 6370892157508240790}
+  - component: {fileID: 6370892157508240791}
   m_Layer: 0
   m_Name: LigthEffect
   m_TagString: Untagged
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800757842086043502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.49, y: 32.99, z: -3.2347784}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!331 &800757842086043491
+--- !u!331 &6370892157508240789
 SpriteMask:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +83,7 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
---- !u!95 &800757842086043488
+--- !u!95 &6370892157508240790
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!212 &800757842086043489
+--- !u!212 &6370892157508240791
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
