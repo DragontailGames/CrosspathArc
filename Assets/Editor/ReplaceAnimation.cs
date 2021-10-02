@@ -6,18 +6,16 @@ using System.IO;
 
 public class ReplaceAnimation
 {
-    public static string oldFolder = "./Assets/Animation/Zombie";
-    public static string newFolder = "./Assets/Animation/Golem";
-    public static string newAnimationFolder = "Assets/Animation/Golem";
-    public static string oldName = "Zombie";
-    public static string newName = "Golem";
+    public static string folder = "Assets/Animation/Creatures";
+    public static string oldName = "Lizard";
+    public static string newName = "Crawler";
     public static string oldSprites_folder = "./Assets/Sprite/Wolf Inimigo";
     public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
 
     [MenuItem("Dragon Tail/Replace Animation")]
     static void LoadFiles()
     {
-        foreach (var asset in AssetDatabase.FindAssets("", new[] { newAnimationFolder }))
+        foreach (var asset in AssetDatabase.FindAssets("", new[] { folder + "/" + newName }))
         {
             var path = AssetDatabase.GUIDToAssetPath(asset);
             var temp = AssetDatabase.LoadAssetAtPath(path, typeof(Object));
@@ -109,6 +107,7 @@ public class ReplaceAnimation
         }
     }
 
+    /*
     public static void processController()
     {
         string[] fileText = File.ReadAllLines(newFolder + "/Female_Archer.controller");
@@ -150,7 +149,7 @@ public class ReplaceAnimation
         }
 
         File.WriteAllLines(newFolder + "/Female_Archer.controller", newText);
-    }
+    }*/
 
     public static int FindInOldRepository(string guidReference)
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 
 public class CreatureController : MonoBehaviour
 {
@@ -31,6 +32,10 @@ public class CreatureController : MonoBehaviour
 
     public BotMultipleTile botMultipleTile;
 
+    public List<Spell> spells;
+
+    public UnityAction startTurnActions;
+
     public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(level)); }
     public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(level)); }
 
@@ -52,6 +57,15 @@ public class CreatureController : MonoBehaviour
         {
             aux.StartNewTurn(this);
         }
+
+        foreach (var aux in spells)
+        {
+            if (aux != null && aux.cooldown > 0)
+            {
+                aux.cooldown--;
+            }
+        }
+        startTurnActions?.Invoke();
 
         attributeStatus.StartNewTurn();
 

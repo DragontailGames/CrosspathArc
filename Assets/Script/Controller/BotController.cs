@@ -24,8 +24,6 @@ public class BotController : CreatureController
 
     public CreatureController forceTarget;
 
-    public List<Spell> spells;
-
     public int range = 1;
 
     public bool meleeAndRanged = false;
@@ -69,6 +67,42 @@ public class BotController : CreatureController
 
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
         animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f && Hp > 0);
+    }
+
+    public override IEnumerator StartMyTurn(bool canStartTurn = true)
+    {
+        if (isDead || target == null || !canMove)
+        {
+            canStartTurn = false;
+            yield return base.StartMyTurn(canStartTurn);
+            yield break;
+        }
+
+        yield return base.StartMyTurn();
+        yield return new WaitForSeconds(0.2f);
+
+        Vector3Int targetTileIndex = target.currentTileIndex;
+        List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, targetTileIndex);
+
+        if (gameManager.DetectLOS(path))
+        {
+            hasTarget = false;
+            target.inCombat = false;
+            this.inCombat = false;
+            gameManager.EndMyTurn(this);
+            yield break;
+        }
+
+        hasTarget = true;
+
+        if (Cast(target)) { }
+        else if (Attack(target)) { }
+        else
+        {
+            Walk(targetTileIndex, path);
+        }
+        yield return new WaitForSeconds(0.2f);
+        gameManager.EndMyTurn(this);
     }
 
     public void Walk(Vector3Int playerPos, List<PathFind.Point> path)
@@ -153,83 +187,57 @@ public class BotController : CreatureController
         }
     }
 
-
-    public void Attack(CreatureController creatureController)
+    public bool Attack(CreatureController creatureController)
     {
+        CharacterController characterController = target.GetComponent<CharacterController>();
+        Vector3Int targetTileIndex = target.currentTileIndex;
+        int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
+        if (!(Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController)))
+        {
+            return false;
+        }
         if (isDead || creatureController == null)
         {
-            return;
+            return false;
         }
 
-        Vector3Int destTileIndex = creatureController.currentTileIndex;
-        direction = gameManager.GetDirection(currentTileIndex, destTileIndex);
+        direction = gameManager.GetDirection(currentTileIndex, creatureController.currentTileIndex);
 
-        int offsetDiagonal = (creatureController.currentTileIndex.x != currentTileIndex.x && creatureController.currentTileIndex.y != currentTileIndex.y) ? 2 : 1;
+        
+        int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
+        int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
+        int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
 
+        if (Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
+        {
+            creatureController.ReceiveHit(this, str, str.ToString());
+        }
+
+        PlayAnimation("Attack", direction);
+        return true;
+    }
+
+    public bool Cast(CreatureController creatureController)
+    {
         Spell selectedSpell = null;
+        direction = gameManager.GetDirection(currentTileIndex, creatureController.currentTileIndex);
         if (spells.Count > 0)
         {
             selectedSpell = spells[UnityEngine.Random.Range(0, spells.Count)];
         }
 
-        if (spells.Count>0 && (!meleeAndRanged || meleeAndRanged && Vector3.Distance(creatureController.currentTileIndex, currentTileIndex) > offsetDiagonal) && !attributeStatus.HasBuff(selectedSpell.spellName))
+        int randValue = UnityEngine.Random.Range(0, 100);
+        if(selectedSpell.probabilityToCast < randValue)
         {
-            selectedSpell.Cast(null,this, creatureController, creatureController.currentTileIndex, null);
+            return false; 
         }
-        else
+        if (!attributeStatus.HasBuff(selectedSpell.spellName) && selectedSpell.cooldown<=0)
         {
-            int hitChance = attributeStatus.GetValue(EnumCustom.Status.HitChance);
-            int str = attributeStatus.GetValue(EnumCustom.Attribute.Str);
-            int dodge = creatureController.attributeStatus.GetValue(EnumCustom.Status.Dodge);
-
-            if (Combat.TryHit(hitChance, str, dodge, creatureController.nickname))
-            {
-                creatureController.ReceiveHit(this, str, str.ToString());
-            }
+            PlayAnimation("Attack", direction);
+            selectedSpell.Cast(null, this, creatureController, creatureController.currentTileIndex, null);
+            return true;
         }
-
-        PlayAnimation("Attack", direction);
-    }
-
-    public override IEnumerator StartMyTurn(bool canStartTurn = true)
-    {
-        if (isDead || target == null || !canMove)
-        {
-            canStartTurn = false;
-            yield return base.StartMyTurn(canStartTurn);
-            yield break;
-        }
-
-        yield return base.StartMyTurn();
-
-        CharacterController characterController = target.GetComponent<CharacterController>();
-        yield return new WaitForSeconds(0.2f);
-
-        Vector3Int targetTileIndex = target.currentTileIndex;
-        List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, targetTileIndex);
-
-        if (gameManager.DetectLOS(path))
-        {
-            hasTarget = false;
-            target.inCombat = false;
-            this.inCombat = false;
-            gameManager.EndMyTurn(this);
-            yield break;
-        }
-
-        hasTarget = true;
-
-        int offsetDiagonal = (targetTileIndex.x != currentTileIndex.x && targetTileIndex.y != currentTileIndex.y) ? range + 1 : range;
-        if (Vector3.Distance(targetTileIndex, currentTileIndex) <= offsetDiagonal && !CheckMinionAndPlayer(characterController))
-        {
-            Attack(target);
-        }
-        else
-        {
-            Walk(targetTileIndex, path);
-        }
-        yield return new WaitForSeconds(0.2f);
-        gameManager.EndMyTurn(this);
+        return false;
     }
 
     public bool CheckMinionAndPlayer(CharacterController characterController)

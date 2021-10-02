@@ -10,8 +10,6 @@ public class CharacterCombat : MonoBehaviour
 
     public List<Skill> skills;
 
-    private List<Spell> spells = new List<Spell>(10);
-
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
     public Spell selectedSpell = null;//Skill que o jogador escolheu
@@ -58,9 +56,9 @@ public class CharacterCombat : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            if (spells.Count> i && spells[i] != null)
+            if (controller.spells.Count> i && controller.spells[i] != null)
             {
-                spellUi[i].GetComponent<Image>().sprite = spells[i].icon;
+                spellUi[i].GetComponent<Image>().sprite = controller.spells[i].icon;
                 spellUi[i].GetComponent<Image>().enabled = true;
                 Button btSpell;
                 if (spellUi[i].GetComponent<Button>())
@@ -96,8 +94,14 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="index"></param>
     public void SelectSkill(int index)
     {
-        if(spells.Count<=index || spells[index] == null)
+        if(controller.spells.Count<=index || controller.spells[index] == null)
         {
+            return;
+        }
+
+        if(controller.spells[index].cooldown > 0)
+        {
+            Manager.Instance.canvasManager.LogMessage($"<color=grey>Habilidade {controller.spells[index].spellName} esta em cooldown</color>");
             return;
         }
 
@@ -106,50 +110,50 @@ public class CharacterCombat : MonoBehaviour
             var auxSpell = selectedSpell;
             selectedSpell = null;
             selectedUi.gameObject.SetActive(false);
-            if (auxSpell == spells[index])
+            if (auxSpell == controller.spells[index])
             {
                 return;
             }
         }
 
-        if (spells[index].costType == EnumCustom.CostType.Mana)
+        if (controller.spells[index].costType == EnumCustom.CostType.Mana)
         {
             //Check mana
-            if (spells[index].manaCost > controller.Mp)
+            if (controller.spells[index].manaCost > controller.Mp)
             {
                 Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
                 return;
             }
             else
             {
-                controller.Mp -= spells[index].manaCost;
+                controller.Mp -= controller.spells[index].manaCost;
             }
         }
         else
         {
             var specialSpellWisp = controller.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Invoke_Wisp) as Invoke_Wisp;
             //Check mana
-            if (specialSpellWisp == null || spells[index].manaCost > specialSpellWisp.value)
+            if (specialSpellWisp == null || controller.spells[index].manaCost > specialSpellWisp.value)
             {
                 Manager.Instance.canvasManager.LogMessage("<color=grey>Wisps insuficiente</color>");
                 return;
             }
             else
             {
-                specialSpellWisp.Cast(controller, spells[index].manaCost);
+                specialSpellWisp.Cast(controller, controller.spells[index].manaCost);
             }
         }
 
-        if (spells[index].castTarget != EnumCustom.CastTarget.None)
+        if (controller.spells[index].castTarget != EnumCustom.CastTarget.None)
         {
-            selectedSpell = spells[index];
+            selectedSpell = controller.spells[index];
             selectedUi = spellUi[index].transform.GetChild(0);
             selectedUi.gameObject.SetActive(true);
         }
         else
         {
             controller.gameManager.EndMyTurn(controller);
-            spells[index].Cast(()=> {  },controller,null, new Vector3Int(), minionCounts);
+            controller.spells[index].Cast(()=> {  },controller,null, new Vector3Int(), minionCounts);
         }
     }
 
@@ -271,6 +275,6 @@ public class CharacterCombat : MonoBehaviour
 
     public void SetSpells(List<Spell> spells)
     {
-        this.spells = spells;
+        this.controller.spells = spells;
     }
 }

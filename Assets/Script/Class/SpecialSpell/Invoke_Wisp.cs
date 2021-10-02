@@ -11,13 +11,6 @@ public class Invoke_Wisp : SpecialSpell
 
     public Invoke_Wisp(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
     {
-        if (ExistingInSpecialSpellList(this))
-        {
-            AddToSpecialSpellList(this);
-        }
-        else
-        {
-            base.ChangeValue(specialSpell.value);
-        }
+        AddToSpecialSpellList(this);
     }
 }

@@ -37,3 +37,6 @@ MonoBehaviour:
   subSpell: []
   onlyMinions: 0
   costType: 0
+  cooldown: 0
+  cooldownTurns: 7
+  probabilityToCast: 100

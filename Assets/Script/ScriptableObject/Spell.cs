@@ -50,6 +50,12 @@ public class Spell : ScriptableObject
 
     public EnumCustom.CostType costType = EnumCustom.CostType.Mana;
 
+    public int cooldown = 0;
+
+    public int cooldownTurns = 0;
+
+    public int probabilityToCast = 100;
+
     public int GetValue(CreatureController creatureController)
     {
         int value = 0;
@@ -93,6 +99,8 @@ public class Spell : ScriptableObject
         string textDamage = "(" + spellDamage + extraDamage + ")";
 
         action += () => { CastSubspells(caster, target); };
+
+        cooldown = cooldownTurns;
 
         if (castTarget == EnumCustom.CastTarget.Area)
         {
