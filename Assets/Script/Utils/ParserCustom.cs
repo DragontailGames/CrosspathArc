@@ -53,6 +53,17 @@ public static class ParserCustom
                     new Spike(specialSpell);
                     break;
                 }
+            case EnumCustom.SpecialEffect.Invoke_Wisp:
+                {
+                    new Invoke_Wisp(specialSpell);
+                    break;
+                }
+            case EnumCustom.SpecialEffect.Visibility:
+                {
+                    Debug.Log("Chegou aqui");
+                    new Visibility(specialSpell);
+                    break;
+                }
         }
     }
 }

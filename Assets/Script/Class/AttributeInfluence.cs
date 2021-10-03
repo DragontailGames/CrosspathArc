@@ -47,9 +47,6 @@ public class AttributeInfluence
         {
             fullValue += baseValue - value;
         }
-
-
-        Debug.Log("baseValue2 " + fullValue + " - " + baseValue);
         return Mathf.CeilToInt(fullValue != 0 ? fullValue : baseValue);
     }
 }

@@ -83,6 +83,8 @@ public class EnumCustom : MonoBehaviour
         Spike,
         Cannot_Walk,
         All,
+        Invoke_Wisp,
+        Visibility,
     }
 
     public enum BuffDebuffType
@@ -107,5 +109,11 @@ public class EnumCustom : MonoBehaviour
     {
         None,
         SkillLevel,
+    }
+
+    public enum CostType
+    {
+        Mana,
+        Wisp,
     }
 }

@@ -89,7 +89,7 @@ public class SpellbookManager : MonoBehaviour
             {
                 var tempSpellController = aux.GetComponent<SpellbookSpellController>();
                 Spell spell = skill.skill.spells[aux.GetSiblingIndex()];
-
+                spell.cooldown = 0;
                 tempSpellController.SetupSpell(this, spell);
                 spellbookSpellControllers.Add(tempSpellController);
             }

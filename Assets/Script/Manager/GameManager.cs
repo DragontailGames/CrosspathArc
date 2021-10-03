@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public SpellbookManager spellbookManager;
 
+    public List<CenarioEntity> cenarioEntities = new List<CenarioEntity>();
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;
@@ -204,7 +206,7 @@ public class GameManager : MonoBehaviour
                 try
                 {
                     Vector3Int pos = new Vector3Int(x, y, 0);
-                    tilesmap[x, y] = Manager.Instance.gameManager.HasAvailableTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos, owner) == null;
+                    tilesmap[x, y] = HasAvailableTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos, owner) == null;
                 }
                 catch(System.Exception e)
                 {
@@ -247,7 +249,7 @@ public class GameManager : MonoBehaviour
                             exception = false;
                         }
                     }
-                    tilesmap[x, y] = Manager.Instance.gameManager.HasAvailableTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos, owner) == null && exception;
+                    tilesmap[x, y] = HasAvailableTile(pos) && Manager.Instance.gameManager.GetBotInTile(pos, owner) == null && exception;
                 }
                 catch (System.Exception e)
                 {
@@ -394,6 +396,7 @@ public class GameManager : MonoBehaviour
     {
         return !elevationTM.HasTile(dest + new Vector3Int(1, 1, 0)) &&
                   (!collisionTM.HasTile(dest + new Vector3Int(1, 1, 0))) &&
-                  (tilemap.HasTile(dest));
+                  (tilemap.HasTile(dest) &&
+                  cenarioEntities.Find(n => n.currentTileIndex == dest) == null);
     }
 }

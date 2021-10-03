@@ -12,6 +12,8 @@ public class Spell : ScriptableObject
 
     public string description;
 
+    public string spellLogName;
+
     public Sprite icon;
 
     public EnumCustom.CastTarget castTarget;
@@ -46,6 +48,14 @@ public class Spell : ScriptableObject
 
     public bool onlyMinions = false;
 
+    public EnumCustom.CostType costType = EnumCustom.CostType.Mana;
+
+    public int cooldown = 0;
+
+    public int cooldownTurns = 0;
+
+    public int probabilityToCast = 100;
+
     public int GetValue(CreatureController creatureController)
     {
         int value = 0;
@@ -66,7 +76,6 @@ public class Spell : ScriptableObject
 
     public void Cast(UnityAction action, CreatureController caster, CreatureController target, Vector3Int tile, List<CharacterMinions> minionCounts)
     {
-        Debug.Log("Agora esta no cast ");
         int hitChance = caster.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
         int intAttribute = caster.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
@@ -80,16 +89,21 @@ public class Spell : ScriptableObject
             extraDamage = " + ";
         }
 
+        int extraDmg = 0;
+
         foreach (var aux in attributeInfluence)
         {
             var auxAttribute = aux.GetValue(caster);
-            extraDamage += auxAttribute;
+            extraDmg += auxAttribute;
             //damage += auxAttribute;
             spellDamage -= auxAttribute;
         }
-        string textDamage = "(" + spellDamage + extraDamage + ")";
+        extraDamage += extraDmg;
+        string textDamage = "(" + (spellDamage + extraDamage) + ")";
 
         action += () => { CastSubspells(caster, target); };
+
+        cooldown = cooldownTurns;
 
         if (castTarget == EnumCustom.CastTarget.Area)
         {
@@ -142,7 +156,23 @@ public class Spell : ScriptableObject
                 }
                 else
                 {
-                    this.CastSpecial(caster, caster);
+                    if (area > 0)
+                    {
+                        tile = caster.currentTileIndex;
+                        CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, caster, action);
+                    }
+                    else
+                    {
+                        this.CastSpecial(caster, caster);
+                    }
+                }
+            }
+            else if(this.spellType == EnumCustom.SpellType.Hit)
+            {
+                if(area>0)
+                {
+                    tile = caster.currentTileIndex;
+                    CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, caster, action);
                 }
             }
             Manager.Instance.canvasManager.UpdateStatus();
@@ -201,7 +231,7 @@ public class Spell : ScriptableObject
         {
             controller.attributeStatus.AddModifier(new AttributeModifier()
             {
-                spellName = spellName,
+                spellName = spellLogName == "" ? spellName : spellLogName,
                 attribute = buffDebuff.attribute,
                 count = buffDebuff.turnDuration,
                 value = buffDebuff.value + buffDebuff.attributeInfluence.GetValue(caster != null ? caster : controller)
@@ -211,7 +241,7 @@ public class Spell : ScriptableObject
         {
             controller.attributeStatus.AddModifier(null, new StatusModifier()
             {
-                spellName = spellName,
+                spellName = spellLogName == "" ? spellName : spellLogName,
                 status = buffDebuff.status,
                 count = buffDebuff.turnDuration,
                 value = buffDebuff.value + buffDebuff.attributeInfluence.GetValue(caster != null ? caster : controller)
@@ -221,7 +251,6 @@ public class Spell : ScriptableObject
 
     public void CastSpecial(CreatureController target, CreatureController caster)
     {
-
         ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
         GameObject objectSpell = Instantiate(spellCastObject, target.transform);
         Destroy(objectSpell, 1.0f);
@@ -326,14 +355,20 @@ public class Spell : ScriptableObject
 
                 if (creature != null && CheckEnemyType(caster, creature))
                 {
-                    bool hit = Combat.TryHit(hitChance, intAttribute, creature.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), creature.nickname);
-                    if (hit)
+                    if (spellType == EnumCustom.SpellType.Special)
                     {
-                        creature.ReceiveSpell(caster, damage, textDamage, this);
+                        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, creature, specialEffect));
+                    }
+                    else
+                    {
+                        bool hit = Combat.TryHit(hitChance, intAttribute, creature.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), creature.nickname);
+                        if (hit)
+                        {
+                            creature.ReceiveSpell(caster, damage, textDamage, this);
+                        }
                     }
                 }
             }
-
         }
         action?.Invoke();
     }
@@ -399,8 +434,8 @@ public class Spell : ScriptableObject
 
     public void AnimateCastAreaSpell(Vector3 position, Vector3Int index)
     {
-        GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
-        spellCreated.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(0, 360)));
+        GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.Euler(Vector3.zero));
+        //spellCreated.transform.rotation = Quaternion.Euler(new Vector3(spellCreated.transform.rotation.x, spellCreated.transform.rotation.y, UnityEngine.Random.Range(0, 360)));
         if(spellType == EnumCustom.SpellType.Area_Hazard)
         {
             SpellAreaHazard spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
@@ -410,7 +445,7 @@ public class Spell : ScriptableObject
         }
         else
         {
-            //Destroy(spellCreated, 1.2f);
+            Destroy(spellCreated, 1.2f);
         }
     }
 

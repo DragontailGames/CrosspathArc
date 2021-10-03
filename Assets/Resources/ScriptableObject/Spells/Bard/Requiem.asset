@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
+  m_Name: Requiem
+  m_EditorClassIdentifier: 
+  spellName: Requiem
+  description: Requiem
+  spellLogName: 
+  icon: {fileID: 21300000, guid: 36ba34dbcaeee0c499e49d1246ea3a24, type: 3}
+  castTarget: 3
+  availableAt: 10
+  minValue: 0
+  maxValue: 0
+  fixedValue: 0
+  manaCost: 30
+  spellType: 0
+  area: 7
+  buffDebuff: []
+  attributeInfluence:
+  - attribute: 7
+    levelOfSkill: 
+    value: 0
+    multiplier: 1
+  - attribute: 7
+    levelOfSkill: Bard
+    value: 0
+    multiplier: 1
+  spellCastObject: {fileID: 3511500341340262283, guid: 4c29bad0141804144a213183a7404c50, type: 3}
+  specialEffect: 0
+  duration: 0
+  invokeLimit: 0
+  subSpell: []
+  onlyMinions: 0
+  costType: 0
+  cooldown: 0
+  cooldownTurns: 0
+  probabilityToCast: 100
