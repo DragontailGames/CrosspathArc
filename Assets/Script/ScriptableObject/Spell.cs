@@ -89,14 +89,17 @@ public class Spell : ScriptableObject
             extraDamage = " + ";
         }
 
+        int extraDmg = 0;
+
         foreach (var aux in attributeInfluence)
         {
             var auxAttribute = aux.GetValue(caster);
-            extraDamage += auxAttribute;
+            extraDmg += auxAttribute;
             //damage += auxAttribute;
             spellDamage -= auxAttribute;
         }
-        string textDamage = "(" + spellDamage + extraDamage + ")";
+        extraDamage += extraDmg;
+        string textDamage = "(" + (spellDamage + extraDamage) + ")";
 
         action += () => { CastSubspells(caster, target); };
 
@@ -153,7 +156,23 @@ public class Spell : ScriptableObject
                 }
                 else
                 {
-                    this.CastSpecial(caster, caster);
+                    if (area > 0)
+                    {
+                        tile = caster.currentTileIndex;
+                        CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, caster, action);
+                    }
+                    else
+                    {
+                        this.CastSpecial(caster, caster);
+                    }
+                }
+            }
+            else if(this.spellType == EnumCustom.SpellType.Hit)
+            {
+                if(area>0)
+                {
+                    tile = caster.currentTileIndex;
+                    CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, caster, action);
                 }
             }
             Manager.Instance.canvasManager.UpdateStatus();
@@ -336,14 +355,20 @@ public class Spell : ScriptableObject
 
                 if (creature != null && CheckEnemyType(caster, creature))
                 {
-                    bool hit = Combat.TryHit(hitChance, intAttribute, creature.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), creature.nickname);
-                    if (hit)
+                    if (spellType == EnumCustom.SpellType.Special)
                     {
-                        creature.ReceiveSpell(caster, damage, textDamage, this);
+                        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, creature, specialEffect));
+                    }
+                    else
+                    {
+                        bool hit = Combat.TryHit(hitChance, intAttribute, creature.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), creature.nickname);
+                        if (hit)
+                        {
+                            creature.ReceiveSpell(caster, damage, textDamage, this);
+                        }
                     }
                 }
             }
-
         }
         action?.Invoke();
     }
@@ -409,8 +434,8 @@ public class Spell : ScriptableObject
 
     public void AnimateCastAreaSpell(Vector3 position, Vector3Int index)
     {
-        GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.identity);
-        spellCreated.transform.rotation = Quaternion.Euler(new Vector3(0, 0, UnityEngine.Random.Range(0, 360)));
+        GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.Euler(Vector3.zero));
+        //spellCreated.transform.rotation = Quaternion.Euler(new Vector3(spellCreated.transform.rotation.x, spellCreated.transform.rotation.y, UnityEngine.Random.Range(0, 360)));
         if(spellType == EnumCustom.SpellType.Area_Hazard)
         {
             SpellAreaHazard spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
@@ -420,7 +445,7 @@ public class Spell : ScriptableObject
         }
         else
         {
-            //Destroy(spellCreated, 1.2f);
+            Destroy(spellCreated, 1.2f);
         }
     }
 

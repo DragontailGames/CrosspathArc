@@ -194,6 +194,7 @@ public class AttributeStatus
             var mod = attributeModifiers.Find(n => n.spellName == attributeModifier.spellName && n.attribute == attributeModifier.attribute);
             if (mod != null)
             {
+                mod.value = attributeModifier.value;
                 mod.count = attributeModifier.count;
             }
             else
@@ -206,6 +207,7 @@ public class AttributeStatus
             var mod = statusModifiers.Find(n => n.spellName == statusModifier.spellName && n.status == statusModifier.status);
             if (mod != null)
             {
+                mod.value = statusModifier.value;
                 mod.count = statusModifier.count;
             }
             else

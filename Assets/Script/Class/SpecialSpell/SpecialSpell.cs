@@ -40,7 +40,7 @@ public class SpecialSpell
     {
         if (duration > 0)
         {
-            var existingSpell = target.specialSpell.Find(n => n.effect == this.effect);
+            var existingSpell = target?.specialSpell.Find(n => n.effect == this.effect);
             if (existingSpell != null)
             {
                 existingSpell.duration = duration;

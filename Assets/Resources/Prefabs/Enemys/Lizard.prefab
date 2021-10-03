@@ -189,6 +189,8 @@ MonoBehaviour:
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   botMultipleTile: {fileID: 0}
+  spells:
+  - {fileID: 11400000, guid: ae6b5339d006933409b0e2f87c1a4043, type: 2}
   specialSpell: []
   HpBar: {fileID: 0}
   hasTarget: 0
@@ -198,7 +200,6 @@ MonoBehaviour:
   mainAnimation: 
   target: {fileID: 0}
   forceTarget: {fileID: 0}
-  spells: []
   range: 1
   meleeAndRanged: 0
   size: 0
