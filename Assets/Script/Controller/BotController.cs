@@ -216,6 +216,10 @@ public class BotController : CreatureController
             gameManager.EndMyTurn(this);
             yield break;
         }
+        else
+        {
+            return false;
+        }
 
         hasTarget = true;
 
