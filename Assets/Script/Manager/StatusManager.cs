@@ -83,7 +83,7 @@ public class StatusManager : MonoBehaviour
     {
         for (int i = 0; i < attributesText.Count; i++)
         {
-            attributesText[i].text = controller.attributeStatus.attributes[i].value.ToString();
+            attributesText[i].text = controller.attributeStatus.GetValue(controller.attributeStatus.attributes[i].attribute).ToString();
 
             Button currentButton = attributePlusButton[i];
             currentButton.targetGraphic.enabled = controller.CharacterStatus.AvailableStatusPoint > 0 && controller.attributeStatus.attributes[i].value < 10;
