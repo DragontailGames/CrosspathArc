@@ -28,11 +28,18 @@ MonoBehaviour:
   attributeInfluence: []
   spellCastObject: {fileID: 6661411421474754461, guid: fd15c54d91650f34f8e0d197b16f89ed, type: 3}
   specialEffect: 12
+<<<<<<< HEAD
   duration: 50
+=======
+  duration: 5
+>>>>>>> origin/master
   invokeLimit: 0
   subSpell: []
   onlyMinions: 0
   costType: 1
+<<<<<<< HEAD
   cooldown: 0
   cooldownTurns: 0
   probabilityToCast: 100
+=======
+>>>>>>> origin/master

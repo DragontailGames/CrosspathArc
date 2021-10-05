@@ -27,6 +27,8 @@ public class CharacterInterface : MonoBehaviour
         mpFlowController = mpInterface.GetComponentInChildren<HPFlowController>();
         txtHp = hpInterface.GetComponentInChildren<TextMeshProUGUI>();
         txtMp = mpInterface.GetComponentInChildren<TextMeshProUGUI>();
+
+        controller.startTurnActions += () => { this.StartTurn(); };
     }
 
     private void Update()
@@ -40,5 +42,20 @@ public class CharacterInterface : MonoBehaviour
 
         txtHp.text = controller.Hp + "/" + maxHp;
         txtMp.text = controller.Mp + "/" + maxMp;
+    }
+
+    public void StartTurn()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (controller.spells.Count > i && controller.spells[i] != null && controller.spells[i].cooldown>0)
+            {
+                controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }
     }
 }

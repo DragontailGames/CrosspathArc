@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ilumination
+    uniqueID: 2410511693
+    locked: 0

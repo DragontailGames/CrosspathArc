@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
+  m_Name: Feline Agi
+  m_EditorClassIdentifier: 
+  spellName: Feline Agi
+  description: Feline Agi
+  spellLogName: 
+  icon: {fileID: 21300000, guid: 524da77acd029b141992be6e9eed396d, type: 3}
+  castTarget: 3
+  availableAt: 9
+  minValue: 0
+  maxValue: 0
+  fixedValue: 0
+  manaCost: 5
+  spellType: 1
+  area: 0
+  buffDebuff:
+  - attribute: 3
+    status: 0
+    specialEffect: 0
+    buffDebuffType: 1
+    value: 0
+    turnDuration: 100
+    attributeInfluence:
+      attribute: 7
+      levelOfSkill: 
+      value: 0
+      multiplier: -3
+    minionModifier: 0
+  attributeInfluence: []
+  spellCastObject: {fileID: 4683210820273860474, guid: 92eb0ee15fce36d4787d92b2f83e0963, type: 3}
+  specialEffect: 0
+  duration: 100
+  invokeLimit: 0
+  subSpell: []
+  onlyMinions: 0
+  costType: 0
+  cooldown: 0
+  cooldownTurns: 0
+  probabilityToCast: 100

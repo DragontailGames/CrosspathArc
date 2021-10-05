@@ -40,7 +40,7 @@ public class SpecialSpell
     {
         if (duration > 0)
         {
-            var existingSpell = target.specialSpell.Find(n => n.effect == this.effect);
+            var existingSpell = target?.specialSpell.Find(n => n.effect == this.effect);
             if (existingSpell != null)
             {
                 existingSpell.duration = duration;
@@ -51,6 +51,23 @@ public class SpecialSpell
                 target.specialSpell.Add(specialSpell);
             }
         }
+        else if(duration == -1)
+        {
+            var existingSpell = target.specialSpell.Find(n => n.effect == this.effect);
+            if (existingSpell != null)
+            {
+                existingSpell.value = value;
+            }
+            else
+            {
+                target.specialSpell.Add(specialSpell);
+            }
+        }
+    }
+
+    public bool ExistingInSpecialSpellList(SpecialSpell specialSpell)
+    {
+        return target.specialSpell.Find(n => n.effect == this.effect) == null;
     }
 
     public virtual void StartNewTurn(CreatureController creatureController)
@@ -93,9 +110,22 @@ public class SpecialSpell
     {
         if (clearAfterDoAttack)
         {
-            Debug.Log("FOI AQUI");
             duration = 0;
             EndOfDuration(creatureController);
+        }
+    }
+
+    public virtual void ChangeValue(int value)
+    {
+        var sSpellAux = target.specialSpell.Find(n => n.effect == this.effect);
+        if(sSpellAux != null)
+        {
+            sSpellAux.value += value;
+        }
+        if(sSpellAux.value<=0)
+        {
+            target.specialSpell.Remove(sSpellAux);
+            Manager.Instance.canvasManager.RemoveLogText(effect.ToString());
         }
     }
 }

@@ -74,6 +74,7 @@ public class CanvasManager : MonoBehaviour
             }
             SetupText(tempStatusLog, aux.spellName, aux.value, aux.attribute.ToString(), aux.count);
         }
+
         foreach (var aux in Manager.Instance.characterController.attributeStatus.statusModifiers)
         {
             var tempStatusLog = statusLogs.Find(n => n.text.Contains(aux.spellName) && n.text.Contains(aux.status.ToString()));
@@ -156,6 +157,10 @@ public class CanvasManager : MonoBehaviour
         if(count == 0)
         {
             statusTmp.text = $"<color=#{positiveColorValue}>{spellName}";
+        }
+        else if (count < 0)
+        {
+            statusTmp.text = $"<color=#{positiveColorValue}>{spellName} {value}";
         }
     }
 
