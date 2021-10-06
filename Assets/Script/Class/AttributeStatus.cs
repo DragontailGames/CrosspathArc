@@ -96,7 +96,7 @@ public class AttributeStatus
         {
             case EnumCustom.Status.Armor:
                 {
-                    value += MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Agi), 2);//Corrige o atributo baseado na formula
+                    value += MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Agi), 4);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.CriticalHit:
@@ -106,7 +106,7 @@ public class AttributeStatus
                 }
             case EnumCustom.Status.Dodge:
                 {
-                    value += GetValue(EnumCustom.Attribute.Agi);//Corrige o atributo baseado na formula
+                    value += MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Agi),3);//Corrige o atributo baseado na formula
                     break;
                 }
             case EnumCustom.Status.HitChance:

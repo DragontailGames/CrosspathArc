@@ -17,6 +17,8 @@ public class SpellbookManager : MonoBehaviour
 
     public GameObject assignMessage;
 
+    public bool isOpen = false;
+
     public void OpenSpellbook()
     {
         this.gameObject.SetActive(true);
@@ -24,7 +26,7 @@ public class SpellbookManager : MonoBehaviour
 
     public void OnEnable()
     {
-        Manager.Instance.gameManager.InPause = true;
+        Manager.Instance.gameManager.SetupPause(true);
         skills = new List<Skill>();
         foreach (var aux in Manager.Instance.characterController.CharacterCombat.skills)
         {
@@ -34,6 +36,7 @@ public class SpellbookManager : MonoBehaviour
             }
         }
         SetupSpellbook(skills[indexSkill]);
+        isOpen = true;
     }
 
     public void Update()
@@ -111,10 +114,11 @@ public class SpellbookManager : MonoBehaviour
 
     public void Close()
     {
+        isOpen = false;
         Manager.Instance.characterController.CharacterCombat.SetSpells(new List<Spell>(selectedSpells));
         Manager.Instance.characterController.CharacterCombat.SetupSpells();
         this.gameObject.SetActive(false);
-        Manager.Instance.gameManager.InPause = false;
         Manager.Instance.mouseTipsManager.HideMessage();
+        Manager.Instance.gameManager.SetupPause(false);
     }
 }

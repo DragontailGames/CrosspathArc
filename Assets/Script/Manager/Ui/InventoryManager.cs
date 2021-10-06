@@ -18,26 +18,26 @@ public class InventoryManager : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        if(Input.GetKeyDown(KeyCode.I) && !manager.InPause)
         {
             OpenInventory();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && inventory.activeSelf == true)
         {
             inventory.SetActive(false);
-            manager.InPause = false;
+            manager.SetupPause(false);
         }
     }
 
     public void OpenInventory()
     {
-        manager.InPause = true;
+        manager.SetupPause(true);
 
         if (inventory.activeSelf)//Inventario aberto
         {
             inventory.SetActive(false);
-            manager.InPause = false;
+            manager.SetupPause(false);
             return;
         }
 

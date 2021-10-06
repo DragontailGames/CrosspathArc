@@ -235,6 +235,11 @@ public class BotController : CreatureController
         {
             return false; 
         }
+        var existingSpecial = this?.specialSpell.Find(n => n.effect == selectedSpell.specialEffect);
+        if (existingSpecial != null)
+        {
+            return false;
+        }
         if (!attributeStatus.HasBuff(selectedSpell.spellName) && selectedSpell.cooldown<=0)
         {
             PlayAnimation("Attack", direction);

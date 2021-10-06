@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
     bool[,] tilesmap;
     PathFind.Grid grid;
     public PathFind.Grid Grid{get { return grid; }}
+
+    public bool InPause { get => this.inPause; }
+
     int width;
     int height;
 
@@ -76,8 +79,6 @@ public class GameManager : MonoBehaviour
         creatures[0] = creatures[indexPlayer];
         creatures[indexPlayer] = firstCC;
     }
-
-    public bool InPause { get => this.inPause; set => this.inPause = value; }//pausa o jogo quando abrir o menu
 
     /// <summary>
     /// Carrega a particula na posição do mouse
@@ -375,8 +376,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && spellbookManager.isOpen)
         {
             spellbookManager.Close();
         }
@@ -398,5 +398,16 @@ public class GameManager : MonoBehaviour
                   (!collisionTM.HasTile(dest + new Vector3Int(1, 1, 0))) &&
                   (tilemap.HasTile(dest) &&
                   cenarioEntities.Find(n => n.currentTileIndex == dest) == null);
+    }
+
+    public void SetupPause(bool _inPause)
+    {
+        StartCoroutine(PauseDelay(_inPause));
+    }
+
+    private IEnumerator PauseDelay(bool _inPause)
+    {
+        yield return new WaitForSeconds(0.2f);
+        this.inPause = _inPause;
     }
 }

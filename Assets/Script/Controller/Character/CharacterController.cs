@@ -218,7 +218,7 @@ public class CharacterController : CreatureController
         string dieAnimationName = animationName + "_Die_" + direction;
         Debug.Log("Name " + dieAnimationName);
         animator.Play(dieAnimationName);
-        Manager.Instance.gameManager.InPause = true;
+        Manager.Instance.gameManager.SetupPause(true);
         Manager.Instance.gameManager.creatures.Remove(this);
     }
 }
