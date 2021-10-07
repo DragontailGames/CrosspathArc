@@ -8,6 +8,8 @@ public class CenarioEntity : MonoBehaviour
 
     public Vector3Int currentTileIndex;
 
+    public bool tileBlock = true; 
+
     public virtual void Start()
     {
         if (entity)
@@ -15,5 +17,10 @@ public class CenarioEntity : MonoBehaviour
             currentTileIndex = Manager.Instance.gameManager.tilemap.WorldToCell(this.transform.position);
             Manager.Instance.gameManager.cenarioEntities.Add(this);
         }
+    }
+
+    public virtual void EventInTile(CreatureController controller)
+    {
+
     }
 }

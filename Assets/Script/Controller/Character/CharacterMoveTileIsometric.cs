@@ -14,7 +14,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     public int tileMove = 1;
 
     public Vector3 offsetPosition;
-    private Vector3 movePosition;
+    public Vector3 movePosition;
     Vector3Int mouse = Vector3Int.zero;
 
     public Vector3Int Mouse { get => this.mouse; set => this.mouse = value; }
@@ -62,12 +62,21 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                     }
                     controller.currentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(controller.currentTileIndex) + offsetPosition;
+                    StartCoroutine(TestHasEntityInTile(controller.currentTileIndex));
                 }
             }
         }
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
 
         controller.animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05);
+    }
+
+    public IEnumerator TestHasEntityInTile(Vector3Int tileIndex)
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        Manager.Instance.gameManager.cenarioEntities.Find(n => n.currentTileIndex == tileIndex && n.tileBlock == false)?.EventInTile(controller);
+
     }
 
     /// <summary>

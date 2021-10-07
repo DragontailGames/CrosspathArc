@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        TeleportManager.Instance.TestTeleport();
         CalculateGrid();
         int indexPlayer = creatures.IndexOf(creatures.Find(n => n.GetType() == typeof(CharacterController)));
         CreatureController firstCC = creatures[0];
@@ -397,7 +398,7 @@ public class GameManager : MonoBehaviour
         return !elevationTM.HasTile(dest + new Vector3Int(1, 1, 0)) &&
                   (!collisionTM.HasTile(dest + new Vector3Int(1, 1, 0))) &&
                   (tilemap.HasTile(dest) &&
-                  cenarioEntities.Find(n => n.currentTileIndex == dest) == null);
+                  cenarioEntities.Find(n => n.currentTileIndex == dest && n.tileBlock == true) == null);
     }
 
     public void SetupPause(bool _inPause)
