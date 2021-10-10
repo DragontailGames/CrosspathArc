@@ -18,6 +18,8 @@ public class CharacterCombat : MonoBehaviour
 
     public List<CharacterMinions> minionCounts = new List<CharacterMinions>();
 
+    public List<SpellAfterDelay> spellAfterDelays = new List<SpellAfterDelay>();
+
     /// <summary>
     /// Configs
     /// </summary>
@@ -116,34 +118,6 @@ public class CharacterCombat : MonoBehaviour
             }
         }
 
-        if (controller.spells[index].costType == EnumCustom.CostType.Mana)
-        {
-            //Check mana
-            if (controller.spells[index].manaCost > controller.Mp)
-            {
-                Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
-                return;
-            }
-            else
-            {
-                controller.Mp -= controller.spells[index].manaCost;
-            }
-        }
-        else
-        {
-            var specialSpellWisp = controller.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Invoke_Wisp) as Invoke_Wisp;
-            //Check mana
-            if (specialSpellWisp == null || controller.spells[index].manaCost > specialSpellWisp.value)
-            {
-                Manager.Instance.canvasManager.LogMessage("<color=grey>Wisps insuficiente</color>");
-                return;
-            }
-            else
-            {
-                specialSpellWisp.Cast(controller, controller.spells[index].manaCost);
-            }
-        }
-
         if (controller.spells[index].castTarget != EnumCustom.CastTarget.None)
         {
             selectedSpell = controller.spells[index];
@@ -152,9 +126,45 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
+            if(!CheckMana(controller.spells[index]))
+            {
+                return;
+            }
             controller.gameManager.EndMyTurn(controller);
             controller.spells[index].Cast(()=> {  },controller,null, new Vector3Int(), minionCounts);
         }
+    }
+
+    public bool CheckMana(Spell spell)
+    {
+        if (spell.costType == EnumCustom.CostType.Mana)
+        {
+            //Check mana
+            if (spell.manaCost > controller.Mp)
+            {
+                Manager.Instance.canvasManager.LogMessage("<color=grey>Mana insuficiente</color>");
+                return false;
+            }
+            else
+            {
+                controller.Mp -= spell.manaCost;
+            }
+        }
+        else
+        {
+            var specialSpellWisp = controller.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Invoke_Wisp) as Invoke_Wisp;
+            //Check mana
+            if (specialSpellWisp == null || spell.manaCost > specialSpellWisp.value)
+            {
+                Manager.Instance.canvasManager.LogMessage("<color=grey>Wisps insuficiente</color>");
+                return false;
+            }
+            else
+            {
+                specialSpellWisp.Cast(controller, spell.manaCost);
+            }
+        }
+        return true;
     }
 
     /// <summary>
@@ -170,20 +180,41 @@ public class CharacterCombat : MonoBehaviour
 
         controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.controller.currentTileIndex, enemy.currentTileIndex);
 
+        int offsetRange = 0;
+
+        if (clickPos.x != playerPos.x && clickPos.y != playerPos.y)
+            offsetRange = 1;
+
         if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
             if(selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
             {
                 return;
             }
-            CastSpell(enemy);
+
+            if (selectedSpell.melee && Vector3Int.Distance(clickPos, playerPos) <= 1 + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+            {
+
+                if (CheckMana(selectedSpell))
+                {
+                    CastSpell(enemy);
+                }
+                return;
+            }
+            else
+            {
+                Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
+            }
+
+            if (!selectedSpell.melee)
+            {
+                if (CheckMana(selectedSpell))
+                {
+                    CastSpell(enemy);
+                }
+            }
             return;
         }
-
-        int offsetRange = 0;
-
-        if(clickPos.x != playerPos.x && clickPos.y != playerPos.y)
-            offsetRange = 1;
 
         if (Vector3Int.Distance(clickPos, playerPos) <= controller.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
         {

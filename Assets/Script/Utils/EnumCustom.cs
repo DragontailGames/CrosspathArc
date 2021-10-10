@@ -85,6 +85,8 @@ public class EnumCustom : MonoBehaviour
         All,
         Invoke_Wisp,
         Visibility,
+        Aggro,
+        Charm,
     }
 
     public enum BuffDebuffType

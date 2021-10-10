@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I) && !manager.InPause)
+        if(Input.GetKeyDown(KeyCode.I))
         {
             OpenInventory();
         }

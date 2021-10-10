@@ -46,9 +46,14 @@ public class EnemyController : BotController
         }*/
     }
 
+    public void StartTurn()
+    {
+        StartCoroutine(StartMyTurn());
+    }
+
     public override IEnumerator StartMyTurn(bool canStartTurn = true)
     {
-        var newTarget = GetTarget(typeof(EnemyController), null, 10);
+        var newTarget = GetTarget(typeof(EnemyController), null);
         if (forceTarget)
         {
             if (newTarget)

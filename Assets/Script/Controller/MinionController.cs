@@ -13,6 +13,12 @@ public class MinionController : BotController
         Manager.Instance.timeManager.startNewTurnAction += () => { StartNewTurn(); };
     }
 
+    public override void Setup(BotController botController)
+    {
+        base.Setup(botController);
+        this.duration = 99;
+    }
+
     public void StartNewTurn()
     {
         if(Hp<=0)
@@ -43,7 +49,7 @@ public class MinionController : BotController
             gameManager.EndMyTurn(this);
             yield break;
         }
-        target = GetTarget(null, typeof(EnemyController),10);
+        target = GetTarget(null, typeof(EnemyController));
         if(target == null)
         {
             target = Manager.Instance.characterController;

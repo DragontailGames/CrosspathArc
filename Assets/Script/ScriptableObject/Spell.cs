@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using System.Threading.Tasks;
 
 [CreateAssetMenu(menuName = "Arc/Spell")]
 public class Spell : ScriptableObject
@@ -56,6 +57,14 @@ public class Spell : ScriptableObject
 
     public int probabilityToCast = 100;
 
+    public bool melee = false;
+
+    public int multipleHit = 0;
+
+    public EnumCustom.Status mainStatusToTryHit = EnumCustom.Status.SpellHit;
+
+    public int castAfterTurns = 0;
+
     public int GetValue(CreatureController creatureController)
     {
         int value = 0;
@@ -74,9 +83,9 @@ public class Spell : ScriptableObject
         return value;
     }
 
-    public void Cast(UnityAction action, CreatureController caster, CreatureController target, Vector3Int tile, List<CharacterMinions> minionCounts)
+    public void Cast(UnityAction action, CreatureController caster, CreatureController target, Vector3Int tile, List<CharacterMinions> minionCounts, bool onlyCast = false)
     {
-        int hitChance = caster.attributeStatus.GetValue(EnumCustom.Status.SpellHit);
+        int hitChance = caster.attributeStatus.GetValue(mainStatusToTryHit);
         int intAttribute = caster.attributeStatus.GetValue(EnumCustom.Attribute.Int);
 
         int spellDamage = GetValue(caster);
@@ -87,21 +96,47 @@ public class Spell : ScriptableObject
         if (attributeInfluence.Count > 0)
         {
             extraDamage = " + ";
+            int extraDmg = 0;
+
+            foreach (var aux in attributeInfluence)
+            {
+                var auxAttribute = aux.GetValue(caster);
+                extraDmg += auxAttribute;
+                //damage += auxAttribute;
+                spellDamage -= auxAttribute;
+            }
+
+            extraDamage += extraDmg;
         }
 
-        int extraDmg = 0;
-
-        foreach (var aux in attributeInfluence)
-        {
-            var auxAttribute = aux.GetValue(caster);
-            extraDmg += auxAttribute;
-            //damage += auxAttribute;
-            spellDamage -= auxAttribute;
-        }
-        extraDamage += extraDmg;
         string textDamage = "(" + (spellDamage + extraDamage) + ")";
 
-        action += () => { CastSubspells(caster, target); };
+        if (onlyCast == false)
+        {
+            if (castAfterTurns > 0)
+            {
+                UnityAction tempAction = action;
+                new SpellAfterDelay(castAfterTurns, () => this.Cast(tempAction, caster, target, tile, minionCounts, true), caster.GetComponent<CharacterCombat>());
+
+                Manager.Instance.canvasManager.UpdateStatus();
+
+                action += () => { CastSubspells(caster, target); };
+                action?.Invoke();
+
+                return;
+            }
+            if (multipleHit > 0)
+            {
+                for (int i = 0; i < multipleHit - 1; i++)
+                {
+                    if(target.Hp>0)
+                    {
+                        this.Cast(null, caster, target, tile, minionCounts, true);
+                    }
+                }
+            }
+            action += () => { CastSubspells(caster, target); };
+        }
 
         cooldown = cooldownTurns;
 
@@ -178,6 +213,12 @@ public class Spell : ScriptableObject
             Manager.Instance.canvasManager.UpdateStatus();
             action?.Invoke();
         }
+    }
+
+    public IEnumerator CastAfterDelay(UnityAction action, int count)
+    {
+        yield return new WaitForSeconds(0.1f * count);
+        action?.Invoke();
     }
 
     public bool CheckIsEnemy(CreatureController caster, CreatureController target)

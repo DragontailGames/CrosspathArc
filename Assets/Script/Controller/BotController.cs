@@ -53,6 +53,37 @@ public class BotController : CreatureController
         }
     }
 
+    public virtual void Setup(BotController botController)
+    {
+
+        this.attributeStatus = botController.attributeStatus;
+        this.myTurn = botController.myTurn;
+        this.inCombat = botController.inCombat;
+        this.animationName = botController.animationName;
+        this.direction = botController.direction;
+        this.offsetSpell = botController.offsetSpell;
+        this.level = botController.level;
+        this.nickname = botController.nickname;
+        this.hp = botController.hp;
+        this.mp = botController.mp;
+        this.canMove = botController.canMove;
+        this.currentTileIndex = botController.currentTileIndex;
+        this.botMultipleTile = botController.botMultipleTile;
+        this.spells = botController.spells;
+        this.startTurnActions = botController.startTurnActions;
+        this.aggro = botController.aggro;
+        this.specialSpell = botController.specialSpell;
+        this.offsetPosition = botController.offsetPosition;
+        this.movementSpeed = botController.movementSpeed;
+        this.mainAnimation = botController.mainAnimation;
+        this.range = botController.range;
+        this.meleeAndRanged = botController.meleeAndRanged;
+        this.size = botController.size;
+        this.exp = botController.exp;
+
+        Start();
+    }
+
     public virtual void Update()
     {
         var scale = HpBar.localScale;
@@ -328,7 +359,7 @@ public class BotController : CreatureController
         animator.Play(ani);
     }
 
-    public CreatureController GetTarget(Type exept, Type only, int limit)
+    public CreatureController GetTarget(Type exept, Type only)
     {
         List<CreatureController> creaturesWithoutEnemy = new List<CreatureController>();
         if (exept != null)
@@ -349,6 +380,9 @@ public class BotController : CreatureController
                 return null;
             }
             var distance = Vector3.Distance(aux.transform.position, this.transform.position);
+
+            int limit = aux.aggro;
+
             if (Vector3Int.Distance(aux.currentTileIndex, currentTileIndex) < limit)
             {
                 if (distance < shortestDistance)

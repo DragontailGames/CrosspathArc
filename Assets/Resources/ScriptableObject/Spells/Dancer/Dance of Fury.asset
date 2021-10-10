@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e454f6ffe2ac940855c1aabd7019b5, type: 3}
+  m_Name: Dance of Fury
+  m_EditorClassIdentifier: 
+  spellName: Dance of Fury
+  description: Dance of Fury
+  spellLogName: 
+  icon: {fileID: 21300000, guid: f5d713049eaa01740b526784e3548148, type: 3}
+  castTarget: 0
+  availableAt: 6
+  minValue: 0
+  maxValue: 0
+  fixedValue: 7
+  manaCost: 15
+  spellType: 0
+  area: 0
+  buffDebuff: []
+  attributeInfluence:
+  - attribute: 7
+    levelOfSkill: 
+    value: 0
+    multiplier: -2
+  spellCastObject: {fileID: 7796539701105135043, guid: 1a9f316f1cf769842ab659933ac8ee9a, type: 3}
+  specialEffect: 0
+  duration: 0
+  invokeLimit: 0
+  subSpell:
+  - minValue: 0
+    maxValue: 0
+    fixedValue: 0
+    castTarget: 4
+    spellType: 3
+    area: 0
+    buffDebuff: []
+    attributeInfluence: []
+    specialEffect: 3
+    duration: 4
+    invokeLimit: 0
+  onlyMinions: 0
+  costType: 0
+  cooldown: 0
+  cooldownTurns: 0
+  probabilityToCast: 100
+  melee: 1
+  multipleHit: 4
+  mainStatusToTryHit: 4
+  castAfterTurns: 0

@@ -36,6 +36,8 @@ public class CreatureController : MonoBehaviour
 
     public UnityAction startTurnActions;
 
+    public int aggro = 10;
+
     public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(level)); }
     public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(level)); }
 
@@ -79,6 +81,7 @@ public class CreatureController : MonoBehaviour
         }
         else
         {
+            yield return new WaitForSeconds(0.5f);
             gameManager.EndMyTurn(this);
         }
     }
@@ -138,6 +141,10 @@ public class CreatureController : MonoBehaviour
 
     public virtual void ReceiveSpell(CreatureController caster, int damage, string damageText, Spell spell)
     {
+        if(Hp <= 0)
+        {
+            return;
+        }
         if (spell.spellType == EnumCustom.SpellType.Special)
         {
             spell.CastSpecial(this, caster);

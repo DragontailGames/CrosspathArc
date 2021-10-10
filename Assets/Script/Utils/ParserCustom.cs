@@ -60,8 +60,17 @@ public static class ParserCustom
                 }
             case EnumCustom.SpecialEffect.Visibility:
                 {
-                    Debug.Log("Chegou aqui");
                     new Visibility(specialSpell);
+                    break;
+                }
+            case EnumCustom.SpecialEffect.Aggro:
+                {
+                    new Aggro(specialSpell);
+                    break;
+                }
+            case EnumCustom.SpecialEffect.Charm:
+                {
+                    new Charm(specialSpell);
                     break;
                 }
         }

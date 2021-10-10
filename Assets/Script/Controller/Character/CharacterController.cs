@@ -137,6 +137,11 @@ public class CharacterController : CreatureController
 
         characterStatus.StartTurn();
 
+        foreach(var aux in characterCombat.spellAfterDelays.ToList())
+        {
+            aux.EndTurn();
+        }
+
         if (isRest)
         {
             Hp += Manager.Instance.configManager.healthRestPerTurn;

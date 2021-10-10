@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Dancer
+  m_EditorClassIdentifier: 
+  skillName: Dancer
+  skillType: 1
+  modifier: []
+  weaponBuffSkills: []
+  spells:
+  - {fileID: 11400000, guid: 23d519afd24b7ce4f8d403a371770164, type: 2}
+  - {fileID: 11400000, guid: d486a4b142194e24d986357127f36c73, type: 2}
+  - {fileID: 11400000, guid: 883a2b86cc6be2d40b7fc37c9fb508f3, type: 2}
+  - {fileID: 11400000, guid: 183f08ad626e89846a0b5b1fbddef693, type: 2}
+  - {fileID: 11400000, guid: 713438b8570d3f24582027305b732db5, type: 2}
+  - {fileID: 11400000, guid: 0e5028e6cd5efc745a9fc39b515df5ff, type: 2}
+  - {fileID: 11400000, guid: c4390ce26a4219a48a47395f32672585, type: 2}
+  - {fileID: 11400000, guid: 3977a419d13b29b4d81bb7f64f729582, type: 2}
