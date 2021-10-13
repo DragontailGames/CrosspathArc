@@ -81,7 +81,6 @@ public class CreatureController : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.5f);
             gameManager.EndMyTurn(this);
         }
     }

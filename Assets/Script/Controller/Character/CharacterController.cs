@@ -158,6 +158,11 @@ public class CharacterController : CreatureController
                 StopRest();
             }
         }
+
+        if(canStartTurn == false)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     /// <summary>
