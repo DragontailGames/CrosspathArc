@@ -64,6 +64,11 @@ public class SubSpell
                     originalSpell.CastBuff(target);
                     break;
                 }
+            case EnumCustom.SpellType.Hit:
+                {
+                    originalSpell.CastProjectileSpell(100,100,caster,target, GetValue(caster),"",null);
+                    break;
+                }
         }
     }
 }

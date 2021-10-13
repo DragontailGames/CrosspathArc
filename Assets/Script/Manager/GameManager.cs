@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public List<CenarioEntity> cenarioEntities = new List<CenarioEntity>();
 
+    public List<CenarioEntity> cenarioEntitiesMouseOn = new List<CenarioEntity>();
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;

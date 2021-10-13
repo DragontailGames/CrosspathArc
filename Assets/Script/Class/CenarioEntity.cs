@@ -8,14 +8,17 @@ public class CenarioEntity : MonoBehaviour
 
     public Vector3Int currentTileIndex;
 
-    public bool tileBlock = true; 
+    public bool tileBlock = true;
+
+    public GameManager gameManager;
 
     public virtual void Start()
     {
+        gameManager = Manager.Instance.gameManager;
         if (entity)
         {
             currentTileIndex = Manager.Instance.gameManager.tilemap.WorldToCell(this.transform.position);
-            Manager.Instance.gameManager.cenarioEntities.Add(this);
+            gameManager.cenarioEntities.Add(this);
         }
     }
 
@@ -23,4 +26,12 @@ public class CenarioEntity : MonoBehaviour
     {
 
     }
+
+    public virtual void OnMouseEnter() { gameManager.cenarioEntitiesMouseOn.Add(this); }
+
+    public virtual void OnMouseOver(){ }
+
+    public virtual void OnMouseExit(){ gameManager.cenarioEntitiesMouseOn.Remove(this); }
+
+    public virtual void OnMouseDown(){}
 }

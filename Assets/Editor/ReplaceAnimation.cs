@@ -7,8 +7,8 @@ using System.IO;
 public class ReplaceAnimation
 {
     public static string folder = "Assets/Animation/Creatures";
-    public static string oldName = "Crawler";
-    public static string newName = "Slime";
+    public static string oldName = "Flayer";
+    public static string newName = "Goblin";
     public static string oldSprites_folder = "./Assets/Sprite/Wolf Inimigo";
     public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
 

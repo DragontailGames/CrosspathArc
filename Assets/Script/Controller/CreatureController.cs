@@ -192,7 +192,9 @@ public class CreatureController : MonoBehaviour
         }
 
         if (damage > 0)
+        {
             ReceiveDamage(caster);
+        }
     }
 
     /// <summary>

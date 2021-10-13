@@ -210,8 +210,11 @@ public class Spell : ScriptableObject
                     CastAreaSpell(hitChance, intAttribute, tile, damage, textDamage, caster, action);
                 }
             }
-            Manager.Instance.canvasManager.UpdateStatus();
-            action?.Invoke();
+            else {
+                Manager.Instance.canvasManager.UpdateStatus();
+                action?.Invoke();
+            }
+            
         }
     }
 
@@ -297,7 +300,7 @@ public class Spell : ScriptableObject
         Destroy(objectSpell, 1.0f);
     }
 
-    private void CastProjectileSpell(int hitChance, int intAttribute, CreatureController caster, CreatureController target, int damage, string textDamage, UnityAction action)
+    public void CastProjectileSpell(int hitChance, int intAttribute, CreatureController caster, CreatureController target, int damage, string textDamage, UnityAction action)
     {
         bool hit = Combat.TryHit(hitChance, intAttribute, target.attributeStatus.GetValue(EnumCustom.Status.SpellDodge), target.nickname);
         if (!hit)

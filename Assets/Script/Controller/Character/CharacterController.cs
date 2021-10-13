@@ -70,9 +70,11 @@ public class CharacterController : CreatureController
         {
             StartCoroutine(StartDelay());
 
-            if (EventSystem.current.IsPointerOverGameObject()) return;
+            if (EventSystem.current.IsPointerOverGameObject() || gameManager.cenarioEntitiesMouseOn.Count>0) return;
 
             Vector3Int mousePos = MousePosition();
+
+            if (gameManager.cenarioEntities.Find(n => n.currentTileIndex == mousePos) != null) return;
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
@@ -221,7 +223,6 @@ public class CharacterController : CreatureController
     public override void Defeat()
     {
         string dieAnimationName = animationName + "_Die_" + direction;
-        Debug.Log("Name " + dieAnimationName);
         animator.Play(dieAnimationName);
         Manager.Instance.gameManager.SetupPause(true);
         Manager.Instance.gameManager.creatures.Remove(this);
