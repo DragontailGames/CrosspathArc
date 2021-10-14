@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class MenuManager : MonoBehaviour
 {
@@ -70,6 +71,9 @@ public class MenuManager : MonoBehaviour
 
     public void Btn_Exit()
     {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#endif            
         Application.Quit();
     }
 }

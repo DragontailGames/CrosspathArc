@@ -38,5 +38,14 @@ MonoBehaviour:
   onlyMinions: 0
   costType: 0
   cooldown: 0
-  cooldownTurns: 7
+  cooldownTurns: 20
+  attributeInfluenceCooldownTurns:
+  - attribute: 7
+    levelOfSkill: Sorcerer
+    value: 0
+    multiplier: -2
   probabilityToCast: 100
+  melee: 0
+  multipleHit: 0
+  mainStatusToTryHit: 4
+  castAfterTurns: 0

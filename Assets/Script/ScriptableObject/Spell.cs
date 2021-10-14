@@ -55,6 +55,8 @@ public class Spell : ScriptableObject
 
     public int cooldownTurns = 0;
 
+    public List<AttributeInfluence> attributeInfluenceCooldownTurns;
+
     public int probabilityToCast = 100;
 
     public bool melee = false;
@@ -111,7 +113,14 @@ public class Spell : ScriptableObject
 
         string textDamage = "(" + (spellDamage + extraDamage) + ")";
 
-        cooldown = cooldownTurns;
+        int value = cooldownTurns;
+
+        foreach(var aux in attributeInfluenceCooldownTurns)
+        {
+            value -= aux.GetValue(caster);
+        }
+
+        cooldown = value;
 
         if (onlyCast == false)
         {
