@@ -29,7 +29,7 @@ MonoBehaviour:
   - attribute: 7
     levelOfSkill: 
     value: 0
-    multiplier: 0
+    multiplier: 1
   spellCastObject: {fileID: 924191849733454078, guid: 3c532f0ee52ea594092bc0f75fe1a3f3, type: 3}
   specialEffect: 14
   duration: 10

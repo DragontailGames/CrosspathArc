@@ -111,6 +111,8 @@ public class Spell : ScriptableObject
 
         string textDamage = "(" + (spellDamage + extraDamage) + ")";
 
+        cooldown = cooldownTurns;
+
         if (onlyCast == false)
         {
             if (castAfterTurns > 0)
@@ -138,7 +140,6 @@ public class Spell : ScriptableObject
             action += () => { CastSubspells(caster, target); };
         }
 
-        cooldown = cooldownTurns;
 
         if (castTarget == EnumCustom.CastTarget.Area)
         {
@@ -185,7 +186,7 @@ public class Spell : ScriptableObject
                     {
                         foreach (var minionCreature in minion.creatures)
                         {
-                            this.CastSpecial(minionCreature, caster);
+                            this.CastSpecial(minionCreature, caster, action);
                         }
                     }
                 }
@@ -198,9 +199,11 @@ public class Spell : ScriptableObject
                     }
                     else
                     {
-                        this.CastSpecial(caster, caster);
+                        this.CastSpecial(caster, caster, action);
                     }
                 }
+
+                Manager.Instance.canvasManager.UpdateStatus();
             }
             else if(this.spellType == EnumCustom.SpellType.Hit)
             {
@@ -293,10 +296,11 @@ public class Spell : ScriptableObject
         }
     }
 
-    public void CastSpecial(CreatureController target, CreatureController caster)
+    public void CastSpecial(CreatureController target, CreatureController caster, UnityAction action)
     {
-        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
+        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect, spellLogName));
         GameObject objectSpell = Instantiate(spellCastObject, target.transform);
+        action?.Invoke();
         Destroy(objectSpell, 1.0f);
     }
 
@@ -401,7 +405,7 @@ public class Spell : ScriptableObject
                 {
                     if (spellType == EnumCustom.SpellType.Special)
                     {
-                        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, creature, specialEffect));
+                        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, creature, specialEffect, spellLogName));
                     }
                     else
                     {

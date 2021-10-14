@@ -146,7 +146,7 @@ public class CreatureController : MonoBehaviour
         }
         if (spell.spellType == EnumCustom.SpellType.Special)
         {
-            spell.CastSpecial(this, caster);
+            spell.CastSpecial(this, caster, null);
         }
         else if (spell.spellType == EnumCustom.SpellType.Buff)
         {
@@ -166,7 +166,7 @@ public class CreatureController : MonoBehaviour
                 {
                     this.attributeStatus.AddModifier(null, new StatusModifier()
                     {
-                        spellName = spell.spellName,
+                        spellName = spell.spellLogName == "" ? spell.spellName : spell.spellLogName,
                         status = aux.status,
                         count = aux.turnDuration,
                         value = aux.value + aux.attributeInfluence.GetValue(caster)

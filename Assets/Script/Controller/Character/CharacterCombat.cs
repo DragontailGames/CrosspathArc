@@ -130,8 +130,8 @@ public class CharacterCombat : MonoBehaviour
             {
                 return;
             }
-            controller.gameManager.EndMyTurn(controller);
             controller.spells[index].Cast(()=> {  },controller,null, new Vector3Int(), minionCounts);
+            controller.gameManager.EndMyTurn(controller);
         }
     }
 
@@ -238,6 +238,11 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
         if (selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
+        {
+            return;
+        }
+
+        if(!CheckMana(selectedSpell))
         {
             return;
         }

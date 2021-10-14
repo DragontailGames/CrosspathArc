@@ -6,6 +6,8 @@ using UnityEngine.Events;
 [System.Serializable]
 public class SpecialSpell
 {
+    public string logName = "";
+
     public int duration;
 
     public int value;
@@ -20,8 +22,9 @@ public class SpecialSpell
 
     public bool clearAfterDoAttack = false;
 
-    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect)
+    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect, string logName)
     {
+        this.logName = logName;
         this.duration = duration;
         this.value = value;
         this.caster = caster;

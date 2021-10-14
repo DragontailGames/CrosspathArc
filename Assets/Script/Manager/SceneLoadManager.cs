@@ -38,16 +38,20 @@ public class SceneLoadManager : MonoBehaviour
         loadingObject.SetActive(true);
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        operation.allowSceneActivation = false;
 
-        while (!operation.isDone)
+        float count = 0;
+
+        while (!operation.isDone && count<=10)
         {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
-
-            Debug.Log(operation.progress);
+            yield return new WaitForSeconds(0.1f);
+            float progress = count / 10.0f;
 
             fillLoading.fillAmount = progress;
 
-            yield return null;
+            count += Random.Range(0.2f,0.6f);
         }
+
+        operation.allowSceneActivation = true;
     }
 }

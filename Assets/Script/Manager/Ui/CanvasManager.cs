@@ -112,7 +112,7 @@ public class CanvasManager : MonoBehaviour
 
         foreach(var specialStatus in Manager.Instance.characterController.specialSpell)
         {
-            SetupText(null, specialStatus.effect.ToString(), specialStatus.value, "", specialStatus.duration);
+            SetupText(null, specialStatus.logName == "" ? specialStatus.effect.ToString(): specialStatus.logName, specialStatus.value, "", specialStatus.duration);
         }
     }
 

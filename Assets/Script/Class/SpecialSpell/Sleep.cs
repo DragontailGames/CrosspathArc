@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class Sleep : SpecialSpell
 {
-    public Sleep(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
-    {
-        clearAfterReceiveHit = true;
-        AddToSpecialSpellList(this);
-    }
-
-    public Sleep(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
+    public Sleep(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         clearAfterReceiveHit = true;
         AddToSpecialSpellList(this);

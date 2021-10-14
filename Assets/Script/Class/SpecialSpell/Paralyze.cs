@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class Paralyze : SpecialSpell
 {
-    public Paralyze(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
-    {
-        AddToSpecialSpellList(this);
-        SetupSpell();
-    }
-    public Paralyze(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
+    public Paralyze(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
         SetupSpell();

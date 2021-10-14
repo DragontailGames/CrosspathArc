@@ -10,12 +10,8 @@ public class Hp_Regen : SpecialSpell
         creatureController.Hp += value;
     }
 
-    public Hp_Regen(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
-    {
-        AddToSpecialSpellList(this);
-    }
 
-    public Hp_Regen(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
+    public Hp_Regen(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
     }

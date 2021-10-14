@@ -56,7 +56,7 @@ public class SubSpell
         {
             case EnumCustom.SpellType.Special:
                 {
-                    ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect));
+                    ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect, originalSpell.spellLogName));
                     break;
                 }
             case EnumCustom.SpellType.Buff:

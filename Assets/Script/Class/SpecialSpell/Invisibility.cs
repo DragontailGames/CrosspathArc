@@ -13,7 +13,7 @@ public class Invisibility : SpecialSpell
         target.transform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
     }
 
-    public Invisibility(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
+    public Invisibility(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         clearAfterDoAttack = true;
         foreach (var aux in Manager.Instance.enemyManager.enemies)

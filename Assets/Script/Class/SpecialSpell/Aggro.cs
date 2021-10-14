@@ -10,13 +10,7 @@ public class Aggro : SpecialSpell
         target.aggro += value;
     }
 
-    public Aggro(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
-    {
-        AddToSpecialSpellList(this);
-        target.aggro -= value;
-    }
-
-    public Aggro(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
+    public Aggro(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
         target.aggro -= value;

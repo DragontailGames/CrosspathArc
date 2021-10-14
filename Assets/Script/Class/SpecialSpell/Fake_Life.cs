@@ -10,13 +10,8 @@ public class Fake_Life : SpecialSpell
         target.attributeStatus.fakeLife = 0;
     }
 
-    public Fake_Life(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect) : base(duration, value, caster, target, effect)
-    {
-        target.attributeStatus.fakeLife = value;
-        AddToSpecialSpellList(this);
-    }
 
-    public Fake_Life(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect)
+    public Fake_Life(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         target.attributeStatus.fakeLife = value;
         AddToSpecialSpellList(this);
