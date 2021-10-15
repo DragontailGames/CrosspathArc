@@ -16,7 +16,12 @@ public class Manager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<Manager>();
+                _instance = FindObjectOfType<Manager>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    _instance = obj.AddComponent<Manager>();
+                }
             }
 
             return _instance;
@@ -25,7 +30,14 @@ public class Manager : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (_instance == null || ReferenceEquals(this, _instance))
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
     #endregion
 

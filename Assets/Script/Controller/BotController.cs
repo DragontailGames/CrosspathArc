@@ -81,7 +81,7 @@ public class BotController : CreatureController
         this.size = botController.size;
         this.exp = botController.exp;
 
-        Start();
+        //Start();
     }
 
     public virtual void Update()

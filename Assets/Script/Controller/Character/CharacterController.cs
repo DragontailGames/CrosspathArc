@@ -50,6 +50,7 @@ public class CharacterController : CreatureController
         characterInventory = this.GetComponent<CharacterInventory>();
         characterInventory.controller = this;
         characterMoveTileIsometric = this.GetComponent<CharacterMoveTileIsometric>();
+        characterMoveTileIsometric.gameManager = Manager.Instance.gameManager;
         characterMoveTileIsometric.controller = this;
         characterStatus = this.GetComponent<CharacterStatus>();
         characterStatus.controller = this;

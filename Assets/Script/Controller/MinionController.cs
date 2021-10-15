@@ -16,6 +16,7 @@ public class MinionController : BotController
     public override void Setup(BotController botController)
     {
         base.Setup(botController);
+        base.Start();
         this.duration = 99;
     }
 

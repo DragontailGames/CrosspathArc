@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Game manager geral
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Manager.Instance.gameManager = this;
+
         if (!PlayerPrefs.HasKey("PLAYER"))
         {
             Manager.Instance.sceneLoadManager.GotoMenu();
@@ -39,16 +41,18 @@ public class GameManager : MonoBehaviour
                 GameObject main = GameObject.Find("Hero_1");
                 Manager.Instance.characterController = main.GetComponent<CharacterController>();
                 cinemachineVirtualCamera.Follow = main.transform;
-                GameObject.Find("Hero_2").SetActive(false);
+                GameObject.Find("Hero_2")?.SetActive(false);
             }
             if (PlayerPrefs.GetString("PLAYER") == "2")
             {
                 GameObject main = GameObject.Find("Hero_2");
                 Manager.Instance.characterController = main.GetComponent<CharacterController>();
                 cinemachineVirtualCamera.Follow = main.transform;
-                GameObject.Find("Hero_1").SetActive(false);
+                GameObject.Find("Hero_1")?.SetActive(false);
             }
         }
+        Manager.Instance.canvasManager = GameObject.Find("Canvas").GetComponent<CanvasManager>();
+        TeleportManager.Instance.TestTeleport();
     }
 
     public Transform particleClick;
@@ -75,9 +79,15 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        TeleportManager.Instance.TestTeleport();
         CalculateGrid();
         int indexPlayer = creatures.IndexOf(creatures.Find(n => n.GetType() == typeof(CharacterController)));
+        if (indexPlayer == -1)
+        {
+            SceneManager.MoveGameObjectToScene(Manager.Instance.characterController.gameObject, SceneManager.GetActiveScene());
+            SceneManager.MoveGameObjectToScene(Manager.Instance.canvasManager.gameObject, SceneManager.GetActiveScene());
+            Manager.Instance.characterController.Awake();
+            indexPlayer = creatures.IndexOf(creatures.Find(n => n.GetType() == typeof(CharacterController)));
+        }
         CreatureController firstCC = creatures[0];
         creatures[0] = creatures[indexPlayer];
         creatures[indexPlayer] = firstCC;

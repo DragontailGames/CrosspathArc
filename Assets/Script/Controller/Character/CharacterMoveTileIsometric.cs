@@ -22,7 +22,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     //Resets iniciais
     public void Start()
     {
-
         movePosition = gameManager.tilemap.GetCellCenterWorld(controller.currentTileIndex) + offsetPosition;
     }
 

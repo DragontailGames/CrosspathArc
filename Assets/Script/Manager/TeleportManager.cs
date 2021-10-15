@@ -13,7 +13,12 @@ public class TeleportManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = GameObject.FindObjectOfType<TeleportManager>();
+                _instance = FindObjectOfType<TeleportManager>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    _instance = obj.AddComponent<TeleportManager>();
+                }
             }
 
             return _instance;
@@ -22,7 +27,14 @@ public class TeleportManager : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (_instance == null || ReferenceEquals(this, _instance))
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
     #endregion
 
@@ -32,7 +44,8 @@ public class TeleportManager : MonoBehaviour
     {
         if (destinationTile != Vector3Int.zero)
         {
-            CreatureController controller = Manager.Instance.characterController;
+            CharacterController controller = Manager.Instance.characterController;
+            controller.Awake();
 
             Vector3 destinyPosition = Manager.Instance.gameManager.tilemap.CellToWorld(destinationTile);
 

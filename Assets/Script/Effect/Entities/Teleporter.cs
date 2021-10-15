@@ -14,8 +14,11 @@ public class Teleporter : CenarioEntity
     {
         if(sceneToTeleport != "" && destinyTile != Vector3Int.zero)
         {
+            DontDestroyOnLoad(Manager.Instance.characterController.gameObject);
+            DontDestroyOnLoad(Manager.Instance.canvasManager.gameObject);
             TeleportManager.Instance.destinationTile = destinyTile;
             Manager.Instance.sceneLoadManager.GotoScene(sceneToTeleport);
+           
             return;
         }
 
