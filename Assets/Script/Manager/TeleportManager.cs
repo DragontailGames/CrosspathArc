@@ -27,14 +27,15 @@ public class TeleportManager : MonoBehaviour
 
     void Awake()
     {
-        if (_instance == null || ReferenceEquals(this, _instance))
+        if (_instance == null)
         {
             _instance = this;
         }
-        else
+        else if (_instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
     #endregion
 

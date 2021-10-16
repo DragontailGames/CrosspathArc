@@ -22,6 +22,14 @@ public class CanvasManager : MonoBehaviour
 
     public Transform skillPanel;
 
+    public GameObject inventory;
+
+    public MouseTipsManager mouseTipsManager;
+
+    public InventoryManager inventoryManager;
+
+    public SpellbookManager spellbookManager;
+
     /// <summary>
     /// Carrega a barra de exp
     /// </summary>
@@ -31,6 +39,10 @@ public class CanvasManager : MonoBehaviour
     {
         float value = (float)(exp /nextLevelExp);
         expBar.fillAmount = value;
+    }
+
+    public void ReStart()
+    {
     }
 
     /// <summary>
@@ -173,5 +185,15 @@ public class CanvasManager : MonoBehaviour
             statusLogs.Remove(temp);
             DestroyImmediate(temp.gameObject);
         }
+    }
+
+    public void Rest_Btn()
+    {
+        Manager.Instance.gameManager.Rest();
+    }
+
+    public void InventoryOpen_Btn()
+    {
+        inventoryManager.OpenInventory();
     }
 }

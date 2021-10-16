@@ -37,7 +37,10 @@ public class BotController : CreatureController
         gameManager = Manager.Instance.gameManager;
 
         maxHp = attributeStatus.GetMaxHP(level);
-        Hp = maxHp;
+        if (hp <= 0)
+        {
+            Hp = maxHp;
+        }
         HpBar = this.transform.Find("HealthBar").GetChild(0);
 
         this.transform.position = Manager.Instance.gameManager.tilemap.GetCellCenterWorld(currentTileIndex) + offsetPosition;
@@ -55,7 +58,6 @@ public class BotController : CreatureController
 
     public virtual void Setup(BotController botController)
     {
-
         this.attributeStatus = botController.attributeStatus;
         this.myTurn = botController.myTurn;
         this.inCombat = botController.inCombat;
@@ -66,6 +68,7 @@ public class BotController : CreatureController
         this.nickname = botController.nickname;
         this.hp = botController.hp;
         this.mp = botController.mp;
+        this.movePosition = botController.movePosition;
         this.canMove = botController.canMove;
         this.currentTileIndex = botController.currentTileIndex;
         this.botMultipleTile = botController.botMultipleTile;
@@ -95,7 +98,7 @@ public class BotController : CreatureController
     {
         if (Hp <= 0)//Correção temporaria
             return;
-
+            
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
         animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05f && Hp > 0);
     }

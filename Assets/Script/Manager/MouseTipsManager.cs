@@ -8,7 +8,6 @@ public class MouseTipsManager : MonoBehaviour
 {
     void Awake()
     {
-        Manager.Instance.mouseTipsManager = this;
         this.gameObject.SetActive(false);
     }
 

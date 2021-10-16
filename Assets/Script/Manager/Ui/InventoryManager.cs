@@ -14,7 +14,13 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject inventory;
 
-    public GameManager manager;
+    public void Start()
+    {
+        if (inventory == null)
+        {
+            inventory = Manager.Instance.canvasManager.inventory;
+        }
+    }
 
     public void Update()
     {
@@ -26,18 +32,18 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && inventory.activeSelf == true)
         {
             inventory.SetActive(false);
-            manager.SetupPause(false);
+            Manager.Instance.gameManager.SetupPause(false);
         }
     }
 
     public void OpenInventory()
     {
-        manager.SetupPause(true);
+        Manager.Instance.gameManager.SetupPause(true);
 
         if (inventory.activeSelf)//Inventario aberto
         {
             inventory.SetActive(false);
-            manager.SetupPause(false);
+            Manager.Instance.gameManager.SetupPause(false);
             return;
         }
 

@@ -30,14 +30,15 @@ public class Manager : MonoBehaviour
 
     void Awake()
     {
-        if (_instance == null || ReferenceEquals(this, _instance))
+        if (_instance == null)
         {
             _instance = this;
         }
-        else
+        else if (_instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
+        DontDestroyOnLoad(gameObject);
     }
     #endregion
 
@@ -54,6 +55,4 @@ public class Manager : MonoBehaviour
     public ConfigManager configManager;
 
     public TimeManager timeManager;
-
-    public MouseTipsManager mouseTipsManager;
 }

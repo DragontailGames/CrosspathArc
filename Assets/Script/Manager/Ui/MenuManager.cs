@@ -8,11 +8,8 @@ public class MenuManager : MonoBehaviour
 {
     private bool open = false;
 
-    GameManager gameManager;
-
     private void Start()
     {
-        gameManager = Manager.Instance.gameManager;
         CloseMenu();
     }
 
@@ -24,7 +21,7 @@ public class MenuManager : MonoBehaviour
             {
                 CloseMenu();
             }
-            else if (!gameManager.InPause)
+            else if (!Manager.Instance.gameManager.InPause)
             {
                 OpenMenu();
             }
@@ -33,7 +30,7 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMenu()
     {
-        gameManager.SetupPause(true);
+        Manager.Instance.gameManager.SetupPause(true);
         open = true;
 
         this.GetComponent<Image>().enabled = true;
@@ -42,7 +39,7 @@ public class MenuManager : MonoBehaviour
 
     public void CloseMenu()
     {
-        gameManager.SetupPause(false);
+        Manager.Instance.gameManager.SetupPause(false);
         open = false;
 
         this.GetComponent<Image>().enabled = false;

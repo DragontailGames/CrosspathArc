@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject campfire;
 
-    public SpellbookManager spellbookManager;
-
     public List<CenarioEntity> cenarioEntities = new List<CenarioEntity>();
 
     public List<CenarioEntity> cenarioEntitiesMouseOn = new List<CenarioEntity>();
@@ -52,7 +50,6 @@ public class GameManager : MonoBehaviour
             }
         }
         Manager.Instance.canvasManager = GameObject.Find("Canvas").GetComponent<CanvasManager>();
-        TeleportManager.Instance.TestTeleport();
     }
 
     public Transform particleClick;
@@ -85,12 +82,15 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.MoveGameObjectToScene(Manager.Instance.characterController.gameObject, SceneManager.GetActiveScene());
             SceneManager.MoveGameObjectToScene(Manager.Instance.canvasManager.gameObject, SceneManager.GetActiveScene());
+            Manager.Instance.canvasManager.ReStart();
             Manager.Instance.characterController.Awake();
             indexPlayer = creatures.IndexOf(creatures.Find(n => n.GetType() == typeof(CharacterController)));
         }
         CreatureController firstCC = creatures[0];
         creatures[0] = creatures[indexPlayer];
         creatures[indexPlayer] = firstCC;
+        
+        TeleportManager.Instance.TestTeleport();
     }
 
     /// <summary>
@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public void Btn_Rest()
+    public void Rest()
     {
         Vector3Int startTile = Manager.Instance.characterController.CharacterMoveTileIsometric.controller.currentTileIndex;
         int radius = Manager.Instance.configManager.tilesWithoutEnemyForRest;
@@ -373,7 +373,7 @@ public class GameManager : MonoBehaviour
         {
             if (inPause == false)
             {
-                Btn_Rest();
+                Rest();
             }
         }
 
@@ -381,17 +381,17 @@ public class GameManager : MonoBehaviour
         {
             if (inPause == false)
             {
-                spellbookManager.OpenSpellbook();
+                Manager.Instance.canvasManager.spellbookManager.OpenSpellbook();
             }
             else
             {
-                spellbookManager.Close();
+                Manager.Instance.canvasManager.spellbookManager.Close();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && spellbookManager.isOpen)
+        if (Input.GetKeyDown(KeyCode.Escape) && Manager.Instance.canvasManager.spellbookManager.isOpen)
         {
-            spellbookManager.Close();
+            Manager.Instance.canvasManager.spellbookManager.Close();
         }
     }
 

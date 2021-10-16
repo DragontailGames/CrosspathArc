@@ -118,7 +118,7 @@ public class SpellbookManager : MonoBehaviour
         Manager.Instance.characterController.CharacterCombat.SetSpells(new List<Spell>(selectedSpells));
         Manager.Instance.characterController.CharacterCombat.SetupSpells();
         this.gameObject.SetActive(false);
-        Manager.Instance.mouseTipsManager.HideMessage();
+        Manager.Instance.canvasManager.mouseTipsManager.HideMessage();
         Manager.Instance.gameManager.SetupPause(false);
     }
 }

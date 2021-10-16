@@ -84,7 +84,7 @@ public class SpellbookSpellController : MonoBehaviour
             {
                 message += $"\n<i>* Select to assign a hotbar</i>";
             }
-            Manager.Instance.mouseTipsManager.ShowMessage(message);
+            Manager.Instance.canvasManager.mouseTipsManager.ShowMessage(message);
         }
     }
 
@@ -92,7 +92,7 @@ public class SpellbookSpellController : MonoBehaviour
     {
         if (spell != null)
         {
-            Manager.Instance.mouseTipsManager.HideMessage();
+            Manager.Instance.canvasManager.mouseTipsManager.HideMessage();
         }
     }
 }

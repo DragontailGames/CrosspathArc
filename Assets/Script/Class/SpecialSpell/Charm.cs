@@ -9,12 +9,12 @@ public class Charm : SpecialSpell
     public override void EndOfDuration(CreatureController creatureController)
     {
         base.EndOfDuration(creatureController);
-        Manager.Instance.gameManager.creatures.Add(target.GetComponent<EnemyController>());
         target.GetComponent<EnemyController>().Setup(target.GetComponent<MinionController>());
+        Manager.Instance.gameManager.creatures.Add(target.GetComponent<EnemyController>());
         Manager.Instance.gameManager.creatures.Remove(target.GetComponent<MinionController>());
-        target.GetComponent<EnemyController>().StartTurn();
-        target.GetComponent<EnemyController>().enabled = true;
         MonoBehaviour.Destroy(target.GetComponent<MinionController>());
+        target.GetComponent<EnemyController>().enabled = true;
+        Manager.Instance.gameManager.EndMyTurn(target);
         caster.GetComponent<CharacterCombat>().minionCounts.Remove(minion);
     }
 
