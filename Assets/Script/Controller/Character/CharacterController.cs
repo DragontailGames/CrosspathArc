@@ -79,7 +79,7 @@ public class CharacterController : CreatureController
 
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if ((characterCombat.selectedSpell == null || characterCombat.selectedSpell?.castTarget == EnumCustom.CastTarget.Enemy) && enemyInTile != null && enemyInTile.Hp>0)
+            if ((characterCombat.selectedSpell == null && characterCombat.selectedSpell?.configSpell.castTarget == EnumCustom.CastTarget.Enemy) && enemyInTile != null && enemyInTile.Hp>0)
             {
                 foreach (var aux in specialSpell.ToList())
                 {
@@ -87,14 +87,14 @@ public class CharacterController : CreatureController
                 }
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.controller.currentTileIndex);
             }
-            else if(characterCombat.selectedSpell != null)
+            else if(characterCombat.selectedSpell != null && characterCombat.selectedSpell.configSpell != null)
             {
                 direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, mousePos);
                 foreach (var aux in specialSpell.ToList())
                 {
                     aux.HandleAttack(this);
                 }
-                if (characterCombat.selectedSpell.castTarget == EnumCustom.CastTarget.Target)
+                if (characterCombat.selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy || characterCombat.selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Target)
                 {
                     characterCombat.CastSpell(gameManager.GetCreatureInTile(mousePos), mousePos);
                 }

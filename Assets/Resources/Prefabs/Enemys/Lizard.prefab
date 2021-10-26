@@ -183,14 +183,16 @@ MonoBehaviour:
   direction: 
   offsetSpell: {x: 0, y: 0}
   level: 1
-  nickname: Zombie
+  nickname: Lizard
   hp: 0
   mp: 0
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   botMultipleTile: {fileID: 0}
   spells:
-  - {fileID: 11400000, guid: ae6b5339d006933409b0e2f87c1a4043, type: 2}
+  - configSpell: {fileID: 11400000, guid: ae6b5339d006933409b0e2f87c1a4043, type: 2}
+    cooldown: 0
+    locked: 0
   specialSpell: []
   HpBar: {fileID: 0}
   hasTarget: 0
@@ -359,7 +361,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: df2df04b4541e7340a233df86b757af4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d027a5d83def4994ebbb43b24242b2a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -380,7 +382,7 @@ Animator:
   m_GameObject: {fileID: 2954842086929571884}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 189bff861ef437a4283da76c009509c1, type: 2}
+  m_Controller: {fileID: 9100000, guid: e0b1f5284ca7b324fa3fbebef16282a5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

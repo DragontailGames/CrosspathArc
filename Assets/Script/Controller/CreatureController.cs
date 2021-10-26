@@ -36,10 +36,11 @@ public class CreatureController : MonoBehaviour
 
     public UnityAction startTurnActions;
 
-    public int aggro = 10;
+    private int aggro = 10;
 
     public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(level)); }
     public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(level)); }
+    public int Aggro { get => this.aggro; set => this.aggro = Mathf.Clamp(value,0,100); }
 
     public List<SpecialSpell> specialSpell = new List<SpecialSpell>();
 
@@ -138,7 +139,7 @@ public class CreatureController : MonoBehaviour
             ReceiveDamage(attacker);
     }
 
-    public virtual void ReceiveSpell(CreatureController caster, int damage, string damageText, Spell spell)
+    public virtual void ReceiveSpell(CreatureController caster, int damage, string damageText, SpellSO spell)
     {
         if(Hp <= 0)
         {

@@ -73,6 +73,11 @@ public static class ParserCustom
                     new Charm(specialSpell);
                     break;
                 }
+            case EnumCustom.SpecialEffect.Assimilation:
+                {
+                    new Assimilation(specialSpell);
+                    break;
+                }
         }
     }
 }

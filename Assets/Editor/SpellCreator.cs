@@ -14,9 +14,9 @@ public class SpellCreator : EditorWindow
         window.Show();
     }
 
-    Spell spell;
+    SpellSO spell;
 
-    Spell[] spells;
+    SpellSO[] spells;
 
     string folder;
 
@@ -29,11 +29,11 @@ public class SpellCreator : EditorWindow
 
     private void CreateSpell()
     {
-        spell = CreateInstance("Spell") as Spell;
+        spell = CreateInstance("Spell") as SpellSO;
         folder = "Wizard";
         spell.buffDebuff = new List<BuffDebuff>();
         spell.attributeInfluence = new List<AttributeInfluence>();
-        spells = Resources.LoadAll<Spell>("ScriptableObject/Spells/");
+        spells = Resources.LoadAll<SpellSO>("ScriptableObject/Spells/");
     }
 
     void OnGUI()

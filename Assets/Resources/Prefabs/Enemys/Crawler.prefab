@@ -379,7 +379,9 @@ MonoBehaviour:
   currentTileIndex: {x: 62, y: 80, z: 0}
   botMultipleTile: {fileID: 0}
   spells:
-  - {fileID: 11400000, guid: af996ee7f647ea240b61095e97513c07, type: 2}
+  - configSpell: {fileID: 11400000, guid: af996ee7f647ea240b61095e97513c07, type: 2}
+    cooldown: 0
+    locked: 0
   specialSpell: []
   HpBar: {fileID: 8933099200968283127}
   hasTarget: 1

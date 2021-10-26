@@ -17,13 +17,20 @@ public class SpellbookSpellController : MonoBehaviour
     {
         this.spell = spell;
         this.spellbookManager = spellbookManager;
-        this.transform.name = spell.name;
+        this.transform.name = spell.configSpell.name;
         this.GetComponent<Button>().onClick.RemoveAllListeners();
         this.GetComponent<Button>().onClick.AddListener(() => { SelectSpell(this.transform.GetSiblingIndex()); });
         this.transform.Find("icon").GetComponent<Image>().enabled = true;
-        this.transform.Find("icon").GetComponent<Image>().sprite = spell.icon;
+        this.transform.Find("icon").GetComponent<Image>().sprite = spell.configSpell.icon;
 
-        locked = spell.availableAt > spellbookManager.skills[spellbookManager.indexSkill].level;
+        if (spell.configSpell.unlockWhenKillThis == "")
+        {
+            locked = spell.configSpell.availableAt > spellbookManager.skills[spellbookManager.indexSkill].level;
+        }
+        else
+        {
+            locked = spell.locked;
+        }
         this.transform.Find("Locked").gameObject.SetActive(locked);
     }
 
@@ -43,7 +50,7 @@ public class SpellbookSpellController : MonoBehaviour
     {
         if(spellbookManager != null && spell != null)
         {
-            if(Array.Find(spellbookManager.selectedSpells, n => n == spell))
+            if(Array.Find(spellbookManager.selectedSpells, n => n == spell) != null)
             {
                 int key = Array.IndexOf(spellbookManager.selectedSpells, spell);
                 this.transform.Find("shortcut").gameObject.SetActive(true);
@@ -69,16 +76,16 @@ public class SpellbookSpellController : MonoBehaviour
 
     public void ShowTips()
     {
-        if(spell != null)
+        if(spell.configSpell != null)
         {
-            string message = $"<b>{spell.name}</b>";
-            if(!string.IsNullOrEmpty(spell.description))
+            string message = $"<b>{spell.configSpell.name}</b>";
+            if(!string.IsNullOrEmpty(spell.configSpell.description))
             {
-                message += $"\n{spell.description}";
+                message += $"\n{spell.configSpell.description}";
             }
             if (locked)
             {
-                message += $"\n<b>*LOCKED* available at {spell.availableAt}</b>";
+                message += $"\n<b>*LOCKED* available at {spell.configSpell.availableAt}</b>";
             }
             else
             {

@@ -45,6 +45,11 @@ MonoBehaviour:
   subSpell: []
   onlyMinions: 0
   costType: 0
-  countdown: 0
-  countdownTurns: 0
-  probabilityToCast: 50
+  cooldownTurns: 0
+  attributeInfluenceCooldownTurns: []
+  probabilityToCast: 100
+  melee: 0
+  multipleHit: 0
+  mainStatusToTryHit: 4
+  castAfterTurns: 0
+  unlockWhenKillThis: 

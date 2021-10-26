@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Breath of Fire
   description: 
+  spellLogName: 
   icon: {fileID: 0}
   castTarget: 1
   availableAt: 1
@@ -30,3 +31,13 @@ MonoBehaviour:
   duration: 0
   invokeLimit: 0
   subSpell: []
+  onlyMinions: 0
+  costType: 0
+  cooldownTurns: 5
+  attributeInfluenceCooldownTurns: []
+  probabilityToCast: 60
+  melee: 0
+  multipleHit: 0
+  mainStatusToTryHit: 4
+  castAfterTurns: 0
+  unlockWhenKillThis: 

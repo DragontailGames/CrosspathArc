@@ -9,9 +9,9 @@ public class SkillSO : ScriptableObject
 
     public EnumCustom.SkillType skillType;
 
-    public List<Status> modifier = new List<Status>();
+    public List<SupportStatus> support = new List<SupportStatus>();
 
     public List<WeaponBuffSkill> weaponBuffSkills = new List<WeaponBuffSkill>();
 
-    public List<Spell> spells = new List<Spell>();
+    public List<SpellSO> spells = new List<SpellSO>();
 }

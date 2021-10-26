@@ -11,9 +11,11 @@ public class CharacterStatus : MonoBehaviour
 
     private int nextLevelExp = 100;//pontos para o proximo nivel
 
-    private int availableStatusPoint = 0;//pontos de status para serem distribuído
+    private int availableStatusPoint = 2;//pontos de status para serem distribuído
 
-    private int availableSkillPoint = 0;//pontos de status para serem distribuído
+    private int availableMainSkillPoint = 2;//pontos de status para serem distribuído
+
+    private int availableSupportSkillPoint = 2;//pontos de status para serem distribuído
 
     [Tooltip("Regular a quantidade de tile base para regenerar")]
     public int totalTilesToRegen = 20;//quantidade de tiles base para regenerar
@@ -26,7 +28,8 @@ public class CharacterStatus : MonoBehaviour
     public int addLevelTemp = 25;//Temporario para desenvolvimento
 
     public int AvailableStatusPoint { get => this.availableStatusPoint; set => this.availableStatusPoint = value; }
-    public int AvailableSkillPoint { get => this.availableSkillPoint; set => this.availableSkillPoint = value; }
+    public int AvailableSkillMainPoint { get => this.availableMainSkillPoint; set => this.availableMainSkillPoint = value; }
+    public int AvailableSkillSupportPoint { get => this.availableSupportSkillPoint; set => this.availableSupportSkillPoint = value; }
     public int NextLevelExp { get => this.nextLevelExp; set => this.nextLevelExp = value; }
     public int Exp { get => this.exp; set => this.exp = value; }
 
@@ -76,7 +79,8 @@ public class CharacterStatus : MonoBehaviour
     {
         controller.level++;
         AvailableStatusPoint++;
-        AvailableSkillPoint++;
+        AvailableSkillMainPoint++;
+        AvailableSkillSupportPoint++;
         ResetHp_Mp();
         levelUpAction?.Invoke();
         Exp -= NextLevelExp;
@@ -100,15 +104,36 @@ public class CharacterStatus : MonoBehaviour
         tilesToRegenHp--;
         if(tilesToRegenHp<=0)
         {
-            controller.Hp += 1;
-            tilesToRegenHp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.HpRegen);
+            int hpRegen = controller.attributeStatus.GetValue(EnumCustom.Status.HpRegen);
+            if (hpRegen <= 20)
+            {
+                controller.Hp += 1;
+                tilesToRegenHp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.HpRegen);
+            }
+            else
+            {
+                int extraHpRegen = hpRegen - 20;
+                controller.Hp += 1 + (Mathf.FloorToInt(extraHpRegen / 5));
+                tilesToRegenHp = 0;
+            }
         }
 
         tilesToRegenMp--;
         if (tilesToRegenMp <= 0)
         {
-            controller.Mp += 1;
-            tilesToRegenMp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.MpRegen);
+
+            int mpRegen = controller.attributeStatus.GetValue(EnumCustom.Status.MpRegen);
+            if (mpRegen <= 20)
+            {
+                controller.Mp += 1;
+                tilesToRegenMp = totalTilesToRegen - controller.attributeStatus.GetValue(EnumCustom.Status.MpRegen);
+            }
+            else
+            {
+                int extraMpRegen = mpRegen - 20;
+                controller.Mp += 1 + (Mathf.FloorToInt(extraMpRegen / 3));
+                tilesToRegenMp = 0;
+            }
         }
     }
 

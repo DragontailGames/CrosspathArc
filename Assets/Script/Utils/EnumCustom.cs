@@ -47,6 +47,7 @@ public class EnumCustom : MonoBehaviour
     {
         WeaponModifier,
         Spellbook,
+        Support,
     }
 
     public enum SpellType
@@ -87,6 +88,7 @@ public class EnumCustom : MonoBehaviour
         Visibility,
         Aggro,
         Charm,
+        Assimilation,
     }
 
     public enum BuffDebuffType

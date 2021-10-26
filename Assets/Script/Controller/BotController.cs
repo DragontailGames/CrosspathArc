@@ -74,7 +74,7 @@ public class BotController : CreatureController
         this.botMultipleTile = botController.botMultipleTile;
         this.spells = botController.spells;
         this.startTurnActions = botController.startTurnActions;
-        this.aggro = botController.aggro;
+        this.Aggro = botController.Aggro;
         this.specialSpell = botController.specialSpell;
         this.offsetPosition = botController.offsetPosition;
         this.movementSpeed = botController.movementSpeed;
@@ -264,17 +264,22 @@ public class BotController : CreatureController
             return false;
         }
 
+        if(selectedSpell == null || selectedSpell.configSpell == null)
+        {
+            return false;
+        }
+
         int randValue = UnityEngine.Random.Range(0, 100);
-        if(selectedSpell.probabilityToCast < randValue)
+        if(selectedSpell.configSpell.probabilityToCast < randValue)
         {
             return false; 
         }
-        var existingSpecial = this?.specialSpell.Find(n => n.effect == selectedSpell.specialEffect);
+        var existingSpecial = this?.specialSpell.Find(n => n.effect == selectedSpell.configSpell.specialEffect);
         if (existingSpecial != null)
         {
             return false;
         }
-        if (!attributeStatus.HasBuff(selectedSpell.spellName) && selectedSpell.cooldown<=0)
+        if (!attributeStatus.HasBuff(selectedSpell.configSpell.spellName) && selectedSpell.cooldown<=0)
         {
             PlayAnimation("Attack", direction);
             selectedSpell.Cast(null, this, creatureController, creatureController.currentTileIndex, null);
@@ -315,7 +320,7 @@ public class BotController : CreatureController
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="damageText"></param>
-    public override void ReceiveSpell(CreatureController attacker, int damage, string damageText, Spell spell)
+    public override void ReceiveSpell(CreatureController attacker, int damage, string damageText, SpellSO spell)
     {
         base.ReceiveSpell(attacker, damage, damageText, spell);
 
@@ -338,8 +343,10 @@ public class BotController : CreatureController
             isDead = true;
             gameManager.creatures.Remove(this);
             Invoke("TurnOffSprite", 1f);
+            Manager.Instance.characterController.CharacterCombat.TryAssimilation(this.nickname);
+            gameManager.EndMyTurn(this);
             //gameManager.currentCreature--;
-            //gameManager.EndMyTurn();
+            //
         }
     }
 
@@ -384,7 +391,7 @@ public class BotController : CreatureController
             }
             var distance = Vector3.Distance(aux.transform.position, this.transform.position);
 
-            int limit = aux.aggro;
+            int limit = aux.Aggro;
 
             if (Vector3Int.Distance(aux.currentTileIndex, currentTileIndex) < limit)
             {

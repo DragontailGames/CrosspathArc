@@ -48,7 +48,7 @@ public class CharacterInterface : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            if (controller.spells.Count > i && controller.spells[i] != null && controller.spells[i].cooldown>0)
+            if (controller.spells.Count > i && controller.spells[i].configSpell != null && controller.spells[i].cooldown>0)
             {
                 controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(true);
             }

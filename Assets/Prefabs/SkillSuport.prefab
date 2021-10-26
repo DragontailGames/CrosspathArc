@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7764706, g: 0.34509805, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -90,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -547,8 +548,9 @@ GameObject:
   - component: {fileID: 8570308541980812173}
   - component: {fileID: 8570308541980812175}
   - component: {fileID: 8570308541980812174}
+  - component: {fileID: 9003199431936659111}
   m_Layer: 5
-  m_Name: Skill
+  m_Name: SkillSuport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -613,3 +615,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9003199431936659111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8570308541980812172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4661f025ab76c4cb03f6366f868618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textName: {fileID: 8570308541821982487}
+  gameObjectLevel: {fileID: 1700744462596246873}
+  textLevel: {fileID: 8570308541977546455}
+  skill:
+    name: 
+    description: 
+    skill: {fileID: 0}
+    level: 0
+  button: {fileID: 1700744461691152674}
+  controller: {fileID: 0}
+  statusManager: {fileID: 0}

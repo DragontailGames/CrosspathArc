@@ -9,13 +9,14 @@ using UnityEngine.UI;
 /// </summary>
 public class StatusManager : MonoBehaviour
 {
-    public GameObject aboutPlayer, status, attributes, playerBase, availablePointsStatus, availablePointsSkill;
+    public GameObject aboutPlayer, status, attributes, playerBase, availablePointsStatus, availablePointsSkillMain, availablePointsSkillSupport;
     public ScrollRect skillScrollRect;
-    public GameObject skillContentModel;
+    public GameObject skillMainContentModel, skillSupportContentModel;
+    public GameObject textModel;
 
     public List<TextMeshProUGUI> attributesText = new List<TextMeshProUGUI>();
     public List<TextMeshProUGUI> statusText = new List<TextMeshProUGUI>();
-    private List<GameObject> skillsContent = new List<GameObject>();
+    private List<SkillUiController> skillsContent = new List<SkillUiController>();
 
     public List<Button> attributePlusButton = new List<Button>();
 
@@ -64,7 +65,8 @@ public class StatusManager : MonoBehaviour
         hpPlayerBaseTMPro = playerBase.transform.Find("Hp").GetChild(0).GetComponent<TextMeshProUGUI>();
         mpPlayerBaseTMPro = playerBase.transform.Find("Mp").GetChild(0).GetComponent<TextMeshProUGUI>();
 
-        CreateSkills(controller.CharacterCombat.skills);
+        CreateMainSkills(controller.CharacterCombat.skills);
+        CreateSupportSkills(controller.CharacterCombat.supportSkills);
 
         controller.CharacterStatus.levelUpAction += UpdateStatus;
         controller.CharacterStatus.levelUpAction += UpdateSkills;
@@ -79,7 +81,7 @@ public class StatusManager : MonoBehaviour
     /// <summary>
     /// Atualiza os status na ui, para evitar chamada a todo segundo
     /// </summary>
-    private void UpdateStatus()
+    public void UpdateStatus()
     {
         for (int i = 0; i < attributesText.Count; i++)
         {
@@ -99,46 +101,64 @@ public class StatusManager : MonoBehaviour
 
         availablePointsStatus.gameObject.SetActive(controller.CharacterStatus.AvailableStatusPoint > 0);
         availablePointsStatus.GetComponentInChildren<TextMeshProUGUI>().text = controller.CharacterStatus.AvailableStatusPoint.ToString();
+
+        availablePointsSkillMain.gameObject.SetActive(controller.CharacterStatus.AvailableSkillMainPoint > 0);
+        availablePointsSkillMain.GetComponentInChildren<TextMeshProUGUI>().text = controller.CharacterStatus.AvailableSkillMainPoint.ToString();
+
+        availablePointsSkillSupport.gameObject.SetActive(controller.CharacterStatus.AvailableSkillSupportPoint > 0);
+        availablePointsSkillSupport.GetComponentInChildren<TextMeshProUGUI>().text = controller.CharacterStatus.AvailableSkillSupportPoint.ToString();
     }
 
-    public void CreateSkills(List<Skill> skills)
+    public void CreateMainSkills(List<Skill> skills)
     {
+        GameObject tempTextModel = Instantiate(textModel, skillScrollRect.content);
+        tempTextModel.GetComponent<TextMeshProUGUI>().text = "MAIN";
+
         for (int i = 0; i < skills.Count; i++)
         {
             Skill aux = skills[i];
-            GameObject tempSkillContent = Instantiate(skillContentModel, skillScrollRect.content);
-            tempSkillContent.transform.Find("SkillName").GetComponent<TextMeshProUGUI>().text = aux.name;
-            Transform skillLevel = tempSkillContent.transform.Find("SkillLevel");
-            skillLevel.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = aux.level.ToString();
-            var currentSkill = i;
-            skillLevel.GetChild(1).GetComponent<Button>().onClick.AddListener(() =>
-            {
-                controller.CharacterCombat.skills[currentSkill].level++;
-                controller.CharacterStatus.AvailableSkillPoint--;
-                UpdateSkill(skills[currentSkill], currentSkill);
-                UpdateSkills();
-                controller.CharacterCombat.SetupSpells();
-            });
-            skillsContent.Add(tempSkillContent);
+            SkillUiController tempSkillUiController = Instantiate(skillMainContentModel, skillScrollRect.content).GetComponent<SkillUiController>();
+            tempSkillUiController.textName.text = aux.name;
+            tempSkillUiController.textLevel.text = aux.level.ToString();
+            tempSkillUiController.skill = aux;
+            tempSkillUiController.controller = controller;
+            tempSkillUiController.statusManager = this;
+
+            skillsContent.Add(tempSkillUiController);
         }
     }
 
-    public void UpdateSkill(Skill skills, int index)
+    public void CreateSupportSkills(List<Skill> skills)
     {
-        Transform skillLevel = skillsContent[index].transform.Find("SkillLevel");
-        skillLevel.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = skills.level.ToString();
+        GameObject tempTextModel = Instantiate(textModel, skillScrollRect.content);
+        tempTextModel.GetComponent<TextMeshProUGUI>().text = "Support";
+
+        for (int i = 0; i < skills.Count; i++)
+        {
+            Skill aux = skills[i];
+            SkillUiController tempSkillUiController = Instantiate(skillSupportContentModel, skillScrollRect.content).GetComponent<SkillUiController>();
+            tempSkillUiController.textName.text = aux.name;
+            tempSkillUiController.textLevel.text = aux.level.ToString();
+            tempSkillUiController.skill = aux;
+            tempSkillUiController.controller = controller;
+            tempSkillUiController.statusManager = this;
+
+            skillsContent.Add(tempSkillUiController);
+        }
     }
 
     public void UpdateSkills()
     {
-        availablePointsSkill.gameObject.SetActive(controller.CharacterStatus.AvailableSkillPoint > 0);
-        availablePointsSkill.GetComponentInChildren<TextMeshProUGUI>().text = controller.CharacterStatus.AvailableSkillPoint.ToString();
-
         for (int i = 0; i < skillsContent.Count; i++)
         {
-            GameObject aux = (GameObject)skillsContent[i];
-            Transform skillLevel = aux.transform.Find("SkillLevel");
-            skillLevel.GetChild(1).gameObject.SetActive(controller.CharacterStatus.AvailableSkillPoint > 0 && controller.CharacterCombat.skills[i].level < 10);
+            if (skillsContent[i].skill.skill.skillType == EnumCustom.SkillType.Spellbook)
+            {
+                skillsContent[i].gameObjectLevel.transform.GetChild(1).gameObject.SetActive(controller.CharacterStatus.AvailableSkillMainPoint > 0 && skillsContent[i].skill.level < 10);
+            }
+            else if (skillsContent[i].skill.skill.skillType == EnumCustom.SkillType.Support)
+            {
+                skillsContent[i].gameObjectLevel.transform.GetChild(1).gameObject.SetActive(controller.CharacterStatus.AvailableSkillSupportPoint > 0 && skillsContent[i].skill.level < 10);
+            }
         }
     }
 }

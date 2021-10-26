@@ -7,5 +7,5 @@ public class CharacterMinions
 {
     public List<MinionController> creatures;
 
-    public Spell spell;
+    public SpellSO spell;
 }

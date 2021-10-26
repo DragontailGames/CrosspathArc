@@ -107,6 +107,16 @@ MonoBehaviour:
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   botMultipleTile: {fileID: 0}
+  spells:
+  - configSpell: {fileID: 11400000, guid: 446843c6d98d60c419c0630894bf57c3, type: 2}
+    cooldown: 0
+    locked: 0
+  - configSpell: {fileID: 11400000, guid: e4ba797d5c2e6d44b92c1cef22ec1145, type: 2}
+    cooldown: 0
+    locked: 0
+  - configSpell: {fileID: 11400000, guid: 63232e03ae956c647bf36c806ef341f3, type: 2}
+    cooldown: 0
+    locked: 0
   specialSpell: []
   HpBar: {fileID: 0}
   hasTarget: 0
@@ -116,10 +126,6 @@ MonoBehaviour:
   mainAnimation: 
   target: {fileID: 0}
   forceTarget: {fileID: 0}
-  spells:
-  - {fileID: 11400000, guid: e4ba797d5c2e6d44b92c1cef22ec1145, type: 2}
-  - {fileID: 11400000, guid: 446843c6d98d60c419c0630894bf57c3, type: 2}
-  - {fileID: 11400000, guid: 63232e03ae956c647bf36c806ef341f3, type: 2}
   range: 10
   meleeAndRanged: 0
   size: 0

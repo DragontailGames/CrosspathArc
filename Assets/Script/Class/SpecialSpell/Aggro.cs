@@ -7,12 +7,12 @@ public class Aggro : SpecialSpell
     public override void EndOfDuration(CreatureController creatureController)
     {
         base.EndOfDuration(creatureController);
-        target.aggro += value;
+        target.Aggro += value;
     }
 
     public Aggro(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
-        target.aggro -= value;
+        target.Aggro -= value;
     }
 }

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Linq;
 
 public class CharacterCombat : MonoBehaviour
 {
     public CharacterController controller;
 
     public List<Skill> skills;
+
+    public List<Skill> supportSkills;
 
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
@@ -25,6 +28,16 @@ public class CharacterCombat : MonoBehaviour
     /// </summary>
     public void Start()
     {
+        skills = skills.OrderBy(n => n.skill.skillName).ToList();
+        supportSkills = supportSkills.OrderBy(n => n.skill.skillName).ToList();
+
+        foreach(var aux in skills)
+        {
+            foreach(var spellSO in aux.skill.spells)
+            {
+                aux.spells.Add(new Spell() { configSpell = spellSO, cooldown = 0, locked = spellSO.unlockWhenKillThis != "" });
+            }
+        }
         foreach (Transform aux in Manager.Instance.canvasManager.skillPanel.GetChild(0))
         {
             spellUi.Add(aux.gameObject);
@@ -58,9 +71,10 @@ public class CharacterCombat : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            if (controller.spells.Count> i && controller.spells[i] != null)
+            if (controller.spells.Count> i && controller.spells[i] != null && controller.spells[i].configSpell != null)
             {
-                spellUi[i].GetComponent<Image>().sprite = controller.spells[i].icon;
+                SpellSO spellSelected = controller.spells[i].configSpell;
+                spellUi[i].GetComponent<Image>().sprite = spellSelected.icon;
                 spellUi[i].GetComponent<Image>().enabled = true;
                 Button btSpell;
                 if (spellUi[i].GetComponent<Button>())
@@ -103,11 +117,11 @@ public class CharacterCombat : MonoBehaviour
 
         if(controller.spells[index].cooldown > 0)
         {
-            Manager.Instance.canvasManager.LogMessage($"<color=grey>Habilidade {controller.spells[index].spellName} esta em cooldown</color>");
+            Manager.Instance.canvasManager.LogMessage($"<color=grey>Habilidade {controller.spells[index].configSpell.spellName} esta em cooldown</color>");
             return;
         }
 
-        if (selectedSpell!=null)
+        if (selectedSpell != null && selectedSpell.configSpell != null)
         {
             var auxSpell = selectedSpell;
             selectedSpell = null;
@@ -118,7 +132,7 @@ public class CharacterCombat : MonoBehaviour
             }
         }
 
-        if (controller.spells[index].castTarget != EnumCustom.CastTarget.None)
+        if (controller.spells[index].configSpell.castTarget != EnumCustom.CastTarget.None)
         {
             selectedSpell = controller.spells[index];
             selectedUi = spellUi[index].transform.GetChild(0);
@@ -126,7 +140,7 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
-            if(!CheckMana(controller.spells[index]))
+            if(!CheckMana(controller.spells[index].configSpell))
             {
                 return;
             }
@@ -135,7 +149,7 @@ public class CharacterCombat : MonoBehaviour
         }
     }
 
-    public bool CheckMana(Spell spell)
+    public bool CheckMana(SpellSO spell)
     {
         if (spell.costType == EnumCustom.CostType.Mana)
         {
@@ -175,7 +189,6 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="playerPos">posição do jogador</param>
     public void TryHit(EnemyController enemy, Vector3Int clickPos, Vector3Int playerPos)
     {
-
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>())?.duration = 0;//pedro maybe
 
         controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.controller.currentTileIndex, enemy.currentTileIndex);
@@ -185,33 +198,27 @@ public class CharacterCombat : MonoBehaviour
         if (clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (selectedSpell != null && selectedSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
+        if (selectedSpell != null && selectedSpell.configSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
-            if(selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
+            if (selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
             {
                 return;
             }
 
-            if (selectedSpell.melee && Vector3Int.Distance(clickPos, playerPos) <= 1 + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+            if (!selectedSpell.configSpell.melee)
             {
+                CastSpell(enemy);
+                return;
+            }
 
-                if (CheckMana(selectedSpell))
-                {
-                    CastSpell(enemy);
-                }
+            if (selectedSpell.configSpell.melee && Vector3Int.Distance(clickPos, playerPos) <= 1 + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+            {
+                CastSpell(enemy);
                 return;
             }
             else
             {
                 Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
-            }
-
-            if (!selectedSpell.melee)
-            {
-                if (CheckMana(selectedSpell))
-                {
-                    CastSpell(enemy);
-                }
             }
             return;
         }
@@ -237,12 +244,12 @@ public class CharacterCombat : MonoBehaviour
             Manager.Instance.canvasManager.LogMessage("Inimigo ou Tile fora do campo de visão");
             return;
         }
-        if (selectedSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
+        if (selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
         {
             return;
         }
 
-        if(!CheckMana(selectedSpell))
+        if(!CheckMana(selectedSpell.configSpell))
         {
             return;
         }
@@ -312,5 +319,22 @@ public class CharacterCombat : MonoBehaviour
     public void SetSpells(List<Spell> spells)
     {
         this.controller.spells = spells;
+    }
+
+    public void TryAssimilation(string name)
+    {
+        if(controller.specialSpell.Find(n => n.effect == EnumCustom.SpecialEffect.Assimilation) != null)
+        {
+            foreach(var aux in skills)
+            {
+                foreach(var temp in aux.spells)
+                {
+                    if(temp.configSpell.unlockWhenKillThis == name)
+                    {
+                        temp.locked = false;
+                    }
+                }
+            }
+        }
     }
 }

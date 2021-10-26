@@ -91,8 +91,7 @@ public class SpellbookManager : MonoBehaviour
             if(skill.skill.spells.Count>aux.GetSiblingIndex())
             {
                 var tempSpellController = aux.GetComponent<SpellbookSpellController>();
-                Spell spell = skill.skill.spells[aux.GetSiblingIndex()];
-                spell.cooldown = 0;
+                Spell spell = skill.spells[aux.GetSiblingIndex()];
                 tempSpellController.SetupSpell(this, spell);
                 spellbookSpellControllers.Add(tempSpellController);
             }

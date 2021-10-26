@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 [CreateAssetMenu(menuName = "Arc/Spell")]
-public class Spell : ScriptableObject
+public class SpellSO : ScriptableObject
 {
     public string spellName;
 
@@ -51,8 +51,6 @@ public class Spell : ScriptableObject
 
     public EnumCustom.CostType costType = EnumCustom.CostType.Mana;
 
-    public int cooldown = 0;
-
     public int cooldownTurns = 0;
 
     public List<AttributeInfluence> attributeInfluenceCooldownTurns;
@@ -66,6 +64,8 @@ public class Spell : ScriptableObject
     public EnumCustom.Status mainStatusToTryHit = EnumCustom.Status.SpellHit;
 
     public int castAfterTurns = 0;
+
+    public string unlockWhenKillThis = "";
 
     public int GetValue(CreatureController creatureController)
     {
@@ -112,15 +112,6 @@ public class Spell : ScriptableObject
         }
 
         string textDamage = "(" + (spellDamage + extraDamage) + ")";
-
-        int value = cooldownTurns;
-
-        foreach(var aux in attributeInfluenceCooldownTurns)
-        {
-            value -= aux.GetValue(caster);
-        }
-
-        cooldown = value;
 
         if (onlyCast == false)
         {

@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
-  m_Name: Wrestling
+  m_Name: Stealth
   m_EditorClassIdentifier: 
-  skillName: Wrestling
-  skillType: 0
-  modifier: []
-  weaponBuffSkills:
-  - weaponType: 0
-    value: 1
+  skillName: Stealth
+  skillType: 2
+  support:
+  - name: Stealth
+    status: 0
+    effect: 13
+    valuePerLevel: 0.5
+  weaponBuffSkills: []
   spells: []

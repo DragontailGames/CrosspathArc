@@ -374,6 +374,10 @@ MonoBehaviour:
   canMove: 1
   currentTileIndex: {x: 0, y: 0, z: 0}
   botMultipleTile: {fileID: 0}
+  spells:
+  - configSpell: {fileID: 11400000, guid: 69a76364e42207645ad1207e27d2924e, type: 2}
+    cooldown: 0
+    locked: 0
   specialSpell: []
   HpBar: {fileID: 0}
   hasTarget: 0
@@ -383,8 +387,6 @@ MonoBehaviour:
   mainAnimation: Wolf
   target: {fileID: 0}
   forceTarget: {fileID: 0}
-  spells:
-  - {fileID: 11400000, guid: 69a76364e42207645ad1207e27d2924e, type: 2}
   range: 1
   meleeAndRanged: 0
   size: 0

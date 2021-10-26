@@ -45,7 +45,7 @@ public class SubSpell
         return value;
     }
 
-    public void Cast(CreatureController caster, CreatureController target, Spell originalSpell)
+    public void Cast(CreatureController caster, CreatureController target, SpellSO originalSpell)
     {
         if(castTarget == EnumCustom.CastTarget.Caster)
         {

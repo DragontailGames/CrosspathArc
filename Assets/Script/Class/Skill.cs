@@ -11,5 +11,7 @@ public class Skill
 
     public SkillSO skill;
 
+    public List<Spell> spells;
+
     public int level;
 }

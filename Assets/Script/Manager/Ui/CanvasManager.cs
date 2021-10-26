@@ -89,38 +89,18 @@ public class CanvasManager : MonoBehaviour
 
         foreach (var aux in Manager.Instance.characterController.attributeStatus.statusModifiers)
         {
-            var tempStatusLog = statusLogs.Find(n => n.text.Contains(aux.spellName) && n.text.Contains(aux.status.ToString()));
-            if (tempStatusLog == null)
+            if (aux.count < 140)
             {
-                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
-                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
-                statusLogs.Add(tempStatusLog);
+                var tempStatusLog = statusLogs.Find(n => n.text.Contains(aux.spellName) && n.text.Contains(aux.status.ToString()));
+                if (tempStatusLog == null)
+                {
+                    var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
+                    tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
+                    statusLogs.Add(tempStatusLog);
+                }
+                SetupText(tempStatusLog, aux.spellName, aux.value, aux.status.ToString(), aux.count);
             }
-            SetupText(tempStatusLog, aux.spellName, aux.value, aux.status.ToString(), aux.count);
         }
-        /*int fakeLife = Manager.Instance.characterController.attributeStatus.fakeLife;
-        if (fakeLife > 0)
-        {
-            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith("False Life"));
-            if (tempStatusLog == null)
-            {
-                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
-                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
-                statusLogs.Add(tempStatusLog);
-            }
-            SetupText(tempStatusLog, "False Life", fakeLife, "", Manager.Instance.characterController.attributeStatus.fakeLifeDuration);
-        }
-        if(Manager.Instance.characterController.CharacterCombat.invisibilityDuration>0)
-        {
-            var tempStatusLog = statusLogs.Find(n => n.text.Split('>')[1].StartsWith("Invisibility"));
-            if (tempStatusLog == null)
-            {
-                var newTempStatusLog = Instantiate(statusLogPrefab, statusLog.content);
-                tempStatusLog = newTempStatusLog.GetComponent<TextMeshProUGUI>();
-                statusLogs.Add(tempStatusLog);
-            }
-            SetupText(tempStatusLog, "Invisibility", 0, "", Manager.Instance.characterController.CharacterCombat.invisibilityDuration);
-        }*/
 
         foreach(var specialStatus in Manager.Instance.characterController.specialSpell)
         {
@@ -143,6 +123,7 @@ public class CanvasManager : MonoBehaviour
     public void SetupText(TextMeshProUGUI tmpStatusText, string spellName, int value, string propName, int count)
     {
         TextMeshProUGUI statusTmp = tmpStatusText;
+
         if (statusTmp == null)
         {
             spellName = spellName.Replace("_", " ");
@@ -166,7 +147,7 @@ public class CanvasManager : MonoBehaviour
         {
             statusTmp.text = $"<color=#{positiveColorValue}>{spellName} ({count})";
         }
-        if(count == 0)
+        else if(count == 0)
         {
             statusTmp.text = $"<color=#{positiveColorValue}>{spellName}";
         }
