@@ -198,7 +198,7 @@ public class CharacterCombat : MonoBehaviour
         if (clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (selectedSpell != null && selectedSpell.configSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
+        if (selectedSpell.configSpell != null && selectedSpell.configSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
             if (selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
             {
@@ -295,6 +295,7 @@ public class CharacterCombat : MonoBehaviour
         //Detecta os buffs
         if(skillBuffs.Count>0)
         {
+            Debug.Log("Entrou aqui bebe");
             foreach(var aux in skillBuffs)
             {
                 var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == controller.CharacterInventory.weapon.weaponType);

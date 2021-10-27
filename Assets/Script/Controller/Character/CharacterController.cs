@@ -72,14 +72,11 @@ public class CharacterController : CreatureController
             StartCoroutine(StartDelay());
 
             if (EventSystem.current.IsPointerOverGameObject() || gameManager.cenarioEntitiesMouseOn.Count>0) return;
-
             Vector3Int mousePos = MousePosition();
-
             if (gameManager.cenarioEntities.Find(n => n.currentTileIndex == mousePos) != null) return;
-
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if ((characterCombat.selectedSpell == null && characterCombat.selectedSpell?.configSpell.castTarget == EnumCustom.CastTarget.Enemy) && enemyInTile != null && enemyInTile.Hp>0)
+            if (characterCombat.selectedSpell.configSpell == null && enemyInTile != null && enemyInTile.Hp>0)
             {
                 foreach (var aux in specialSpell.ToList())
                 {

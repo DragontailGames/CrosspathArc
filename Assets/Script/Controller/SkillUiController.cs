@@ -30,7 +30,7 @@ public class SkillUiController : MonoBehaviour
             skill.level++;
             textLevel.text = skill.level.ToString();
 
-            if (skill.skill.skillType == EnumCustom.SkillType.Spellbook)
+            if (skill.skill.skillType == EnumCustom.SkillType.Spellbook || skill.skill.skillType == EnumCustom.SkillType.WeaponModifier)
             {
                 controller.CharacterStatus.AvailableSkillMainPoint--;
                 statusManager.availablePointsSkillMain.gameObject.SetActive(controller.CharacterStatus.AvailableSkillMainPoint > 0);

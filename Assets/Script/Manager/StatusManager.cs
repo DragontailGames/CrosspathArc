@@ -159,6 +159,10 @@ public class StatusManager : MonoBehaviour
             {
                 skillsContent[i].gameObjectLevel.transform.GetChild(1).gameObject.SetActive(controller.CharacterStatus.AvailableSkillSupportPoint > 0 && skillsContent[i].skill.level < 10);
             }
+            else if (skillsContent[i].skill.skill.skillType == EnumCustom.SkillType.WeaponModifier)
+            {
+                skillsContent[i].gameObjectLevel.transform.GetChild(1).gameObject.SetActive(controller.CharacterStatus.AvailableSkillMainPoint > 0 && skillsContent[i].skill.level < 10);
+            }
         }
     }
 }
