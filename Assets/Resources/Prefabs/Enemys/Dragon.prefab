@@ -122,7 +122,7 @@ MonoBehaviour:
   forceTarget: {fileID: 0}
   range: 10
   meleeAndRanged: 1
-  size: 0
+  size: 3
   exp: 0
 --- !u!1 &3889284111757247051
 GameObject:

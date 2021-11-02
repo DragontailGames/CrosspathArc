@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class Sign : CenarioEntity
 {
@@ -14,6 +15,8 @@ public class Sign : CenarioEntity
     public string text;
 
     public GameObject panel;
+
+    public SignsController sign;
 
     public override void Start()
     {
@@ -34,21 +37,10 @@ public class Sign : CenarioEntity
 
     }
 
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Manager.Instance.gameManager.SetupPause(false);
-            panel.transform.parent.gameObject.SetActive(false);
-            panel.SetActive(false);
-        }
-    }
-
     public override void OnMouseDown()
     {
         base.OnMouseDown();
-        gameManager.SetupPause(true);
-        panel.transform.parent.gameObject.SetActive(true);
+        sign.OpenSign();
         panel.SetActive(true);
         panel.GetComponentInChildren<TextMeshProUGUI>().text = text;
 

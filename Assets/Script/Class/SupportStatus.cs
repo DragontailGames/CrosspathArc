@@ -27,7 +27,11 @@ public class SupportStatus
         StartRound(controller, skill);
         if (effect == EnumCustom.SpecialEffect.Aggro)
         {
-            controller.Aggro -= Mathf.FloorToInt(valuePerLevel * skill.level );
+            float nAggro = valuePerLevel * skill.level;
+            if(nAggro%1==0)
+            {
+                controller.Aggro -= 1;
+            }
         }
     }
 }

@@ -76,7 +76,7 @@ public class CharacterController : CreatureController
             if (gameManager.cenarioEntities.Find(n => n.currentTileIndex == mousePos) != null) return;
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if (characterCombat.selectedSpell.configSpell == null && enemyInTile != null && enemyInTile.Hp>0)
+            if ((characterCombat.selectedSpell == null || characterCombat.selectedSpell.configSpell == null) && enemyInTile != null && enemyInTile.Hp>0)
             {
                 foreach (var aux in specialSpell.ToList())
                 {

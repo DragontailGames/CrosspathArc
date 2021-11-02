@@ -36,11 +36,11 @@ public class CreatureController : MonoBehaviour
 
     public UnityAction startTurnActions;
 
-    private int aggro = 10;
+    private int aggro = 12;
 
     public int Hp { get => this.hp; set => this.hp = Mathf.Clamp(value, 0, attributeStatus.GetMaxHP(level)); }
     public int Mp { get => this.mp; set => this.mp = Mathf.Clamp(value, 0, attributeStatus.GetMaxMP(level)); }
-    public int Aggro { get => this.aggro; set => this.aggro = Mathf.Clamp(value,0,100); }
+    public int Aggro { get => this.aggro; set => this.aggro = Mathf.Clamp(value,1,100); }
 
     public List<SpecialSpell> specialSpell = new List<SpecialSpell>();
 
