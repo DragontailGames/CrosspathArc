@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using CrusaderUI.Scripts;
 using TMPro;
+using System.Linq;
 
 /// <summary>
 /// Controle da interface do usuario
@@ -46,15 +47,19 @@ public class CharacterInterface : MonoBehaviour
 
     public void StartTurn()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < controller.CharacterCombat.spellUi.Count; i++)
         {
-            if (controller.spells.Count > i && controller.spells[i].configSpell != null && controller.spells[i].cooldown>0)
+            if (controller.CharacterCombat.spellUi[i] != null)
             {
-                controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(true);
-            }
-            else
-            {
-                controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(false);
+                if (controller.spells.ElementAtOrDefault(i) != null && controller.spells[i].configSpell != null && controller.spells[i].cooldown > 0)
+                {
+                    controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(true);
+                }
+                else
+                {
+                    controller.CharacterCombat.spellUi[i].transform.GetChild(1).gameObject.SetActive(false);
+                }
+
             }
         }
     }

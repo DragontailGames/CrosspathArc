@@ -20,6 +20,11 @@ public class Sign : CenarioEntity
 
     public override void Start()
     {
+        if(sign == null)
+        {
+            sign = FindObjectOfType<SignsController>();
+        }
+
         base.Start();
         baseColor = this.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
     }

@@ -110,12 +110,7 @@ public class CharacterCombat : MonoBehaviour
     /// <param name="index"></param>
     public void SelectSkill(int index)
     {
-        if(controller.spells[index].configSpell == null)
-        {
-            return;
-        }
-
-        if(controller.spells.Count<=index || controller.spells[index] == null)
+        if(controller.spells.Count<=index || controller.spells[index] == null || controller.spells[index].configSpell == null)
         {
             return;
         }
