@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SignsController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class SignsController : MonoBehaviour
             }
 
             hasSignOpen = false;
+            this.GetComponent<Image>().enabled = false;
         }
     }
 
@@ -26,6 +28,7 @@ public class SignsController : MonoBehaviour
         Manager.Instance.gameManager.SetupPause(true);
         this.gameObject.SetActive(true);
         StartCoroutine(DelayToOpen());
+        this.GetComponent<Image>().enabled = true;
     }
 
     public IEnumerator DelayToOpen()
