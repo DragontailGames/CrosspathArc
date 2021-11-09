@@ -60,7 +60,6 @@ public class EnumCustom : MonoBehaviour
         Blink,
         Unlock,
         Create_Food,
-        Area_Hazard,
         Cure_Disease,
     }
 
@@ -107,6 +106,14 @@ public class EnumCustom : MonoBehaviour
         Caster,
         Target,
         Minions,
+        Area_Hazard,
+    }
+
+    public enum CastEffect
+    {
+        Player,
+        Enemy,
+        Allies,
     }
 
     public enum FormulaType

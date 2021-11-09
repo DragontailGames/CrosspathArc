@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Runemage
+  m_EditorClassIdentifier: 
+  skillName: Runemage
+  skillType: 1
+  support: []
+  weaponBuffSkills: []
+  spells:
+  - {fileID: 11400000, guid: 057e654837b27b0488403cee98ca1b30, type: 2}
+  - {fileID: 11400000, guid: 56efb557f824dba499717dcac4d2c18d, type: 2}
+  - {fileID: 11400000, guid: aa339ab8502670446b381b4bb69df637, type: 2}
+  - {fileID: 11400000, guid: 2bacfe7f5cf6c0f459c0b211cb31c3be, type: 2}
+  - {fileID: 11400000, guid: 7257ff76fabd8b647b10b6314c373342, type: 2}
+  - {fileID: 11400000, guid: f40a2ff0fd196eb49957251c1a205921, type: 2}
+  - {fileID: 11400000, guid: 793390a4498c899479a1c01bafa33449, type: 2}
+  - {fileID: 11400000, guid: 511013aba7267f54d8f41a3708983bff, type: 2}

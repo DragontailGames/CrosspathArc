@@ -63,6 +63,8 @@ public class SpellSO : ScriptableObject
 
     public EnumCustom.Status mainStatusToTryHit = EnumCustom.Status.SpellHit;
 
+    public EnumCustom.CastEffect castEffect = EnumCustom.CastEffect.Player;
+
     public int castAfterTurns = 0;
 
     public string unlockWhenKillThis = "";
@@ -111,6 +113,11 @@ public class SpellSO : ScriptableObject
             extraDamage += extraDmg;
         }
 
+        if (castTarget == EnumCustom.CastTarget.Area_Hazard)
+        {
+            onlyCast = true;
+        }
+
         string textDamage = "(" + (spellDamage + extraDamage) + ")";
 
         if (onlyCast == false)
@@ -141,7 +148,7 @@ public class SpellSO : ScriptableObject
         }
 
 
-        if (castTarget == EnumCustom.CastTarget.Area)
+        if (castTarget == EnumCustom.CastTarget.Area || castTarget == EnumCustom.CastTarget.Area_Hazard)
         {
             if (tile == new Vector3Int() && target != null)
             {
@@ -177,6 +184,8 @@ public class SpellSO : ScriptableObject
                 {
                     aux.HandleAttack(caster);
                 }
+                CastSubspells(caster, target);
+                Manager.Instance.canvasManager.UpdateStatus();
             }
             else if (this.spellType == EnumCustom.SpellType.Special)
             {
@@ -396,8 +405,8 @@ public class SpellSO : ScriptableObject
 
         foreach (var aux in tiles)
         {
-            AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux), aux);
-            if (spellType != EnumCustom.SpellType.Area_Hazard)
+            AnimateCastAreaSpell(Manager.Instance.gameManager.tilemap.CellToLocal(aux), aux, caster);
+            if (castTarget != EnumCustom.CastTarget.Area_Hazard)
             {
                 CreatureController creature = Manager.Instance.gameManager.creatures.Find(n => n.currentTileIndex == aux);
 
@@ -480,15 +489,27 @@ public class SpellSO : ScriptableObject
         return returnValue;
     }
 
-    public void AnimateCastAreaSpell(Vector3 position, Vector3Int index)
+    public void AnimateCastAreaSpell(Vector3 position, Vector3Int index, CreatureController caster)
     {
         GameObject spellCreated = Instantiate(spellCastObject, position + Vector3.up * 0.25f, Quaternion.Euler(Vector3.zero));
         //spellCreated.transform.rotation = Quaternion.Euler(new Vector3(spellCreated.transform.rotation.x, spellCreated.transform.rotation.y, UnityEngine.Random.Range(0, 360)));
-        if(spellType == EnumCustom.SpellType.Area_Hazard)
+        if(castTarget == EnumCustom.CastTarget.Area_Hazard)
         {
             SpellAreaHazard spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
+            if(spellAreaHazard == null)
+            {
+                spellCreated.AddComponent<SpellAreaHazard>();
+                spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
+            }
             spellAreaHazard.duration = duration;
-            spellAreaHazard.damage = fixedValue != 0 ? fixedValue : UnityEngine.Random.Range(minValue, maxValue);
+            spellAreaHazard.spellName = spellLogName == "" ? spellName : spellLogName;
+            spellAreaHazard.castEffect = castEffect;
+            spellAreaHazard.spellType = spellType;
+            spellAreaHazard.buffDebuff = buffDebuff;
+            spellAreaHazard.caster = caster;
+            spellAreaHazard.spell = this;
+            spellAreaHazard.specialEffect = specialEffect;
+            spellAreaHazard.value = fixedValue != 0 ? fixedValue : UnityEngine.Random.Range(minValue, maxValue) + GetValue(caster);
             spellAreaHazard.position = index;
         }
         else

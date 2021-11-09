@@ -76,7 +76,7 @@ public class SpellCreator : EditorWindow
         content.text = "Cast Target";
         spell.castTarget = (EnumCustom.CastTarget)EditorGUILayout.EnumPopup(content, spell.castTarget);
 
-        if (spell.castTarget == EnumCustom.CastTarget.Area)
+        if (spell.castTarget == EnumCustom.CastTarget.Area || spell.castTarget == EnumCustom.CastTarget.Area_Hazard)
         {
             content.text = "Area";
             spell.area = EditorGUILayout.IntField(content, spell.area);
@@ -117,11 +117,6 @@ public class SpellCreator : EditorWindow
         else if(spell.spellType == EnumCustom.SpellType.Special)
         {
             RenderSpecial();
-        }
-        else if (spell.spellType == EnumCustom.SpellType.Area_Hazard)
-        {
-            RenderDamage();
-            RenderAreaHazard();
         }
     }
 
