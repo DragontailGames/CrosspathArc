@@ -93,7 +93,7 @@ public class SpecialSpell
     public virtual void EndOfDuration(CreatureController creatureController)
     {
         creatureController.specialSpell.Remove(this);
-        Manager.Instance.canvasManager.RemoveLogText(effect.ToString());
+        Manager.Instance.canvasManager.RemoveLogText(logName != "" ?logName:effect.ToString());
     }
 
     public virtual void ReceiveHit(CreatureController creatureDealer, CreatureController creatureTarget) 

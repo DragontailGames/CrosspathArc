@@ -52,7 +52,7 @@ public class SpellAreaHazard : MonoBehaviour
             CreatureController controller =  Manager.Instance.gameManager.creatures.Find(n => n.currentTileIndex == position);
             if(controller != null)
             {
-                if (CheckController(castEffect, controller))
+                if (!CheckController(castEffect, controller))
                 {
                     return;
                 }

@@ -198,7 +198,7 @@ public class CharacterCombat : MonoBehaviour
         if (clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (selectedSpell.configSpell != null && selectedSpell.configSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
+        if (selectedSpell != null && selectedSpell.configSpell != null && selectedSpell.configSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
         {
             if (selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
             {
