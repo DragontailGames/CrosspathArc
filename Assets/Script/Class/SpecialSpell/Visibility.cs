@@ -14,7 +14,7 @@ public class Visibility : SpecialSpell
         base.EndOfDuration(creatureController);
     }
 
-    public Visibility(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Visibility(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
         originalSize = target.GetComponentInChildren<Light>().size;

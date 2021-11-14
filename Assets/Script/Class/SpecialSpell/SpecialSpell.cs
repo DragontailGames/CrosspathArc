@@ -12,6 +12,8 @@ public class SpecialSpell
 
     public int value;
 
+    public Vector3Int tile;
+
     public CreatureController caster;
 
     public CreatureController target;
@@ -22,7 +24,9 @@ public class SpecialSpell
 
     public bool clearAfterDoAttack = false;
 
-    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, EnumCustom.SpecialEffect effect, string logName)
+    public GameObject spellObject = null;
+
+    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, Vector3Int tile, EnumCustom.SpecialEffect effect, string logName, GameObject spellObject = null)
     {
         this.logName = logName;
         this.duration = duration;
@@ -30,8 +34,10 @@ public class SpecialSpell
         this.caster = caster;
         this.target = target;
         this.effect = effect;
+        this.tile = tile;
+        this.spellObject = spellObject;
 
-        if(duration == 0)
+        if (duration == 0)
         {
             Cast(target, value);
             EndOfDuration(target);

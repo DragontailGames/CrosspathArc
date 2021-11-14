@@ -9,7 +9,7 @@ public class Invoke_Wisp : SpecialSpell
         base.ChangeValue(-value);
     }
 
-    public Invoke_Wisp(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Invoke_Wisp(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Sleep : SpecialSpell
 {
-    public Sleep(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Sleep(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         clearAfterReceiveHit = true;
         AddToSpecialSpellList(this);

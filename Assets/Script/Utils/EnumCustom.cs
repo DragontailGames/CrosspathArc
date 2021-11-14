@@ -88,6 +88,9 @@ public class EnumCustom : MonoBehaviour
         Aggro,
         Charm,
         Assimilation,
+        ShowLog,
+        Wall,
+        Fast_Cast,
     }
 
     public enum BuffDebuffType

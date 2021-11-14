@@ -147,7 +147,7 @@ public class CreatureController : MonoBehaviour
         }
         if (spell.spellType == EnumCustom.SpellType.Special)
         {
-            spell.CastSpecial(this, caster, null);
+            spell.CastSpecial(this, caster, null, new Vector3Int());
         }
         else if (spell.spellType == EnumCustom.SpellType.Buff)
         {
@@ -171,6 +171,32 @@ public class CreatureController : MonoBehaviour
                         status = aux.status,
                         count = aux.turnDuration,
                         value = aux.value + aux.attributeInfluence.GetValue(caster)
+                    });
+                }
+            }
+        }
+        else if (spell.spellType == EnumCustom.SpellType.Debuff)
+        {
+            foreach (var aux in spell.buffDebuff)
+            {
+                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
+                {
+                    this.attributeStatus.AddModifier(new AttributeModifier()
+                    {
+                        spellName = spell.spellLogName == "" ? spell.spellName : spell.spellLogName,
+                        attribute = aux.attribute,
+                        count = aux.turnDuration,
+                        value = -(aux.value + aux.attributeInfluence.GetValue(caster))
+                    }, null);
+                }
+                if (aux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
+                {
+                    this.attributeStatus.AddModifier(null, new StatusModifier()
+                    {
+                        spellName = spell.spellLogName == "" ? spell.spellName : spell.spellLogName,
+                        status = aux.status,
+                        count = aux.turnDuration,
+                        value = -(aux.value + aux.attributeInfluence.GetValue(caster))
                     });
                 }
             }

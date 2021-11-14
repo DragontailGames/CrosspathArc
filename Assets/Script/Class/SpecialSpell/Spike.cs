@@ -10,7 +10,7 @@ public class Spike : SpecialSpell
         creatureDealer.ReceiveHit(creatureTarget, value, value + " (Spike)", true);
     }
 
-    public Spike(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Spike(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
     }

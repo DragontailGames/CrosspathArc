@@ -11,7 +11,7 @@ public class Hp_Regen : SpecialSpell
     }
 
 
-    public Hp_Regen(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Hp_Regen(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
     }

@@ -78,6 +78,21 @@ public static class ParserCustom
                     new Assimilation(specialSpell);
                     break;
                 }
+            case EnumCustom.SpecialEffect.ShowLog:
+                {
+                    new ShowLog(specialSpell);
+                    break;
+                }
+            case EnumCustom.SpecialEffect.Wall:
+                {
+                    new Wall(specialSpell);
+                    break;
+                }
+            case EnumCustom.SpecialEffect.Fast_Cast:
+                {
+                    new Fast_Cast(specialSpell);
+                    break;
+                }
         }
     }
 }

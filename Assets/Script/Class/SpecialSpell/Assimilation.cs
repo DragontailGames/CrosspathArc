@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Assimilation : SpecialSpell
 {
-    public Assimilation(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Assimilation(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         duration = specialSpell.value;
         value = 0;

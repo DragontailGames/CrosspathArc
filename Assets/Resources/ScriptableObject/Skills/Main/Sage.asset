@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Sage
+  m_EditorClassIdentifier: 
+  skillName: Sage
+  skillType: 1
+  support: []
+  weaponBuffSkills: []
+  spells:
+  - {fileID: 11400000, guid: 4edda92e79cea45498524cf64b77ae7b, type: 2}
+  - {fileID: 11400000, guid: 298806dc41b863c40b95583602ea259e, type: 2}
+  - {fileID: 11400000, guid: 4483a777ecb6b354381f621229952b6d, type: 2}
+  - {fileID: 11400000, guid: bb4f090a3408c6a419df3a8821a7f2dc, type: 2}
+  - {fileID: 11400000, guid: 736e0f41761b6354592822e24a65ae7a, type: 2}
+  - {fileID: 11400000, guid: 25d987ef797a4de4bb0e10882b34d4d0, type: 2}

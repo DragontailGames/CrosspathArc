@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 /// <summary>
 /// Game manager geral
@@ -287,7 +288,9 @@ public class GameManager : MonoBehaviour
         foreach (var aux in path)
         {
             Vector3Int tempPath = new Vector3Int(aux.x, aux.y, 0);
-            if (elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)) || collisionTM.HasTile(tempPath + new Vector3Int(1, 1, 0)))
+            if (elevationTM.HasTile(tempPath + new Vector3Int(1, 1, 0)) || 
+                collisionTM.HasTile(tempPath + new Vector3Int(1, 1, 0)) || 
+                GameObject.FindObjectsOfType<WallController>().ToList().Find(n => n.currentTile == tempPath))
             {
                 return true;
             }

@@ -18,7 +18,7 @@ public class Charm : SpecialSpell
         caster.GetComponent<CharacterCombat>().minionCounts.Remove(minion);
     }
 
-    public Charm(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.effect, specialSpell.logName)
+    public Charm(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName)
     {
         AddToSpecialSpellList(this);
         Manager.Instance.gameManager.creatures.Remove(target.GetComponent<EnemyController>());

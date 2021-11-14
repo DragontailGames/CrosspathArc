@@ -43,6 +43,8 @@ public class SpellSO : ScriptableObject
 
     public int duration = 0;
 
+    public AttributeInfluence attributeInfluenceDuration;
+
     public int invokeLimit = 0;
 
     public List<SubSpell> subSpell = new List<SubSpell>();
@@ -179,7 +181,17 @@ public class SpellSO : ScriptableObject
         {
             if (this.spellType == EnumCustom.SpellType.Buff)
             {
-                this.CastBuff(caster);
+                this.CastBuffDebuff(caster);
+                foreach (var aux in caster.specialSpell)
+                {
+                    aux.HandleAttack(caster);
+                }
+                CastSubspells(caster, target);
+                Manager.Instance.canvasManager.UpdateStatus();
+            }
+            else if (this.spellType == EnumCustom.SpellType.Debuff)
+            {
+                this.CastBuffDebuff(caster);
                 foreach (var aux in caster.specialSpell)
                 {
                     aux.HandleAttack(caster);
@@ -195,7 +207,7 @@ public class SpellSO : ScriptableObject
                     {
                         foreach (var minionCreature in minion.creatures)
                         {
-                            this.CastSpecial(minionCreature, caster, action);
+                            this.CastSpecial(minionCreature, caster, action, tile);
                         }
                     }
                 }
@@ -208,7 +220,7 @@ public class SpellSO : ScriptableObject
                     }
                     else
                     {
-                        this.CastSpecial(caster, caster, action);
+                        this.CastSpecial(caster, caster, action, tile);
                     }
                 }
 
@@ -249,7 +261,7 @@ public class SpellSO : ScriptableObject
         return isEnemy;
     }
 
-    public void CastBuff(CreatureController controller)
+    public void CastBuffDebuff(CreatureController controller)
     {
         if (spellType == EnumCustom.SpellType.Buff)
         {
@@ -264,7 +276,7 @@ public class SpellSO : ScriptableObject
                         {
                             GameObject minionSpell = Instantiate(spellCastObject, creatures.transform);
                             Destroy(minionSpell, 1.0f);
-                            ApplyBuffDebuff(creatures, aux, controller);
+                            ApplyBuff(creatures, aux, controller);
                         }
                     }
 
@@ -273,7 +285,35 @@ public class SpellSO : ScriptableObject
                 }
                 else
                 {
-                    ApplyBuffDebuff(controller, aux);
+                    ApplyBuff(controller, aux);
+                    GameObject objectSpell = Instantiate(spellCastObject, controller.transform);
+                    Destroy(objectSpell, 1.0f);
+                }
+            }
+        }
+        if (spellType == EnumCustom.SpellType.Debuff)
+        {
+            foreach (var aux in this.buffDebuff)
+            {
+                if (aux.minionModifier)
+                {
+                    var minions = (controller as CharacterController).CharacterCombat.minionCounts;
+                    foreach (var minion in minions)
+                    {
+                        foreach (var creatures in minion.creatures)
+                        {
+                            GameObject minionSpell = Instantiate(spellCastObject, creatures.transform);
+                            Destroy(minionSpell, 1.0f);
+                            ApplyDebuff(creatures, aux, controller);
+                        }
+                    }
+
+                    GameObject objectSpell = Instantiate(spellCastObject, controller.transform);
+                    Destroy(objectSpell, 1.0f);
+                }
+                else
+                {
+                    ApplyDebuff(controller, aux);
                     GameObject objectSpell = Instantiate(spellCastObject, controller.transform);
                     Destroy(objectSpell, 1.0f);
                 }
@@ -281,7 +321,7 @@ public class SpellSO : ScriptableObject
         }
     }
 
-    public void ApplyBuffDebuff(CreatureController controller, BuffDebuff buffDebuff, CreatureController caster = null)
+    public void ApplyBuff(CreatureController controller, BuffDebuff buffDebuff, CreatureController caster = null)
     {
         if (buffDebuff.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
         {
@@ -305,9 +345,33 @@ public class SpellSO : ScriptableObject
         }
     }
 
-    public void CastSpecial(CreatureController target, CreatureController caster, UnityAction action)
+    public void ApplyDebuff(CreatureController controller, BuffDebuff buffDebuff, CreatureController caster = null)
     {
-        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, target, specialEffect, spellLogName));
+        if (buffDebuff.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
+        {
+            controller.attributeStatus.AddModifier(new AttributeModifier()
+            {
+                spellName = spellLogName == "" ? spellName : spellLogName,
+                attribute = buffDebuff.attribute,
+                count = buffDebuff.turnDuration,
+                value = -(buffDebuff.value + buffDebuff.attributeInfluence.GetValue(caster != null ? caster : controller))
+            }, null);
+        }
+        if (buffDebuff.buffDebuffType == EnumCustom.BuffDebuffType.Status)
+        {
+            controller.attributeStatus.AddModifier(null, new StatusModifier()
+            {
+                spellName = spellLogName == "" ? spellName : spellLogName,
+                status = buffDebuff.status,
+                count = buffDebuff.turnDuration,
+                value = -(buffDebuff.value + buffDebuff.attributeInfluence.GetValue(caster != null ? caster : controller))
+            });
+        }
+    }
+
+    public void CastSpecial(CreatureController target, CreatureController caster, UnityAction action, Vector3Int tile)
+    {
+        ParserCustom.SpellSpecialParser(new SpecialSpell(duration + attributeInfluenceDuration.GetValue(caster), GetValue(caster), caster, target, tile, specialEffect, spellLogName));
         GameObject objectSpell = Instantiate(spellCastObject, target.transform);
         action?.Invoke();
         Destroy(objectSpell, 1.0f);
@@ -380,6 +444,11 @@ public class SpellSO : ScriptableObject
                 caster.GetComponent<CharacterMoveTileIsometric>().Blink(pos);
             }
         }
+        else if(spellType == EnumCustom.SpellType.Special)
+        {
+            GameObject spellObject = Instantiate(spellCastObject);
+            ParserCustom.SpellSpecialParser(new SpecialSpell(duration + attributeInfluenceDuration.GetValue(caster), GetValue(caster), caster, caster, index, specialEffect, spellLogName, spellObject));
+        }
 
         action?.Invoke();
     }
@@ -414,7 +483,7 @@ public class SpellSO : ScriptableObject
                 {
                     if (spellType == EnumCustom.SpellType.Special)
                     {
-                        ParserCustom.SpellSpecialParser(new SpecialSpell(duration, GetValue(caster), caster, creature, specialEffect, spellLogName));
+                        ParserCustom.SpellSpecialParser(new SpecialSpell(duration + attributeInfluenceDuration.GetValue(caster), GetValue(caster), caster, creature, aux, specialEffect, spellLogName));
                     }
                     else
                     {
@@ -501,7 +570,7 @@ public class SpellSO : ScriptableObject
                 spellCreated.AddComponent<SpellAreaHazard>();
                 spellAreaHazard = spellCreated.GetComponent<SpellAreaHazard>();
             }
-            spellAreaHazard.duration = duration;
+            spellAreaHazard.duration = duration + attributeInfluenceDuration.GetValue(caster);
             spellAreaHazard.spellName = spellLogName == "" ? spellName : spellLogName;
             spellAreaHazard.castEffect = castEffect;
             spellAreaHazard.spellType = spellType;

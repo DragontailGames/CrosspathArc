@@ -127,7 +127,7 @@ public class SpellAreaHazard : MonoBehaviour
 
                 if (specialEffect != EnumCustom.SpecialEffect.None)
                 {
-                    ParserCustom.SpellSpecialParser(new SpecialSpell(1, value, caster, controller, specialEffect, spellName));
+                    ParserCustom.SpellSpecialParser(new SpecialSpell(1, value, caster, controller, position, specialEffect, spellName));
                 }
                 else
                 {
@@ -139,7 +139,7 @@ public class SpellAreaHazard : MonoBehaviour
                             {
                                 if (spell.spellType == EnumCustom.SpellType.Special)
                                 {
-                                    ParserCustom.SpellSpecialParser(new SpecialSpell(spell.duration, spell.GetValue(caster), caster, controller, spell.specialEffect, spellName));
+                                    ParserCustom.SpellSpecialParser(new SpecialSpell(spell.duration, spell.GetValue(caster), caster, controller, position, spell.specialEffect, spellName));
                                 }
                             }
                         }
