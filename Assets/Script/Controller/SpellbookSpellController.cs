@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class SpellbookSpellController : MonoBehaviour
 {
@@ -31,6 +32,17 @@ public class SpellbookSpellController : MonoBehaviour
         {
             locked = spell.locked;
         }
+        this.transform.Find("Locked").gameObject.SetActive(locked);
+    }
+
+    public void SetupSimpleSpell(Spell spell, bool locked, UnityAction action)
+    {
+        this.spell = spell;
+        this.transform.name = spell.configSpell.name;
+        this.GetComponent<Button>().onClick.RemoveAllListeners();
+        this.GetComponent<Button>().onClick.AddListener(() => { action?.Invoke(); });
+        this.transform.Find("icon").GetComponent<Image>().enabled = true;
+        this.transform.Find("icon").GetComponent<Image>().sprite = spell.configSpell.icon;
         this.transform.Find("Locked").gameObject.SetActive(locked);
     }
 

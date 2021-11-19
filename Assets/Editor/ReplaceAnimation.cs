@@ -6,6 +6,7 @@ using System.IO;
 
 public class ReplaceAnimation
 {
+    /*
     public static string folder = "Assets/Animation/Creatures";
     public static string oldName = "Flayer";
     public static string newName = "Goblin";
@@ -35,7 +36,7 @@ public class ReplaceAnimation
         processFiles();
         processController();
 
-        Debug.Log("---------------------ACABOU---------------------");*/
+        Debug.Log("---------------------ACABOU---------------------");
     }
 
     public static void RunDirectory(string path)
@@ -107,7 +108,7 @@ public class ReplaceAnimation
         }
     }
 
-    /*
+    
     public static void processController()
     {
         string[] fileText = File.ReadAllLines(newFolder + "/Female_Archer.controller");
@@ -149,7 +150,7 @@ public class ReplaceAnimation
         }
 
         File.WriteAllLines(newFolder + "/Female_Archer.controller", newText);
-    }*/
+    }
 
     public static int FindInOldRepository(string guidReference)
     {
@@ -227,6 +228,6 @@ public class ReplaceAnimation
             }
         }
         return "";
-    }
+    }*/
 }
 

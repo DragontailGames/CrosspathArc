@@ -6,6 +6,6 @@ public class Fast_Cast : SpecialSpell
 {
     public Fast_Cast(SpecialSpell specialSpell) : base(specialSpell.duration, specialSpell.value, specialSpell.caster, specialSpell.target, specialSpell.tile, specialSpell.effect, specialSpell.logName, specialSpell.spellObject)
     {
-
+        Manager.Instance.gameManager.fastcastSpellsController.gameObject.SetActive(true);
     }
 }

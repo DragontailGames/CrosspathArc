@@ -73,10 +73,11 @@ public class CharacterController : CreatureController
 
             if (EventSystem.current.IsPointerOverGameObject() || gameManager.cenarioEntitiesMouseOn.Count>0) return;
             Vector3Int mousePos = MousePosition();
+
             if (gameManager.cenarioEntities.Find(n => n.currentTileIndex == mousePos) != null) return;
             EnemyController enemyInTile = enemyManager.CheckEnemyInTile(mousePos);
 
-            if ((characterCombat.selectedSpell == null || characterCombat.selectedSpell.configSpell == null) && enemyInTile != null && enemyInTile.Hp>0)
+            if ((characterCombat.selectedSpell.Count<=0 || characterCombat.selectedSpell[0].configSpell == null) && enemyInTile != null && enemyInTile.Hp>0)
             {
                 foreach (var aux in specialSpell.ToList())
                 {
@@ -84,20 +85,23 @@ public class CharacterController : CreatureController
                 }
                 characterCombat.TryHit(enemyInTile, mousePos, characterMoveTileIsometric.controller.currentTileIndex);
             }
-            else if(characterCombat.selectedSpell != null && characterCombat.selectedSpell.configSpell != null)
+            else if(characterCombat.selectedSpell.Count>0 && characterCombat.selectedSpell[0].configSpell != null)
             {
                 direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, mousePos);
                 foreach (var aux in specialSpell.ToList())
                 {
                     aux.HandleAttack(this);
                 }
-                if (characterCombat.selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy || characterCombat.selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Target)
+                foreach (var aux in characterCombat.selectedSpell)
                 {
-                    characterCombat.CastSpell(gameManager.GetCreatureInTile(mousePos), mousePos);
-                }
-                else
-                {
-                    characterCombat.CastSpell(null, mousePos);
+                    if (aux.configSpell.castTarget == EnumCustom.CastTarget.Enemy || aux.configSpell.castTarget == EnumCustom.CastTarget.Target)
+                    {
+                        characterCombat.CastSpell(gameManager.GetCreatureInTile(mousePos), mousePos);
+                    }
+                    else
+                    {
+                        characterCombat.CastSpell(null, mousePos);
+                    }
                 }
             }
             else

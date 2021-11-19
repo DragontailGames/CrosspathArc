@@ -34,9 +34,14 @@ MonoBehaviour:
     levelOfSkill: 
     value: 0
     multiplier: -4
-  spellCastObject: {fileID: 5606476770866019508, guid: 2773ee570cfc1114ba050b43771fa52f, type: 3}
+  spellCastObject: {fileID: 8183710571108549920, guid: 20772d453e7bd3244b5ed1051e979e01, type: 3}
   specialEffect: 0
   duration: 0
+  attributeInfluenceDuration:
+    attribute: 0
+    levelOfSkill: 
+    value: 0
+    multiplier: 0
   invokeLimit: 0
   subSpell: []
   onlyMinions: 0

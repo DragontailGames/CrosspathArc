@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 public class SpellCreator : EditorWindow
-{
+{/*
     [MenuItem("Arc/Spell Creator")]
     private static void ShowWindow()
     {
@@ -277,5 +277,5 @@ public class SpellCreator : EditorWindow
 
 
         EditorGUILayout.Space(2);
-    }
+    }*/
 }

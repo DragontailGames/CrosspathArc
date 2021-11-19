@@ -15,7 +15,7 @@ public class CharacterCombat : MonoBehaviour
 
     public List<GameObject> spellUi = new List<GameObject>();//Barra de spells
 
-    public Spell selectedSpell = null;//Skill que o jogador escolheu
+    public List<Spell> selectedSpell = new List<Spell>();//Skill que o jogador escolheu
 
     public Transform selectedUi;
 
@@ -121,10 +121,10 @@ public class CharacterCombat : MonoBehaviour
             return;
         }
 
-        if (selectedSpell != null && selectedSpell.configSpell != null)
+        if (selectedSpell.Count > 0 && selectedSpell[0] != null && selectedSpell[0].configSpell != null)
         {
-            var auxSpell = selectedSpell;
-            selectedSpell = null;
+            Spell auxSpell = selectedSpell[0];
+            selectedSpell = new List<Spell>();
             selectedUi.gameObject.SetActive(false);
             if (auxSpell == controller.spells[index])
             {
@@ -132,9 +132,9 @@ public class CharacterCombat : MonoBehaviour
             }
         }
 
-        if (controller.spells[index].configSpell.castTarget != EnumCustom.CastTarget.None)
+        if (controller.spells[index].configSpell != null && controller.spells[index].configSpell.castTarget != EnumCustom.CastTarget.None)
         {
-            selectedSpell = controller.spells[index];
+            selectedSpell.Add(controller.spells[index]);
             selectedUi = spellUi[index].transform.GetChild(0);
             selectedUi.gameObject.SetActive(true);
         }
@@ -198,29 +198,35 @@ public class CharacterCombat : MonoBehaviour
         if (clickPos.x != playerPos.x && clickPos.y != playerPos.y)
             offsetRange = 1;
 
-        if (selectedSpell != null && selectedSpell.configSpell != null && selectedSpell.configSpell.name != "")//Se tem uma spell selecionada ele tenta atacar com ela
+        if (selectedSpell.Count > 0)//Se tem uma spell selecionada ele tenta atacar com ela
         {
-            if (selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
+            foreach (var aux in selectedSpell)
             {
-                return;
-            }
+                if (aux.configSpell != null && aux.configSpell.name != "")
+                {
+                    if (aux.configSpell.castTarget == EnumCustom.CastTarget.Enemy && enemy == null)
+                    {
+                        return;
+                    }
 
-            if (!selectedSpell.configSpell.melee)
-            {
-                CastSpell(enemy);
-                return;
-            }
+                    if (!aux.configSpell.melee)
+                    {
+                        CastSpell(enemy);
+                        return;
+                    }
 
-            if (selectedSpell.configSpell.melee && Vector3Int.Distance(clickPos, playerPos) <= 1 + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
-            {
-                CastSpell(enemy);
-                return;
+                    if (aux.configSpell.melee && Vector3Int.Distance(clickPos, playerPos) <= 1 + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+                    {
+                        CastSpell(enemy);
+                        return;
+                    }
+                    else
+                    {
+                        Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
+                    }
+                    return;
+                }
             }
-            else
-            {
-                Manager.Instance.canvasManager.LogMessage("Inimigo fora do alcançe de ataque");
-            }
-            return;
         }
 
         if (Vector3Int.Distance(clickPos, playerPos) <= controller.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
@@ -244,14 +250,21 @@ public class CharacterCombat : MonoBehaviour
             Manager.Instance.canvasManager.LogMessage("Inimigo ou Tile fora do campo de visão");
             return;
         }
-        if (selectedSpell.configSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
+        foreach(var aux in selectedSpell)
         {
-            return;
-        }
+            if (aux.configSpell.castTarget == EnumCustom.CastTarget.Enemy && creature == null)
+            {
+                return;
+            }
 
-        if(!CheckMana(selectedSpell.configSpell))
-        {
-            return;
+            if (selectedSpell.Count == 1)
+            {
+                if (!CheckMana(aux.configSpell))
+                {
+                    return;
+                }
+            }
+
         }
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
@@ -259,11 +272,17 @@ public class CharacterCombat : MonoBehaviour
         controller.animator.Play(controller.animationName + "_Cast_" + controller.direction);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
-        selectedSpell.Cast(() => 
-        { 
-            selectedSpell = null;
-            selectedUi.gameObject.SetActive(false);
-        },controller, creature, tile, minionCounts);
+        foreach (var aux in selectedSpell)
+        {
+            aux.Cast(() =>
+            {
+                selectedSpell = new List<Spell>();
+                if (selectedUi != null)
+                {
+                    selectedUi?.gameObject.SetActive(false);
+                }
+            }, controller, creature, tile, minionCounts,selectedSpell.Count>1?true:false);
+        }
     }
 
     /// <summary>

@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public List<CenarioEntity> cenarioEntitiesMouseOn = new List<CenarioEntity>();
 
+    public SelectSpellsController fastcastSpellsController;
+
     private void Awake()
     {
         Manager.Instance.gameManager = this;

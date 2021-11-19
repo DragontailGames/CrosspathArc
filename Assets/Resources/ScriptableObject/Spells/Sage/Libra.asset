@@ -26,9 +26,14 @@ MonoBehaviour:
   area: 0
   buffDebuff: []
   attributeInfluence: []
-  spellCastObject: {fileID: 5606476770866019508, guid: 2773ee570cfc1114ba050b43771fa52f, type: 3}
+  spellCastObject: {fileID: 7744530528321329041, guid: 8a7580cdaa40e7c48a4ddb0bf7b2a417, type: 3}
   specialEffect: 16
   duration: 0
+  attributeInfluenceDuration:
+    attribute: 0
+    levelOfSkill: 
+    value: 0
+    multiplier: 0
   invokeLimit: 0
   subSpell: []
   onlyMinions: 0
