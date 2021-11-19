@@ -102,7 +102,7 @@ public class SpecialSpell
         Manager.Instance.canvasManager.RemoveLogText(logName != "" ?logName:effect.ToString());
     }
 
-    public virtual void ReceiveHit(CreatureController creatureDealer, CreatureController creatureTarget) 
+    public virtual void ReceiveHit(CreatureController creatureDealer, CreatureController creatureTarget, bool isSpell) 
     { 
         if (clearAfterReceiveHit)
         {
@@ -133,9 +133,9 @@ public class SpecialSpell
             sSpellAux.value += value;
         }
         if(sSpellAux.value<=0)
-        {
+        { 
             target.specialSpell.Remove(sSpellAux);
-            Manager.Instance.canvasManager.RemoveLogText(effect.ToString());
+            Manager.Instance.canvasManager.RemoveLogText(logName != "" ? logName : effect.ToString());
         }
     }
 }

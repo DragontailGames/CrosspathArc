@@ -16,6 +16,13 @@ public class SpellbookSpellController : MonoBehaviour
 
     public void SetupSpell(SpellbookManager spellbookManager, Spell spell)
     {
+        if(spell == null)
+        {
+            this.transform.Find("icon").GetComponent<Image>().enabled = false;
+            this.transform.Find("Locked").gameObject.SetActive(false);
+            return;
+        }
+
         this.spell = spell;
         this.spellbookManager = spellbookManager;
         this.transform.name = spell.configSpell.name;

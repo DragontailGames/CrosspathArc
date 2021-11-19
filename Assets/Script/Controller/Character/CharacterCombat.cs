@@ -314,7 +314,6 @@ public class CharacterCombat : MonoBehaviour
         //Detecta os buffs
         if(skillBuffs.Count>0)
         {
-            Debug.Log("Entrou aqui bebe");
             foreach(var aux in skillBuffs)
             {
                 var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == controller.CharacterInventory.weapon.weaponType);

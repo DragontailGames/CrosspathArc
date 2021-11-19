@@ -18,8 +18,8 @@ public class Wall : SpecialSpell
             {
                 spellObject?.AddComponent<WallController>();
             }
-            spellObject?.GetComponent<WallController>().CreateWall(tile);
-            AddToSpecialSpellList(this);
+            spellObject?.GetComponent<WallController>().CreateWall(tile, duration);
+            //AddToSpecialSpellList(this);
         }
         else
         {

@@ -341,6 +341,11 @@ public class GameManager : MonoBehaviour
     {
         turnCount++;
         Manager.Instance.timeManager.StartNewTurn();
+
+        foreach(var aux in FindObjectsOfType<WallController>().ToList())
+        {
+            aux.StartRound();
+        }
     }
 
     public int restCount = 0;
@@ -415,7 +420,8 @@ public class GameManager : MonoBehaviour
         return !elevationTM.HasTile(dest + new Vector3Int(1, 1, 0)) &&
                   (!collisionTM.HasTile(dest + new Vector3Int(1, 1, 0))) &&
                   (tilemap.HasTile(dest) &&
-                  cenarioEntities.Find(n => n.currentTileIndex == dest && n.tileBlock == true) == null);
+                  cenarioEntities.Find(n => n.currentTileIndex == dest && n.tileBlock == true) == null) &&
+                  FindObjectsOfType<WallController>().ToList().Find(n => n.currentTile == dest) == null;
     }
 
     public void SetupPause(bool _inPause)

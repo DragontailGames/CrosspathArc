@@ -29,6 +29,17 @@ public class SpellAreaHazard : MonoBehaviour
 
     public void Start()
     {
+        
+
+        foreach(var aux in FindObjectsOfType<SpellAreaHazard>())
+        {
+            if(aux.spellName == this.spellName && aux.gameObject != this.gameObject && aux.position == this.position)
+            {
+                DestroyImmediate(this.gameObject);
+                return;
+            }
+        }
+
         action = () => StartRound();
         Manager.Instance.timeManager.startNewTurnAction += action;
     }

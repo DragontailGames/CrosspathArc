@@ -100,11 +100,11 @@ public class CreatureController : MonoBehaviour
         return "DirectionWrong";
     }
 
-    public virtual void ReceiveDamage(CreatureController attacker)
+    public virtual void ReceiveDamage(CreatureController attacker, bool isSpell)
     {
         foreach (var aux in specialSpell.ToList())
         {
-            aux.ReceiveHit(attacker, this);
+            aux.ReceiveHit(attacker, this, isSpell);
         }
     }
 
@@ -136,7 +136,7 @@ public class CreatureController : MonoBehaviour
         }
 
         if (trueDamage > 0)
-            ReceiveDamage(attacker);
+            ReceiveDamage(attacker, false);
     }
 
     public virtual void ReceiveSpell(CreatureController caster, int damage, string damageText, SpellSO spell)
@@ -219,7 +219,7 @@ public class CreatureController : MonoBehaviour
 
         if (damage > 0)
         {
-            ReceiveDamage(caster);
+            ReceiveDamage(caster, true);
         }
     }
 

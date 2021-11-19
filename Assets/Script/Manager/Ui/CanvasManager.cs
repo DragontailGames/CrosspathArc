@@ -159,6 +159,9 @@ public class CanvasManager : MonoBehaviour
 
     public void RemoveLogText(string spellName)
     {
+        if (string.IsNullOrEmpty(spellName) || statusLog == null)
+            return;
+
         spellName = spellName.Replace("_", " ");
         var temp = statusLogs.Find(n => n.text.Split('>')[1].StartsWith(spellName));
         if (temp != null)

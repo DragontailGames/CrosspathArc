@@ -95,6 +95,11 @@ public class SpellbookManager : MonoBehaviour
                 tempSpellController.SetupSpell(this, spell);
                 spellbookSpellControllers.Add(tempSpellController);
             }
+            else
+            {
+                var tempSpellController = aux.GetComponent<SpellbookSpellController>();
+                tempSpellController.SetupSpell(this, null);
+            }
         }
     }
 
