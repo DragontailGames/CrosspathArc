@@ -253,9 +253,10 @@ public class BotController : CreatureController
 
     public bool Cast(CreatureController creatureController)
     {
+        CharacterController characterController = target.GetComponent<CharacterController>();
         Spell selectedSpell = null;
         direction = gameManager.GetDirection(currentTileIndex, creatureController.currentTileIndex);
-        if (spells.Count > 0)
+        if (spells.Count > 0 && !CheckMinionAndPlayer(characterController))
         {
             selectedSpell = spells[UnityEngine.Random.Range(0, spells.Count)];
         }
