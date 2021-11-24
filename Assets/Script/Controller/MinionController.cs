@@ -52,11 +52,14 @@ public class MinionController : BotController
 
         target = GetTarget(null, typeof(EnemyController));
 
-        List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, target.currentTileIndex);
-
-        if (gameManager.DetectLOS(path))
+        if (target != null)
         {
-            target = null;
+            List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, target.currentTileIndex);
+
+            if (gameManager.DetectLOS(path))
+            {
+                target = null;
+            }
         }
 
         if(target == null)
