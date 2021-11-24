@@ -49,7 +49,16 @@ public class MinionController : BotController
             gameManager.EndMyTurn(this);
             yield break;
         }
+
         target = GetTarget(null, typeof(EnemyController));
+
+        List<PathFind.Point> path = gameManager.GetPathForLOS(currentTileIndex, target.currentTileIndex);
+
+        if (gameManager.DetectLOS(path))
+        {
+            target = null;
+        }
+
         if(target == null)
         {
             target = Manager.Instance.characterController;
