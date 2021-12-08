@@ -12,4 +12,11 @@ public class CharacterInventory : MonoBehaviour
     public Weapon weapon;
 
     public Weapon secondaryWeapon;
+
+    public InventoryManager inventoryManager;
+
+    public void AddToInventory(ItemSO item, int qtd)
+    {
+        inventoryManager.inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = inventoryManager.GetNextSlot()});
+    }
 }

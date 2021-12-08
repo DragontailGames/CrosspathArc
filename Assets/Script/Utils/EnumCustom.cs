@@ -91,6 +91,7 @@ public class EnumCustom : MonoBehaviour
         ShowLog,
         Wall,
         Fast_Cast,
+        Add_Item_Inventory,
     }
 
     public enum BuffDebuffType
@@ -129,5 +130,10 @@ public class EnumCustom : MonoBehaviour
     {
         Mana,
         Wisp,
+    }
+
+    public enum ConsumableType
+    {
+        Hp,
     }
 }

@@ -71,6 +71,8 @@ public class SpellSO : ScriptableObject
 
     public string unlockWhenKillThis = "";
 
+    public ItemSO itemToInventory;
+
     public int GetValue(CreatureController creatureController)
     {
         int value = 0;
@@ -371,7 +373,7 @@ public class SpellSO : ScriptableObject
 
     public void CastSpecial(CreatureController target, CreatureController caster, UnityAction action, Vector3Int tile)
     {
-        ParserCustom.SpellSpecialParser(new SpecialSpell(duration + attributeInfluenceDuration.GetValue(caster), GetValue(caster), caster, target, tile, specialEffect, spellLogName));
+        ParserCustom.SpellSpecialParser(new SpecialSpell(duration + attributeInfluenceDuration.GetValue(caster), GetValue(caster), caster, target, tile, specialEffect, spellLogName,null, itemToInventory));
         GameObject objectSpell = Instantiate(spellCastObject, target.transform);
         action?.Invoke();
         Destroy(objectSpell, 1.0f);

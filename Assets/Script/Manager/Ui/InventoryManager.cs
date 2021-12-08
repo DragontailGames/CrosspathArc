@@ -2,23 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Gerenciamento do inventario
 /// </summary>
 public class InventoryManager : MonoBehaviour
 {
-    public List<EquipmentUi> equipmentUi;
+    public List<ItemInterface> inventory = new List<ItemInterface>();
 
-    public List<Equipment> tempSetupItem;
+    public List<SlotController> slotControllers = new List<SlotController>();
 
-    public GameObject inventory;
+    public GameObject inventoryObject;
+
+    public Sprite alchemyIcon;
+
+    public GameObject itemInventory;
+
+    public SlotController slotSelectedController = null;
 
     public void Start()
     {
-        if (inventory == null)
+        if (inventoryObject == null)
         {
-            inventory = Manager.Instance.canvasManager.inventory;
+            inventoryObject = Manager.Instance.canvasManager.inventory;
+        }
+
+        Transform slots = inventoryObject.transform.GetChild(0).Find("Slots");
+        int y = 0;
+        for (int i = 0; i < slots.childCount; i++)
+        {
+            Transform slot = slots.GetChild(i);
+
+            SlotController slotController = slot.gameObject.AddComponent<SlotController>();
+            slotControllers.Add(slotController);
+            int x = i - (7 * y);
+            slotController.index = new Vector2(x, y);
+
+            if (y < 2)
+            {
+                slotController.forAlchemy = true;
+                slotController.icon = alchemyIcon;
+
+                Instantiate(itemInventory, slotController.transform);
+            }
+            slotController.inventoryManager = this;
+            slotController.Setup();
+
+            if ((i + 1.0f) % 7 == 0)
+            {
+                y++;
+            }
         }
     }
 
@@ -26,12 +60,19 @@ public class InventoryManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.I))
         {
-            OpenInventory();
+            if (inventoryObject.activeSelf)//Inventario aberto
+            {
+                CloseInventory();
+            }
+            else
+            {
+                OpenInventory();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && inventory.activeSelf == true)
+        if (Input.GetKeyDown(KeyCode.Escape) && inventoryObject.activeSelf == true)
         {
-            inventory.SetActive(false);
+            inventoryObject.SetActive(false);
             Manager.Instance.gameManager.SetupPause(false);
         }
     }
@@ -40,18 +81,23 @@ public class InventoryManager : MonoBehaviour
     {
         Manager.Instance.gameManager.SetupPause(true);
 
-        if (inventory.activeSelf)//Inventario aberto
+        inventoryObject.SetActive(true);
+
+        foreach (var aux in inventory)
         {
-            inventory.SetActive(false);
-            Manager.Instance.gameManager.SetupPause(false);
-            return;
+            SetupItemInventory(aux);
         }
+    }
 
-        inventory.SetActive(true);
+    public List<GameObject> listToDestroy = new List<GameObject>();
 
-        foreach (var aux in tempSetupItem)
+    public void CloseInventory()
+    {
+        inventoryObject.SetActive(false);
+        Manager.Instance.gameManager.SetupPause(false);
+        foreach(var aux in listToDestroy)
         {
-            SetupItem(aux);
+            Destroy(aux.gameObject, 0.2f);
         }
     }
 
@@ -59,19 +105,35 @@ public class InventoryManager : MonoBehaviour
     /// Define o item na estrutura do inventario mais comentarios no futuro
     /// </summary>
     /// <param name="item"></param>
-    public void SetupItem(Equipment item)
+    public void SetupItemInventory(ItemInterface item)
     {
+        SlotController slotController = slotControllers.Find(n => n.index == item.slot);
+        GameObject itemAux = Instantiate(itemInventory, slotController.transform);
+
+        Image img = itemAux.GetComponent<Image>();
+        img.sprite = item.item.icon;
+        img.enabled = true;
+
+        ItemSlotController itemSlotAux = itemAux.AddComponent<ItemSlotController>();
+        itemSlotAux.inventoryManager = this;
+        itemSlotAux.item = item;
+        itemSlotAux.SetupText();
+        listToDestroy.Add(itemAux);
+    }
+
+    public void SetupEquipment(ItemInterface item)
+    {/*
         List<EquipmentUi> equipment = equipmentUi.FindAll(n => n.equipmentType == item.equipmentType);
-        if(equipment.Count == 1)
+        if (equipment.Count == 1)
         {
             equipment[0].slot.Find("BackItem").gameObject.SetActive(false);
             Image icon = equipment[0].slot.Find("Icon").GetComponent<Image>();
             icon.enabled = true;
             icon.sprite = item.icon;
         }
-        else if(equipment.Count >= 1)
+        else if (equipment.Count >= 1)
         {
-            if(equipment[1].slot.Find("BackItem").gameObject.activeSelf)
+            if (equipment[1].slot.Find("BackItem").gameObject.activeSelf)
             {
                 equipment[1].slot.Find("BackItem").gameObject.SetActive(false);
                 Image icon1 = equipment[1].slot.Find("Icon").GetComponent<Image>();
@@ -87,6 +149,19 @@ public class InventoryManager : MonoBehaviour
         else
         {
             Debug.LogError("Tipo de equipamento não encontrado");
+        }*/
+    }
+
+    public Vector2 GetNextSlot()
+    {
+        foreach(var aux in slotControllers)
+        {
+            if(aux.transform.childCount<=0 && aux.forAlchemy == false)
+            {
+                return aux.index;
+            }
         }
+
+        return Vector2.zero;
     }
 }

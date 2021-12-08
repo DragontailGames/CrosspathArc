@@ -34,7 +34,7 @@ public class AttributeStatus
         int level = _level;
         for (int i = 0; i < 8; i++)
         {
-            attributes[i] = new Attributes { name = ((EnumCustom.Attribute)i).ToString(), attribute = (EnumCustom.Attribute)i, value = attributes[i].value != 0 ? attributes[i].value: 1 };//inicializa as variaveis com valor proporicional
+            attributes[i] = new Attributes { attribute = (EnumCustom.Attribute)i, value = attributes[i].value != 0 ? attributes[i].value: 1 };//inicializa as variaveis com valor proporicional
             status[i] = new Status { status = (EnumCustom.Status)i, value = status[i].value != 0 ? status[i].value : 1 };//inicializa as variaveis com 1 de valor
         }
 

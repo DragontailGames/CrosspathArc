@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Weapon : Equipment
+public class Weapon : ScriptableObject
 {
     public bool twoHanded = false;
 

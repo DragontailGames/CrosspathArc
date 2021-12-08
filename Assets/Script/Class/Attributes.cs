@@ -8,8 +8,6 @@ using UnityEngine;
 [System.Serializable]
 public class Attributes
 {
-    public string name;
-
     public EnumCustom.Attribute attribute;//tipo
 
     public int value;

@@ -93,6 +93,11 @@ public static class ParserCustom
                     new Fast_Cast(specialSpell);
                     break;
                 }
+            case EnumCustom.SpecialEffect.Add_Item_Inventory:
+                {
+                    new Add_Item_Inventory(specialSpell);
+                    break;
+                }
         }
     }
 }

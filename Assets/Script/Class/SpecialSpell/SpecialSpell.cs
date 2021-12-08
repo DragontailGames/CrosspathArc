@@ -26,7 +26,9 @@ public class SpecialSpell
 
     public GameObject spellObject = null;
 
-    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, Vector3Int tile, EnumCustom.SpecialEffect effect, string logName, GameObject spellObject = null)
+    public ItemSO itemSO;
+
+    public SpecialSpell(int duration, int value, CreatureController caster, CreatureController target, Vector3Int tile, EnumCustom.SpecialEffect effect, string logName, GameObject spellObject = null, ItemSO itemSO = null)
     {
         this.logName = logName;
         this.duration = duration;
@@ -36,6 +38,7 @@ public class SpecialSpell
         this.effect = effect;
         this.tile = tile;
         this.spellObject = spellObject;
+        this.itemSO = itemSO;
 
         if (duration == 0)
         {
