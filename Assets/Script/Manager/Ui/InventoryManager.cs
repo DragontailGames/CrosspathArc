@@ -28,7 +28,7 @@ public class InventoryManager : MonoBehaviour
             inventoryObject = Manager.Instance.canvasManager.inventory;
         }
 
-        Transform slots = inventoryObject.transform.GetChild(0).Find("Slots");
+        Transform slots = inventoryObject.transform.Find("Inventory").Find("Slots");
         int y = 0;
         for (int i = 0; i < slots.childCount; i++)
         {
@@ -74,6 +74,7 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryObject.SetActive(false);
             Manager.Instance.gameManager.SetupPause(false);
+            CloseInventory();
         }
     }
 

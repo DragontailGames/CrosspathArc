@@ -17,6 +17,13 @@ public class CharacterInventory : MonoBehaviour
 
     public void AddToInventory(ItemSO item, int qtd)
     {
-        inventoryManager.inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = inventoryManager.GetNextSlot()});
+        try
+        {
+            inventoryManager.inventory.Find(n => n.item.itemName == item.itemName).qtd += qtd;
+        }
+        catch
+        {
+            inventoryManager.inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = inventoryManager.GetNextSlot() });
+        }
     }
 }
