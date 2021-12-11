@@ -1,0 +1,3960 @@
+fileFormatVersion: 2
+guid: 571e9459058d1984dbad160ac8a8867a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5922154167552043218
+    second: 4_chests_bag_0
+  - first:
+      213: 3138648314417398531
+    second: 4_chests_bag_1
+  - first:
+      213: -8457262529114427943
+    second: 4_chests_bag_2
+  - first:
+      213: 9100349549255599470
+    second: 4_chests_bag_3
+  - first:
+      213: 8118291276729510869
+    second: 4_chests_bag_4
+  - first:
+      213: 4276134346347661761
+    second: 4_chests_bag_5
+  - first:
+      213: 3085546220539816392
+    second: 4_chests_bag_6
+  - first:
+      213: -8529446266633665340
+    second: 4_chests_bag_7
+  - first:
+      213: 318328448107148659
+    second: 4_chests_bag_8
+  - first:
+      213: 9037864946975951191
+    second: 4_chests_bag_9
+  - first:
+      213: 7172232963064911565
+    second: 4_chests_bag_10
+  - first:
+      213: -259163083896567983
+    second: 4_chests_bag_11
+  - first:
+      213: -4575779174023682669
+    second: 4_chests_bag_12
+  - first:
+      213: -1244519092787918755
+    second: 4_chests_bag_13
+  - first:
+      213: -9061466420003920947
+    second: 4_chests_bag_14
+  - first:
+      213: 4734614761827023894
+    second: 4_chests_bag_15
+  - first:
+      213: 9143132251217924345
+    second: 4_chests_bag_16
+  - first:
+      213: -5369476089044362907
+    second: 4_chests_bag_17
+  - first:
+      213: -3884808210168172076
+    second: 4_chests_bag_18
+  - first:
+      213: 6778447644542422788
+    second: 4_chests_bag_19
+  - first:
+      213: -545033543316746150
+    second: 4_chests_bag_20
+  - first:
+      213: 5264245420010759517
+    second: 4_chests_bag_21
+  - first:
+      213: -8509368543764596654
+    second: 4_chests_bag_22
+  - first:
+      213: 3034459508690008712
+    second: 4_chests_bag_23
+  - first:
+      213: 2152716734598556937
+    second: 4_chests_bag_24
+  - first:
+      213: -3655290300291730226
+    second: 4_chests_bag_25
+  - first:
+      213: 3671291891677300020
+    second: 4_chests_bag_26
+  - first:
+      213: 783343059338950734
+    second: 4_chests_bag_27
+  - first:
+      213: -4455652675994848456
+    second: 4_chests_bag_28
+  - first:
+      213: -3137841531354331705
+    second: 4_chests_bag_29
+  - first:
+      213: -3452542622776779415
+    second: 4_chests_bag_30
+  - first:
+      213: 9131417262049651217
+    second: 4_chests_bag_31
+  - first:
+      213: -1743845878808307142
+    second: 4_chests_bag_32
+  - first:
+      213: 2049915422273392322
+    second: 4_chests_bag_33
+  - first:
+      213: -143277774552300748
+    second: 4_chests_bag_34
+  - first:
+      213: -6166926812777177969
+    second: 4_chests_bag_35
+  - first:
+      213: 6780998606936010439
+    second: 4_chests_bag_36
+  - first:
+      213: 7799533799500699695
+    second: 4_chests_bag_37
+  - first:
+      213: 3427968260639650739
+    second: 4_chests_bag_38
+  - first:
+      213: 2307195872482707695
+    second: 4_chests_bag_39
+  - first:
+      213: -7386033386428065075
+    second: 4_chests_bag_40
+  - first:
+      213: -1254567526539160809
+    second: 4_chests_bag_41
+  - first:
+      213: 1346306497694096463
+    second: 4_chests_bag_42
+  - first:
+      213: -684299860282971618
+    second: 4_chests_bag_43
+  - first:
+      213: 8409706065588962673
+    second: 4_chests_bag_44
+  - first:
+      213: -4569629709868935348
+    second: 4_chests_bag_45
+  - first:
+      213: 1298847398855488082
+    second: 4_chests_bag_46
+  - first:
+      213: 5801978618040764802
+    second: 4_chests_bag_47
+  - first:
+      213: 5956376301942017259
+    second: 4_chests_bag_48
+  - first:
+      213: -8127565223521905127
+    second: 4_chests_bag_49
+  - first:
+      213: -9092172925591629262
+    second: 4_chests_bag_50
+  - first:
+      213: 7827904987000763356
+    second: 4_chests_bag_51
+  - first:
+      213: -2862620515125897687
+    second: 4_chests_bag_52
+  - first:
+      213: 7634153722118579952
+    second: 4_chests_bag_53
+  - first:
+      213: 3329132215242191016
+    second: 4_chests_bag_54
+  - first:
+      213: 6074209083196622433
+    second: 4_chests_bag_55
+  - first:
+      213: -2681245894478613994
+    second: 4_chests_bag_56
+  - first:
+      213: 7682852903040237948
+    second: 4_chests_bag_57
+  - first:
+      213: -8452349749824116644
+    second: 4_chests_bag_58
+  - first:
+      213: -5761638876437279936
+    second: 4_chests_bag_59
+  - first:
+      213: 5907570198108465966
+    second: 4_chests_bag_60
+  - first:
+      213: -8551020074342611097
+    second: 4_chests_bag_61
+  - first:
+      213: 6337772730547270153
+    second: 4_chests_bag_62
+  - first:
+      213: 1057344048837060806
+    second: 4_chests_bag_63
+  - first:
+      213: 2942441787290915194
+    second: 4_chests_bag_64
+  - first:
+      213: 2914759296959003912
+    second: 4_chests_bag_65
+  - first:
+      213: 2055918175344037540
+    second: 4_chests_bag_66
+  - first:
+      213: -1199420176910602620
+    second: 4_chests_bag_67
+  - first:
+      213: -3871925748429607923
+    second: 4_chests_bag_68
+  - first:
+      213: -7047901691334532155
+    second: 4_chests_bag_69
+  - first:
+      213: -3180234089924568208
+    second: 4_chests_bag_70
+  - first:
+      213: 4840235774897397061
+    second: 4_chests_bag_71
+  - first:
+      213: 6814728947586824149
+    second: 4_chests_bag_72
+  - first:
+      213: 8539409321215350610
+    second: 4_chests_bag_73
+  - first:
+      213: 7040519245188634826
+    second: 4_chests_bag_74
+  - first:
+      213: -8238838713789205784
+    second: 4_chests_bag_75
+  - first:
+      213: -1104984115281828840
+    second: 4_chests_bag_76
+  - first:
+      213: -8274385264442375108
+    second: 4_chests_bag_77
+  - first:
+      213: -5557222073190546827
+    second: 4_chests_bag_78
+  - first:
+      213: -7900521037237530100
+    second: 4_chests_bag_79
+  - first:
+      213: -2206227301148151309
+    second: 4_chests_bag_80
+  - first:
+      213: -4859214961123447056
+    second: 4_chests_bag_81
+  - first:
+      213: 7425261172040038251
+    second: 4_chests_bag_82
+  - first:
+      213: -2356114395528923653
+    second: 4_chests_bag_83
+  - first:
+      213: -4235833012788962707
+    second: 4_chests_bag_84
+  - first:
+      213: -2710609233464680703
+    second: 4_chests_bag_85
+  - first:
+      213: 3173507068560395215
+    second: 4_chests_bag_86
+  - first:
+      213: -2317173992167307497
+    second: 4_chests_bag_87
+  - first:
+      213: -5342023525070383293
+    second: 4_chests_bag_88
+  - first:
+      213: 3442707989113207688
+    second: 4_chests_bag_89
+  - first:
+      213: -5104841418226212166
+    second: 4_chests_bag_90
+  - first:
+      213: -5435402692787784021
+    second: 4_chests_bag_91
+  - first:
+      213: -7472016672729903217
+    second: 4_chests_bag_92
+  - first:
+      213: 2225557441188803899
+    second: 4_chests_bag_93
+  - first:
+      213: -167519886833308126
+    second: 4_chests_bag_94
+  - first:
+      213: -2534209466882247614
+    second: 4_chests_bag_95
+  - first:
+      213: 6291960922458592559
+    second: 4_chests_bag_96
+  - first:
+      213: -544896373940504927
+    second: 4_chests_bag_97
+  - first:
+      213: -8897316977334418883
+    second: 4_chests_bag_98
+  - first:
+      213: 509262245878354083
+    second: 4_chests_bag_99
+  - first:
+      213: 1007829409395968704
+    second: 4_chests_bag_100
+  - first:
+      213: 4274577525506123687
+    second: 4_chests_bag_101
+  - first:
+      213: -2319413444595074542
+    second: 4_chests_bag_102
+  - first:
+      213: -2476797593856319171
+    second: 4_chests_bag_103
+  - first:
+      213: -1398843077933540015
+    second: 4_chests_bag_104
+  - first:
+      213: 1313739900942770177
+    second: 4_chests_bag_105
+  - first:
+      213: 5874987327884601232
+    second: 4_chests_bag_106
+  - first:
+      213: 8229969146442006270
+    second: 4_chests_bag_107
+  - first:
+      213: -6653499975270007064
+    second: 4_chests_bag_108
+  - first:
+      213: 4668322973569762581
+    second: 4_chests_bag_109
+  - first:
+      213: 9150466216021805986
+    second: 4_chests_bag_110
+  - first:
+      213: 5299554157470160022
+    second: 4_chests_bag_111
+  - first:
+      213: 1645310225094221222
+    second: 4_chests_bag_112
+  - first:
+      213: -6296118745049660497
+    second: 4_chests_bag_113
+  - first:
+      213: -3503183033989528577
+    second: 4_chests_bag_114
+  - first:
+      213: -4188140643546505542
+    second: 4_chests_bag_115
+  - first:
+      213: 4576558956797730290
+    second: 4_chests_bag_116
+  - first:
+      213: -2040692711459489525
+    second: 4_chests_bag_117
+  - first:
+      213: -2651078198598819013
+    second: 4_chests_bag_118
+  - first:
+      213: 7812093757893002891
+    second: 4_chests_bag_119
+  - first:
+      213: -7125444157521942767
+    second: 4_chests_bag_120
+  - first:
+      213: 2548047172035944258
+    second: 4_chests_bag_121
+  - first:
+      213: 6808505740686210300
+    second: 4_chests_bag_122
+  - first:
+      213: -5757146881225987079
+    second: 4_chests_bag_123
+  - first:
+      213: -3646789982812175932
+    second: 4_chests_bag_124
+  - first:
+      213: 372300885132510107
+    second: 4_chests_bag_125
+  - first:
+      213: 6608714294740472587
+    second: 4_chests_bag_126
+  - first:
+      213: 3069190959644033588
+    second: 4_chests_bag_127
+  - first:
+      213: 3120423047989107856
+    second: 4_chests_bag_128
+  - first:
+      213: -9086106438239642541
+    second: 4_chests_bag_129
+  - first:
+      213: -2378431228687252347
+    second: 4_chests_bag_130
+  - first:
+      213: 5092045599332677184
+    second: 4_chests_bag_131
+  - first:
+      213: -3726067697934923961
+    second: 4_chests_bag_132
+  - first:
+      213: 7352169599878089886
+    second: 4_chests_bag_133
+  - first:
+      213: -4135800079598968162
+    second: 4_chests_bag_134
+  - first:
+      213: 6108318288195589919
+    second: 4_chests_bag_135
+  - first:
+      213: -7021765502040919097
+    second: 4_chests_bag_136
+  - first:
+      213: 1181075985597846938
+    second: 4_chests_bag_137
+  - first:
+      213: -8686236511053949193
+    second: 4_chests_bag_138
+  - first:
+      213: 6135440384996043515
+    second: 4_chests_bag_139
+  - first:
+      213: -8908950665797614124
+    second: 4_chests_bag_140
+  - first:
+      213: -3287431253079601376
+    second: 4_chests_bag_141
+  - first:
+      213: 7846528225722930259
+    second: 4_chests_bag_142
+  - first:
+      213: 5166606533340483083
+    second: 4_chests_bag_143
+  - first:
+      213: 2398932553870879657
+    second: 4_chests_bag_144
+  - first:
+      213: 6998676102461053598
+    second: 4_chests_bag_145
+  - first:
+      213: 3863244808088171032
+    second: 4_chests_bag_146
+  - first:
+      213: -2625049246543692964
+    second: 4_chests_bag_147
+  - first:
+      213: 2808319817605494100
+    second: 4_chests_bag_148
+  - first:
+      213: 4337575959477379946
+    second: 4_chests_bag_149
+  - first:
+      213: 3156557546740278916
+    second: 4_chests_bag_150
+  - first:
+      213: -3050233088778760219
+    second: 4_chests_bag_151
+  - first:
+      213: -8219592673591508202
+    second: 4_chests_bag_152
+  - first:
+      213: 5471572039481042458
+    second: 4_chests_bag_153
+  - first:
+      213: -1171766658408705830
+    second: 4_chests_bag_154
+  - first:
+      213: 1037971797527898693
+    second: 4_chests_bag_155
+  - first:
+      213: 6080822620981351881
+    second: 4_chests_bag_156
+  - first:
+      213: -267613261754623886
+    second: 4_chests_bag_157
+  - first:
+      213: -2567216765703294125
+    second: 4_chests_bag_158
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 4_chests_bag_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 675
+        width: 94
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2716f9592840dda0800000000000000
+      internalID: -5922154167552043218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_1
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 634
+        width: 71
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3034abf3308be8b20800000000000000
+      internalID: 3138648314417398531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_2
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 673
+        width: 71
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dda9ebc984c1aa80800000000000000
+      internalID: -8457262529114427943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 733
+        width: 28
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e65244703bfea4e70800000000000000
+      internalID: 9100349549255599470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_4
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 732
+        width: 31
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5db6d9457e6f9a070800000000000000
+      internalID: 8118291276729510869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_5
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 742
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c946e53881e75b30800000000000000
+      internalID: 4276134346347661761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_6
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 741
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c9235d80ff02da20800000000000000
+      internalID: 3085546220539816392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_7
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 742
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c4c48abfc151a980800000000000000
+      internalID: -8529446266633665340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_8
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 741
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 375f357790eea6400800000000000000
+      internalID: 318328448107148659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_9
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 742
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 759c47cd842fc6d70800000000000000
+      internalID: 9037864946975951191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_10
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 741
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc6d4d931e3e88360800000000000000
+      internalID: 7172232963064911565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_11
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 742
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 157437d5c84476cf0800000000000000
+      internalID: -259163083896567983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_12
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 741
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39520b1b5119f70c0800000000000000
+      internalID: -4575779174023682669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_13
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 687
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d584f269a749abee0800000000000000
+      internalID: -1244519092787918755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_14
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 684
+        width: 31
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc3298bfc443f3280800000000000000
+      internalID: -9061466420003920947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_15
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61c35037a0bb4b140800000000000000
+      internalID: 4734614761827023894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_16
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f01340175ee2ee70800000000000000
+      internalID: 9143132251217924345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_17
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5699e8a12f9cb75b0800000000000000
+      internalID: -5369476089044362907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_18
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d1b764f383661ac0800000000000000
+      internalID: -3884808210168172076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_19
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40fc88d0832e11e50800000000000000
+      internalID: 6778447644542422788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_20
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a50deeb41e6af68f0800000000000000
+      internalID: -545033543316746150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_21
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d55e73e715b5e0940800000000000000
+      internalID: 5264245420010759517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_22
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 682
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 258370ed466a8e980800000000000000
+      internalID: -8509368543764596654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_23
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 593
+        width: 64
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88a36cc88d09c1a20800000000000000
+      internalID: 3034459508690008712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_24
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 582
+        width: 29
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90d29cbe67cffdd10800000000000000
+      internalID: 2152716734598556937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_25
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 582
+        width: 26
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec43e24a6dcc54dc0800000000000000
+      internalID: -3655290300291730226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_26
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 582
+        width: 25
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 435823e268c03f230800000000000000
+      internalID: 3671291891677300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_27
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 630
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e487a25bc5efeda00800000000000000
+      internalID: 783343059338950734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_28
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 833fecc8f775a22c0800000000000000
+      internalID: -4455652675994848456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_29
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c5482290c52474d0800000000000000
+      internalID: -3137841531354331705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_30
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96d9e75e6ca1610d0800000000000000
+      internalID: -3452542622776779415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_31
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11ae6589e9f49be70800000000000000
+      internalID: 9131417262049651217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_32
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3a1a9a996d9cc7e0800000000000000
+      internalID: -1743845878808307142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_33
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ce43343733c27c10800000000000000
+      internalID: 2049915422273392322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_34
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4330a978f99f20ef0800000000000000
+      internalID: -143277774552300748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_35
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 638
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8c9590dcbcaa6aa0800000000000000
+      internalID: -6166926812777177969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_36
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 590
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cee6d44e42fa1e50800000000000000
+      internalID: 6780998606936010439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_37
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 534
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2854ecbaa28d3c60800000000000000
+      internalID: 7799533799500699695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_38
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 591
+        width: 28
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b37dbc88f6929f20800000000000000
+      internalID: 3427968260639650739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_39
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe844960c6ec40020800000000000000
+      internalID: 2307195872482707695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_40
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca97c694c98f7990800000000000000
+      internalID: -7386033386428065075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_41
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71394e94b71e69ee0800000000000000
+      internalID: -1254567526539160809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_42
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4c5bd960aa0fa210800000000000000
+      internalID: 1346306497694096463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_43
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1aebf317e0e086f0800000000000000
+      internalID: -684299860282971618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_44
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 175c0e03c1745b470800000000000000
+      internalID: 8409706065588962673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_45
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c47d0346df96590c0800000000000000
+      internalID: -4569629709868935348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_46
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 583
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 252b832e3de660210800000000000000
+      internalID: 1298847398855488082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_47
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 497
+        width: 65
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2894bba10d4c48050800000000000000
+      internalID: 5801978618040764802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_48
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 535
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bec0fc930bc49a250800000000000000
+      internalID: 5956376301942017259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_49
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 542
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 916982bad76153f80800000000000000
+      internalID: -8127565223521905127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_50
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 543
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 232dfa585ec12d180800000000000000
+      internalID: -9092172925591629262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_51
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 542
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd370b59c1e42ac60800000000000000
+      internalID: 7827904987000763356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_52
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 535
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 926dc2deecde548d0800000000000000
+      internalID: -2862620515125897687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_53
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f6aa9fdc56f1f960800000000000000
+      internalID: 7634153722118579952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_54
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a0f1db7c14733e20800000000000000
+      internalID: 3329132215242191016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_55
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 166c2678afceb4450800000000000000
+      internalID: 6074209083196622433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_56
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 612b028901d4acad0800000000000000
+      internalID: -2681245894478613994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_57
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c71ca43820afe9a60800000000000000
+      internalID: 7682852903040237948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_58
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c582f5c5fa833ba80800000000000000
+      internalID: -8452349749824116644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_59
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04b00e5e7fb8a00b0800000000000000
+      internalID: -5761638876437279936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_60
+      rect:
+        serializedVersion: 2
+        x: 731
+        y: 538
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b60f7abc7ebf150800000000000000
+      internalID: 5907570198108465966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_61
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 490
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76703913c8ca45980800000000000000
+      internalID: -8551020074342611097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_62
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 485
+        width: 45
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9027d6f28ba44f750800000000000000
+      internalID: 6337772730547270153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_63
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 485
+        width: 46
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c86e447fc07cae00800000000000000
+      internalID: 1057344048837060806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_64
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 485
+        width: 44
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a719dbf3737a5d820800000000000000
+      internalID: 2942441787290915194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_65
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 484
+        width: 43
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80d3205332e437820800000000000000
+      internalID: 2914759296959003912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_66
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 490
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ae86a010b6188c10800000000000000
+      internalID: 2055918175344037540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_67
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48eaec234bdca5fe0800000000000000
+      internalID: -1199420176910602620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_68
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0c2a20db08244ac0800000000000000
+      internalID: -3871925748429607923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_69
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c3612cc0c2d03e90800000000000000
+      internalID: -7047901691334532155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_70
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07b557fd1f98dd3d0800000000000000
+      internalID: -3180234089924568208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_71
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54d95e7eac8fb2340800000000000000
+      internalID: 4840235774897397061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_72
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d7fb713fd7c29e50800000000000000
+      internalID: 6814728947586824149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_73
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25753bea883128670800000000000000
+      internalID: 8539409321215350610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_74
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 489
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac815c383f2f4b160800000000000000
+      internalID: 7040519245188634826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_75
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 390
+        width: 29
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e2bbde47d3c9ad80800000000000000
+      internalID: -8238838713789205784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_76
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 390
+        width: 28
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8146d263dce4aa0f0800000000000000
+      internalID: -1104984115281828840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_77
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 390
+        width: 27
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c348f2a017a7b2d80800000000000000
+      internalID: -8274385264442375108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_78
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 390
+        width: 46
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5728485c7f7c0e2b0800000000000000
+      internalID: -5557222073190546827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_79
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 390
+        width: 38
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c02d4f2b9f5bb5290800000000000000
+      internalID: -7900521037237530100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_80
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 390
+        width: 36
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f1bb4d65f7e161e0800000000000000
+      internalID: -2206227301148151309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_81
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 438
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fe29f2fcb9909cb0800000000000000
+      internalID: -4859214961123447056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_82
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 445
+        width: 28
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6772fbf1b3db0760800000000000000
+      internalID: 7425261172040038251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_83
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf57054c0766d4fd0800000000000000
+      internalID: -2356114395528923653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_84
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6a57d8315c4735c0800000000000000
+      internalID: -4235833012788962707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_85
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10f917a734bf16ad0800000000000000
+      internalID: -2710609233464680703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_86
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcbcbb96ddf8a0c20800000000000000
+      internalID: 3173507068560395215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_87
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7170812f78eb7dfd0800000000000000
+      internalID: -2317173992167307497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_88
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 347566e38e15dd5b0800000000000000
+      internalID: -5342023525070383293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_89
+      rect:
+        serializedVersion: 2
+        x: 673
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88bfd740da4f6cf20800000000000000
+      internalID: 3442707989113207688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_90
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 433
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab2ece7d6c5f729b0800000000000000
+      internalID: -5104841418226212166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_91
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 393
+        width: 20
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba6be258c029194b0800000000000000
+      internalID: -5435402692787784021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_92
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 393
+        width: 28
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8f4322bc601e4890800000000000000
+      internalID: -7472016672729903217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_93
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b35394583b4c2ee10800000000000000
+      internalID: 2225557441188803899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_94
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22eac7cec89dcadf0800000000000000
+      internalID: -167519886833308126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_95
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2443d0caaeda4dcd0800000000000000
+      internalID: -2534209466882247614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_96
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2598cb6f19815750800000000000000
+      internalID: 6291960922458592559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_97
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a6b0e782a32078f0800000000000000
+      internalID: -544896373940504927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_98
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 342
+        width: 24
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d320eef5951668480800000000000000
+      internalID: -8897316977334418883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_99
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a0d81f7053411700800000000000000
+      internalID: 509262245878354083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_100
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 342
+        width: 23
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ca0d3512878cfd00800000000000000
+      internalID: 1007829409395968704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_101
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 294
+        width: 41
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a729ac9c99525b30800000000000000
+      internalID: 4274577525506123687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_102
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 294
+        width: 31
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21a35abc2c9cfcfd0800000000000000
+      internalID: -2319413444595074542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_103
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 294
+        width: 31
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31e6a506b5a0add0800000000000000
+      internalID: -2476797593856319171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_104
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 294
+        width: 46
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15dd14bc1af469ce0800000000000000
+      internalID: -1398843077933540015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_105
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 294
+        width: 38
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10063faba775b3210800000000000000
+      internalID: 1313739900942770177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_106
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 294
+        width: 37
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 097ab7209d5288150800000000000000
+      internalID: 5874987327884601232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_107
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 346
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efeb91e9559b63270800000000000000
+      internalID: 8229969146442006270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_108
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 344
+        width: 28
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8eef5f436050aa3a0800000000000000
+      internalID: -6653499975270007064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_109
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 299
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 515cb68b20739c040800000000000000
+      internalID: 4668322973569762581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_110
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 299
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ab413fca8cfcfe70800000000000000
+      internalID: 9150466216021805986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_111
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69414ff8d6ccb8940800000000000000
+      internalID: 5299554157470160022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_112
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad1f08bee055d610800000000000000
+      internalID: 1645310225094221222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_113
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa303a11c51bf98a0800000000000000
+      internalID: -6296118745049660497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_114
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff301eb5791326fc0800000000000000
+      internalID: -3503183033989528577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_115
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abed800464cb0e5c0800000000000000
+      internalID: -4188140643546505542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_116
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fd9f81af14338f30800000000000000
+      internalID: 4576558956797730290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_117
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b097abd7ac00ea3e0800000000000000
+      internalID: -2040692711459489525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_118
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 296
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b332cb4ac6a753bd0800000000000000
+      internalID: -2651078198598819013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_119
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 198
+        width: 40
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b86424fe1e12a6c60800000000000000
+      internalID: 7812093757893002891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_120
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 198
+        width: 32
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 117a50c7a465d1d90800000000000000
+      internalID: -7125444157521942767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_121
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 198
+        width: 31
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f1420276b7c5320800000000000000
+      internalID: 2548047172035944258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_122
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 204
+        width: 73
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf43fcce5ebac7e50800000000000000
+      internalID: 6808505740686210300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_123
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 208
+        width: 74
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fbe6c80a618a10b0800000000000000
+      internalID: -5757146881225987079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_124
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 201
+        width: 19
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c1070805dff36dc0800000000000000
+      internalID: -3646789982812175932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_125
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 242
+        width: 47
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9303e7beadaa2500800000000000000
+      internalID: 372300885132510107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_126
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 238
+        width: 33
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b035d08f2aed6bb50800000000000000
+      internalID: 6608714294740472587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_127
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 240
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4324c61aae4f79a20800000000000000
+      internalID: 3069190959644033588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_128
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 241
+        width: 47
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09c155cba38fd4b20800000000000000
+      internalID: 3120423047989107856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_129
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 238
+        width: 69
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35c165da55aa7e180800000000000000
+      internalID: -9086106438239642541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_130
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 201
+        width: 96
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5848663266d1efed0800000000000000
+      internalID: -2378431228687252347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_131
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 102
+        width: 35
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 046b0586e749aa640800000000000000
+      internalID: 5092045599332677184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_132
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 96
+        width: 35
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74708879b295a4cc0800000000000000
+      internalID: -3726067697934923961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_133
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 102
+        width: 34
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9cc8213c47280660800000000000000
+      internalID: 7352169599878089886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_134
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 146
+        width: 14
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e92a8717dbfaa96c0800000000000000
+      internalID: -4135800079598968162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_135
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 146
+        width: 15
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f179beeae1b15c450800000000000000
+      internalID: 6108318288195589919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_136
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 144
+        width: 27
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c332c29a7dad8e90800000000000000
+      internalID: -7021765502040919097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_137
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 144
+        width: 30
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a95dd4ee956046010800000000000000
+      internalID: 1181075985597846938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_138
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 144
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f6d9933ae9447780800000000000000
+      internalID: -8686236511053949193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_139
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 144
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfa6640f586752550800000000000000
+      internalID: 6135440384996043515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_140
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 147
+        width: 47
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d547a3329c0d5480800000000000000
+      internalID: -8908950665797614124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_141
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 144
+        width: 47
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02f4ca061b2b062d0800000000000000
+      internalID: -3287431253079601376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_142
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 144
+        width: 45
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3549a4e39d774ec60800000000000000
+      internalID: 7846528225722930259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_143
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 145
+        width: 47
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0ec8f9a44973b740800000000000000
+      internalID: 5166606533340483083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_144
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 144
+        width: 94
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ab28999278ba4120800000000000000
+      internalID: 2398932553870879657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_145
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 105
+        width: 96
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9ad439a5da402160800000000000000
+      internalID: 6998676102461053598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_146
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 6
+        width: 105
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 812b7724fa00d9530800000000000000
+      internalID: 3863244808088171032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_147
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 97
+        width: 32
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5b3bdd4e93f19bd0800000000000000
+      internalID: -2625049246543692964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_148
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 101
+        width: 9
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 455b018bef729f620800000000000000
+      internalID: 2808319817605494100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_149
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 99
+        width: 22
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a636cea8a5a223c30800000000000000
+      internalID: 4337575959477379946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_150
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 116
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48668865d585ecb20800000000000000
+      internalID: 3156557546740278916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_151
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 56
+        width: 114
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ef0335aa256ba5d0800000000000000
+      internalID: -3050233088778760219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_152
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 11
+        width: 144
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 613cc2c33042eed80800000000000000
+      internalID: -8219592673591508202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_153
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 63
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a162a30c7cdeeeb40800000000000000
+      internalID: 5471572039481042458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_154
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 57
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad017e5be6c0dbfe0800000000000000
+      internalID: -1171766658408705830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_155
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 9
+        width: 122
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54a2686b9dd976e00800000000000000
+      internalID: 1037971797527898693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_156
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 32
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c5d0c9c4fb636450800000000000000
+      internalID: 6080822620981351881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_157
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 7
+        width: 36
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2789ee3082f394cf0800000000000000
+      internalID: -267613261754623886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_chests_bag_158
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 1
+        width: 47
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 353f3da04f96f5cd0800000000000000
+      internalID: -2567216765703294125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

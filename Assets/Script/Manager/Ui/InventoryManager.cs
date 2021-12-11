@@ -21,6 +21,19 @@ public class InventoryManager : MonoBehaviour
 
     public SlotController slotSelectedController = null;
 
+    public GameObject bag;
+
+    public GameObject dropItemController;
+
+    public GameObject chestUi;
+
+    public ItemSlotController dragItem;
+
+    public void Awake()
+    {
+        Manager.Instance.inventoryManager = this;
+    }
+
     public void Start()
     {
         if (inventoryObject == null)
@@ -78,6 +91,39 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void AddToInventory(ItemSO item, int qtd)
+    {
+        try
+        {
+            inventory.Find(n => n.item.itemName == item.itemName).qtd += qtd;
+        }
+        catch
+        {
+            inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = GetNextSlot() });
+        }
+    }
+
+    public void AddToInventory(ItemSO item, int qtd, Vector2 slot)
+    {
+        if(inventory.Find(n => n.slot == slot) == null)
+        {
+            inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = slot });
+        }
+        else
+        {
+
+        }
+        try
+        {
+            inventory.Find(n => n.item.itemName == item.itemName).qtd += qtd;
+        }
+        catch
+        {
+            inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = GetNextSlot() });
+        }
+    }
+
+
     public void OpenInventory()
     {
         Manager.Instance.gameManager.SetupPause(true);
@@ -94,9 +140,26 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseInventory()
     {
+        dragItem?.transform.SetParent(dragItem.slotController.transform);
+
         inventoryObject.SetActive(false);
         Manager.Instance.gameManager.SetupPause(false);
-        foreach(var aux in listToDestroy)
+
+        inventory = new List<ItemInterface>();
+
+        foreach (var aux in slotControllers)
+        {
+            if (aux.GetComponentInChildren<ItemSlotController>())
+            {
+                inventory.Add(aux.GetComponentInChildren<ItemSlotController>().item);
+            }
+        }
+
+        foreach (var aux in FindObjectsOfType<ChestController>())
+        {
+            aux.Close();
+        }
+        foreach (var aux in listToDestroy)
         {
             Destroy(aux.gameObject, 0.2f);
         }
@@ -164,5 +227,22 @@ public class InventoryManager : MonoBehaviour
         }
 
         return Vector2.zero;
+    }
+
+    public List<ItemSO> DropItem(List<ItemDrop> listToDrop)
+    {
+        List<ItemSO> finalItems = new List<ItemSO>();
+
+        foreach(var aux in listToDrop)
+        {
+            float randValue = Random.Range(0.0f, 100.0f);
+            Debug.Log("Try drop " + aux.item.itemName + " with a " + aux.probability + " percentange, and the result is " + randValue);
+            if (aux.probability >= randValue)
+            {
+                finalItems.Add(aux.item);
+            }
+        }
+
+        return finalItems;
     }
 }

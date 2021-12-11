@@ -7,10 +7,6 @@ using System;
 
 public class Sign : CenarioEntity
 {
-    public Color mouseOverColor;
-
-    private Color baseColor;
-
     [TextArea(0,10)]
     public string text;
 
@@ -26,20 +22,9 @@ public class Sign : CenarioEntity
         }
 
         base.Start();
+
+        spriteRenderer = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
         baseColor = this.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
-    }
-
-    public override void OnMouseOver()
-    {
-        base.OnMouseOver();
-        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = mouseOverColor;
-    }
-
-    public override void OnMouseExit()
-    {
-        base.OnMouseExit();
-        this.transform.GetChild(0).GetComponent<SpriteRenderer>().color = baseColor;
-
     }
 
     public override void OnMouseDown()

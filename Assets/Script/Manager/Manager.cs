@@ -55,4 +55,6 @@ public class Manager : MonoBehaviour
     public ConfigManager configManager;
 
     public TimeManager timeManager;
+
+    public InventoryManager inventoryManager;
 }

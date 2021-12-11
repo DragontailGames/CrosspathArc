@@ -1,0 +1,1248 @@
+fileFormatVersion: 2
+guid: f9574071c018ab346b4262d6289f3843
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9017200576381572856
+    second: 2_chests_b_bag_0
+  - first:
+      213: 7356039313132432909
+    second: 2_chests_b_bag_1
+  - first:
+      213: 8253769752189746053
+    second: 2_chests_b_bag_2
+  - first:
+      213: 3949592434746523632
+    second: 2_chests_b_bag_3
+  - first:
+      213: -2615178833926412776
+    second: 2_chests_b_bag_4
+  - first:
+      213: 8928378160726506092
+    second: 2_chests_b_bag_5
+  - first:
+      213: 1601495869641508517
+    second: 2_chests_b_bag_6
+  - first:
+      213: -4522081065699383658
+    second: 2_chests_b_bag_7
+  - first:
+      213: -4227123006977117732
+    second: 2_chests_b_bag_8
+  - first:
+      213: 8207225547100218224
+    second: 2_chests_b_bag_9
+  - first:
+      213: -907733567112417846
+    second: 2_chests_b_bag_10
+  - first:
+      213: 7458137617279973252
+    second: 2_chests_b_bag_11
+  - first:
+      213: 550351116203562815
+    second: 2_chests_b_bag_12
+  - first:
+      213: 648039417916871753
+    second: 2_chests_b_bag_13
+  - first:
+      213: -8009606487005768680
+    second: 2_chests_b_bag_14
+  - first:
+      213: 1245256508269067572
+    second: 2_chests_b_bag_15
+  - first:
+      213: -6016939304506343535
+    second: 2_chests_b_bag_16
+  - first:
+      213: 832009785783553437
+    second: 2_chests_b_bag_17
+  - first:
+      213: 1290715393377467449
+    second: 2_chests_b_bag_18
+  - first:
+      213: -8041478171911281126
+    second: 2_chests_b_bag_19
+  - first:
+      213: -341723032592421712
+    second: 2_chests_b_bag_20
+  - first:
+      213: -4116470172660707611
+    second: 2_chests_b_bag_21
+  - first:
+      213: -2563756360296926854
+    second: 2_chests_b_bag_22
+  - first:
+      213: 3068138100108923269
+    second: 2_chests_b_bag_23
+  - first:
+      213: 8871066571196987783
+    second: 2_chests_b_bag_24
+  - first:
+      213: 6743388434297581514
+    second: 2_chests_b_bag_25
+  - first:
+      213: -5162516595430388983
+    second: 2_chests_b_bag_26
+  - first:
+      213: -7443933251645023468
+    second: 2_chests_b_bag_27
+  - first:
+      213: 7737297877392868272
+    second: 2_chests_b_bag_28
+  - first:
+      213: 5593373426916984278
+    second: 2_chests_b_bag_29
+  - first:
+      213: 8655081884401747264
+    second: 2_chests_b_bag_30
+  - first:
+      213: -8746552638975604492
+    second: 2_chests_b_bag_31
+  - first:
+      213: -6124594062547412379
+    second: 2_chests_b_bag_32
+  - first:
+      213: 4777466866578397340
+    second: 2_chests_b_bag_33
+  - first:
+      213: -2372584276964920668
+    second: 2_chests_b_bag_34
+  - first:
+      213: -6232620599858457145
+    second: 2_chests_b_bag_35
+  - first:
+      213: -5480208549190391450
+    second: 2_chests_b_bag_36
+  - first:
+      213: -6367013350385793405
+    second: 2_chests_b_bag_37
+  - first:
+      213: 8262991886790817265
+    second: 2_chests_b_bag_38
+  - first:
+      213: 8423622401437799527
+    second: 2_chests_b_bag_39
+  - first:
+      213: -8707951570286609345
+    second: 2_chests_b_bag_40
+  - first:
+      213: -982926760236624805
+    second: 2_chests_b_bag_41
+  - first:
+      213: -7467337935941773413
+    second: 2_chests_b_bag_42
+  - first:
+      213: -3670612998421631573
+    second: 2_chests_b_bag_43
+  - first:
+      213: -444024681773333006
+    second: 2_chests_b_bag_44
+  - first:
+      213: 4505144034743274206
+    second: 2_chests_b_bag_45
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 2_chests_b_bag_0
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 676
+        width: 57
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8092458d9d77cd280800000000000000
+      internalID: -9017200576381572856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_1
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 676
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0e211508c6e51660800000000000000
+      internalID: 7356039313132432909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_2
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 679
+        width: 113
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58b3229fbd74b8270800000000000000
+      internalID: 8253769752189746053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_3
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 674
+        width: 46
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fff2a0c465cfc630800000000000000
+      internalID: 3949592434746523632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_4
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 582
+        width: 58
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81622b3d4b405bbd0800000000000000
+      internalID: -2615178833926412776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 582
+        width: 37
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6a7572f1a8f7eb70800000000000000
+      internalID: 8928378160726506092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_6
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 580
+        width: 84
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a6cc332208a93610800000000000000
+      internalID: 1601495869641508517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_7
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 626
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 696e771da375e31c0800000000000000
+      internalID: -4522081065699383658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_8
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 576
+        width: 49
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd17f3b750e3655c0800000000000000
+      internalID: -4227123006977117732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_9
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 518
+        width: 57
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0736b6eb62ce5e170800000000000000
+      internalID: 8207225547100218224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_10
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 454
+        width: 108
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acde09d41251763f0800000000000000
+      internalID: -907733567112417846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_11
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 533
+        width: 47
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48773f3e5a0a08760800000000000000
+      internalID: 7458137617279973252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_12
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 481
+        width: 55
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f379d0f9c6d33a700800000000000000
+      internalID: 550351116203562815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_13
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 483
+        width: 47
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 944d269ca6c4ef800800000000000000
+      internalID: 648039417916871753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_14
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 391
+        width: 63
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8145b57365928d090800000000000000
+      internalID: -8009606487005768680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_15
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 391
+        width: 36
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43dfe95523a084110800000000000000
+      internalID: 1245256508269067572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_16
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 301
+        width: 108
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19f30d7e4998f7ca0800000000000000
+      internalID: -6016939304506343535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_17
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 300
+        width: 74
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9d0743fd74eb8b00800000000000000
+      internalID: 832009785783553437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_18
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 299
+        width: 59
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93c7460dfca89e110800000000000000
+      internalID: 1290715393377467449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_19
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 202
+        width: 76
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a16ab2e453ee66090800000000000000
+      internalID: -8041478171911281126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_20
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 247
+        width: 57
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bc62ce56b4f14bf0800000000000000
+      internalID: -341723032592421712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_21
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 255
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ee411e103c5fd6c0800000000000000
+      internalID: -4116470172660707611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_22
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 201
+        width: 59
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a717ad57c25bb6cd0800000000000000
+      internalID: -2563756360296926854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_23
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 206
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58195daa857349a20800000000000000
+      internalID: 3068138100108923269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_24
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 207
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 789f90bab0c5c1b70800000000000000
+      internalID: 8871066571196987783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_25
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 202
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acfe8c09d04559d50800000000000000
+      internalID: 6743388434297581514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_26
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 206
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90b0056328e0b58b0800000000000000
+      internalID: -5162516595430388983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_27
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 159
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41bdaf3b526d1b890800000000000000
+      internalID: -7443933251645023468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_28
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 163
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b3c26fec67606b60800000000000000
+      internalID: 7737297877392868272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_29
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 165
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d50f7f2f77af9d40800000000000000
+      internalID: 5593373426916984278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_30
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 107
+        width: 74
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0454fa50e170d1870800000000000000
+      internalID: 8655081884401747264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_31
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 112
+        width: 59
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f88a9057b00e9680800000000000000
+      internalID: -8746552638975604492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_32
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 151
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56a156c4622110ba0800000000000000
+      internalID: -6124594062547412379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_33
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 107
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c989a949dc8fc4240800000000000000
+      internalID: 4777466866578397340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_34
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 115
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a234dbab23e21fd0800000000000000
+      internalID: -2372584276964920668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_35
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 116
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c597a516984189a0800000000000000
+      internalID: -6232620599858457145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_36
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 109
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 669a2722c5362f3b0800000000000000
+      internalID: -5480208549190391450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_37
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 15
+        width: 59
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 386c51a7713d3a7a0800000000000000
+      internalID: -6367013350385793405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_38
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 61
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f5f912875b0ca270800000000000000
+      internalID: 8262991886790817265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_39
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 54
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76419bf91f7b6e470800000000000000
+      internalID: 8423622401437799527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_40
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 66
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3cf2cbfe24272780800000000000000
+      internalID: -8707951570286609345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_41
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 9
+        width: 76
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b54dedfb151fb52f0800000000000000
+      internalID: -982926760236624805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_42
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 9
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b97546ef5bfae5890800000000000000
+      internalID: -7467337935941773413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_43
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 15
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bada529fcec5f0dc0800000000000000
+      internalID: -3670612998421631573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_44
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 14
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f5056b87e186d9f0800000000000000
+      internalID: -444024681773333006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_chests_b_bag_45
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 16
+        width: 26
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edac7dc51ac758e30800000000000000
+      internalID: 4505144034743274206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -23,14 +23,23 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        inventoryManager.dragItem = this;
+
         this.transform.SetParent(this.transform.parent.parent.parent);
         canvasGroup.blocksRaycasts = false;
+
+        inventoryManager.dropItemController.SetActive(true);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        inventoryManager.dragItem = null;
+
         canvasGroup.blocksRaycasts = true;
         Invoke("BackToController", 0.1f);
+
+        inventoryManager.dropItemController.SetActive(false);
+
     }
 
     public void BackToController()
@@ -47,12 +56,12 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(item.item.GetType() == typeof(ConsumableSO))
+        if (eventData.clickCount == 2)
         {
             item.qtd--;
             (item.item as ConsumableSO).Consume();
             SetupText();
-            if(item.qtd<=0)
+            if (item.qtd <= 0)
             {
                 inventoryManager.inventory.Remove(item);
                 DestroyImmediate(this.gameObject);

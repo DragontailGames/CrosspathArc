@@ -8,6 +8,8 @@ public class EnemyController : BotController
 
     private CharacterController player;
 
+    public List<ItemDrop> itemsToDrop = new List<ItemDrop>();
+
 
     public override void Start()
     {
@@ -80,11 +82,15 @@ public class EnemyController : BotController
 
     public override void Defeat()
     {
+        GameObject bagAux = Instantiate(Manager.Instance.inventoryManager.bag, Manager.Instance.gameManager.tilemap.CellToWorld(this.currentTileIndex) + (Vector3.up * 0.25f), Quaternion.identity);
+        bagAux.GetComponent<Bag>().items = Manager.Instance.inventoryManager.DropItem(itemsToDrop);
+
         base.Defeat();
 
         Manager.Instance.characterController.CharacterStatus.AddExp(exp);
         Manager.Instance.canvasManager.LogMessage(nickname + " foi derrotado, <color=yellow>" + exp + "</color> exp ganha");
         this.transform.Find("HealthBar").gameObject.SetActive(false);
+
     }
 
 }

@@ -45,9 +45,39 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if(eventData.pointerDrag != null && !forAlchemy)
         {
             Transform objItem = eventData.pointerDrag.transform;
-            objItem.GetComponent<ItemSlotController>().slotController = this;
-            objItem.SetParent(this.transform);
-            objItem.localPosition = Vector2.zero;
+            if (this.transform.childCount > 0)
+            {
+                Transform auxObject = this.transform.GetChild(0);
+                auxObject.GetComponent<ItemSlotController>().slotController = objItem.GetComponent<ItemSlotController>().slotController;
+                auxObject.GetComponent<ItemSlotController>().item.slot = objItem.GetComponent<ItemSlotController>().slotController.index;
+                auxObject.SetParent(objItem.GetComponent<ItemSlotController>().slotController.transform);
+                auxObject.localPosition = Vector2.zero;
+
+
+                objItem.GetComponent<ItemSlotController>().slotController = this;
+                objItem.GetComponent<ItemSlotController>().item.slot = this.index;
+                objItem.SetParent(this.transform);
+                objItem.localPosition = Vector2.zero;
+            }
+            else
+            {
+                objItem.GetComponent<ItemSlotController>().slotController = this;
+                objItem.SetParent(this.transform);
+                objItem.localPosition = Vector2.zero;
+            }
+
+            /*
+            if (inventoryManager.inventory.Find(n => n.item.itemName == itemSlotController.item.item.itemName) == null)
+            {
+                inventoryManager.inventory.Add(new ItemInterface)
+            }
+            else
+            {
+                if (inventoryManager.inventory.Find(n => n.qtd == itemSlotController.item.qtd) == null)
+                {
+
+                }
+            }*/
         }
     }
 }
