@@ -58,13 +58,16 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
     {
         if (eventData.clickCount == 2)
         {
-            item.qtd--;
-            (item.item as ConsumableSO).Consume();
-            SetupText();
-            if (item.qtd <= 0)
+            if(item.item.GetType() == typeof(ConsumableSO))
             {
+                item.qtd--;
+                (item.item as ConsumableSO).Consume();
+                SetupText();
+                if (item.qtd <= 0)
+                {
                 inventoryManager.inventory.Remove(item);
                 DestroyImmediate(this.gameObject);
+                }
             }
         }
     }

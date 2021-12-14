@@ -71,7 +71,18 @@ public class CharacterController : CreatureController
         {
             StartCoroutine(StartDelay());
 
-            if (EventSystem.current.IsPointerOverGameObject() || gameManager.cenarioEntitiesMouseOn.Count>0) return;
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            if (gameManager.cenarioEntitiesMouseOn.Count > 0)
+            {
+                foreach(var aux in gameManager.cenarioEntitiesMouseOn)
+                {
+                    if(aux != null)
+                    {
+                        return;
+                    }
+                }
+            }
+
             Vector3Int mousePos = MousePosition();
 
             if (gameManager.cenarioEntities.Find(n => n.currentTileIndex == mousePos) != null) return;

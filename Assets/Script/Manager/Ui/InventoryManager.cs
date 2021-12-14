@@ -140,7 +140,10 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseInventory()
     {
-        dragItem?.transform.SetParent(dragItem.slotController.transform);
+        if (dragItem != null && dragItem.slotController != null)
+        {
+            dragItem.transform.SetParent(dragItem.slotController.transform);
+        }
 
         inventoryObject.SetActive(false);
         Manager.Instance.gameManager.SetupPause(false);
