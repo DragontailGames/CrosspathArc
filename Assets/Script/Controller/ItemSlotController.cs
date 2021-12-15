@@ -12,7 +12,7 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
 
     public SlotController slotController;
 
-    public ItemInterface item;
+    public ItemInventory itemInventory;
 
     public void Awake()
     {
@@ -29,6 +29,9 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
         canvasGroup.blocksRaycasts = false;
 
         inventoryManager.dropItemController.SetActive(true);
+
+        itemInventory.equiped = false;
+        Manager.Instance.characterController.CharacterInventory.UpdateEquipmentList();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -46,7 +49,12 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
     {
         this.transform.SetParent(slotController.transform);
         this.transform.localPosition = Vector2.zero;
-        item.slot = slotController.index;
+        itemInventory.slot = slotController.index;
+
+        if(slotController.GetType() == typeof(SlotEquipmentController))
+        {
+            this.transform.localScale = Vector2.one * 4;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -56,17 +64,18 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.clickCount == 2)
+        if (eventData.clickCount == 2 && eventData.button == PointerEventData.InputButton.Left)
         {
-            if(item.item.GetType() == typeof(ConsumableSO))
+            if(itemInventory.item.GetType() == typeof(ConsumableSO))
             {
-                item.qtd--;
-                (item.item as ConsumableSO).Consume();
+                Debug.Log("Teste");
+                itemInventory.qtd--;
+                (itemInventory.item as ConsumableSO).Consume();
                 SetupText();
-                if (item.qtd <= 0)
+                if (itemInventory.qtd <= 0)
                 {
-                inventoryManager.inventory.Remove(item);
-                DestroyImmediate(this.gameObject);
+                    inventoryManager.inventory.Remove(itemInventory);
+                    DestroyImmediate(this.gameObject);
                 }
             }
         }
@@ -75,7 +84,10 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
     public void SetupText()
     {
         TextMeshProUGUI txt = this.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        txt.text = item.qtd.ToString();
-        txt.enabled = true;
+        txt.text = itemInventory.qtd.ToString();
+        if (itemInventory.qtd > 1)
+        {
+            txt.enabled = true;
+        }
     }
 }

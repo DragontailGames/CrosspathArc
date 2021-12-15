@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler
+public class SlotController : MonoBehaviour, IDropHandler, IPointerDownHandler
 {
     public Vector2 index;
 
@@ -30,34 +30,32 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        inventoryManager.slotSelectedController = this;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        inventoryManager.slotSelectedController = null;
-    }
-
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
         if(eventData.pointerDrag != null && !forAlchemy)
         {
             Transform objItem = eventData.pointerDrag.transform;
             if (this.transform.childCount > 0)
             {
-                Transform auxObject = this.transform.GetChild(0);
-                auxObject.GetComponent<ItemSlotController>().slotController = objItem.GetComponent<ItemSlotController>().slotController;
-                auxObject.GetComponent<ItemSlotController>().item.slot = objItem.GetComponent<ItemSlotController>().slotController.index;
-                auxObject.SetParent(objItem.GetComponent<ItemSlotController>().slotController.transform);
-                auxObject.localPosition = Vector2.zero;
+                if (this.transform.GetChild(0).GetComponent<ItemSlotController>().itemInventory.item.itemName == objItem.GetComponent<ItemSlotController>().itemInventory.item.itemName)
+                {
+                    this.transform.GetChild(0).GetComponent<ItemSlotController>().itemInventory.qtd += objItem.GetComponent<ItemSlotController>().itemInventory.qtd;
+                    this.transform.GetChild(0).GetComponent<ItemSlotController>().SetupText();
+                    Destroy(objItem.gameObject);
+                }
+                else
+                {
+                    Transform auxObject = this.transform.GetChild(0);
+                    auxObject.GetComponent<ItemSlotController>().slotController = objItem.GetComponent<ItemSlotController>().slotController;
+                    auxObject.GetComponent<ItemSlotController>().itemInventory.slot = objItem.GetComponent<ItemSlotController>().slotController.index;
+                    auxObject.SetParent(objItem.GetComponent<ItemSlotController>().slotController.transform);
+                    auxObject.localPosition = Vector2.zero;
 
-
-                objItem.GetComponent<ItemSlotController>().slotController = this;
-                objItem.GetComponent<ItemSlotController>().item.slot = this.index;
-                objItem.SetParent(this.transform);
-                objItem.localPosition = Vector2.zero;
+                    objItem.GetComponent<ItemSlotController>().slotController = this;
+                    objItem.GetComponent<ItemSlotController>().itemInventory.slot = this.index;
+                    objItem.SetParent(this.transform);
+                    objItem.localPosition = Vector2.zero;
+                }
             }
             else
             {
@@ -78,6 +76,38 @@ public class SlotController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
                 }
             }*/
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(eventData.button == PointerEventData.InputButton.Right && inventoryManager.dragItem != null)
+        {
+            if (inventoryManager.dragItem.itemInventory.qtd > 1)
+            {
+                if(this.transform.childCount <= 0)
+                {
+                    GameObject clone = Instantiate(inventoryManager.dragItem.gameObject, this.transform);
+
+                    clone.GetComponent<ItemSlotController>().slotController = this;
+                    clone.GetComponent<ItemSlotController>().itemInventory.qtd = 1;
+                    clone.GetComponent<ItemSlotController>().itemInventory.slot = this.index;
+                    clone.GetComponent<ItemSlotController>().SetupText();
+                    clone.transform.localPosition = Vector2.zero;
+
+                    clone.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+                    inventoryManager.dragItem.itemInventory.qtd--;
+                    inventoryManager.dragItem.SetupText();
+                }
+                else if(this.transform.GetChild(0).GetComponent<ItemSlotController>().itemInventory.item.itemName == inventoryManager.dragItem.itemInventory.item.itemName)
+                {
+                    this.transform.GetChild(0).GetComponent<ItemSlotController>().itemInventory.qtd++;
+                    this.transform.GetChild(0).GetComponent<ItemSlotController>().SetupText();
+                    inventoryManager.dragItem.itemInventory.qtd--;
+                    inventoryManager.dragItem.SetupText();
+                }
+            }
         }
     }
 }

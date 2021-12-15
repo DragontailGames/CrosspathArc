@@ -26,6 +26,8 @@ public class AttributeStatus
 
     public int baseHp = 0;
 
+    public int hpExtra, mpExtra;
+
     /// <summary>
     /// Construtor da classe com level
     /// </summary>
@@ -145,11 +147,13 @@ public class AttributeStatus
     /// <returns>Retorna o maximo do hp</returns>
     public int GetMaxHP(int level)
     {
-        return 10 +
-            MathfCustom.CalculateStatusByPoints(level, 2) + 
-            MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Str),2) +
-            (GetValue(EnumCustom.Attribute.Con) * 3) + 
-            fakeLife + baseHp;
+        int maxHp = 10 +
+            MathfCustom.CalculateStatusByPoints(level, 2) +
+            MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Str), 2) +
+            (GetValue(EnumCustom.Attribute.Con) * 3) +
+            fakeLife + baseHp + hpExtra;
+
+        return maxHp;
     }
 
 
@@ -162,7 +166,7 @@ public class AttributeStatus
     {
         return 10 + 
             MathfCustom.CalculateStatusByPoints(level, 2) +
-            (GetValue(EnumCustom.Attribute.Foc) * 4);
+            (GetValue(EnumCustom.Attribute.Foc) * 4) + mpExtra;
     }
 
     public void StartNewTurn()

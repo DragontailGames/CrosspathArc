@@ -15,11 +15,11 @@ public class DropItemController : MonoBehaviour, IDropHandler
                 Manager.Instance.inventoryManager.bag, 
                 Manager.Instance.gameManager.tilemap.CellToWorld(Manager.Instance.characterController.currentTileIndex) + 
                 (Vector3.up * 0.25f), Quaternion.identity);
-            for(int i = 0; i<itemSlotController.item.qtd;i++)
+            for(int i = 0; i<itemSlotController.itemInventory.qtd;i++)
             {
-                bagAux.GetComponent<Bag>().items.Add(itemSlotController.item.item);
+                bagAux.GetComponent<Bag>().items.Add(itemSlotController.itemInventory.item);
             }
-            objItem.GetComponent<ItemSlotController>().inventoryManager.inventory.Remove(itemSlotController.item);
+            objItem.GetComponent<ItemSlotController>().inventoryManager.inventory.Remove(itemSlotController.itemInventory);
             DestroyImmediate(objItem.gameObject);
             this.gameObject.SetActive(false);
         }

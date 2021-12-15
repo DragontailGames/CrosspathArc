@@ -9,7 +9,7 @@ using TMPro;
 /// </summary>
 public class InventoryManager : MonoBehaviour
 {
-    public List<ItemInterface> inventory = new List<ItemInterface>();
+    public List<ItemInventory> inventory = new List<ItemInventory>();
 
     public List<SlotController> slotControllers = new List<SlotController>();
 
@@ -19,8 +19,6 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject itemInventory;
 
-    public SlotController slotSelectedController = null;
-
     public GameObject bag;
 
     public GameObject dropItemController;
@@ -28,6 +26,8 @@ public class InventoryManager : MonoBehaviour
     public GameObject chestUi;
 
     public ItemSlotController dragItem;
+
+    public EquipmentController equipmentController;
 
     public void Awake()
     {
@@ -99,7 +99,7 @@ public class InventoryManager : MonoBehaviour
         }
         catch
         {
-            inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = GetNextSlot() });
+            inventory.Add(new ItemInventory(GetNextSlot(), qtd, item, false));
         }
     }
 
@@ -107,7 +107,7 @@ public class InventoryManager : MonoBehaviour
     {
         if(inventory.Find(n => n.slot == slot) == null)
         {
-            inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = slot });
+            inventory.Add(new ItemInventory(slot, qtd, item, false));
         }
         else
         {
@@ -119,7 +119,7 @@ public class InventoryManager : MonoBehaviour
         }
         catch
         {
-            inventory.Add(new ItemInterface() { item = item, qtd = qtd, slot = GetNextSlot() });
+            inventory.Add(new ItemInventory(GetNextSlot(), qtd, item, false));
         }
     }
 
@@ -129,6 +129,8 @@ public class InventoryManager : MonoBehaviour
         Manager.Instance.gameManager.SetupPause(true);
 
         inventoryObject.SetActive(true);
+
+        equipmentController.OpenEquipmentController();
 
         foreach (var aux in inventory)
         {
@@ -148,13 +150,13 @@ public class InventoryManager : MonoBehaviour
         inventoryObject.SetActive(false);
         Manager.Instance.gameManager.SetupPause(false);
 
-        inventory = new List<ItemInterface>();
+        inventory = new List<ItemInventory>();
 
         foreach (var aux in slotControllers)
         {
             if (aux.GetComponentInChildren<ItemSlotController>())
             {
-                inventory.Add(aux.GetComponentInChildren<ItemSlotController>().item);
+                inventory.Add(aux.GetComponentInChildren<ItemSlotController>().itemInventory);
             }
         }
 
@@ -166,13 +168,15 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(aux.gameObject, 0.2f);
         }
+
+        equipmentController.CloseInventory();
     }
 
     /// <summary>
     /// Define o item na estrutura do inventario mais comentarios no futuro
     /// </summary>
     /// <param name="item"></param>
-    public void SetupItemInventory(ItemInterface item)
+    public void SetupItemInventory(ItemInventory item)
     {
         SlotController slotController = slotControllers.Find(n => n.index == item.slot);
         GameObject itemAux = Instantiate(itemInventory, slotController.transform);
@@ -183,12 +187,29 @@ public class InventoryManager : MonoBehaviour
 
         ItemSlotController itemSlotAux = itemAux.AddComponent<ItemSlotController>();
         itemSlotAux.inventoryManager = this;
-        itemSlotAux.item = item;
+        itemSlotAux.itemInventory = item;
         itemSlotAux.SetupText();
         listToDestroy.Add(itemAux);
     }
 
-    public void SetupEquipment(ItemInterface item)
+    public void SetupItemInventory(ItemSO item, Transform parent)
+    {
+        GameObject itemAux = Instantiate(itemInventory, parent);
+
+        itemAux.transform.localScale = Vector3.one * 4;
+
+        Image img = itemAux.GetComponent<Image>();
+        img.sprite = item.icon;
+        img.enabled = true;
+
+        ItemSlotController itemSlotAux = itemAux.AddComponent<ItemSlotController>();
+        itemSlotAux.inventoryManager = this;
+        itemSlotAux.itemInventory = new ItemInventory(Vector2.zero, 1, item, true);
+        itemSlotAux.SetupText();
+        listToDestroy.Add(itemAux);
+    }
+
+    public void SetupEquipment(ItemInventory item)
     {/*
         List<EquipmentUi> equipment = equipmentUi.FindAll(n => n.equipmentType == item.equipmentType);
         if (equipment.Count == 1)

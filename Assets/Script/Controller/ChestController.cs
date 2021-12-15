@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ChestController : MonoBehaviour
 {
-    public List<ItemInterface> itemInterfaces = new List<ItemInterface>();
+    public List<ItemInventory> itemInterfaces = new List<ItemInventory>();
 
     public List<SlotController> slotControllers = new List<SlotController>();
 
@@ -54,11 +54,11 @@ public class ChestController : MonoBehaviour
         }
         catch
         {
-            itemInterfaces.Add(new ItemInterface() { item = item, equiped = false, qtd = 1, slot = GetNextSlot() });
+            itemInterfaces.Add(new ItemInventory(GetNextSlot(), 1, item, false));
         }
     }
 
-    public void SetupItemInventory(ItemInterface item)
+    public void SetupItemInventory(ItemInventory item)
     {
         SlotController slotController = slotControllers.Find(n => n.index == item.slot);
         GameObject itemAux = Instantiate(Manager.Instance.inventoryManager.itemInventory, slotController.transform);
@@ -69,7 +69,7 @@ public class ChestController : MonoBehaviour
 
         ItemSlotController itemSlotAux = itemAux.AddComponent<ItemSlotController>();
         itemSlotAux.inventoryManager = Manager.Instance.inventoryManager;
-        itemSlotAux.item = item;
+        itemSlotAux.itemInventory = item;
         itemSlotAux.SetupText();
         Manager.Instance.inventoryManager.listToDestroy.Add(itemAux);
     }
@@ -93,14 +93,19 @@ public class ChestController : MonoBehaviour
 
         chestUi.gameObject.SetActive(false);
 
-        itemInterfaces = new List<ItemInterface>();
+        itemInterfaces = new List<ItemInventory>();
 
         foreach(var aux in slotControllers)
         {
             if(aux.transform.childCount>0)
             {
-                itemInterfaces.Add(aux.GetComponentInChildren<ItemSlotController>().item);
+                itemInterfaces.Add(aux.GetComponentInChildren<ItemSlotController>().itemInventory);
             }
+        }
+
+        if(this.GetComponent<Bag>().chest==false && itemInterfaces.Count<=0 )
+        {
+            DestroyImmediate(this.gameObject);
         }
     }
 
