@@ -12,4 +12,6 @@ public class AttributeModifier
     public int count;
 
     public string spellName;
+
+    public int level = 0;
 }

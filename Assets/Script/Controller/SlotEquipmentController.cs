@@ -12,9 +12,11 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
         if (eventData.pointerDrag != null)
         {
             Transform objItem = eventData.pointerDrag.transform;
-            if(objItem.GetComponent<ItemSlotController>().itemInventory.item.GetType() == typeof(EquipmentSO))
+
+            ItemSO itemAux = objItem.GetComponent<ItemSlotController>().itemInventory.item;
+            if (itemAux.GetType() == typeof(EquipmentSO) || itemAux.GetType() == typeof(ChestEquipmentSO))
             {
-                EquipmentSO equipment = objItem.GetComponent<ItemSlotController>().itemInventory.item as EquipmentSO;
+                EquipmentSO equipment = itemAux as EquipmentSO;
                 if (equipment.equipmentType == equipmentType)
                 {
                     objItem.localScale = (Vector2.one * 2f);
@@ -37,6 +39,13 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
         if (eventData.pointerDrag != null)
         {
             Transform objItem = eventData.pointerDrag.transform;
+            ItemInventory itemAux = objItem.GetComponent<ItemSlotController>().itemInventory;
+
+            if(equipmentType != (itemAux.item as EquipmentSO).equipmentType)
+            {
+                return;
+            }
+
             if (this.transform.GetComponentInChildren<ItemSlotController>())
             {
                 ItemSlotController auxObject = this.transform.GetComponentInChildren<ItemSlotController>();
@@ -61,9 +70,10 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
             objItem.GetComponent<ItemSlotController>().itemInventory.equiped = true;
 
             CharacterInventory characterInventory = Manager.Instance.characterController.CharacterInventory;
-            ItemInventory itemAux = objItem.GetComponent<ItemSlotController>().itemInventory;
 
-            ItemInventory itemFinded = characterInventory.equipements.Find(n => (n.item as EquipmentSO).equipmentType == (itemAux.item as EquipmentSO).equipmentType);
+            ItemInventory itemFinded = characterInventory.equipements.Find(n => (n.item as EquipmentSO).equipmentType == (itemAux.item as EquipmentSO).equipmentType && 
+            (n.item as EquipmentSO).equipmentType != EnumCustom.EquipmentType.Ring);
+
             if (itemFinded != null)
             {
                 characterInventory.equipements.Remove(itemFinded);

@@ -18,15 +18,19 @@ public class AttributeStatus
 
     public float combatDelay = 1.0f;
 
-    public List<AttributeModifier> attributeModifiers = new List<AttributeModifier>();
-
-    public List<StatusModifier> statusModifiers = new List<StatusModifier>();
+    public List<AttributeModifier> attributeModifiersSpells = new List<AttributeModifier>();
+    public List<StatusModifier> statusModifiersSpells = new List<StatusModifier>();
 
     public int fakeLife = 0;
 
     public int baseHp = 0;
 
     public int hpExtra, mpExtra;
+
+    public int hpExtraSuportSkillEquipment, mpExtraSuportSkillEquipment;
+
+    public List<Status> statusEquipmentModifier = new List<Status>();
+    public List<Attributes> attributeEquipmentModifier = new List<Attributes>();
 
     /// <summary>
     /// Construtor da classe com level
@@ -71,10 +75,15 @@ public class AttributeStatus
         Attributes currentAttribute = Array.Find(attributes, n => n.attribute == enumAttribute);
         float value = currentAttribute.value;
 
-        foreach (var aux in attributeModifiers.FindAll(n => n.attribute == enumAttribute))
+        foreach (var aux in attributeModifiersSpells.FindAll(n => n.attribute == enumAttribute))
         {
             value += aux.value;
         }
+        foreach (var aux in attributeEquipmentModifier.FindAll(n => n.attribute == enumAttribute))
+        {
+            value += aux.value;
+        }
+
         return Mathf.RoundToInt(value);
     }
 
@@ -88,13 +97,17 @@ public class AttributeStatus
         Status currentStatus = Array.Find(status, n => n.status == enumStatus);
         int value = currentStatus.value;
 
-        foreach (var aux in statusModifiers.FindAll(n => n.status == enumStatus))
+        foreach (var aux in statusModifiersSpells.FindAll(n => n.status == enumStatus))
+        {
+            value += aux.value;
+        }
+        foreach (var aux in statusEquipmentModifier.FindAll(n => n.status == enumStatus))
         {
             value += aux.value;
         }
 
         //verifica qual o status que esta sendo verificado e aplica a formula
-        switch(enumStatus)
+        switch (enumStatus)
         {
             case EnumCustom.Status.Armor:
                 {
@@ -151,7 +164,7 @@ public class AttributeStatus
             MathfCustom.CalculateStatusByPoints(level, 2) +
             MathfCustom.CalculateStatusByPoints(GetValue(EnumCustom.Attribute.Str), 2) +
             (GetValue(EnumCustom.Attribute.Con) * 3) +
-            fakeLife + baseHp + hpExtra;
+            fakeLife + baseHp + hpExtra + hpExtraSuportSkillEquipment;
 
         return maxHp;
     }
@@ -166,27 +179,27 @@ public class AttributeStatus
     {
         return 10 + 
             MathfCustom.CalculateStatusByPoints(level, 2) +
-            (GetValue(EnumCustom.Attribute.Foc) * 4) + mpExtra;
+            (GetValue(EnumCustom.Attribute.Foc) * 4) + mpExtra + mpExtraSuportSkillEquipment;
     }
 
     public void StartNewTurn()
     {
-        foreach(var aux in attributeModifiers.ToList())
+        foreach(var aux in attributeModifiersSpells.ToList())
         {
             aux.count--;
             if (aux.count <= 0)
             {
                 Manager.Instance.canvasManager.RemoveLogText(aux.spellName);
-                attributeModifiers.Remove(aux);
+                attributeModifiersSpells.Remove(aux);
             }
         }
-        foreach (var aux in statusModifiers.ToList())
+        foreach (var aux in statusModifiersSpells.ToList())
         {
             aux.count--;
             if (aux.count <= 0)
             {
                 Manager.Instance.canvasManager.RemoveLogText(aux.spellName);
-                statusModifiers.Remove(aux);
+                statusModifiersSpells.Remove(aux);
             }
         }
     }
@@ -195,7 +208,7 @@ public class AttributeStatus
     {
         if(attributeModifier != null)
         {
-            var mod = attributeModifiers.Find(n => n.spellName == attributeModifier.spellName && n.attribute == attributeModifier.attribute);
+            var mod = attributeModifiersSpells.Find(n => n.spellName == attributeModifier.spellName && n.attribute == attributeModifier.attribute && n.level == attributeModifier.level);
             if (mod != null)
             {
                 mod.value = attributeModifier.value;
@@ -203,12 +216,12 @@ public class AttributeStatus
             }
             else
             {
-                attributeModifiers.Add(attributeModifier);
+                attributeModifiersSpells.Add(attributeModifier);
             }
         }
         if(statusModifier != null)
         {
-            var mod = statusModifiers.Find(n => n.spellName == statusModifier.spellName && n.status == statusModifier.status);
+            var mod = statusModifiersSpells.Find(n => n.spellName == statusModifier.spellName && n.status == statusModifier.status && n.level == statusModifier.level);
             if (mod != null)
             {
                 mod.value = statusModifier.value;
@@ -216,14 +229,14 @@ public class AttributeStatus
             }
             else
             {
-                statusModifiers.Add(statusModifier);
+                statusModifiersSpells.Add(statusModifier);
             }
         }
     }
 
     public bool HasBuff(string spellName)
     {
-        if(attributeModifiers.Find(n => n.spellName == spellName) != null || statusModifiers.Find(n => n.spellName == spellName) != null)
+        if(attributeModifiersSpells.Find(n => n.spellName == spellName) != null || statusModifiersSpells.Find(n => n.spellName == spellName) != null)
         {
             return true;
         }

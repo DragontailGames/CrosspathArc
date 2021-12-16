@@ -136,4 +136,12 @@ public class EnumCustom : MonoBehaviour
     {
         Hp,
     }
+
+    public enum ArmorType
+    {
+        Light,
+        Medium,
+        Heavy
+    }
+
 }

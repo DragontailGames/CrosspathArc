@@ -75,7 +75,7 @@ public class CanvasManager : MonoBehaviour
         List<AttributeModifier> tempAttributeModifiers = new List<AttributeModifier>();
         List<StatusModifier> tempStatusModifier = new List<StatusModifier>();
 
-        foreach(var aux in Manager.Instance.characterController.attributeStatus.attributeModifiers)
+        foreach(var aux in Manager.Instance.characterController.attributeStatus.attributeModifiersSpells)
         {
             var tempStatusLog = statusLogs.Find(n => n.text.Contains(aux.spellName) && n.text.Contains(aux.attribute.ToString()));
             if (tempStatusLog==null)
@@ -87,7 +87,7 @@ public class CanvasManager : MonoBehaviour
             SetupText(tempStatusLog, aux.spellName, aux.value, aux.attribute.ToString(), aux.count);
         }
 
-        foreach (var aux in Manager.Instance.characterController.attributeStatus.statusModifiers)
+        foreach (var aux in Manager.Instance.characterController.attributeStatus.statusModifiersSpells)
         {
             if (aux.count < 140)
             {

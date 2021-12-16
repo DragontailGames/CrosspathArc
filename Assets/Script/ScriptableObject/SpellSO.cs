@@ -619,15 +619,15 @@ public class SpellSO : ScriptableObject
             {
                 if (bfAux.buffDebuffType == EnumCustom.BuffDebuffType.Status)
                 {
-                    var statusToRemove = creatureController.attributeStatus.statusModifiers.Find(n => n.status == bfAux.status);    
+                    var statusToRemove = creatureController.attributeStatus.statusModifiersSpells.Find(n => n.status == bfAux.status);    
                     Manager.Instance.canvasManager.RemoveLogText(statusToRemove.spellName);
-                    creatureController.attributeStatus.statusModifiers.Remove(statusToRemove);
+                    creatureController.attributeStatus.statusModifiersSpells.Remove(statusToRemove);
                 }
                 if(bfAux.buffDebuffType == EnumCustom.BuffDebuffType.Attribute)
                 {
-                    var attribute = creatureController.attributeStatus.attributeModifiers.Find(n => n.attribute == bfAux.attribute);
+                    var attribute = creatureController.attributeStatus.attributeModifiersSpells.Find(n => n.attribute == bfAux.attribute);
                     Manager.Instance.canvasManager.RemoveLogText(attribute.spellName);
-                    creatureController.attributeStatus.attributeModifiers.Remove(attribute);
+                    creatureController.attributeStatus.attributeModifiersSpells.Remove(attribute);
                 }
             }
         }

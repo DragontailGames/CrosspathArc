@@ -23,16 +23,49 @@ public class CharacterInventory : MonoBehaviour
     {
         int extraHp = 0;
         int extraMp = 0;
+        List<Status> statusAux = new List<Status>();
+        List<Attributes> attributesAux = new List<Attributes>();
+
+        SupportStatus supportStatus;
+
         foreach (var aux in equipements)
         {
             if (aux.equiped)
             {
-                extraHp += (aux.item as EquipmentSO).hp;
-                extraMp += (aux.item as EquipmentSO).mp;
+                EquipmentSO equip = aux.item as EquipmentSO;
+                extraHp += equip.hp;
+                extraMp += equip.mp;
+                foreach(var statusTemp in equip.statuses)
+                {
+                    statusAux.Add(statusTemp);
+                }
+                foreach (var attributeTemp in equip.attributes)
+                {
+                    attributesAux.Add(attributeTemp);
+                }
+
+                if(equip.GetType() == typeof(ChestEquipmentSO))
+                {
+                    ChestEquipmentSO chestEquipment = (equip as ChestEquipmentSO); 
+                    foreach(var tempSupportSkill in chestEquipment.skill.skill.support)
+                    {
+                        supportStatus = tempSupportSkill;
+                    }
+                    //supportStatuses.Add(chestEquipment.supportStatus);
+                }
             }
         }
         controller.attributeStatus.hpExtra = extraHp;
         controller.attributeStatus.mpExtra = extraMp;
+        controller.attributeStatus.statusEquipmentModifier = statusAux;
+        controller.attributeStatus.attributeEquipmentModifier = attributesAux;
+        foreach (var tempSpell in controller.CharacterCombat.supportSkills)
+        {
+            foreach (var suportAux in tempSpell.skill.support)
+            {
+                suportAux.StartRound(controller, tempSpell);
+            }
+        }
 
         statusManager.UpdateStatus();
     }
