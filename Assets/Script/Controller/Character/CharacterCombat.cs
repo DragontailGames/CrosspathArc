@@ -305,7 +305,7 @@ public class CharacterCombat : MonoBehaviour
         }
 
         //Define o dano do ataque
-        int weaponDamage = Random.Range(controller.CharacterInventory.weapon.damageMin, controller.CharacterInventory.weapon.damageMax+1);
+        int weaponDamage = controller.CharacterInventory.weapon.getValue(); 
         int str = controller.attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int critical = Combat.Critical(controller.attributeStatus.GetValue(EnumCustom.Status.CriticalHit));
 
@@ -322,7 +322,7 @@ public class CharacterCombat : MonoBehaviour
                 {
                     foreach(var temp in tempweaponBuffSkills)
                     {
-                        skillModifier += temp.value;
+                        skillModifier += temp.value * aux.level;
                     }
                 }
             }

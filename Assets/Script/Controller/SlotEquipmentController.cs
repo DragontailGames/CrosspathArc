@@ -53,6 +53,7 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
                 auxObject.itemInventory.slot = objItem.GetComponent<ItemSlotController>().slotController.index;
                 auxObject.transform.SetParent(objItem.GetComponent<ItemSlotController>().slotController.transform);
                 auxObject.transform.localPosition = Vector2.zero;
+                auxObject.transform.localScale = Vector2.one;
 
                 objItem.GetComponent<ItemSlotController>().slotController = this;
                 objItem.GetComponent<ItemSlotController>().itemInventory.slot = this.index;
@@ -78,6 +79,18 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
             {
                 characterInventory.equipements.Remove(itemFinded);
             }
+
+            /*
+            if(equipmentType == EnumCustom.EquipmentType.Weapon)
+            {
+                characterInventory.weapon = (itemAux.item as WeaponEquipmentSO);
+            }
+
+            if (equipmentType == EnumCustom.EquipmentType.Bow || equipmentType == EnumCustom.EquipmentType.Shield)
+            {
+                characterInventory.extraWeapon = (itemAux.item as WeaponEquipmentSO);
+            }*/
+
             characterInventory.equipements.Add(itemAux);
 
             characterInventory.UpdateEquipmentList();

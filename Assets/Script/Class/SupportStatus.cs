@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [System.Serializable]
 public class SupportStatus
@@ -35,30 +33,35 @@ public class SupportStatus
                 {
                     if (itemAux.equiped == true && (itemAux.item as ChestEquipmentSO).skill.skill.support.Contains(this))
                     {
+                        List<StatusModifier> statusModifiersList = new List<StatusModifier>();
+                        List<AttributeModifier> attributeModifiersList = new List<AttributeModifier>();
                         for (int i = 0; i < skill.level; i++)
                         {
+
                             if (attributeStatusPerLevels[i].status.Count > 0)
                             {
                                 foreach (var aux in attributeStatusPerLevels[i].status)
                                 {
-                                    controller.attributeStatus.AddModifier(null, new StatusModifier() { status = aux.status, count = 150, spellName = name, value = Mathf.FloorToInt(aux.value), level = i });
+                                    statusModifiersList.Add(new StatusModifier() { status = aux.status, count = 150, spellName = name, value = Mathf.FloorToInt(aux.value), level = i });
                                 }
                             }
                             else if (attributeStatusPerLevels[i].attributes.Count > 0)
                             {
                                 foreach (var aux in attributeStatusPerLevels[i].attributes)
                                 {
-                                    controller.attributeStatus.AddModifier(new AttributeModifier() { attribute = aux.attribute, count = 150, spellName = name, value = Mathf.FloorToInt(aux.value), level = i }, null);
+
+                                    attributeModifiersList.Add(new AttributeModifier() { attribute = aux.attribute, count = 150, spellName = name, value = Mathf.FloorToInt(aux.value), level = i });
                                 }
                             }
                             hp += attributeStatusPerLevels[i].hp;
                             mp += attributeStatusPerLevels[i].mp;
                         }
+                        controller.attributeStatus.AddUniqueModifier(attributeModifiersList, statusModifiersList);
 
                         controller.attributeStatus.hpExtraSuportSkillEquipment = hp;
                         controller.attributeStatus.mpExtraSuportSkillEquipment = mp;
                     }
-                    else if(itemAux.equiped == false)
+                    else if (itemAux.equiped == false)
                     {
                         controller.attributeStatus.hpExtraSuportSkillEquipment = hp;
                         controller.attributeStatus.mpExtraSuportSkillEquipment = mp;
@@ -79,7 +82,7 @@ public class SupportStatus
         if (effect == EnumCustom.SpecialEffect.Aggro)
         {
             float nAggro = valuePerLevel * skill.level;
-            if(nAggro%1==0)
+            if (nAggro % 1 == 0)
             {
                 controller.Aggro -= 1;
             }

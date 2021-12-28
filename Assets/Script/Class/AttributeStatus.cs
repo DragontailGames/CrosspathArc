@@ -222,6 +222,7 @@ public class AttributeStatus
         if(statusModifier != null)
         {
             var mod = statusModifiersSpells.Find(n => n.spellName == statusModifier.spellName && n.status == statusModifier.status && n.level == statusModifier.level);
+
             if (mod != null)
             {
                 mod.value = statusModifier.value;
@@ -230,6 +231,47 @@ public class AttributeStatus
             else
             {
                 statusModifiersSpells.Add(statusModifier);
+            }
+        }
+    }
+
+    public void AddUniqueModifier(List<AttributeModifier> attributeModifier, List<StatusModifier> statusModifier)
+    {
+        foreach(var aux in attributeModifier)
+        {
+            attributeModifiersSpells.Remove(attributeModifiersSpells.Find(n => n.spellName == aux.spellName)) ;
+        }
+        foreach (var aux in statusModifier)
+        {
+            statusModifiersSpells.Remove(statusModifiersSpells.Find(n => n.spellName == aux.spellName));
+        }
+
+
+        foreach (var aux in attributeModifier)
+        {
+            var mod = attributeModifiersSpells.Find(n => n.spellName == aux.spellName && n.attribute == aux.attribute && n.level == aux.level);
+            if (mod != null)
+            {
+                mod.value += aux.value;
+                mod.count = aux.count;
+            }
+            else
+            {
+                attributeModifiersSpells.Add(aux);
+            }
+        }
+        foreach (var aux in statusModifier)
+        {
+            var mod = statusModifiersSpells.Find(n => n.spellName == aux.spellName && n.status == aux.status && n.level == aux.level);
+
+            if (mod != null)
+            {
+                mod.value += aux.value;
+                mod.count = aux.count;
+            }
+            else
+            {
+                statusModifiersSpells.Add(aux);
             }
         }
     }

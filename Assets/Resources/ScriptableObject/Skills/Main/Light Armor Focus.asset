@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c87c9cafcc0edd41ac2ec3239510a4b, type: 3}
+  m_Name: Light Armor Focus
+  m_EditorClassIdentifier: 
+  skillName: Light Armor Focus
+  skillType: 2
+  support:
+  - name: Light Armor Focus
+    status: 0
+    effect: 0
+    valuePerLevel: 0
+    attributeStatusPerLevels:
+    - attributes: []
+      status: []
+      hp: 0
+      mp: 2
+    - attributes: []
+      status:
+      - status: 5
+        value: 1
+      hp: 0
+      mp: 0
+    - attributes: []
+      status: []
+      hp: 0
+      mp: 3
+    - attributes: []
+      status: []
+      hp: 0
+      mp: 4
+    - attributes: []
+      status:
+      - status: 3
+        value: 1
+      hp: 0
+      mp: 0
+    - attributes: []
+      status: []
+      hp: 0
+      mp: 5
+    - attributes: []
+      status: []
+      hp: 0
+      mp: 5
+    - attributes:
+      - attribute: 5
+        value: 1
+      status: []
+      hp: 0
+      mp: 0
+    - attributes: []
+      status: []
+      hp: 0
+      mp: 6
+    - attributes:
+      - attribute: 4
+        value: 1
+      status: []
+      hp: 0
+      mp: 0
+    enable: 0
+  weaponBuffSkills: []
+  spells: []

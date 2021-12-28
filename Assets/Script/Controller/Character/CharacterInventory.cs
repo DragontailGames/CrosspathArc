@@ -9,9 +9,9 @@ public class CharacterInventory : MonoBehaviour
 {
     public CharacterController controller;
 
-    public Weapon weapon;
+    public WeaponEquipmentSO weapon;
 
-    public Weapon secondaryWeapon;
+    public WeaponEquipmentSO extraWeapon;
 
     public InventoryManager inventoryManager;
 
@@ -55,6 +55,7 @@ public class CharacterInventory : MonoBehaviour
                 }
             }
         }
+
         controller.attributeStatus.hpExtra = extraHp;
         controller.attributeStatus.mpExtra = extraMp;
         controller.attributeStatus.statusEquipmentModifier = statusAux;
@@ -65,6 +66,29 @@ public class CharacterInventory : MonoBehaviour
             {
                 suportAux.StartRound(controller, tempSpell);
             }
+        }
+        foreach (var tempSpell in controller.CharacterCombat.skills)
+        {
+            foreach (var suportAux in tempSpell.skill.support)
+            {
+                suportAux.StartRound(controller, tempSpell);
+            }
+        }
+
+        var weaponList = equipements.FindAll(n => n.item.GetType() == typeof(WeaponEquipmentSO));
+        if (weaponList.Count>0)
+        {
+            var weapon = weaponList.Find(n => (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Weapon).item as WeaponEquipmentSO;
+            controller.CharacterInventory.weapon = weapon;
+
+            var extraWeapon = weaponList.Find(n => (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Bow ||
+            (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Shield)?.item as WeaponEquipmentSO;
+            controller.CharacterInventory.extraWeapon = extraWeapon;
+        }
+        else
+        {
+            controller.CharacterInventory.weapon = null;
+            controller.CharacterInventory.extraWeapon = null;
         }
 
         statusManager.UpdateStatus();

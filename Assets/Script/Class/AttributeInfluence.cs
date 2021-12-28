@@ -21,13 +21,17 @@ public class AttributeInfluence
 
         int baseValue = 0;
 
-        if (string.IsNullOrEmpty(levelOfSkill) )
+        if(controller != null)
         {
-            baseValue = controller.attributeStatus.GetValue(attribute);
-        }
-        else
-        {
-            baseValue = (controller as CharacterController).CharacterCombat.skills.Find(n => n.skill.skillName == levelOfSkill).level;
+            if (string.IsNullOrEmpty(levelOfSkill) )
+            {
+                baseValue = controller.attributeStatus.GetValue(attribute);
+            }
+            else
+            {
+                baseValue = (controller as CharacterController).CharacterCombat.skills.Find(n => n.skill.skillName == levelOfSkill).level;
+            }
+
         }
 
         float fullValue = 0;
