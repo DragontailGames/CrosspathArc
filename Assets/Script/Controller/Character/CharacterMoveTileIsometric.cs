@@ -56,7 +56,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
                     if (!controller.animator.GetBool("Walk"))
                     {
-                        PlayAnimation(controller.animationName + "_Walk_" + controller.direction);
+                        PlayAnimation(controller.animationName + "Walk_" + controller.direction);
                         controller.animator.SetBool("Walk", true);
                     }
                     controller.currentTileIndex += moveCell * tileMove;

@@ -6,9 +6,9 @@ using System.IO;
 
 public class ReplaceAnimation
 {
-    public static string folder = "Assets/Animation/Creatures";
-    public static string oldName = "Flayer";
-    public static string newName = "Goblin";
+    public static string folder = "Assets/Animation/Female/Female_Naked";
+    public static string oldName = "Female_Archer_";
+    public static string newName = "";
     public static string oldSprites_folder = "./Assets/Sprite/Wolf Inimigo";
     public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
     public static string newFolder = "Teste";
@@ -26,6 +26,7 @@ public class ReplaceAnimation
 
         DirectoryInfo d = new DirectoryInfo(newFolder);
 
+        /*
         foreach (var file in d.GetDirectories())
         {
             RunFiles(file.FullName);
@@ -35,7 +36,7 @@ public class ReplaceAnimation
         processFiles();
         processController();
 
-        Debug.Log("---------------------ACABOU---------------------");
+        Debug.Log("---------------------ACABOU---------------------");*/
     }
 
     public static void RunDirectory(string path)

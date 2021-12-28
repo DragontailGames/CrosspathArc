@@ -9,7 +9,9 @@ public class CharacterInventory : MonoBehaviour
 {
     public CharacterController controller;
 
-    public WeaponEquipmentSO weapon;
+    public WeaponEquipmentSO handStandartEquipment;
+
+    private WeaponEquipmentSO weapon;
 
     public WeaponEquipmentSO extraWeapon;
 
@@ -18,6 +20,13 @@ public class CharacterInventory : MonoBehaviour
     public List<ItemInventory> equipements;
 
     public StatusManager statusManager;
+
+    public WeaponEquipmentSO Weapon { get {
+            if (this.weapon != null)
+                return this.weapon;
+            else
+                return this.handStandartEquipment;
+            } set => this.weapon = value; }
 
     public void UpdateEquipmentList()
     {
@@ -79,7 +88,7 @@ public class CharacterInventory : MonoBehaviour
         if (weaponList.Count>0)
         {
             var weapon = weaponList.Find(n => (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Weapon).item as WeaponEquipmentSO;
-            controller.CharacterInventory.weapon = weapon;
+            controller.CharacterInventory.Weapon = weapon;
 
             var extraWeapon = weaponList.Find(n => (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Bow ||
             (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Shield)?.item as WeaponEquipmentSO;
@@ -87,7 +96,7 @@ public class CharacterInventory : MonoBehaviour
         }
         else
         {
-            controller.CharacterInventory.weapon = null;
+            controller.CharacterInventory.Weapon = null;
             controller.CharacterInventory.extraWeapon = null;
         }
 

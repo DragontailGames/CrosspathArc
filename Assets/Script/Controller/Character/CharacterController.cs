@@ -219,7 +219,7 @@ public class CharacterController : CreatureController
     {
         isRest = true;
         gameManager.restCount = 0;
-        characterMoveTileIsometric.PlayAnimation(animationName + "_Idle_S");
+        characterMoveTileIsometric.PlayAnimation(animationName + "Idle_S");
         gameManager.campfire.transform.position = this.transform.position;
         gameManager.campfire.SetActive(true);
         gameManager.EndMyTurn(this);
@@ -234,13 +234,13 @@ public class CharacterController : CreatureController
     public override void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
     {
         direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, attacker.currentTileIndex);
-        animator.Play(animationName + "_GetHit_" + direction);
+        animator.Play(animationName + "GetHit_" + direction);
         base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
     }
 
     public override void Defeat()
     {
-        string dieAnimationName = animationName + "_Die_" + direction;
+        string dieAnimationName = animationName + "Die_" + direction;
         animator.Play(dieAnimationName);
         Manager.Instance.gameManager.SetupPause(true);
         Manager.Instance.gameManager.creatures.Remove(this);
