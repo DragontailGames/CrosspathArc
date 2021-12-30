@@ -14,8 +14,6 @@ public class CreatureController : MonoBehaviour
 
     public bool inCombat = false;
 
-    public string animationName = "";
-
     public string direction;
 
     public Vector2 offsetSpell;

@@ -30,7 +30,7 @@ public class CharacterController : CreatureController
 
     #endregion
 
-    public Animator animator;
+    public AnimatorEquipmentController animator;
 
     private EnemyManager enemyManager;
 
@@ -55,8 +55,7 @@ public class CharacterController : CreatureController
         characterStatus = this.GetComponent<CharacterStatus>();
         characterStatus.controller = this;
 
-        animator = this.transform.GetComponentInChildren<Animator>();
-        animator.speed = 0.6f;
+        animator = this.transform.GetComponentInChildren<AnimatorEquipmentController>();
 
         enemyManager = Manager.Instance.enemyManager;
     }
@@ -197,17 +196,6 @@ public class CharacterController : CreatureController
         return MathfCustom.Sign(pos);//Retorna o sinal do valor(-1,+1 ou 0)
     }
 
-    public void SetupAnimation(string animName)
-    {
-        animationName = animName;
-        this.transform.GetChild(0).gameObject.SetActive(false);
-        this.transform.GetChild(1).gameObject.SetActive(false);
-        var animatorObject = this.transform.Find(animName);
-
-        animatorObject.gameObject.SetActive(true);
-        animator = animatorObject.GetComponent<Animator>();
-    }
-
     public IEnumerator StartDelay()
     {
         delay = true;
@@ -219,7 +207,7 @@ public class CharacterController : CreatureController
     {
         isRest = true;
         gameManager.restCount = 0;
-        characterMoveTileIsometric.PlayAnimation(animationName + "Idle_S");
+        animator.PlayAnimation("Idle", "S", false);
         gameManager.campfire.transform.position = this.transform.position;
         gameManager.campfire.SetActive(true);
         gameManager.EndMyTurn(this);
@@ -234,14 +222,13 @@ public class CharacterController : CreatureController
     public override void ReceiveHit(CreatureController attacker, int damage, string damageText = "", bool ignoreArmor = false)
     {
         direction = Manager.Instance.gameManager.GetDirection(CharacterMoveTileIsometric.controller.currentTileIndex, attacker.currentTileIndex);
-        animator.Play(animationName + "GetHit_" + direction);
+        animator.PlayAnimation("Get_Hit", direction,true);
         base.ReceiveHit(attacker, damage, damageText, ignoreArmor);
     }
 
     public override void Defeat()
     {
-        string dieAnimationName = animationName + "Die_" + direction;
-        animator.Play(dieAnimationName);
+        animator.PlayAnimation("Die" , direction, true, true);
         Manager.Instance.gameManager.SetupPause(true);
         Manager.Instance.gameManager.creatures.Remove(this);
     }

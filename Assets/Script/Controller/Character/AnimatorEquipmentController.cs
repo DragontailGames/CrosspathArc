@@ -1,125 +1,148 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Linq;
 
 public class AnimatorEquipmentController : MonoBehaviour
 {
-    public RuntimeAnimatorController naked_hand;
-    public RuntimeAnimatorController naked_hand_shield;
-    public RuntimeAnimatorController naked_hand_shield_sword;
-    public RuntimeAnimatorController naked_hand_sword;
+    public List<AnimationCustomController> animationsCustom = new List<AnimationCustomController>();
 
-    public RuntimeAnimatorController heavy_hand;
-    public RuntimeAnimatorController heavy_hand_shield;
-    public RuntimeAnimatorController heavy_hand_shield_sword;
-    public RuntimeAnimatorController heavy_hand_sword;
+    private AnimationCustomController currentAnimationCustom;
 
-    public RuntimeAnimatorController light_hand;
-    public RuntimeAnimatorController light_hand_shield;
-    public RuntimeAnimatorController light_hand_shield_sword;
-    public RuntimeAnimatorController light_hand_sword;
+    private Sprite[] constantAnimation = new Sprite[] { };
+    private Sprite[] framesAnimation = new Sprite[] { };
 
-    public RuntimeAnimatorController medium_hand;
-    public RuntimeAnimatorController medium_hand_shield;
-    public RuntimeAnimatorController medium_hand_shield_sword;
-    public RuntimeAnimatorController medium_hand_sword;
+    public bool isWalking = false;
 
-    public Animator animator;
+    public float delayBetweenFrames = 0.1f;
 
-    private void Start()
+    private bool isDead = false;
+
+    private Dictionary<int, string> fromToDirection = new Dictionary<int, string>()
     {
-        animator = this.GetComponent<Animator>();
+        {0, "S"},
+        {1, "W"},
+        {2, "E"},
+        {3, "N"},
+        {4, "SW"},
+        {5, "NW"},
+        {6, "SE"},
+        {7, "NE"},
+    };
+
+    public void Start()
+    {
+        currentAnimationCustom = animationsCustom[0];
+        SetupFrames();
+        PlayAnimation("Idle", "S", false);
+    }
+
+    public void SetupFrames()
+    {
+        foreach(var aux in currentAnimationCustom.animationCustoms)
+        {
+            aux.sprites = aux.sprites.OrderBy(n => n.name).ToArray();
+            var auxFrames = aux.sprites;
+            var spritePerAnimation = aux.spritesPerAnimation;
+            aux.animationFrames = new List<AnimationFrames>();
+
+            for (int i = 0; i < 8; i++)
+            {
+                aux.animationFrames.Add(new AnimationFrames()
+                {
+                    sprites = new ArraySegment<Sprite>(auxFrames, auxFrames.Length / 8 * i, spritePerAnimation).ToList(),
+                    direction = fromToDirection[i]
+                });
+            }
+        }
+    }
+
+    IEnumerator animationCoroutine;
+
+    public void PlayAnimation(string name, string direction, bool onlyOneCast, bool isDie = false)
+    {
+        if(animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+        }
+        if(isDead)
+        {
+            return;
+        }
+        var frames = currentAnimationCustom.animationCustoms.Find(n => n.name == name).animationFrames.Find(n=>n.direction == direction).sprites;
+        if(onlyOneCast)
+        {
+            framesAnimation = frames.ToArray();
+            constantAnimation = currentAnimationCustom.animationCustoms.Find(n => n.name == "Idle").animationFrames.Find(n=>n.direction == direction).sprites.ToArray();
+        }
+        else
+        {
+            framesAnimation = frames.ToArray();
+            constantAnimation = frames.ToArray();
+        }
+        if(isDie == true)
+        {
+            framesAnimation = frames.ToArray();
+            constantAnimation = frames.ToArray();
+            isDead = true;
+            StopCoroutine(animationCoroutine);
+        }
+        animationCoroutine = Play(0);
+        StartCoroutine(animationCoroutine);
+    }
+
+    private IEnumerator Play(int index)
+    {
+        if(framesAnimation.Length <= 0)
+        {
+            framesAnimation = constantAnimation;
+        }
+
+        Sprite[] frames = framesAnimation;
+        this.transform.GetComponent<SpriteRenderer>().sprite = frames[index];
+        yield return new WaitForSeconds(delayBetweenFrames);
+        if(frames.Length-1>index)
+        {
+            animationCoroutine = Play(index + 1);
+            StartCoroutine(animationCoroutine);
+        }
+        else
+        {
+            framesAnimation = new Sprite[] { };
+            animationCoroutine = Play(0);
+            StartCoroutine(animationCoroutine);
+        }
     }
 
     public void SetController(EnumCustom.ArmorType armorType, bool shield, bool sword)
     {
-        if (armorType == EnumCustom.ArmorType.None)
+        string finalString = "";
+        string armorName = "Naked";
+        string equipment = "";
+
+        if (shield && !sword)
         {
-            if(shield || sword)
-            {
-                if(shield && !sword)
-                {
-                    animator.runtimeAnimatorController = naked_hand_shield;
-                }
-                if(!shield && sword)
-                {
-                    animator.runtimeAnimatorController = naked_hand_sword;
-                }
-                if(shield && sword)
-                {
-                    animator.runtimeAnimatorController = naked_hand_shield_sword;
-                }
-            }
-            else
-            {
-                animator.runtimeAnimatorController = naked_hand;
-            }
+            equipment = "Shield";
         }
-        if (armorType == EnumCustom.ArmorType.Heavy)
+        if (!shield && sword)
         {
-            if (shield || sword)
-            {
-                if (shield && !sword)
-                {
-                    animator.runtimeAnimatorController = heavy_hand_shield;
-                }
-                if (!shield && sword)
-                {
-                    animator.runtimeAnimatorController = heavy_hand_sword;
-                }
-                if (shield && sword)
-                {
-                    animator.runtimeAnimatorController = heavy_hand_shield_sword;
-                }
-            }
-            else
-            {
-                animator.runtimeAnimatorController = heavy_hand;
-            }
+            equipment = "Sword";
         }
-        if (armorType == EnumCustom.ArmorType.Light)
+        if (shield && sword)
         {
-            if (shield || sword)
-            {
-                if (shield && !sword)
-                {
-                    animator.runtimeAnimatorController = light_hand_shield;
-                }
-                if (!shield && sword)
-                {
-                    animator.runtimeAnimatorController = light_hand_sword;
-                }
-                if (shield && sword)
-                {
-                    animator.runtimeAnimatorController = light_hand_shield_sword;
-                }
-            }
-            else
-            {
-                animator.runtimeAnimatorController = light_hand;
-            }
+            equipment = "Shield_Sword";
         }
-        if (armorType == EnumCustom.ArmorType.Medium)
+
+        if (armorType != EnumCustom.ArmorType.None)
         {
-            if (shield || sword)
-            {
-                if (shield && !sword)
-                {
-                    animator.runtimeAnimatorController = medium_hand_shield;
-                }
-                if (!shield && sword)
-                {
-                    animator.runtimeAnimatorController = medium_hand_sword;
-                }
-                if (shield && sword)
-                {
-                    animator.runtimeAnimatorController = medium_hand_shield_sword;
-                }
-            }
-            else
-            {
-                animator.runtimeAnimatorController = medium_hand;
-            }
+            armorName = Enum.GetName(typeof(EnumCustom.ArmorType), armorType);
         }
+
+        finalString = armorName + (equipment != "" ? ("_" + equipment) : "");
+
+        currentAnimationCustom = animationsCustom.Find(n => n.name.EndsWith(finalString));
+        SetupFrames();
+        PlayAnimation("Idle", "S", false);
     }
 }

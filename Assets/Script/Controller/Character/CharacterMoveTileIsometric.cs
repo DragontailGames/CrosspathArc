@@ -29,7 +29,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         Vector3Int moveCell = Vector3Int.zero;
 
-        if (!gameManager.InPause && controller.animator.GetBool("Walk") == false && controller.delay)//Testa o delay para correção da movimentação por tile
+        if (!gameManager.InPause && controller.delay)//if (!gameManager.InPause && controller.animator.GetBool("Walk") == false && controller.delay)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 
@@ -46,18 +46,16 @@ public class CharacterMoveTileIsometric : MonoBehaviour
                     if(controller.direction != "W" && controller.direction != "E")
                     {
                         movementSpeed = 1.5f;
-                        controller.animator.speed = 0.8f;
                     }
                     else
                     {
                         movementSpeed = 1.75f;
-                        controller.animator.speed = 0.7f;
                     }
 
-                    if (!controller.animator.GetBool("Walk"))
+                    if (!controller.animator.isWalking)
                     {
-                        PlayAnimation(controller.animationName + "Walk_" + controller.direction);
-                        controller.animator.SetBool("Walk", true);
+                        controller.animator.PlayAnimation("Walk", controller.direction, false);
+                        controller.animator.isWalking = true;
                     }
                     controller.currentTileIndex += moveCell * tileMove;
                     movePosition = gameManager.tilemap.GetCellCenterWorld(controller.currentTileIndex) + offsetPosition;
@@ -67,7 +65,21 @@ public class CharacterMoveTileIsometric : MonoBehaviour
         }
         this.transform.position = Vector3.MoveTowards(this.transform.position, movePosition, movementSpeed * Time.deltaTime);
 
-        controller.animator.SetBool("Walk", Vector3.Distance(this.transform.position, movePosition) > 0.05);
+        if(Vector3.Distance(this.transform.position, movePosition) < 0.02)
+        {
+            if (controller.animator.isWalking == true)
+            {
+                controller.animator.isWalking = false;
+                if (controller.direction == "")
+                {
+                    controller.animator.PlayAnimation("Idle", "S", false);
+                }
+                else
+                {
+                    controller.animator.PlayAnimation("Idle", controller.direction, false);
+                }
+            }
+        }
     }
 
     public IEnumerator TestHasEntityInTile(Vector3Int tileIndex)
@@ -95,11 +107,6 @@ public class CharacterMoveTileIsometric : MonoBehaviour
 
         return (gameManager.HasAvailableTile(nextTile) &&
                 (Manager.Instance.gameManager.GetCreatureInTile(nextTile) == null));
-    }
-
-    public void PlayAnimation(string animation)
-    {
-        controller.animator.Play(animation);
     }
 
     public void Blink(Vector3Int index)

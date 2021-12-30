@@ -269,7 +269,7 @@ public class CharacterCombat : MonoBehaviour
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
 
-        controller.animator.Play(controller.animationName + "Cast_" + controller.direction);
+        controller.animator.PlayAnimation("Cast", controller.direction, true);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
         foreach (var aux in selectedSpell)
@@ -295,7 +295,7 @@ public class CharacterCombat : MonoBehaviour
         int dex = controller.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
 
         controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.controller.currentTileIndex, enemy.currentTileIndex);
-        controller.animator.Play(controller.animationName + "Punch_" + controller.direction);
+        controller.animator.PlayAnimation("Punch", controller.direction, true);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
 
