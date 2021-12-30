@@ -65,9 +65,8 @@ MonoBehaviour:
     - attributes: []
       status:
       - status: 2
-        value: 0
+        value: 1
       hp: 0
       mp: 0
-    enable: 0
   weaponBuffSkills: []
   spells: []

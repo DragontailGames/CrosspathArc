@@ -20,7 +20,7 @@ MonoBehaviour:
   attributes: []
   hp: 0
   mp: 0
-  animatorName: 0
+  animatorName: 2
   skill:
     name: Heavy Chest Armor
     description: 

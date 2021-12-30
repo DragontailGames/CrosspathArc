@@ -61,7 +61,6 @@ public class BotController : CreatureController
         this.attributeStatus = botController.attributeStatus;
         this.myTurn = botController.myTurn;
         this.inCombat = botController.inCombat;
-        this.animationName = botController.animationName;
         this.direction = botController.direction;
         this.offsetSpell = botController.offsetSpell;
         this.level = botController.level;

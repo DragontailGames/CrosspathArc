@@ -229,7 +229,7 @@ public class CharacterCombat : MonoBehaviour
             }
         }
 
-        if (Vector3Int.Distance(clickPos, playerPos) <= controller.CharacterInventory.weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
+        if (Vector3Int.Distance(clickPos, playerPos) <= controller.CharacterInventory.Weapon.range + offsetRange)//Detecta se o jogador esta a uma distancia suficiente
         {
             HitEnemy(enemy);
         }
@@ -269,7 +269,7 @@ public class CharacterCombat : MonoBehaviour
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
 
-        controller.animator.Play(controller.animationName + "_Cast_" + controller.direction);
+        controller.animator.PlayAnimation("Cast", controller.direction, true);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
         foreach (var aux in selectedSpell)
@@ -295,7 +295,7 @@ public class CharacterCombat : MonoBehaviour
         int dex = controller.attributeStatus.GetValue(EnumCustom.Attribute.Dex);
 
         controller.direction = Manager.Instance.gameManager.GetDirection(controller.CharacterMoveTileIsometric.controller.currentTileIndex, enemy.currentTileIndex);
-        controller.animator.Play(controller.animationName + "_Punch_" + controller.direction);
+        controller.animator.PlayAnimation("Punch", controller.direction, true);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
 
@@ -305,7 +305,7 @@ public class CharacterCombat : MonoBehaviour
         }
 
         //Define o dano do ataque
-        int weaponDamage = controller.CharacterInventory.weapon.getValue(); 
+        int weaponDamage = controller.CharacterInventory.Weapon.getValue(); 
         int str = controller.attributeStatus.GetValue(EnumCustom.Attribute.Str);
         int critical = Combat.Critical(controller.attributeStatus.GetValue(EnumCustom.Status.CriticalHit));
 
@@ -316,7 +316,7 @@ public class CharacterCombat : MonoBehaviour
         {
             foreach(var aux in skillBuffs)
             {
-                var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == controller.CharacterInventory.weapon.weaponType);
+                var tempweaponBuffSkills = aux.skill.weaponBuffSkills.FindAll(n => n.weaponType == controller.CharacterInventory.Weapon.weaponType);
 
                 if(tempweaponBuffSkills.Count>0)
                 {
