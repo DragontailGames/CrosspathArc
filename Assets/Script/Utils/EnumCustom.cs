@@ -141,7 +141,8 @@ public class EnumCustom : MonoBehaviour
     {
         Light,
         Medium,
-        Heavy
+        Heavy,
+        None,
     }
 
 }

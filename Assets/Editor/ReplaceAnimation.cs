@@ -4,39 +4,35 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 
-public class ReplaceAnimation
+public class ReplaceAnimation : MonoBehaviour
 {
-    public static string folder = "Assets/Animation/Female/Female_Naked";
-    public static string oldName = "Female_Archer_";
-    public static string newName = "";
-    public static string oldSprites_folder = "./Assets/Sprite/Wolf Inimigo";
-    public static string newSprites_folder = "./Assets/Sprite/Female_Archer_Naked_Hand";
-    public static string newFolder = "Teste";
+    public static string folder = "Assets/Animation/Female/Female_Naked/Hand_SmallShieldqwe";
 
     [MenuItem("Dragon Tail/Replace Animation")]
     static void LoadFiles()
     {
-        foreach (var asset in AssetDatabase.FindAssets("", new[] { folder + "/" + newName }))
+        /*
+        Debug.Log("PAth " + (folder + "/Female_Naked"));
+        foreach (var asset in AssetDatabase.FindAssets("", new[] { folder  }))
         {
             var path = AssetDatabase.GUIDToAssetPath(asset);
             var temp = AssetDatabase.LoadAssetAtPath(path, typeof(Object));
             var name = temp.name.Replace(oldName, newName);
             AssetDatabase.RenameAsset(path, name);
-        }
+        }*/
 
-        DirectoryInfo d = new DirectoryInfo(newFolder);
+        DirectoryInfo d = new DirectoryInfo(folder);
 
-        /*
         foreach (var file in d.GetDirectories())
         {
             RunFiles(file.FullName);
             RunDirectory(file.FullName);
         }
 
-        processFiles();
-        processController();
+ //       processFiles();
+            processController();
 
-        Debug.Log("---------------------ACABOU---------------------");*/
+        Debug.Log("---------------------ACABOU---------------------");
     }
 
     public static void RunDirectory(string path)
@@ -104,14 +100,16 @@ public class ReplaceAnimation
                 }
             }
 
-            File.WriteAllLines(metaFile, newText);
+            Debug.Log("Teste");
+
+            //File.WriteAllLines(metaFile, newText);
         }
     }
 
     
     public static void processController()
     {
-        string[] fileText = File.ReadAllLines(newFolder + "/Female_Archer.controller");
+        string[] fileText = File.ReadAllLines(folder + "/Female_Naked_Hand_SmallShield.controller");
         List<string> guids = new List<string>();
 
         foreach(var line in fileText)
@@ -143,17 +141,17 @@ public class ReplaceAnimation
                     for (int i = 0; i < newText.Count; i++)
                     {
                         newText[i] = newText[i].Replace(oldGuid, newGuid);
-                        newText[i] = newText[i].Replace(oldName, newName);
                     }
                 }
             }
         }
-
-        File.WriteAllLines(newFolder + "/Female_Archer.controller", newText);
+        Debug.Log("Tewste");
+        //File.WriteAllLines(folder + "/Female_Naked_Hand_SmallShield.controller", newText);
     }
 
     public static int FindInOldRepository(string guidReference)
     {
+        /*
         DirectoryInfo d = new DirectoryInfo(oldSprites_folder);
 
         FileInfo[] array = d.GetFiles("*meta");
@@ -177,12 +175,13 @@ public class ReplaceAnimation
                 }
             }
         }
-
+        */
         return -1;
     }
 
     public static string FindFileInNewRepository(int index)
     {
+        /*
         DirectoryInfo d = new DirectoryInfo(newSprites_folder);
 
         FileInfo[] array = d.GetFiles("*meta");
@@ -197,12 +196,13 @@ public class ReplaceAnimation
                 string guid = temp.Replace(guidString, "");
                 return guid;
             }
-        }
+        }*/
         return "";
     }
 
     public static string FindPathInOldRepository(string guid)
     {
+        /*
         foreach(var aux in metaFilesPath)
         {
             var txt = File.ReadAllText(aux.Replace(newName, oldName) + ".meta");
@@ -211,7 +211,7 @@ public class ReplaceAnimation
                 return aux;
             }
         }
-
+        */
         return "";
     }
 
