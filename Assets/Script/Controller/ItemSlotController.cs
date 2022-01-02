@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler
+public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public InventoryManager inventoryManager;
 
@@ -89,5 +89,15 @@ public class ItemSlotController : MonoBehaviour, IDragHandler, IEndDragHandler, 
         {
             txt.enabled = true;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Manager.Instance.mouseTipsManager.ShowMessage($"<b>{itemInventory.item.itemName}</b>\n{itemInventory.item.description}");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Manager.Instance.mouseTipsManager.HideMessage();
     }
 }

@@ -12,8 +12,15 @@ public class Bag : CenarioEntity
     {
         base.Start();
 
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-        baseColor = this.GetComponent<SpriteRenderer>().color;
+        if (this.GetComponent<SpriteRenderer>())
+        {
+            spriteRenderer = this.GetComponent<SpriteRenderer>();
+        }
+        else
+        {
+            spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+        }
+        baseColor = spriteRenderer.color;
         this.gameObject.AddComponent<ChestController>();
         Invoke("SetupInventory", 0.2f);
     }
@@ -28,6 +35,9 @@ public class Bag : CenarioEntity
 
     public override void OnMouseDown()
     {
-        this.GetComponent<ChestController>().OpenChest();
+        if (Vector3Int.Distance(Manager.Instance.characterController.currentTileIndex, currentTileIndex) < 3)
+        {
+            this.GetComponent<ChestController>().OpenChest();
+        }
     }
 }

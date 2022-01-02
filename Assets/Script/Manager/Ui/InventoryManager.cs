@@ -170,6 +170,8 @@ public class InventoryManager : MonoBehaviour
         }
 
         equipmentController.CloseInventory();
+
+        Manager.Instance.mouseTipsManager.HideMessage();
     }
 
     /// <summary>

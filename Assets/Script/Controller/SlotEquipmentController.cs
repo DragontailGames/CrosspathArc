@@ -41,8 +41,9 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
             Transform objItem = eventData.pointerDrag.transform;
             ItemInventory itemAux = objItem.GetComponent<ItemSlotController>().itemInventory;
 
-            if(equipmentType != (itemAux.item as EquipmentSO).equipmentType)
+            if(equipmentType != (itemAux.item as EquipmentSO)?.equipmentType)
             {
+                objItem.transform.localScale = Vector2.one;
                 return;
             }
 

@@ -24,6 +24,7 @@ public class CenarioEntity : MonoBehaviour
         if (entity)
         {
             currentTileIndex = Manager.Instance.gameManager.tilemap.WorldToCell(this.transform.position);
+            currentTileIndex.z = 0;
             gameManager.cenarioEntities.Add(this);
         }
     }
@@ -36,7 +37,7 @@ public class CenarioEntity : MonoBehaviour
     public virtual void OnMouseEnter() { gameManager.cenarioEntitiesMouseOn.Add(this); }
 
     public virtual void OnMouseOver(){
-        if (entity)
+        if (entity && Vector3Int.Distance(Manager.Instance.characterController.currentTileIndex, currentTileIndex) < 3)
         {
             spriteRenderer.color = mouseOverColor;
         }

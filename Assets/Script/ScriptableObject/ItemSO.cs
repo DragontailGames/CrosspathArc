@@ -11,4 +11,7 @@ public class ItemSO : ScriptableObject
     public int stackable = 1;
 
     public Sprite icon;
+
+    [TextArea]
+    public string description;
 }

@@ -235,17 +235,16 @@ public class AttributeStatus
         }
     }
 
-    public void AddUniqueModifier(List<AttributeModifier> attributeModifier, List<StatusModifier> statusModifier)
+    public void AddUniqueModifier(List<AttributeModifier> attributeModifier, List<StatusModifier> statusModifier, string spellName)
     {
-        foreach(var aux in attributeModifier)
+        foreach(var aux in attributeModifiersSpells.FindAll(n => n.spellName == spellName))
         {
-            attributeModifiersSpells.Remove(attributeModifiersSpells.Find(n => n.spellName == aux.spellName)) ;
+            attributeModifiersSpells.Remove(aux);
         }
-        foreach (var aux in statusModifier)
+        foreach (var aux in statusModifiersSpells.FindAll(n => n.spellName == spellName))
         {
-            statusModifiersSpells.Remove(statusModifiersSpells.Find(n => n.spellName == aux.spellName));
+            statusModifiersSpells.Remove(aux);
         }
-
 
         foreach (var aux in attributeModifier)
         {

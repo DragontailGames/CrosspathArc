@@ -57,4 +57,6 @@ public class Manager : MonoBehaviour
     public TimeManager timeManager;
 
     public InventoryManager inventoryManager;
+
+    public MouseTipsManager mouseTipsManager;
 }

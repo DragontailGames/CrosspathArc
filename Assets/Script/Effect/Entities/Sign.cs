@@ -29,10 +29,12 @@ public class Sign : CenarioEntity
 
     public override void OnMouseDown()
     {
-        base.OnMouseDown();
-        sign.OpenSign();
-        panel.SetActive(true);
-        panel.GetComponentInChildren<TextMeshProUGUI>().text = text;
-
+        if (Vector3Int.Distance(Manager.Instance.characterController.currentTileIndex, currentTileIndex) < 3)
+        {
+            base.OnMouseDown();
+            sign.OpenSign();
+            panel.SetActive(true);
+            panel.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        }
     }
 }

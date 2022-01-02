@@ -56,13 +56,14 @@ public class SupportStatus
                             hp += attributeStatusPerLevels[i].hp;
                             mp += attributeStatusPerLevels[i].mp;
                         }
-                        controller.attributeStatus.AddUniqueModifier(attributeModifiersList, statusModifiersList);
+                        controller.attributeStatus.AddUniqueModifier(attributeModifiersList, statusModifiersList, name);
 
                         controller.attributeStatus.hpExtraSuportSkillEquipment = hp;
                         controller.attributeStatus.mpExtraSuportSkillEquipment = mp;
                     }
                     else if (itemAux.equiped == false)
                     {
+                        controller.attributeStatus.AddUniqueModifier(new List<AttributeModifier>(), new List<StatusModifier>(), name);
                         controller.attributeStatus.hpExtraSuportSkillEquipment = hp;
                         controller.attributeStatus.mpExtraSuportSkillEquipment = mp;
                     }

@@ -22,8 +22,8 @@ MonoBehaviour:
     attributeStatusPerLevels:
     - attributes: []
       status: []
-      hp: 1
-      mp: 1
+      hp: 2
+      mp: 0
     - attributes: []
       status:
       - status: 2
@@ -40,7 +40,7 @@ MonoBehaviour:
       mp: 0
     - attributes: []
       status:
-      - status: 3
+      - status: 2
         value: 1
       hp: 0
       mp: 0
