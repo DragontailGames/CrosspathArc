@@ -29,7 +29,7 @@ public class CharacterMoveTileIsometric : MonoBehaviour
     {
         Vector3Int moveCell = Vector3Int.zero;
 
-        if (!gameManager.InPause && controller.animator.isWalking == false && controller.delay)//if (!gameManager.InPause && controller.animator.GetBool("Walk") == false && controller.delay)//Testa o delay para correção da movimentação por tile
+        if (!gameManager.InPause && controller.delay)//if (!gameManager.InPause && controller.animator.GetBool("Walk") == false && controller.delay)//Testa o delay para correção da movimentação por tile
         {
             Vector3Int keyboard = GetMoveCellKeyboard();
 
@@ -70,16 +70,13 @@ public class CharacterMoveTileIsometric : MonoBehaviour
             if (controller.animator.isWalking == true)
             {
                 controller.animator.isWalking = false;
-                if (!controller.MouseOn())
+                if (controller.direction == "")
                 {
-                    if (controller.direction == "")
-                    {
-                        controller.animator.PlayAnimation("Idle", "S", false);
-                    }
-                    else
-                    {
-                        controller.animator.PlayAnimation("Idle", controller.direction, false);
-                    }
+                    controller.animator.PlayAnimation("Idle", "S", false);
+                }
+                else
+                {
+                    controller.animator.PlayAnimation("Idle", controller.direction, false);
                 }
             }
         }

@@ -9,15 +9,24 @@ public class CharacterInventory : MonoBehaviour
 {
     public CharacterController controller;
 
-    public WeaponEquipmentSO weapon;
+    public WeaponEquipmentSO handStandartEquipment;
 
-    public WeaponEquipmentSO extraWeapon;
+    private WeaponEquipmentSO weapon;
+
+    public EquipmentSO extraWeapon;
 
     public InventoryManager inventoryManager;
 
     public List<ItemInventory> equipements;
 
     public StatusManager statusManager;
+
+    public WeaponEquipmentSO Weapon { get {
+            if (this.weapon != null)
+                return this.weapon;
+            else
+                return this.handStandartEquipment;
+            } set => this.weapon = value; }
 
     public void UpdateEquipmentList()
     {
@@ -27,6 +36,8 @@ public class CharacterInventory : MonoBehaviour
         List<Attributes> attributesAux = new List<Attributes>();
 
         SupportStatus supportStatus;
+
+        ChestEquipmentSO chest = null;
 
         foreach (var aux in equipements)
         {
@@ -51,6 +62,7 @@ public class CharacterInventory : MonoBehaviour
                     {
                         supportStatus = tempSupportSkill;
                     }
+                    chest = chestEquipment;
                     //supportStatuses.Add(chestEquipment.supportStatus);
                 }
             }
@@ -75,22 +87,36 @@ public class CharacterInventory : MonoBehaviour
             }
         }
 
-        var weaponList = equipements.FindAll(n => n.item.GetType() == typeof(WeaponEquipmentSO));
+        List<EquipmentSO> weaponList = new List<EquipmentSO>();
+        foreach(var aux in equipements)
+        {
+            var equipAux = (aux.item as EquipmentSO);
+            if(equipAux.equipmentType == EnumCustom.EquipmentType.Shield ||
+                equipAux.equipmentType == EnumCustom.EquipmentType.Weapon ||
+                equipAux.equipmentType == EnumCustom.EquipmentType.Bow)
+            {
+                weaponList.Add(equipAux);
+            }
+        }
         if (weaponList.Count>0)
         {
-            var weapon = weaponList.Find(n => (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Weapon).item as WeaponEquipmentSO;
-            controller.CharacterInventory.weapon = weapon;
+            var weapon = weaponList.Find(n => n.equipmentType == EnumCustom.EquipmentType.Weapon);
+            controller.CharacterInventory.Weapon = weapon as WeaponEquipmentSO;
 
-            var extraWeapon = weaponList.Find(n => (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Bow ||
-            (n.item as WeaponEquipmentSO).equipmentType == EnumCustom.EquipmentType.Shield)?.item as WeaponEquipmentSO;
+            var extraWeapon = weaponList.Find(n => n.equipmentType == EnumCustom.EquipmentType.Bow ||
+            n.equipmentType == EnumCustom.EquipmentType.Shield) as EquipmentSO;
             controller.CharacterInventory.extraWeapon = extraWeapon;
         }
         else
         {
-            controller.CharacterInventory.weapon = null;
+            controller.CharacterInventory.Weapon = null;
             controller.CharacterInventory.extraWeapon = null;
         }
 
         statusManager.UpdateStatus();
+
+        this.controller.animator.GetComponent<AnimatorEquipmentController>().SetController(chest == null? EnumCustom.ArmorType.None : chest.animatorName, 
+            controller.CharacterInventory.extraWeapon == null ? false : controller.CharacterInventory.extraWeapon.equipmentType == EnumCustom.EquipmentType.Shield,
+            controller.CharacterInventory.Weapon == null ? false : controller.CharacterInventory.Weapon.weaponType == EnumCustom.WeaponType.Sword) ;
     }
 }

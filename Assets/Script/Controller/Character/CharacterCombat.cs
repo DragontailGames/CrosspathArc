@@ -269,7 +269,7 @@ public class CharacterCombat : MonoBehaviour
 
         //controller.specialSpell.Find(n => n.CheckType<Invisibility>()).duration = 0;//pedro maybe
 
-        controller.animator.PlayAnimation("Casting", controller.direction, true);
+        controller.animator.PlayAnimation("Cast", controller.direction, true);
 
         Manager.Instance.gameManager.EndMyTurn(controller);
         foreach (var aux in selectedSpell)
