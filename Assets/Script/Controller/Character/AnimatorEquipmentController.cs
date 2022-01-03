@@ -8,16 +8,20 @@ public class AnimatorEquipmentController : MonoBehaviour
 {
     public List<AnimationCustomController> animationsCustom = new List<AnimationCustomController>();
 
-    private AnimationCustomController currentAnimationCustom;
+    public AnimationCustomController currentAnimationCustom;
 
-    private Sprite[] constantAnimation = new Sprite[] { };
-    private Sprite[] framesAnimation = new Sprite[] { };
+    public Sprite[] constantAnimation = new Sprite[] { };
+    public Sprite[] framesAnimation = new Sprite[] { };
 
     public bool isWalking = false;
 
     public float delayBetweenFrames = 0.1f;
 
     private bool isDead = false;
+
+    private string lastdirection = "S";
+    private string lastAnimation = "";
+    private int currentFrame;
 
     private Dictionary<int, string> fromToDirection = new Dictionary<int, string>()
     {
@@ -35,7 +39,6 @@ public class AnimatorEquipmentController : MonoBehaviour
     {
         currentAnimationCustom = animationsCustom[0];
         SetupFrames();
-        PlayAnimation("Idle", "S", false);
     }
 
     public void SetupFrames()
@@ -56,12 +59,31 @@ public class AnimatorEquipmentController : MonoBehaviour
                 });
             }
         }
+        PlayAnimation("Idle", "S", false, false, true);
     }
 
     IEnumerator animationCoroutine;
 
-    public void PlayAnimation(string name, string direction, bool onlyOneCast, bool isDie = false)
+    public void PlayAnimation(string name, string direction, bool onlyOneCast, bool isDie = false, bool forceUpdate = false)
     {
+        if(lastdirection == direction && lastAnimation == name && !forceUpdate)
+        {
+            StopCoroutine(animationCoroutine);
+            if (constantAnimation.Length - 1 > currentFrame)
+            {
+                animationCoroutine = Play(currentFrame + 1);
+            }
+            else
+            {
+                animationCoroutine = Play(0);
+            }
+            StartCoroutine(animationCoroutine);
+            return;
+        }
+
+        lastAnimation = name;
+        lastdirection = direction;
+
         if(animationCoroutine != null)
         {
             StopCoroutine(animationCoroutine);
@@ -94,6 +116,7 @@ public class AnimatorEquipmentController : MonoBehaviour
 
     private IEnumerator Play(int index)
     {
+        currentFrame = index;
         if(framesAnimation.Length <= 0)
         {
             framesAnimation = constantAnimation;
@@ -143,6 +166,5 @@ public class AnimatorEquipmentController : MonoBehaviour
 
         currentAnimationCustom = animationsCustom.Find(n => n.name.EndsWith(finalString));
         SetupFrames();
-        PlayAnimation("Idle", "S", false);
     }
 }
