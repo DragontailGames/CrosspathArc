@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1135128230}
   - component: {fileID: 1135128232}
-  - component: {fileID: 1135128231}
   m_Layer: 0
   m_Name: Icon
   m_TagString: Untagged
@@ -83,32 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &1135128231
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1135128229}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.12041484, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.17990495}
-    oldSize: {x: 3.81, y: 3.83}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.44844237, y: 1.0746043}
-  m_EdgeRadius: 0
 --- !u!1 &8304664163320023744
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8304664163320023747}
   - component: {fileID: 8304664163320023745}
+  - component: {fileID: 2056569521}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -160,3 +134,29 @@ MonoBehaviour:
   mouseOverColor: {r: 1, g: 1, b: 1, a: 1}
   items: []
   chest: 1
+--- !u!61 &2056569521
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8304664163320023744}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.49}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.17990495}
+    oldSize: {x: 3.81, y: 3.83}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.44844237, y: 1.0746043}
+  m_EdgeRadius: 0

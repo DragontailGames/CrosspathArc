@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1597930272}
   - component: {fileID: 1597930274}
-  - component: {fileID: 1597930273}
   m_Layer: 0
   m_Name: Icon
   m_TagString: Untagged
@@ -83,32 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &1597930273
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597930271}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.119414166, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5106076, y: 0.11982349}
-    oldSize: {x: 0.8, y: 1.25}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.56117177, y: 1.16}
-  m_EdgeRadius: 0
 --- !u!1 &4703695309976326652
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4703695309976326640}
   - component: {fileID: 4703695309976326642}
+  - component: {fileID: 583180745}
   m_Layer: 0
   m_Name: Cacti
   m_TagString: Untagged
@@ -160,3 +134,29 @@ MonoBehaviour:
   mouseOverColor: {r: 1, g: 1, b: 1, a: 1}
   items: []
   chest: 1
+--- !u!61 &583180745
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703695309976326652}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.06, y: 0.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5106076, y: 0.11982349}
+    oldSize: {x: 0.8, y: 1.25}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.56117177, y: 1.16}
+  m_EdgeRadius: 0
