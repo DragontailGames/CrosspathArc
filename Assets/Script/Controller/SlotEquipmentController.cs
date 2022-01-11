@@ -7,6 +7,8 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
 {
     public EnumCustom.EquipmentType equipmentType;
 
+    public ItemInventory currentItem;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)
@@ -47,14 +49,16 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
                 return;
             }
 
+            ItemSlotController oldObject = null;
+
             if (this.transform.GetComponentInChildren<ItemSlotController>())
             {
-                ItemSlotController auxObject = this.transform.GetComponentInChildren<ItemSlotController>();
-                auxObject.slotController = objItem.GetComponent<ItemSlotController>().slotController;
-                auxObject.itemInventory.slot = objItem.GetComponent<ItemSlotController>().slotController.index;
-                auxObject.transform.SetParent(objItem.GetComponent<ItemSlotController>().slotController.transform);
-                auxObject.transform.localPosition = Vector2.zero;
-                auxObject.transform.localScale = Vector2.one;
+                oldObject = this.transform.GetComponentInChildren<ItemSlotController>();
+                oldObject.slotController = objItem.GetComponent<ItemSlotController>().slotController;
+                oldObject.itemInventory.slot = objItem.GetComponent<ItemSlotController>().slotController.index;
+                oldObject.transform.SetParent(objItem.GetComponent<ItemSlotController>().slotController.transform);
+                oldObject.transform.localPosition = Vector2.zero;
+                oldObject.transform.localScale = Vector2.one;
 
                 objItem.GetComponent<ItemSlotController>().slotController = this;
                 objItem.GetComponent<ItemSlotController>().itemInventory.slot = this.index;
@@ -73,24 +77,12 @@ public class SlotEquipmentController : SlotController, IPointerEnterHandler, IPo
 
             CharacterInventory characterInventory = Manager.Instance.characterController.CharacterInventory;
 
-            ItemInventory itemFinded = characterInventory.equipements.Find(n => (n.item as EquipmentSO).equipmentType == (itemAux.item as EquipmentSO).equipmentType && 
-            (n.item as EquipmentSO).equipmentType != EnumCustom.EquipmentType.Ring);
-
-            if (itemFinded != null)
+            if (currentItem != null)
             {
-                characterInventory.equipements.Remove(itemFinded);
+                characterInventory.equipements.Remove(currentItem);
             }
 
-            /*
-            if(equipmentType == EnumCustom.EquipmentType.Weapon)
-            {
-                characterInventory.weapon = (itemAux.item as WeaponEquipmentSO);
-            }
-
-            if (equipmentType == EnumCustom.EquipmentType.Bow || equipmentType == EnumCustom.EquipmentType.Shield)
-            {
-                characterInventory.extraWeapon = (itemAux.item as WeaponEquipmentSO);
-            }*/
+            currentItem = itemAux;
 
             characterInventory.equipements.Add(itemAux);
 

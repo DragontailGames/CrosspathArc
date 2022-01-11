@@ -204,42 +204,13 @@ public class InventoryManager : MonoBehaviour
         img.sprite = item.icon;
         img.enabled = true;
 
+
         ItemSlotController itemSlotAux = itemAux.AddComponent<ItemSlotController>();
         itemSlotAux.inventoryManager = this;
         itemSlotAux.itemInventory = new ItemInventory(Vector2.zero, 1, item, true);
+        parent.GetComponent<SlotEquipmentController>().currentItem = itemSlotAux.itemInventory;
         itemSlotAux.SetupText();
         listToDestroy.Add(itemAux);
-    }
-
-    public void SetupEquipment(ItemInventory item)
-    {/*
-        List<EquipmentUi> equipment = equipmentUi.FindAll(n => n.equipmentType == item.equipmentType);
-        if (equipment.Count == 1)
-        {
-            equipment[0].slot.Find("BackItem").gameObject.SetActive(false);
-            Image icon = equipment[0].slot.Find("Icon").GetComponent<Image>();
-            icon.enabled = true;
-            icon.sprite = item.icon;
-        }
-        else if (equipment.Count >= 1)
-        {
-            if (equipment[1].slot.Find("BackItem").gameObject.activeSelf)
-            {
-                equipment[1].slot.Find("BackItem").gameObject.SetActive(false);
-                Image icon1 = equipment[1].slot.Find("Icon").GetComponent<Image>();
-                icon1.enabled = true;
-                icon1.sprite = item.icon;
-                return;
-            }
-            equipment[0].slot.Find("BackItem").gameObject.SetActive(false);
-            Image icon = equipment[0].slot.Find("Icon").GetComponent<Image>();
-            icon.enabled = true;
-            icon.sprite = item.icon;
-        }
-        else
-        {
-            Debug.LogError("Tipo de equipamento não encontrado");
-        }*/
     }
 
     public Vector2 GetNextSlot()

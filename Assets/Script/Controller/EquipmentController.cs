@@ -21,8 +21,22 @@ public class EquipmentController : MonoBehaviour
     {
         foreach(var aux in Manager.Instance.characterController.CharacterInventory.equipements)
         {
-            SlotEquipmentController slotEquipmentController = slotEquipmentControllers.Find(n => n.equipmentType == (aux.item as EquipmentSO).equipmentType);
-            Manager.Instance.inventoryManager.SetupItemInventory(aux.item, slotEquipmentController.transform);
+            List<SlotEquipmentController> slotEquipmentController = slotEquipmentControllers.FindAll(n => n.equipmentType == (aux.item as EquipmentSO).equipmentType);
+            if(slotEquipmentController.Count==1)
+            {
+                Manager.Instance.inventoryManager.SetupItemInventory(aux.item, slotEquipmentController[0].transform);
+            }
+            else
+            {
+                if (!slotEquipmentController[0].GetComponentInChildren<ItemSlotController>())
+                {
+                    Manager.Instance.inventoryManager.SetupItemInventory(aux.item, slotEquipmentController[0].transform);
+                }
+                else
+                {
+                    Manager.Instance.inventoryManager.SetupItemInventory(aux.item, slotEquipmentController[1].transform);
+                }
+            }
         }
     }
 
